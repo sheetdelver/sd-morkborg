@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Create Decoctions",
+    "type": "script",
+    "author": "LYF9zR8SvB0h2e6R",
+    "img": "icons/svg/dice-target.svg",
+    "scope": "global",
+    "command": "(async () => {\nlet pack = game.packs.get('morkborg.mork-borg-tables');\nlet content = await pack.getDocuments();\nlet table = content.find(i => i.name === 'Occult Herbmaster Decoctions');\nawait table.drawMany(2);\nnew Roll('1d4').toMessage({ flavor: 'Doses Brewed' });\n})();",
+    "folder": null,
+    "flags": {
+      "core": {}
+    },
+    "_id": "l6vx8Dy5iSzh7OEh",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685228869935,
+      "modifiedTime": 1686342229435,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  }
+]

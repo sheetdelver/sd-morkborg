@@ -1,0 +1,4433 @@
+[
+  {
+    "_id": "0bddHriOAq9fEstq",
+    "name": "Barbarister the Incredible Horse",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/barbarister_bw.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Barbarister is magical, intelligent, arrogant and vain. He can also talk. If you can persuade him to care, Barbarister occasionally adds +2 to Presence tests involving logic and intellect. The horse may be smarter than you and is quite aware of this.</p>",
+      "hp": {
+        "max": 8,
+        "value": 8
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": 0,
+      "speciality": "",
+      "trait": "",
+      "value": ""
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Barbarister",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "color": null,
+        "alpha": 1,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/barbarister_bw.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "46A26aWQ3yUP3vbi",
+    "name": "Monkey",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/monkey.png",
+    "items": [
+      {
+        "_id": "SmPvCHM5fQRwKC0W",
+        "name": "Monkey Punch",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/followeritems/punch.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d1",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.follower-items.MMewMpqseWxGPmPj",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>d4 monkeys that ignore but love you (d4+2 HP, punch/bite d4).</p>",
+      "hp": {
+        "max": 3,
+        "value": 3
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Monkeys",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/monkey.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "4hGrH6UVkXIKMDyE",
+    "name": "Earthbound",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/earthbound.png",
+    "items": [
+      {
+        "_id": "h1g1kXsBQWc6BQ8q",
+        "name": "Leather",
+        "type": "armor",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/armor/light.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "<p>Fur, padded cloth, leather, etc.</p>",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 20,
+          "quantity": 1,
+          "currentTier": 1,
+          "maxTier": 1,
+          "tier": {
+            "min": 0,
+            "max": 1,
+            "value": 1
+          }
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.armor.OdANZUpaMPggKU0F",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      },
+      {
+        "_id": "UhwP9ZOPOPPlICGR",
+        "name": "Femur",
+        "type": "weapon",
+        "sort": 200000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/femur.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.KDG9eB0nnFz3TEwH",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      },
+      {
+        "_id": "sSE4u2u9mvH85t1X",
+        "name": "Staff",
+        "type": "weapon",
+        "sort": 300000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/staff.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": false,
+          "carried": true,
+          "price": 5,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "2",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.O4NLiIskKuu7PnlB",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>These freaks are roughly three parts human to one part dog. Society sees them as foul, diseased and disloyal for a carrier of canine blood. Isolation and contempt have made them self-reliant scavengers.</p>\n<p>&nbsp;</p>\n<p>Trait: (d4)</p>\n<ol><li>Arrogant</li>\n<li>Quiet</li>\n<li>Joking</li>\n<li>Hypochondriac</li>\n</ol><p>&nbsp;</p><p>Speciality: (d4)</p>\n<ol><li>Excellent cooking (d4 extra HP when resting)</li>\n<li>Finds the right path</li>\n<li>Senses danger</li>\n<li>Makes/repairs items</li>\n</ol>\n<p>&nbsp;</p><p>Values: (d6)</p>\n<ol><li>Fireplace discussions</li>\n<li>Praise</li>\n<li>Endless tasks</li>\n<li>Items as payment</li>\n<li>Carnal relations</li>\n<li>Diluted black poison</li>\n</ol>",
+      "hp": {
+        "max": 8,
+        "value": 8
+      },
+      "alternateName": "Outcast",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Earthbound",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/earthbound.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "9tjuJtUyLb8pV3ZX",
+    "name": "Berserker",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/berserker.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p><strong>They're on you!</strong></p>\n<p>&nbsp;</p>\n<p>As if from nowhere, a frenzied ambush in dusty hallways and from behind the stacked black stones of catacombs.</p>\n<p>&nbsp;</p>\n<p>Wields (d4):</p>\n<p>1. Long flail d8</p>\n<p>2. Heavy mace d6</p>\n<p>3. Chained sword d6</p>\n<p>4. Huge warhammer d10</p>",
+      "hp": {
+        "max": 13,
+        "value": 13
+      },
+      "alternateName": "Berserker",
+      "armor": {
+        "name": "Hardened skin -d2"
+      },
+      "attack": {
+        "name": "Random weapon (d6, d8, d10)"
+      },
+      "morale": 9,
+      "special": "Attacks twice per round but doesn’t have time for defence (DR10 to hit them)."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Berserker",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/berserker.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "EPsRB69MjrMUpQgs",
+    "name": "Zombie",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/zombie.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<ul>\n<li>Captured - 30s</li>\n<li>Blood, per litre - 5s</li>\n</ul>\n<p>&nbsp;</p>\n<p>The only cure or vaccine is said to be found at the peak of a pale mountain within an infinitely-miserable forest of dark leaves. King Fathmu IX of W&auml;stland in particular seeks this cure and knows the name and location of the forest which the mountain overlooks.</p>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 7,
+        "value": 7
+      },
+      "alternateName": "Zombie",
+      "armor": {
+        "name": "Leather scraps -d2"
+      },
+      "attack": {
+        "name": "Claw/bite d2 + special"
+      },
+      "morale": 12,
+      "special": "Anyone bitten tests Toughness DR8 or dies within two days before rising as a zombie."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Zombie",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/zombie.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "ErBhN8ay6l22MKHH",
+    "name": "Ancient Gore-Hound",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/hound.png",
+    "items": [
+      {
+        "_id": "Zus6SwUmNDeXoDtT",
+        "name": "Gore-hound Bite",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/followeritems/fangs.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 0,
+          "description": "<p>Attacks with DR10 (bite d6).</p>",
+          "carryWeight": 0,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d6",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.follower-items.3gBW34F7dJJAKAqd",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Asthmatic, deluded and on its last legs, this wizened creature still has a superb nose and can sniffle up treasure in the most disgusting debris. Attacks with DR10 (bite d6). Defends with DR12, 10 HP. Becomes frenzied around goblins and berserkers.</p>",
+      "hp": {
+        "max": 10,
+        "value": 10
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Gore-Hound",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/hound.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "GEZcVk3p2MTazT7B",
+    "name": "Small Wagon",
+    "type": "container",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/containers/wagon_bw.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "capacity": {
+        "max": 15,
+        "value": 0
+      },
+      "description": "It holds things.",
+      "price": 0
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Small Wagon",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": 0,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "color": null,
+        "alpha": 1,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/containers/wagon_bw.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "UNiBBW93dD1kZCPe",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213804212,
+      "modifiedTime": 1685214047736,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "GwnVAHrVp7Jn8Q9e",
+    "name": "Prowler",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/prowler.png",
+    "items": [
+      {
+        "_id": "SFKkNUIz1DwzEtNN",
+        "name": "Leather",
+        "type": "armor",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/armor/light.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "<p>Fur, padded cloth, leather, etc.</p>",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 20,
+          "quantity": 1,
+          "currentTier": 1,
+          "maxTier": 1,
+          "tier": {
+            "min": 0,
+            "max": 1,
+            "value": 1
+          }
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.armor.OdANZUpaMPggKU0F",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      },
+      {
+        "_id": "5mVgx5kffLk16uT8",
+        "name": "Femur",
+        "type": "weapon",
+        "sort": 200000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/femur.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": false,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.KDG9eB0nnFz3TEwH",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      },
+      {
+        "_id": "XQu6nf4OGHnn879J",
+        "name": "Knife",
+        "type": "weapon",
+        "sort": 300000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/knife.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 10,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.0pBtjACKS3geBOXe",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Lawless good-for-nothing crooks banished from civilization. Low on resources, allies and basic decency they seek retribution ... and coin.</p>\n<p>&nbsp;</p>\n<p>Trait: (d4)</p>\n<ol>\n<li>Lazy</li>\n<li>Bragging</li>\n<li>Liar</li>\n<li>Traitor</li>\n</ol>\n<p>&nbsp;</p>\n<p>Speciality: (d4)</p>\n<ol>\n<li>Disarm traps (you need to find them first)&nbsp;</li>\n<li>Steal single items&nbsp;</li>\n<li>Climb impossible routes alone&nbsp;</li>\n<li>Finds trails and corners that keep the group hidden.</li>\n</ol>\n<p>&nbsp;</p>\n<p>Values: (d6)</p>\n<ol>\n<li>Payment in silver&nbsp;</li>\n<li>Food&nbsp;</li>\n<li>Gossip&nbsp;</li>\n<li>Liquor&nbsp;</li>\n<li>Pointless death&nbsp;</li>\n<li>Getting the credit for exploits</li>\n</ol>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 1,
+        "value": 1
+      },
+      "alternateName": "Outcast",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Prowler",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/prowler.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "name": "Hegelian Owl",
+    "type": "follower",
+    "img": "systems/morkborg/tokens/followers/hegelian-owl.png",
+    "items": [
+      {
+        "_id": "MOwcWP9f3Ik1O4FS",
+        "name": "Claw/Bite",
+        "type": "weapon",
+        "img": "systems/morkborg/icons/followeritems/talons.png",
+        "effects": [],
+        "folder": null,
+        "sort": 0,
+        "flags": {},
+        "system": {
+          "containerSpace": 0,
+          "description": "",
+          "carryWeight": 0,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "ownership": {
+          "default": 0,
+          "8TrFu59c1zX6K3pu": 3
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": null,
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "flags": {
+      "core": {}
+    },
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>This philosophical beast is a bitter, reluctant and hypersensitive assistant &mdash;persuaded with a DR12 Presence test. After two acts of aid it regards you with mute contempt. It can fetch small items, attack enemies and find traps. By night the owl delivers understanding of what you should have done today in dreams.</p>\n<p>&nbsp;</p>\n<p>Too quick to hit. Attacks are DR8.</p>",
+      "hp": {
+        "max": 2,
+        "value": 2
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": 0,
+      "speciality": "",
+      "trait": "",
+      "value": ""
+    },
+    "prototypeToken": {
+      "actorLink": true,
+      "disposition": 1,
+      "name": "Hegelian Owl",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "alpha": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "flags": {},
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 0.25,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "color": null,
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/hegelian-owl.png",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "tint": "#ffffff",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": true,
+        "range": 30,
+        "brightness": 0,
+        "visionMode": "basic",
+        "color": null,
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0
+      },
+      "detectionModes": [],
+      "appendNumber": false,
+      "prependAdjective": false,
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1684777613115,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_id": "HLu7lgwoNPlhfx3W",
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "IHGZLScGLifEo7SH",
+    "name": "Troll",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/troll.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>&nbsp;</p>\n<ul>\n<li>Captured - 200s</li>\n<li>Corpse - 70s</li>\n<li>Horn - 25s</li>\n</ul>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 32,
+        "value": 32
+      },
+      "alternateName": "Troll",
+      "armor": {
+        "name": "Thick hide -d2"
+      },
+      "attack": {
+        "name": "Fist 2d6"
+      },
+      "morale": 0,
+      "special": "Easy to hit; attacks are DR10. Cowards despite their size. Usually retreat if badly wounded. Never forget who hurt them. They grow larger during the healing process and will definitely come back, stronger than before. Any HP healed is added to their maximum HP. Every time they return, add another d6 to their damage."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Troll",
+      "displayName": 0,
+      "width": 2,
+      "height": 2,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/troll.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "JnKLja5Y4jsBgbwR",
+    "name": "Wild Wickhead",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/wild_wickhead.png",
+    "items": [
+      {
+        "_id": "bkTj7WTgGFpWUYNh",
+        "name": "Knife",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/knife.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 1,
+          "description": "",
+          "carryWeight": 1,
+          "equipped": true,
+          "carried": true,
+          "price": 10,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.0pBtjACKS3geBOXe",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Wickheads are solitary by nature, but the wildest and vilest are cast even from that loose community. Wandering forests and rambling ruins, they take any company they can find. Fickle, suspicious and bad, you would be well-advised to keep them chained.</p>\n<p>&nbsp;</p>\n<p>Trait: (d4)</p>\n<ol>\n<li>Grumpy</li>\n<li>Apathetic</li>\n<li>Careless</li>\n<li>Moody</li>\n</ol>\n<p>&nbsp;</p>\n<p>Speciality: (d4)</p>\n<ol>\n<li>Walking lightsource</li>\n<li>Walking lightsource</li>\n<li>Expert with a knife (d4+2)&nbsp;</li>\n<li>Backstab (test DR8 with d20 rolled by the GM. Deals weapon damage+3)&nbsp;</li>\n</ol>\n<p>&nbsp;</p>\n<p>Aside from their specialty they will carry up to five items.</p>\n<p>&nbsp;</p>\n<p>Values: (d6)</p>\n<ol>\n<li>Holding long monologues about oneself&nbsp;</li>\n<li>Verbal conflicts within the group&nbsp;</li>\n<li>Getting paid in sharp weapons&nbsp;</li>\n<li>Burnt meat&nbsp;</li>\n<li>Depressing stories&nbsp;</li>\n<li>Captured slaves</li>\n</ol>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 10,
+        "value": 10
+      },
+      "alternateName": "Outcast",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Wild Wickhead",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/wild_wickhead.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "KbNCwXUcl7ca9JcV",
+    "name": "Small but vicious dog",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/dog.png",
+    "items": [
+      {
+        "_id": "0pUjQCKinpkKEphp",
+        "name": "Small Dog Bite",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/followeritems/fangs.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 0,
+          "description": "",
+          "carryWeight": 0,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.follower-items.TcvBD3s6XonLyNM5",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>d6+2 HP,&nbsp; bite d4,&nbsp; only obeys you.</p>",
+      "hp": {
+        "max": 3,
+        "value": 3
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Dog",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/dog.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "NBO7cAE8LKW60S72",
+    "name": "Scum",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/scum.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>There are few fiends more fell than poverty or monsters more powerful than hate. In this stricken world, the slums and black alleyways are fecund scum, mothering countless abhorred miscreants. The PC with the highest Presence makes a DR14 test at the start of battle. Failure means a random party member is automatically hit with a cowardly backstab-normal damage +3.</p>",
+      "hp": {
+        "max": 7,
+        "value": 7
+      },
+      "alternateName": "Scum",
+      "armor": {
+        "name": "None"
+      },
+      "attack": {
+        "name": "Poisoned knife d4 + special"
+      },
+      "morale": 8,
+      "special": "Test Toughness DR10 or become infected."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Scum",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/scum.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "Qvy6gLQBAbOse9yi",
+    "name": "Lich",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/lich.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<ul>\n<li>Captured - 200s</li>\n<li>Remains - 130s</li>\n<li>Skull - 100s</li>\n</ul>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 15,
+        "value": 15
+      },
+      "alternateName": "Undead (Weak) Necromancer",
+      "armor": {
+        "name": "Barrier (necro) -d4"
+      },
+      "attack": {
+        "name": "Strike d6 + special"
+      },
+      "morale": 12,
+      "special": "Paralyzing touch (Presence DR14 every round to break free). No one can use Powers near this anti-magical wound in reality. Every round they can steal the contents of a nearby scroll and use this Power against its owner."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Lich",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/lich.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "bsPjBb00iYn0Ij2d",
+    "name": "Goblin",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/goblin.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>All goblins carry a curse.<br /><br />Once like you, they are now trapped in the prison of their crazed goblin flesh. Only their eyes reveal the truth: a ruined mind watching its body-prison perform terrible deeds.<br /><br />Even being attacked by goblins sends the curse, carried on the winds of their hate. Hit or miss,<br />it doesn&rsquo;t matter. In the dark of Sarkash they shoot at passers-by with twanging bows. You must find and kill the goblin before your mind is paralyzed. If the curse- carrying creature still lives d6 days after the attack, you will warp irrevocably into one yourself. Then,<br />only the dark of Sarkash will hide you.</p>\n<p>&nbsp;</p>\n<ul>\n<li>Head - 7s</li>\n<li>Dead - 20s</li>\n<li>Captured - 150s</li>\n</ul>",
+      "hp": {
+        "max": 6,
+        "value": 6
+      },
+      "alternateName": "Goblin",
+      "armor": {
+        "name": "Ropy skin -d2"
+      },
+      "attack": {
+        "name": "Knife/shortbow d4"
+      },
+      "morale": 7,
+      "special": "Quick, attacks and defense are DR 14"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Goblin",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/goblin.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "d6pGFaOVukoH4bpB",
+    "name": "Hawk as weapon",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/hawk.png",
+    "items": [
+      {
+        "_id": "WdnKKXEwOX5HFTfx",
+        "name": "Hawk Talons",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/followeritems/talons.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 0,
+          "description": "<p>DR10 (claws/bite D4).</p>",
+          "carryWeight": 0,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d4",
+          "handed": "2",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.follower-items.nWFs1TpkJoogpOIU",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Your crafty almost-intelligent hawk is loyal only to you. Even without shared language, you understand its cries as it keeps watch, scouts and swoops to attack foes. Attacks/ defence DR10 (claws/bite D4), HP 8.</p>",
+      "hp": {
+        "max": 8,
+        "value": 8
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "1d6",
+      "targetArmorDie": "1d2"
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Hawk",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/hawk.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "dlvO3nUvNuc8C297",
+    "name": "Blood-Drenched Skeleton",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/blood_skeleton.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>&nbsp;</p>\n<ul>\n<li>Captured - 35s</li>\n<li>Destroyed - 7s</li>\n</ul>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 7,
+        "value": 7
+      },
+      "alternateName": "Blood-Drenched Skeleton",
+      "armor": {
+        "name": "None"
+      },
+      "attack": {
+        "name": "Shortsword d4, Knife d2, or Bony knuckles d2"
+      },
+      "morale": 8,
+      "special": "Skulks about, impossibly soundless. Attacks by surprise. Can mimic voices to lure victims, but can only repeat what it has heard. Attacks on them with piercing weapons are DR14. Any strike doing 5 or more damage destroys the skeleton completely."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Blood-Drenched Skeleton",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/blood_skeleton.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "druf8vNjV30skui5",
+    "name": "Wickhead",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/wickhead.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Sneaks up behind its victims, silent as the grave. Skulks around the cities' outskirts and the thickets of Sarkash.</p>",
+      "hp": {
+        "max": 10,
+        "value": 10
+      },
+      "alternateName": "Wickhead knife-wielder",
+      "armor": {
+        "name": "None"
+      },
+      "attack": {
+        "name": "Knife with dried blood + special"
+      },
+      "morale": 7,
+      "special": "25% chance wounds from the insanely filthy knife become infected. Can magically douse all nearby light sources, ignite its own blinding light and attack. Then vanish into the darkness."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Wickhead",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/wickhead.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "f8nghV2lkv44mh2Y",
+    "name": "Undead Doll",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/undead_doll.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>In Tveland relic thieves, defamers and corrupt clerks suffer a punishment of exquisite and deeply impractical cruelty. Their children or grandchildren are enclosed in porcelain dolls then placed in cathedral windows, to die slowly of starvation and heat. Despite warding rituals, many return as vengeful undead, often gathering in large throngs to hunt their tormentors. Their mad gaze demands a Presence DR12 test at the start of combat to avoid being frozen with fear for d4 rounds.</p>\n<p>&nbsp;</p>\n<ul>\n<li>Head - 20s</li>\n<li>Captured - 80s</li>\n</ul>\n<p>&nbsp;</p>\n<p>&nbsp;</p>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 11,
+        "value": 11
+      },
+      "alternateName": "Undead Doll",
+      "armor": {
+        "name": "Porcelain -d2"
+      },
+      "attack": {
+        "name": "Claws/piercing bite d4"
+      },
+      "morale": 12,
+      "special": ""
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Undead Doll",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/undead_doll.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "hEKbkgIhMUcmTuTU",
+    "name": "Wraith",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/wraith.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>&nbsp;</p>\n<ul>\n<li>Captured - 120s</li>\n<li>Skull - 70s</li>\n<li>Ectoplasm - 25s</li>\n</ul>",
+      "hp": {
+        "max": 15,
+        "value": 15
+      },
+      "alternateName": "Wraith",
+      "armor": {
+        "name": "None"
+      },
+      "attack": {
+        "name": "Touch d4 + special"
+      },
+      "morale": 12,
+      "special": "Swift, elusive and difficult to hit (DR14). These soundless phantoms always win initiative.\nTheir touch drains Strength, Presence and Agility by 1 for the duration of the fight."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Wraith",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/wraith.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "i9eNpTFMhRGFDjon",
+    "name": "Pale One",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/pale_one.png",
+    "items": [
+      {
+        "_id": "cmIIz2ediGXgoCDh",
+        "name": "Unarmed",
+        "type": "weapon",
+        "sort": 100000,
+        "flags": {
+          "core": {}
+        },
+        "img": "systems/morkborg/icons/items/weapons/fist.png",
+        "effects": [],
+        "system": {
+          "containerSpace": 0,
+          "description": "",
+          "carryWeight": 0,
+          "equipped": true,
+          "carried": true,
+          "price": 0,
+          "quantity": 1,
+          "critOn": 20,
+          "damageDie": "1d2",
+          "handed": "1",
+          "fumbleOn": 1,
+          "usesAmmo": false,
+          "weaponType": "melee"
+        },
+        "folder": null,
+        "ownership": {
+          "default": 0
+        },
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": "13.341",
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null,
+          "compendiumSource": "Compendium.morkborg.weapons.uzPl4ex2RemvBp8y",
+          "duplicateSource": null,
+          "exportSource": null
+        }
+      }
+    ],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>As if fallen from the stars the pale ones fit in nowhere. This unwilling alienation makes them destructive and detached.</p>\n<p>&nbsp;</p>\n<p>Trait: (d4)</p>\n<ol>\n<li>Bitter</li>\n<li>Incoherent</li>\n<li>Mute</li>\n<li>Self-harming behaviour</li>\n</ol>\n<p>&nbsp;</p>\n<p>Speciality: (d4), once per day</p>\n<ol>\n<li>Create d2 doses of a random decoction (see the class Occult Herbmaster)</li>\n<li>Create d2 doses Elixir Vitalis (heals d6 HP and stops infection)</li>\n<li>Use one random unclean Power</li>\n<li>Use one random sacred Power</li>\n</ol>\n<p>&nbsp;</p>\n<p>Values: (d6)</p>\n<ol>\n<li>Not having to use their speciality all the time</li>\n<li>Cleanliness</li>\n<li>Listening to melancholic melodies</li>\n<li>A couple of hours alone in darkness</li>\n<li>Wine</li>\n<li>Obscure rituals with the group</li>\n</ol>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 5,
+        "value": 5
+      },
+      "alternateName": "Outcast",
+      "morale": 7,
+      "silver": null,
+      "speciality": "",
+      "trait": "",
+      "value": "",
+      "incomingAttackDamageDie": "",
+      "targetArmorDie": ""
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Pale One",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/pale_one.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "nE21BWuHHuxoyVkT",
+    "name": "Grotesque",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/grotesque.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p>Lurking round churches, stalking graveyards, creeping closer when you look away. Disturbingly still, difficult to discern against gray stone and hard to recognize even when seen.</p>\n<p>&nbsp;</p>",
+      "hp": {
+        "max": 18,
+        "value": 18
+      },
+      "alternateName": "Grotesque",
+      "armor": {
+        "name": "Clay/stone -d6"
+      },
+      "attack": {
+        "name": "Claws d6, Eye-beam d8"
+      },
+      "morale": 12,
+      "special": "They move slowly and are easy to hit (DR10). Their terrifying gaze is used on 1–2 on a d6 each round. Always hits."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Grotesque",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/grotesque.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "rKStnRSKMwt65fra",
+    "name": "Wyvern",
+    "type": "creature",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/creatures/wyvern.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<ul>\n<li>Captured - 200s</li>\n<li>Corpse - 100s</li>\n<li>Poison gland - 60s</li>\n<li>Tail spike - 60s</li>\n</ul>",
+      "hp": {
+        "max": 25,
+        "value": 25
+      },
+      "alternateName": "Wyvern",
+      "armor": {
+        "name": "Thick hide -d4"
+      },
+      "attack": {
+        "name": "Bite/Sting d6"
+      },
+      "morale": 10,
+      "special": "60% chance that she bites. The tail's venomous sting can paralyze a victim. Test Toughness DR14 to avoid one painful hour of paralysis."
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Wyvern",
+      "displayName": 0,
+      "width": 2,
+      "height": 2,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": -1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "alpha": 1,
+        "animation": {
+          "speed": 5,
+          "intensity": 5,
+          "type": null,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0,
+        "color": null
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/creatures/wyvern.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "ZilrXHS0pZdNIj9O",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213808465,
+      "modifiedTime": 1685214061058,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "sdWMb1q5nZ4l972t",
+    "name": "Donkey",
+    "type": "container",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/containers/donkey_bw.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "capacity": {
+        "max": 15,
+        "value": 0
+      },
+      "description": "<p>Not bad.</p>",
+      "price": 0
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Donkey",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": false,
+      "disposition": 0,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "color": null,
+        "alpha": 1,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/containers/donkey_bw.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "UNiBBW93dD1kZCPe",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213804212,
+      "modifiedTime": 1685214047736,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "vUdLhnWukMgKvoBQ",
+    "name": "Poltroon the Court Jester",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/jester.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p><span style=\"font-size: 13px;\">While practically useless, personally irritating and an emotional drain, Poltroon&rsquo;s capering actually makes enemies lose their focus in combat. For the first two rounds you and your allies get +2 on attack/defence.</span></p>",
+      "hp": {
+        "max": 1,
+        "value": 1
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": 0,
+      "speciality": "",
+      "trait": "",
+      "value": ""
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Poltroon",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "color": null,
+        "alpha": 1,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/jester.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  },
+  {
+    "_id": "zD8IqfQnPgVPSB0j",
+    "name": "Hamfund the Squire",
+    "type": "follower",
+    "flags": {
+      "core": {}
+    },
+    "img": "systems/morkborg/tokens/followers/hamfund.png",
+    "items": [],
+    "effects": [],
+    "system": {
+      "abilities": {
+        "agility": {
+          "value": 0
+        },
+        "presence": {
+          "value": 0
+        },
+        "strength": {
+          "value": 0
+        },
+        "toughness": {
+          "value": 0
+        }
+      },
+      "description": "<p><span style=\"font-size: 13px;\">This intensely cowardly servant acts only as guardian for the scabbard of the cursed sword Eurekia. Once per combat, if Ham can be found, Eurekia may be drawn. The sword does 2d6 damage, and for every swing of Eurekia roll a d6. On a 1 the squire is slain and Eurekia vanishes forever.</span></p>",
+      "hp": {
+        "max": 1,
+        "value": 1
+      },
+      "alternateName": "",
+      "morale": 7,
+      "silver": 0,
+      "speciality": "",
+      "trait": "",
+      "value": ""
+    },
+    "prototypeToken": {
+      "flags": {},
+      "name": "Hamfund",
+      "displayName": 0,
+      "width": 1,
+      "height": 1,
+      "lockRotation": false,
+      "rotation": 0,
+      "actorLink": true,
+      "disposition": 1,
+      "displayBars": 0,
+      "bar1": {
+        "attribute": "hp"
+      },
+      "bar2": {
+        "attribute": null
+      },
+      "randomImg": false,
+      "light": {
+        "dim": 0,
+        "bright": 0,
+        "angle": 360,
+        "color": null,
+        "alpha": 1,
+        "animation": {
+          "type": null,
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "coloration": 1,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0,
+        "shadows": 0,
+        "darkness": {
+          "min": 0,
+          "max": 1
+        },
+        "negative": false,
+        "priority": 0
+      },
+      "texture": {
+        "src": "systems/morkborg/tokens/followers/hamfund.png",
+        "tint": "#ffffff",
+        "scaleX": 1,
+        "scaleY": 1,
+        "offsetX": 0,
+        "offsetY": 0,
+        "rotation": 0,
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "fit": "contain",
+        "alphaThreshold": 0.75
+      },
+      "sight": {
+        "angle": 360,
+        "enabled": false,
+        "range": 0,
+        "brightness": 1,
+        "visionMode": "basic",
+        "attenuation": 0.1,
+        "saturation": 0,
+        "contrast": 0,
+        "color": null
+      },
+      "appendNumber": false,
+      "prependAdjective": false,
+      "alpha": 1,
+      "detectionModes": [],
+      "occludable": {
+        "radius": 0
+      },
+      "ring": {
+        "enabled": false,
+        "colors": {
+          "ring": null,
+          "background": null
+        },
+        "effects": 1,
+        "subject": {
+          "scale": 1,
+          "texture": null
+        }
+      },
+      "turnMarker": {
+        "mode": 1,
+        "animation": null,
+        "src": null,
+        "disposition": false
+      },
+      "movementAction": null
+    },
+    "folder": "BOUJvhKSxEh4lSqE",
+    "_stats": {
+      "systemId": "morkborg",
+      "systemVersion": "2.0.0",
+      "coreVersion": "13.341",
+      "createdTime": 1685213842494,
+      "modifiedTime": 1685214069479,
+      "lastModifiedBy": "LYF9zR8SvB0h2e6R",
+      "compendiumSource": null,
+      "duplicateSource": null,
+      "exportSource": null
+    },
+    "sort": 0,
+    "ownership": {
+      "default": 0,
+      "LYF9zR8SvB0h2e6R": 3
+    }
+  }
+]
