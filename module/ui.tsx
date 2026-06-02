@@ -1,6 +1,8 @@
 import React from 'react';
-import { UIModuleManifest } from '@modules/registry/types';
-import info from '../info.json';
+import type { ModuleInfo, UIModuleManifest } from '@sheet-delver/sdk';
+import infoJson from '../info.json';
+
+const info = infoJson as ModuleInfo;
 
 const uiManifest: UIModuleManifest = {
     info,

@@ -17,7 +17,7 @@
             "roll-engine-api": ">=1.0.0 <2.0.0"
         }
     },
-    "discovery": {
+    "compendiumPacks": {
         "packs": [
             {
                 "id": "morkborg.mork-borg-items",
