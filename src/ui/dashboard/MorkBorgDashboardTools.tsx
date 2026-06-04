@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import MorkBorgCharacterGenerator from './MorkBorgCharacterGenerator';
 import { Skull } from 'lucide-react';
-import { logger } from '@shared/utils/logger';
 
 
 interface MorkBorgDashboardToolsProps {
@@ -31,7 +30,7 @@ export default function MorkBorgDashboardTools({ setLoading, setLoginMessage, th
                 </button>
                 {/*
                 <button
-                    onClick={() => logger.info('TODO...')}
+                    onClick={() => console.info('TODO...')}
                     className={`px-4 py-4 rounded-lg font-bold bg-neutral-800/80 hover:bg-neutral-700/80 border border-white/10 text-white shadow-xl hover:-translate-y-0.5 hover:shadow-2xl flex items-center justify-center gap-2 transition-all duration-300 w-full`}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">

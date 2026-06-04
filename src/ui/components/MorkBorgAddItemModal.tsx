@@ -3,8 +3,7 @@
 import { useState, useMemo, useEffect } from 'react';
 
 import { Search, Plus, Package, ChevronDown, ChevronRight } from 'lucide-react';
-import { mbDataManager } from '../../data/DataManager';
-import { useConfig } from '@client/ui/context/ConfigContext';
+import { useSDK } from '@sheet-delver/sdk/react';
 
 
 
@@ -44,18 +43,29 @@ export default function MorkBorgAddItemModal({
     onConfirm,
     onClose,
 }: MorkBorgAddItemModalProps) {
-    const { resolveImageUrl } = useConfig();
+    const { resolveImageUrl, fetchWithAuth } = useSDK();
     const [tab, setTab] = useState<TabId>('browse');
     const [search, setSearch] = useState('');
     const [customName, setCustomName] = useState('');
     const [customType, setCustomType] = useState(allowedTypes[0] || 'misc');
     const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
 
-    // Pack items filtered to allowed types
-    const packItems = useMemo(
-        () => mbDataManager.getItemsByType(allowedTypes).sort((a, b) => a.name.localeCompare(b.name)),
-        [allowedTypes]
-    );
+    // Pack items (filtered to allowed types) come from the module's compendium-backed
+    // item route (ADR-0027 — no bundled data); fetched once per allowed-type set.
+    const [packItems, setPackItems] = useState<any[]>([]);
+    useEffect(() => {
+        let active = true;
+        (async () => {
+            try {
+                const res = await fetchWithAuth(`/api/modules/morkborg/items?types=${encodeURIComponent(allowedTypes.join(','))}`);
+                const data = await res.json();
+                if (active) setPackItems(((data.items ?? []) as any[]).slice().sort((a, b) => a.name.localeCompare(b.name)));
+            } catch {
+                if (active) setPackItems([]);
+            }
+        })();
+        return () => { active = false; };
+    }, [allowedTypes, fetchWithAuth]);
 
     const filtered = useMemo(() => {
         const q = search.toLowerCase().trim();

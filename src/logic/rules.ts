@@ -234,6 +234,14 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
     if (type === 'rest') return { type: 'rest', isAutomated: true, label: 'Rest' };
     if (type === 'broken') return { type: 'broken', isAutomated: true, label: 'Broken' };
     if (type === 'spendOmen') return { type: 'spendOmen', isAutomated: true, label: 'Spend Omen' };
+    if (type === 'getBetter') return { type: 'getBetter', isAutomated: true, label: 'Get Better' };
+
+    // The "Brew Decoctions" special action (Occult Herbmaster) is dispatched as a feat by
+    // name; it maps to the engine's automated decoctions sequence, which draws from the
+    // compendium decoctions table and creates the resulting items on the actor.
+    if (type === 'feat' && key === 'Create Decoctions') {
+        return { type: 'decoctions', isAutomated: true, label: 'Brew Decoctions' };
+    }
 
     return {
         formula: '1d20',

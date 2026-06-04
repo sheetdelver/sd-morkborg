@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import RichTextEditor from '@client/ui/components/RichTextEditor';
+import { useSDK, useSDKComponents } from '@sheet-delver/sdk/react';
 import { morkborgTheme } from '../themes/morkborg';
 
-import grunge from '../assets/grunge.png';
+import { buildModuleAssetUrl } from '@sheet-delver/sdk';
 import { randomRotation } from './utils';
-import { useConfig } from '@client/ui/context/ConfigContext';
 
 
 
@@ -17,7 +16,8 @@ interface ItemModalProps {
 }
 
 export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModalProps) {
-    const { resolveImageUrl } = useConfig();
+    const { resolveImageUrl } = useSDK();
+    const { RichTextEditor } = useSDKComponents();
     const [activeTab, setActiveTab] = useState<'description' | 'details'>('description');
 
     React.useEffect(() => {
@@ -293,7 +293,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                     {/* Grunge Texture Overlay */}
                     <div
                         className="absolute inset-0 opacity-40 pointer-events-none mix-blend-overlay"
-                        style={{ backgroundImage: `url(${grunge.src})`, backgroundSize: 'cover' }}
+                        style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'grunge.png')})`, backgroundSize: 'cover' }}
                     />
 
                     <button
@@ -344,7 +344,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                             <div className="font-serif text-base sm:text-lg leading-relaxed text-neutral-300">
                                 <RichTextEditor
                                     content={item.system?.description || ''}
-                                    onSave={(html) => handleChange('system.description', html)}
+                                    onSave={(html: string) => handleChange('system.description', html)}
                                     editButtonText="Edit Item Description"
                                     theme={morkborgTheme.richText}
                                 />

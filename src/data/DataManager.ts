@@ -1,32 +1,18 @@
-import tablesData from './packs/morkborg.mork-borg-tables.json';
-import itemsData from './packs/morkborg.mork-borg-items.json';
-import { logger } from '@shared/utils/logger';
-
+/**
+ * MorkBorgDataManager — Mörk Borg system data logic (table draws, item lookups, scvm
+ * generation). The pack data (items + roll tables) is no longer bundled offline JSON; it
+ * is fetched from `runtime.compendium` (the declared `morkborg.*` packs) and injected here
+ * per request (ADR-0027 — modules use the platform compendium, not their own cache). A
+ * world without those packs hydrated yields empty data — an intended failure for the module
+ * author to fix, not a silent offline fallback.
+ */
 export class MorkBorgDataManager {
-    private static instance: MorkBorgDataManager;
-    private tablesCache: any[] | null = null;
-    private itemsCache: any[] | null = null;
+    private tablesCache: any[];
+    private itemsCache: any[];
 
-    private constructor() {
-        this.loadData();
-    }
-
-    public static getInstance(): MorkBorgDataManager {
-        if (!MorkBorgDataManager.instance) {
-            MorkBorgDataManager.instance = new MorkBorgDataManager();
-        }
-        return MorkBorgDataManager.instance;
-    }
-
-    private loadData() {
-        try {
-            this.tablesCache = tablesData as any[];
-            this.itemsCache = itemsData as any[];
-        } catch (error) {
-            logger.error('Failed to load Mork Borg compendium data:', error);
-            this.tablesCache = [];
-            this.itemsCache = [];
-        }
+    constructor(items: any[], tables: any[]) {
+        this.itemsCache = items ?? [];
+        this.tablesCache = tables ?? [];
     }
 
     public getItemByName(name: string): any {
@@ -453,4 +439,16 @@ export class MorkBorgDataManager {
     }
 }
 
-export const mbDataManager = MorkBorgDataManager.getInstance();
+/**
+ * Build a MorkBorgDataManager from the request runtime's compendium (server-side only).
+ * Reads the declared item + roll-table packs; replaces the old bundled-JSON singleton.
+ */
+export async function createMorkBorgData(compendium: {
+    findAll(type: string, query?: Record<string, unknown>): Promise<any[]>;
+}): Promise<MorkBorgDataManager> {
+    const [items, tables] = await Promise.all([
+        compendium.findAll('Item'),
+        compendium.findAll('RollTable'),
+    ]);
+    return new MorkBorgDataManager(items, tables);
+}

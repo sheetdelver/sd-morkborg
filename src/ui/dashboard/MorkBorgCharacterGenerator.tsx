@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
+import { useSDK } from '@sheet-delver/sdk/react';
 
-import grunge from '../assets/grunge.png';
-import { mbDataManager } from '../../data/DataManager';
-import { logger } from '@shared/utils/logger';
 import { randomRotation } from '../components/utils';
 import { AlignCenterHorizontal, AlignCenterVertical, Skull, Bone } from 'lucide-react';
 
@@ -97,52 +95,34 @@ function randomTheme(currentTheme: any) {
     return availableThemes[Math.floor(Math.random() * availableThemes.length)];
 }
 
-function randomName() {
-    return mbDataManager.drawFromTable('characterNames').name;
-}
+type FetchWithAuth = (input: string, init?: RequestInit) => Promise<Response>;
 
-function randomCharacter(classInclusion: Record<string, boolean>, previousClassId?: string) {
-    const character = mbDataManager.generateRandomCharacter(classInclusion, previousClassId);
-    return character;
-}
-
-async function createCharacter(character: any) {
+/**
+ * Generate a scvm via the module's server route (ADR-0027: scvm generation reads the
+ * declared compendium packs server-side; no bundled data).
+ */
+async function generateCharacter(
+    fetchWithAuth: FetchWithAuth,
+    classInclusion: Record<string, boolean>,
+    previousClassId?: string,
+): Promise<any> {
     try {
-        /*
-        name: s.name,
-        system: {
-            abilities: {
-                strength: { value: s.strength },
-                agility: { value: s.agility },
-                presence: { value: s.presence },
-                toughness: { value: s.toughness },
-            },
-            description: s.description,
-            hp: {
-                max: s.hitPoints,
-                value: s.hitPoints,
-            },
-            omens: {
-                max: s.omens,
-                value: s.omens,
-            },
-            powerUses: {
-                max: s.powerUses,
-                value: s.powerUses,
-            },
-            silver: s.silver,
-        },
-        img: s.actorImg,
-        items: s.items,
-        flags: {},
-        prototypeToken: {
-            name: s.name,
-            texture: {
-                src: s.actorImg,
-            },
-        },
-        type: "character",
-        */
+        const res = await fetchWithAuth('/api/modules/morkborg/generate-character', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ classInclusion, previousClassId }),
+        });
+        const data = await res.json();
+        return data.success ? data.character : null;
+    } catch (error) {
+        console.error('Error generating character:', error);
+        return null;
+    }
+}
+
+/** Persist the generated scvm via the PLATFORM actor-create route (core handling). */
+async function createCharacter(fetchWithAuth: FetchWithAuth, character: any) {
+    try {
         const actorData = {
             name: character.name,
             type: 'character',
@@ -166,21 +146,15 @@ async function createCharacter(character: any) {
             },
         };
 
-        // 3. Send to API
-
-        const headers: any = { 'Content-Type': 'application/json' };
-        const token = localStorage.getItem('sheet-delver-token');
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-
-        const res = await fetch('/api/actors', {
+        const res = await fetchWithAuth('/api/actors', {
             method: 'POST',
-            headers,
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(actorData)
         });
 
         const result = await res.json();
         if (result.success) {
-            // Redirect to sheet - Wait 500ms for backend stabilization
+            // Redirect to sheet — wait briefly for backend stabilization.
             setTimeout(() => {
                 window.location.href = `/actors/${result.id}`;
             }, 500);
@@ -188,12 +162,7 @@ async function createCharacter(character: any) {
             throw new Error(result.error);
         }
     } catch (error) {
-        logger.error('Error creating character:', error);
-        //setCreationError('Creation Failed: ' + error);
-        //setLoading(false);
-        setTimeout(() => {
-            //window.location.reload();
-        }, 1000);
+        console.error('Error creating character:', error);
     }
 }
 
@@ -313,6 +282,7 @@ function characterInclusionGroups(
 }
 
 export default function MorkBorgCharacterGenerator() {
+    const { fetchWithAuth } = useSDK();
     const [theme, setTheme] = useState(randomTheme({}));
 
     // Initialize class inclusion state (defaults to true for all defined classes)
@@ -322,7 +292,14 @@ export default function MorkBorgCharacterGenerator() {
         return initial;
     });
 
-    const [character, setCharacter] = useState(() => randomCharacter(classInclusion));
+    // Generation runs server-side now (compendium-backed), so the first scvm is fetched on
+    // mount rather than computed synchronously; the preview is guarded on `character`.
+    const [character, setCharacter] = useState<any>(null);
+    useEffect(() => {
+        generateCharacter(fetchWithAuth, classInclusion).then(setCharacter);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <div className={`min-h-screen text-[#111] $"font-inter" selection:bg-pink-500 selection:text-white`} suppressHydrationWarning>
 
@@ -372,7 +349,7 @@ export default function MorkBorgCharacterGenerator() {
                     <button
                         onClick={() => {
                             setTheme(randomTheme(theme));
-                            setCharacter(randomCharacter(classInclusion, character?.class?._id));
+                            generateCharacter(fetchWithAuth, classInclusion, character?.class?._id).then(setCharacter);
                         }}
                         className={`relative flex items-center justify-center -mb-2 ${!Object.values(classInclusion).some(Boolean) ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer group'}`}
                         title="Randomize All"
@@ -491,8 +468,8 @@ export default function MorkBorgCharacterGenerator() {
                             className={`w-full mt-4 p-4 text-2xl md:text-4xl ${theme.colors.tailwind.backgroundAccent} ${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] cursor-pointer ${randomRotation()}`}
                             style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
                             onClick={() => {
-                                //logger.info(character);
-                                createCharacter(character);
+                                //console.info(character);
+                                createCharacter(fetchWithAuth, character);
                             }}
                         >
                             <div className="flex items-center justify-center gap-2 cursor-pointer">

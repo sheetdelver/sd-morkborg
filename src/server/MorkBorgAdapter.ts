@@ -1,9 +1,8 @@
-import { GenericSystemAdapter } from '@modules/generic/src/logic/adapter';
+import { BaseSystemAdapter, getErrorMessage, resolveImage } from '@sheet-delver/sdk';
+import type { ActorCardData, ActorCardBlock } from '@sheet-delver/sdk';
 import { ChatCards } from '../ui/components/chat/ChatCards';
-import { mbDataManager } from '../data/DataManager';
-import { logger } from '@shared/utils/logger';
-import { getErrorMessage } from '@server/shared/utils/getErrorMessage';
-import { 
+import type { MorkBorgDataManager } from '../data/DataManager';
+import {
     getRollData, 
     calculateMaxSlots, 
     calculateSlotsUsed, 
@@ -26,7 +25,7 @@ interface ClassItem {
     description: string;
 }
 
-export class MorkBorgAdapter extends GenericSystemAdapter {
+export class MorkBorgAdapter extends BaseSystemAdapter {
     systemId = 'morkborg';
 
     getClass(actor: any): ClassItem {
@@ -43,13 +42,15 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
         return actor.systemId === 'morkborg' || hasMorkborgType;
     }
 
-    normalizeActorData(actor: any, client?: any): any {
+    normalizeActorData(actor: any): any {
         const data = super.normalizeActorData(actor);
 
-        if (client && data.items) {
+        // Resolve embedded item images to full URLs (ADR-0027: pure projection, no client —
+        // use the runtime's foundryUrl via the SDK resolveImage helper).
+        if (data.items) {
             data.items = data.items.map((item: any) => {
                 if (item.img) {
-                    item.img = client.resolveUrl(item.img);
+                    item.img = resolveImage(item.img, this.foundryUrl);
                 }
                 return item;
             });
@@ -108,11 +109,11 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
         };
     }
 
-    getActorCardData(actor: any): import('@shared/interfaces').ActorCardData {
+    getActorCardData(actor: any): ActorCardData {
         const charClass = this.getClass(actor).name || actor.type;
         const subtext = charClass;
 
-        const blocks: import('@shared/interfaces').ActorCardBlock[] = [];
+        const blocks: ActorCardBlock[] = [];
 
         if (actor.derived?.maxHp || actor.system?.hp?.max) {
             blocks.push({
@@ -317,7 +318,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
     /**
      * Perform an automated roll sequence (Attack, Defense, Initiative)
      */
-    async performAutomatedSequence(client: any, actor: any, rollData: any, options: any): Promise<any> {
+    async performAutomatedSequence(client: any, actor: any, rollData: any, options: any, data: MorkBorgDataManager): Promise<any> {
         const results: any = {
             type: rollData.type,
             item: actor.items?.find((i: any) => i._id === rollData.itemId || i.id === rollData.itemId),
@@ -338,7 +339,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
         };
 
         if (rollData.type === 'decoctions') {
-            return await this.createDecoctions(actor, client, options);
+            return await this.createDecoctions(actor, client, options, data);
         }
 
         // Unknown feat: show the item's Foundry card
@@ -562,8 +563,8 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
             const tableResult = await client.roll(formula, 'Broken', { displayChat: false });
             const tableRoll = parseSyntheticRoll(tableResult, 'Roll');
             // MB broken table is sequential, 1d4 matches index 0-3
-            const entry = mbDataManager.drawFromTable('broken');
-            // Actually, mbDataManager.drawFromTable picks random. 
+            const entry = data.drawFromTable('broken');
+            // Actually, data.drawFromTable picks random. 
             // For Broken, it should be the specific index.
             const allBroken = [
                 "Fall unconscious for d4 rounds, awaken with d4 HP.",
@@ -630,7 +631,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
                 debrisOutcome = `Found ${silverRoll.total} silver.`;
                 newSilver += silverRoll.total;
             } else if (debrisRoll.total === 5) {
-                const scroll = mbDataManager.drawFromTable('uncleanScrolls');
+                const scroll = data.drawFromTable('uncleanScrolls');
                 if (scroll?.isDocument) {
                     await client.createActorItem(actor._id || actor.id, scroll);
                     debrisOutcome = `Found an Unclean Scroll: ${scroll.name} — added to inventory.`;
@@ -638,7 +639,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
                     debrisOutcome = `Found an Unclean Scroll: ${scroll?.name ?? 'Unknown'}.`;
                 }
             } else {
-                const scroll = mbDataManager.drawFromTable('sacredScrolls');
+                const scroll = data.drawFromTable('sacredScrolls');
                 if (scroll?.isDocument) {
                     await client.createActorItem(actor._id || actor.id, scroll);
                     debrisOutcome = `Found a Sacred Scroll: ${scroll.name} — added to inventory.`;
@@ -729,7 +730,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
 
                 if (isFumble) {
                     results.outcomes.push('FUMBLE! Arcane Catastrophe!');
-                    const catastrophe = mbDataManager.drawFromTable('arcaneCatastrophes');
+                    const catastrophe = data.drawFromTable('arcaneCatastrophes');
                     results.outcomes.push(catastrophe.name);
 
                     const damageRes = await client.roll('1d2', 'Catastrophe Damage', { displayChat: false });
@@ -773,7 +774,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
      * Draws 2 decoctions from the 'Occult Herbmaster Decoctions' table,
      * rolls a 1d4 for doses, adds the items to the inventory, and prints a chat card.
      */
-    public async createDecoctions(actor: any, client: any, options?: any) {
+    public async createDecoctions(actor: any, client: any, options: any, data: MorkBorgDataManager) {
         const speaker = { alias: actor.name || 'Unknown Actor', actor: actor._id || actor.id };
         const results: any = { type: 'decoctions', outcomes: [] };
 
@@ -790,13 +791,13 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
 
         // 2. Draw 2 unique decoctions
         const tableAlias = 'Occult Herbmaster Decoctions';
-        const firstDraw = mbDataManager.drawFromTable(tableAlias);
-        let secondDraw = mbDataManager.drawFromTable(tableAlias);
+        const firstDraw = data.drawFromTable(tableAlias);
+        let secondDraw = data.drawFromTable(tableAlias);
 
         // Prevent duplicate draws if possible
         let attempts = 0;
         while (secondDraw.name === firstDraw.name && attempts < 5) {
-            secondDraw = mbDataManager.drawFromTable(tableAlias);
+            secondDraw = data.drawFromTable(tableAlias);
             attempts++;
         }
 
@@ -814,7 +815,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
 
             // Prepare item data for creation 
             // We use the full item payload if found, otherwise build a generic item.
-            const baseItem = mbDataManager.getItemByName(draw.name);
+            const baseItem = data.getItemByName(draw.name);
             if (baseItem) {
                 const itemData: any = {
                     name: baseItem.name,
@@ -845,7 +846,7 @@ export class MorkBorgAdapter extends GenericSystemAdapter {
                 await client.createActorItem(actor._id || actor.id, itemsToCreate);
                 results.outcomes.push('<br><i>Items added to inventory.</i>');
             } catch (error: unknown) {
-                logger.error("Failed to create decoction items:", getErrorMessage(error));
+                console.error("Failed to create decoction items:", getErrorMessage(error));
                 results.outcomes.push('<br><i>Failed to add items to inventory.</i>');
             }
         }

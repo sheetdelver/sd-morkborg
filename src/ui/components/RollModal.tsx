@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import grunge from '../assets/grunge.png';
+import { buildModuleAssetUrl } from '@sheet-delver/sdk';
 import { randomRotation } from './utils';
 
 
@@ -75,7 +75,7 @@ export default function RollModal({
                     {/* Grunge Texture Overlay */}
                     <div
                         className="absolute inset-0 opacity-40 pointer-events-none mix-blend-overlay"
-                        style={{ backgroundImage: `url(${grunge.src})`, backgroundSize: 'cover' }}
+                        style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'grunge.png')})`, backgroundSize: 'cover' }}
                     />
 
                     {/* Header */}

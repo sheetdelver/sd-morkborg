@@ -1,17 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-
-import SheetRouter from '@client/ui/components/SheetRouter';
-import { useFoundry } from '@client/ui/context/FoundryContext';
-import { useUI } from '@client/ui/context/UIContext';
-import { useConfig } from '@client/ui/context/ConfigContext';
-import type { RealtimeActorChangedPayload } from '@shared/contracts/realtime';
-import { processHtmlContent } from '@modules/registry/client';
-import { useNotifications } from '@client/ui/components/NotificationSystem';
-import LoadingModal from '@client/ui/components/LoadingModal';
-import { SharedContentModal } from '@client/ui/components/SharedContentModal';
+import { useCallback } from 'react';
+import { processHtmlContent } from '@sheet-delver/sdk';
+import { useSDK, useSDKComponents, useActorSheet } from '@sheet-delver/sdk/react';
+import MorkBorgSheet from '../MorkBorgSheet';
 
 export interface MorkBorgActorPageProps {
     actorId: string;
@@ -19,283 +11,126 @@ export interface MorkBorgActorPageProps {
 }
 
 /**
- * Mörk Borg actor page.
- * Simpler than Shadowdark - no effects system, no level-up complexity.
- * Registered in modules/morkborg/index.ts as actorPage.
+ * Mörk Borg actor page (ADR-0027 conformed).
+ *
+ * A custom actorPage (the sanctioned escape hatch, decision 16) because morkborg's rolls
+ * are a system-specific engine, not the generic platform roll. Data/read/field-update use
+ * the host (`useActorSheet` → platform `/api/actors`); roll sequences + brew hit morkborg's
+ * MODULE routes; item CRUD hits the platform actor-item surface. No hand-rolled fetch/realtime.
  */
 export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
-    const router = useRouter();
-    const {
-        token,
-        appSocket
-    } = useFoundry();
+    const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray } = useSDK();
+    const { LoadingModal, SharedContentModal } = useSDKComponents();
+    const { actor, loading, notFound, refresh, update } = useActorSheet<any>(actorId);
 
-    const { isDiceTrayOpen, toggleDiceTray } = useUI();
-    const { addNotification: addToast } = useNotifications();
-    const { foundryUrl, setFoundryUrl } = useConfig();
-
-    const [actor, setActor] = useState<any>(null);
-    const [loading, setLoading] = useState(true);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-
-    const fetchWithAuth = useCallback(async (input: string, init?: RequestInit) => {
-        const headers = new Headers(init?.headers);
-        if (token) headers.set('Authorization', `Bearer ${token}`);
-        return fetch(input, { ...init, headers });
-    }, [token]);
-
-    const foundryUrlRef = useRef(foundryUrl);
-    useEffect(() => { foundryUrlRef.current = foundryUrl; }, [foundryUrl]);
-
-    const addNotification = useCallback((message: string, type: 'info' | 'success' | 'error' = 'info') => {
-        const content = processHtmlContent(message, foundryUrlRef.current);
-        addToast(content, type, { html: true });
-    }, [addToast]);
-
-    const fetchActor = useCallback(async (id: string, silent = false) => {
-        if (!silent) setLoading(true);
-        try {
-            const res = await fetchWithAuth(`/api/actors/${id}`);
-            if (res.status === 503 || res.status === 401) {
-                router.push('/');
-                return;
-            }
-            if (res.status === 404) {
-                setShowDeleteModal(true);
-                return;
-            }
-
-            const data = await res.json();
-            if (data && !data.error) {
-                setActor(data);
-                if (data.foundryUrl) setFoundryUrl(data.foundryUrl);
-            } else {
-                if (res.status >= 500) {
-                    addNotification('Server Error: ' + (data?.error || 'Unknown Error'), 'error');
-                } else {
-                    setShowDeleteModal(true);
-                }
-            }
-        } catch (e: any) {
-            addNotification('Connection Error: ' + e.message, 'error');
-        } finally {
-            if (!silent) setLoading(false);
-        }
-    }, [router, fetchWithAuth, addNotification, setFoundryUrl]);
-
-    const loadingRef = useRef(loading);
-    useEffect(() => { loadingRef.current = loading; }, [loading]);
-
-    useEffect(() => {
-        if (!actorId) return;
-        fetchActor(actorId);
-
-        if (appSocket) {
-            const handleActorChanged = (data: RealtimeActorChangedPayload) => {
-                if (data.actorId === actorId) {
-                    fetchActor(actorId, true);
-                }
-            };
-            appSocket.on('actorChanged', handleActorChanged);
-            return () => {
-                appSocket.off('actorChanged', handleActorChanged);
-            };
-        }
-
-        const timeout = setTimeout(() => {
-            if (loadingRef.current) {
-                addNotification('Loading is taking longer than expected. The server might be busy.', 'error');
-            }
-        }, 15000);
-
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [actorId, fetchActor, addNotification, appSocket]);
-
-
-    const handleRoll = async (type: string, key: string, options: any = {}) => {
+    const moduleRoll = useCallback(async (type: string, key: string, options: Record<string, unknown> = {}) => {
         if (!actor) return;
-        const rollMode = localStorage.getItem('sheetdelver_roll_mode') || 'publicroll';
+        const rollMode = (typeof window !== 'undefined' && window.localStorage.getItem('sheetdelver_roll_mode')) || 'publicroll';
         const rollOptions = {
             ...options,
-            rollMode: options.rollMode || rollMode,
-            speaker: options.speaker || { actor: actor.id, alias: actor.name }
+            rollMode: (options as any).rollMode || rollMode,
+            speaker: (options as any).speaker || { actor: actor.id, alias: actor.name },
         };
-
         try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/roll`, {
+            const res = await fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/roll`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type, key, options: rollOptions })
+                body: JSON.stringify({ type, key, options: rollOptions }),
             });
             const data = await res.json();
             if (data.success) {
-                if (data.html) addNotification(data.html, 'success');
+                if (data.html) addNotification(processHtmlContent(data.html, foundryUrl), 'success', { html: true });
                 else if (data.result?.total !== undefined) addNotification(`Rolled ${data.label || 'Result'}: ${data.result.total}`, 'success');
-                else addNotification(`${data.label || 'Item'} used`, 'success');
             } else {
-                addNotification('Roll failed: ' + data.error, 'error');
+                addNotification('Roll failed: ' + (data.error ?? 'Unknown error'), 'error');
             }
         } catch (e: any) {
             addNotification('Error: ' + e.message, 'error');
         }
-    };
+    }, [actor, fetchWithAuth, addNotification, foundryUrl]);
 
-    const handleUpdate = async (path: string, value: any) => {
+    // Item CRUD goes to the PLATFORM actor-item surface (generic, no system logic).
+    const itemRequest = useCallback(async (init: RequestInit, label: string, refreshAfter = true) => {
         if (!actor) return;
         try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/update`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ [path]: value })
-            });
-            const data = await res.json();
-            if (data.success) fetchActor(actor.id, true);
-            else addNotification('Update failed: ' + data.error, 'error');
-        } catch (e: any) {
-            addNotification('Error updating: ' + e.message, 'error');
-        }
-    };
-
-    const handleDeleteItem = async (itemId: string) => {
-        if (!actor) return;
-        try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/items?itemId=${itemId}`, {
-                method: 'DELETE'
-            });
+            const res = await fetchWithAuth(`/api/actors/${actor.id}/items`, init);
             const data = await res.json();
             if (data.success) {
-                fetchActor(actor.id, true);
-                addNotification('Item Deleted', 'success');
+                if (refreshAfter) refresh();
+                if (label) addNotification(label, 'success');
             } else {
-                addNotification('Failed to delete item: ' + data.error, 'error');
+                addNotification('Failed: ' + (data.error ?? 'Unknown error'), 'error');
             }
         } catch (e: any) {
             addNotification('Error: ' + e.message, 'error');
         }
-    };
+    }, [actor, fetchWithAuth, addNotification, refresh]);
 
-    const handleCreateItem = async (itemData: any) => {
+    const onCreateItem = useCallback((itemData: any) =>
+        itemRequest({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
+            itemData?.name ? `Created ${itemData.name}` : 'Item created'), [itemRequest]);
+
+    const onUpdateItem = useCallback((itemData: any) =>
+        itemRequest({ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
+            itemData?.name ? `Updated ${itemData.name}` : 'Item updated'), [itemRequest]);
+
+    const onDeleteItem = useCallback(async (itemId: string) => {
         if (!actor) return;
         try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/items`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(itemData)
-            });
+            const res = await fetchWithAuth(`/api/actors/${actor.id}/items?itemId=${itemId}`, { method: 'DELETE' });
             const data = await res.json();
-            if (data.success) {
-                fetchActor(actor.id, true);
-                if (itemData.name) addNotification(`Created ${itemData.name}`, 'success');
-            } else {
-                addNotification('Failed to create item: ' + data.error, 'error');
-            }
+            if (data.success) { refresh(); addNotification('Item Deleted', 'success'); }
+            else addNotification('Failed to delete item: ' + (data.error ?? 'Unknown error'), 'error');
         } catch (e: any) {
             addNotification('Error: ' + e.message, 'error');
         }
-    };
+    }, [actor, fetchWithAuth, addNotification, refresh]);
 
-    const handleUpdateItem = async (itemData: any) => {
-        if (!actor) return;
-        try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/items`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(itemData)
-            });
-            const data = await res.json();
-            if (data.success) {
-                fetchActor(actor.id, true);
-                if (itemData.name) addNotification(`Updated ${itemData.name}`, 'success');
-            } else {
-                addNotification('Failed to update item: ' + data.error, 'error');
-            }
-        } catch (e: any) {
-            addNotification('Error: ' + e.message, 'error');
-        }
-    };
+    if (loading && !actor) return <LoadingModal message="Loading..." />;
 
-    const handleBrewDecoctions = async () => {
-        if (!actor) return;
-        const rollMode = localStorage.getItem('sheetdelver_roll_mode') || 'blindroll';
-        try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/brew-decoctions`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ rollMode })
-            });
-            const data = await res.json();
-            if (data.success) {
-                fetchActor(actor.id, true);
-                addNotification('Decoctions brewed and added to inventory!', 'success');
-            } else {
-                addNotification('Brew failed: ' + data.error, 'error');
-            }
-        } catch (e: any) {
-            addNotification('Error: ' + e.message, 'error');
-        }
-    };
+    if (notFound || !actor) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-neutral-900 text-white">
+                <div className="bg-neutral-900 border border-red-900/40 p-8 rounded-xl max-w-md w-full text-center shadow-2xl">
+                    <div className="text-5xl mb-4">💀</div>
+                    <h2 className="text-2xl font-bold text-white mb-2">Character Deleted</h2>
+                    <p className="text-neutral-400 mb-8">This character has been deleted from the world.</p>
+                    <a href="/" className="inline-block bg-red-900 hover:bg-neutral-800 text-white font-bold py-3 px-8 rounded shadow-lg uppercase tracking-widest transition-all w-full">
+                        Return to Dashboard
+                    </a>
+                </div>
+            </div>
+        );
+    }
 
-    if (loading) return <LoadingModal message="Loading..." />;
-    if (!actor && !showDeleteModal) return null;
-
-    const getClassName = () => {
-        return actor?.items.filter((item: any) => item.type === 'class')[0]?.name;
-    };
+    const className = actor.items?.find((item: any) => item.type === 'class')?.name;
 
     return (
         <main className="min-h-screen font-sans pb-20">
             <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
-                <button
-                    onClick={() => router.push('/')}
-                    className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors font-semibold group text-sm uppercase tracking-wide cursor-pointer"
-                >
+                <a href="/" className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors font-semibold group text-sm uppercase tracking-wide cursor-pointer">
                     <span className="group-hover:-translate-x-1 transition-transform">←</span>
                     Back to Dashboard
-                </button>
+                </a>
                 <div className="text-xs text-neutral-600 font-mono hidden md:block">
-                    {actor?.name ? `${actor?.name} (${getClassName()})` : 'Loading...'}
+                    {actor.name ? `${actor.name}${className ? ` (${className})` : ''}` : 'Loading...'}
                 </div>
             </nav>
 
-            {actor && (
-                <div className="w-full max-w-5xl mx-auto p-4 pt-20">
-                    <SheetRouter
-                        systemId={actor.systemId || 'morkborg'}
-                        actor={actor}
-                        foundryUrl={actor?.foundryUrl}
-                        token={token}
-                        isOwner={actor?.isOwner ?? true}
-                        onRoll={handleRoll}
-                        onUpdate={handleUpdate}
-                        onDeleteItem={handleDeleteItem}
-                        onCreateItem={handleCreateItem}
-                        onUpdateItem={handleUpdateItem}
-                        onBrewDecoctions={handleBrewDecoctions}
-                        onToggleDiceTray={toggleDiceTray}
-                        isDiceTrayOpen={isDiceTrayOpen}
-                    />
-                </div>
-            )}
+            <div className="w-full max-w-5xl mx-auto p-4 pt-20">
+                <MorkBorgSheet
+                    actor={actor}
+                    onRoll={moduleRoll}
+                    onUpdate={update}
+                    onDeleteItem={onDeleteItem}
+                    onCreateItem={onCreateItem}
+                    onUpdateItem={onUpdateItem}
+                    onToggleDiceTray={toggleDiceTray}
+                    isDiceTrayOpen={isDiceTrayOpen}
+                />
+            </div>
 
             <SharedContentModal />
-
-            {showDeleteModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-                    <div className="bg-neutral-900 border border-red-900/40 p-8 rounded-xl max-w-md w-full text-center shadow-2xl">
-                        <div className="text-5xl mb-4">💀</div>
-                        <h2 className="text-2xl font-bold text-white mb-2">Character Deleted</h2>
-                        <p className="text-neutral-400 mb-8">This character has been deleted from the world.</p>
-                        <button
-                            onClick={() => router.push('/')}
-                            className="bg-red-900 hover:bg-neutral-800 text-white font-bold py-3 px-8 rounded shadow-lg uppercase tracking-widest transition-all w-full"
-                        >
-                            Return to Dashboard
-                        </button>
-                    </div>
-                </div>
-            )}
         </main>
     );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import paperTexture from './assets/paper-texture.png';
+import { buildModuleAssetUrl } from '@sheet-delver/sdk';
 import RollModal from './components/RollModal';
 import ItemModal from './components/ItemModal';
 import ItemInfoModal from './components/ItemInfoModal';
@@ -351,7 +351,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
             {/* Header / Carrying Capacity */}
             <div
                 className="bg-black text-neutral-300 p-4 mb-8 border-2 border-pink-900/30 flex flex-col sm:flex-row justify-between items-center transform -rotate-1 shadow-lg gap-4"
-                style={{ backgroundImage: `url(${paperTexture.src})`, backgroundSize: 'cover', backgroundBlendMode: 'overlay' }}
+                style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'paper-texture.png')})`, backgroundSize: 'cover', backgroundBlendMode: 'overlay' }}
             >
                 <div className="w-full sm:w-auto flex justify-center sm:justify-start">
                     <div className="flex items-baseline gap-2">

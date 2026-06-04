@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 
-import grunge from './assets/grunge.png';
+import { buildModuleAssetUrl } from '@sheet-delver/sdk';
 import BackgroundTab from './BackgroundTab';
 import EquipmentTab from './EquipmentTab';
 import ViolenceTab from './ViolenceTab';
@@ -21,7 +21,6 @@ import MorkBorgEditScvmModal from './components/MorkBorgEditScvmModal';
 import MorkBorgChatStyles from './components/chat/MorkBorgChatStyles';
 import { getRollData, categorizeItems } from '../logic/rules';
 import { morkborgTheme } from './themes/morkborg';
-import { logger } from '@shared/utils/logger';
 
 
 
@@ -132,7 +131,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
     };
 
     useEffect(() => {
-        logger.debug(`[MorkBorg] Initializing Sheet for actor: ${actor.name}`);
+        console.debug(`[MorkBorg] Initializing Sheet for actor: ${actor.name}`);
     }, [actor.name]);
 
     // Intercept onRoll for types that need the confirmation modal
@@ -248,7 +247,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
             <div className="fixed inset-0 -z-50" style={{ backgroundColor: '#ffe900' }}></div>
 
             {/* Texture Overlay - Global */}
-            <div className="fixed inset-0 pointer-events-none opacity-5 mix-blend-overlay z-40" style={{ backgroundImage: `url(${grunge.src})` }}></div>
+            <div className="fixed inset-0 pointer-events-none opacity-5 mix-blend-overlay z-40" style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'grunge.png')})` }}></div>
             <MorkBorgChatStyles />
             {/* Dark Wrapper around the sheet (The 'Deep Darkness') */}
             <div className="max-w-7xl mx-auto my-8 p-4 md:p-8 relative z-10 shadow-2xl skew-y-1" style={{ backgroundColor: '#1a1a1a' }}>
@@ -278,7 +277,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                                 className="block object-cover border-4 border-black shadow-lg w-24 h-24 sm:w-32 sm:h-32 min-w-[96px] sm:min-w-[128px]"
                                                 alt="Character Portrait"
                                                 onError={(e) => {
-                                                    logger.error('Image failed to load:', sheetActor.img);
+                                                    console.error('Image failed to load:', sheetActor.img);
                                                     e.currentTarget.style.display = 'none';
                                                 }}
                                             />
