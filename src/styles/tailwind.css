@@ -1,0 +1,13 @@
+/*
+ * Mörk Borg Tailwind entry — compiled at package time into assets/morkborg.tailwind.css,
+ * scoped under .sdk-module--morkborg (ADR-0027 decisions 37, 38). In local dev this file is
+ * dormant; the host scans the module's source directly (decision 33, layer 1).
+ *
+ * Preflight is intentionally omitted (theme + utilities layers only) — the host supplies a
+ * global reset (decision 34). The SDK theme is `@import`ed (not `@reference`d) so the
+ * platform's custom tokens (font-imfell, etc.) register without suppressing theme emission.
+ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "@sheet-delver/sdk/theme.css";          /* platform design tokens (font-imfell, base colors) */
+@import "tailwindcss/utilities.css" layer(utilities);
+/* extend below: @theme {…}, @layer components { .x { @apply … } }, @font-face, @source */

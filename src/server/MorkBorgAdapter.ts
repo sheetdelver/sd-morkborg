@@ -304,14 +304,28 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         if (type === 'initiative') cardTitle = subType === 'party' ? 'Party Initiative' : 'Initiative';
         else if (type === 'power') cardTitle = 'Wield a Power';
 
+        // Pair each roll with its OWN outcome. Multi-roll sequences (e.g. a long rest: Heal +
+        // Powers + Omens) build rolls and outcomes in lockstep, so attaching the full outcomes
+        // array to every roll duplicates every line. The real Mörk Borg system posts a separate
+        // card per action; we keep one card but give each roll only its own outcome, with the
+        // last roll absorbing any trailing outcomes so nothing is dropped.
+        let rollResults: any[];
+        if (rolls.length === 0) {
+            rollResults = outcomes.length ? [{ rollTitle: '', outcomeLines: outcomes }] : [];
+        } else if (rolls.length === 1) {
+            rollResults = [{ rollTitle: rolls[0].label, roll: rolls[0].json, outcomeLines: outcomes }];
+        } else {
+            rollResults = rolls.map((r: any, i: number) => ({
+                rollTitle: r.label,
+                roll: r.json,
+                outcomeLines: i === rolls.length - 1 ? outcomes.slice(i) : (outcomes[i] !== undefined ? [outcomes[i]] : []),
+            }));
+        }
+
         return ChatCards.result({
             cardTitle,
             items: item ? [item] : [],
-            rollResults: rolls.map((r: any) => ({
-                rollTitle: r.label,
-                roll: r.json,
-                outcomeLines: outcomes
-            }))
+            rollResults,
         });
     }
 
@@ -762,11 +776,11 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         }
 
         const html = this.generateRollCard(actor, results);
-        return await client.sendMessage({
-            content: html,
-            rolls: collectedRolls,
-            type: 5 // Explicitly set as ROLL type
-        }, { rollMode: options?.rollMode, speaker });
+        // Post the rendered card as a content message, public — matching the real Mörk Borg
+        // system (ChatMessage.create({ content, sound, speaker })). The card HTML already
+        // contains the roll outcome, so we do NOT attach a raw `rolls`/`type: 5` (that makes
+        // Foundry render a dice roll over the card) and do NOT whisper/blind it.
+        return await client.sendMessage({ content: html, sound: 'sounds/dice.wav', speaker });
     }
 
     /**
@@ -853,12 +867,8 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
 
         // 5. Generate and send chat card
         const html = this.generateRollCard(actor, results);
-        // NOTE: sendMessage(content, userId?, options?) — pass undefined as userId so options go to the right param
-        return await client.sendMessage(
-            { content: html, type: 5 },
-            undefined,
-            { rollMode: options?.rollMode || 'blindroll', speaker }
-        );
+        // Public content card, matching the real Mörk Borg system (no rolls/type, no rollMode).
+        return await client.sendMessage({ content: html, sound: 'sounds/dice.wav', speaker });
     }
 
     /**
