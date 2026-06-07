@@ -14,7 +14,7 @@ Provides dedicated support for the Mörk Borg RPG system in Sheet Delver:
 - **Rest System**: Rest modal with food/drink condition tracking, infection handling, and HP recovery rolls.
 - **Spend Omen**: Omen spending with outcome reminder card.
 - **Broken & Initiative**: Broken condition rolls and individual/party initiative.
-<img src="https://github.com/sheetdelver/sheet-delver/images/sheets/morkborg/mb-character-sheet.png" width="25%">
+<img src="https://github.com/sheetdelver/sheetdelver/blob/main/images/sheets/morkborg/mb-character-sheet.png" width="25%">
 
 ### Third-Party Licenses 
 

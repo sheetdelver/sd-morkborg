@@ -2,6 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { useSDK } from '@sheet-delver/sdk/react';
+import { logger } from '@sheet-delver/sdk';
 
 import { randomRotation } from '../components/utils';
 import { AlignCenterHorizontal, AlignCenterVertical, Skull, Bone } from 'lucide-react';
@@ -115,7 +116,7 @@ async function generateCharacter(
         const data = await res.json();
         return data.success ? data.character : null;
     } catch (error) {
-        console.error('Error generating character:', error);
+        logger.error('Error generating character:', error);
         return null;
     }
 }
@@ -162,7 +163,7 @@ async function createCharacter(fetchWithAuth: FetchWithAuth, character: any) {
             throw new Error(result.error);
         }
     } catch (error) {
-        console.error('Error creating character:', error);
+        logger.error('Error creating character:', error);
     }
 }
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { buildModuleAssetUrl } from '@sheet-delver/sdk';
+import { buildModuleAssetUrl, logger } from '@sheet-delver/sdk';
 import BackgroundTab from './BackgroundTab';
 import EquipmentTab from './EquipmentTab';
 import ViolenceTab from './ViolenceTab';
@@ -131,7 +131,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
     };
 
     useEffect(() => {
-        console.debug(`[MorkBorg] Initializing Sheet for actor: ${actor.name}`);
+        logger.debug(`[MorkBorg] Initializing Sheet for actor: ${actor.name}`);
     }, [actor.name]);
 
     // Intercept onRoll for types that need the confirmation modal
@@ -277,7 +277,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                                 className="block object-cover border-4 border-black shadow-lg w-24 h-24 sm:w-32 sm:h-32 min-w-[96px] sm:min-w-[128px]"
                                                 alt="Character Portrait"
                                                 onError={(e) => {
-                                                    console.error('Image failed to load:', sheetActor.img);
+                                                    logger.error('Image failed to load:', sheetActor.img);
                                                     e.currentTarget.style.display = 'none';
                                                 }}
                                             />

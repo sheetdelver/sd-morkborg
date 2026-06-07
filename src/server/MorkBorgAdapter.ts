@@ -1,4 +1,4 @@
-import { BaseSystemAdapter, getErrorMessage, resolveImage } from '@sheet-delver/sdk';
+import { BaseSystemAdapter, getErrorMessage, resolveImage, logger } from '@sheet-delver/sdk';
 import type { ActorCardData, ActorCardBlock } from '@sheet-delver/sdk';
 import { ChatCards } from '../ui/components/chat/ChatCards';
 import type { MorkBorgDataManager } from '../data/DataManager';
@@ -776,11 +776,18 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         }
 
         const html = this.generateRollCard(actor, results);
-        // Post the rendered card as a content message, public — matching the real Mörk Borg
-        // system (ChatMessage.create({ content, sound, speaker })). The card HTML already
-        // contains the roll outcome, so we do NOT attach a raw `rolls`/`type: 5` (that makes
-        // Foundry render a dice roll over the card) and do NOT whisper/blind it.
-        return await client.sendMessage({ content: html, sound: 'sounds/dice.wav', speaker });
+        // Post the rendered card as a PUBLIC content message. Attach the evaluated rolls so
+        // Foundry registers/animates them (dice-so-nice) — the SDK roll primitive evaluates
+        // synthetically (displayChat:false) and never posts, so without this the dice are
+        // computed but never actually rolled in Foundry. Public + no `type:5` keeps the card
+        // content rendering (the earlier "??? rolled" overlay came from a blind/whisper
+        // rollMode, not from including `rolls`).
+        return await client.sendMessage({
+            content: html,
+            sound: 'sounds/dice.wav',
+            speaker,
+            ...(collectedRolls.length ? { rolls: collectedRolls } : {}),
+        });
     }
 
     /**
@@ -791,15 +798,17 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     public async createDecoctions(actor: any, client: any, options: any, data: MorkBorgDataManager) {
         const speaker = { alias: actor.name || 'Unknown Actor', actor: actor._id || actor.id };
         const results: any = { type: 'decoctions', outcomes: [] };
+        // Foundry Roll JSONs to attach to the chat card so Foundry registers/animates the dice.
+        const collectedRolls: string[] = [];
 
         // Output title
         results.outcomes.push('<b>Occult Herbmaster</b>');
 
         // 1. Roll 1d4 for doses
         const dosesResult = await client.roll('1d4', 'Doses Brewed', { displayChat: false });
-        // We aren't adding this roll to a specific 'results.rolls' array for Decoctions, 
-        // but we still want the total. Safe to pass empty arrays.
-        const dosesRoll = this.parseSyntheticRoll(dosesResult, 'Doses', [], [], {});
+        // Not added to results.rolls (the card renders its own decoction list), but collected
+        // so the doses roll is sent to Foundry's dice system with the card.
+        const dosesRoll = this.parseSyntheticRoll(dosesResult, 'Doses', [], collectedRolls, {});
         const doses = dosesRoll.total;
         results.outcomes.push(`Brewed <b>${doses}</b> dose(s) each of:`);
 
@@ -860,15 +869,20 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 await client.createActorItem(actor._id || actor.id, itemsToCreate);
                 results.outcomes.push('<br><i>Items added to inventory.</i>');
             } catch (error: unknown) {
-                console.error("Failed to create decoction items:", getErrorMessage(error));
+                logger.error("Failed to create decoction items:", getErrorMessage(error));
                 results.outcomes.push('<br><i>Failed to add items to inventory.</i>');
             }
         }
 
         // 5. Generate and send chat card
         const html = this.generateRollCard(actor, results);
-        // Public content card, matching the real Mörk Borg system (no rolls/type, no rollMode).
-        return await client.sendMessage({ content: html, sound: 'sounds/dice.wav', speaker });
+        // Public content card + the evaluated doses roll so Foundry rolls the dice.
+        return await client.sendMessage({
+            content: html,
+            sound: 'sounds/dice.wav',
+            speaker,
+            ...(collectedRolls.length ? { rolls: collectedRolls } : {}),
+        });
     }
 
     /**
