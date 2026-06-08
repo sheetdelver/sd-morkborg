@@ -567,10 +567,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 updates['system.omens'] = newOmenData;
             }
 
-            await client.dispatchDocumentSocket('Actor', 'update', {
-                ids: [actor._id || actor.id],
-                updates: [updates]
-            });
+            await client.updateActor(actor._id || actor.id, updates);
         } else if (rollData.type === 'broken') {
             const manualBase = options?.manualData?.dieResult;
             const formula = manualBase !== undefined ? String(manualBase) : '1d4';
@@ -678,10 +675,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 'system.silver': newSilver,
                 ...abilityUpdates
             };
-            await client.dispatchDocumentSocket('Actor', 'update', {
-                ids: [actor._id || actor.id],
-                updates: [updates]
-            });
+            await client.updateActor(actor._id || actor.id, updates);
         } else if (rollData.type === 'spendOmen') {
             results.outcomes = [
                 '• Deal maximum damage with one attack.',
@@ -725,7 +719,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 if (hasTwoHanded) results.outcomes.push('Scrolls cannot be read while wielding martial weapons.');
                 // Note: The scroll use is still consumed even if it failed mechanically due to equipping heavy items.
                 const updates: any = { _id: actor._id || actor.id, 'system.powerUses.value': Math.max(0, currentUses - 1) };
-                await client.dispatchDocumentSocket('Actor', 'update', { ids: [actor._id || actor.id], updates: [updates] });
+                await client.updateActor(actor._id || actor.id, updates);
             } else {
                 const preMod = actor.system?.abilities?.presence?.value ?? 0;
                 const manualBase = options?.manualData?.dieResult;
@@ -768,10 +762,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 const newUses = Math.max(0, currentUses - 1);
                 updates['system.powerUses.value'] = newUses;
 
-                await client.dispatchDocumentSocket('Actor', 'update', {
-                    ids: [actor._id || actor.id],
-                    updates: [updates]
-                });
+                await client.updateActor(actor._id || actor.id, updates);
             }
         }
 

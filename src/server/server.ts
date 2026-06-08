@@ -20,22 +20,19 @@ import { createMorkBorgData } from '../data/DataManager';
 const adapter = new MorkBorgAdapter();
 
 /**
- * Drives the (preserved) mechanics engine over `req.runtime`. The engine still calls
- * `roll` / `createActorItem` / `sendMessage` / `useItem` /
- * `dispatchDocumentSocket('Actor','update')` — this shim maps each onto the runtime so the
- * engine body is unchanged.
+ * Drives the (preserved) mechanics engine over `req.runtime`. The engine calls
+ * `roll` / `updateActor` / `createActorItem` / `sendMessage` / `useItem` — this shim maps
+ * each onto the runtime (document store / rolls / chat) so the engine body is unchanged.
+ * These are document-store operations now; the old Foundry-socket vocabulary is gone.
  */
 function engineClient(runtime: ModuleRequestRuntime) {
     return {
         roll: (formula: string, label?: string, opts?: Record<string, unknown>) => runtime.rolls.roll(formula, label, opts),
-        dispatchDocumentSocket: (type: string, action: string, op: any) => {
-            if (type === 'Actor' && action === 'update') {
-                const id = op?.ids?.[0];
-                const updates = { ...(op?.updates?.[0] ?? {}) };
-                delete updates._id;
-                return runtime.documents.patch('Actor', id, updates);
-            }
-            throw new Error(`morkborg: unsupported dispatch ${type}/${action}`);
+        // Patch an actor's document via the document store (was a Foundry socket dispatch).
+        updateActor: (actorId: string, updates: Record<string, unknown>) => {
+            const patch = { ...updates };
+            delete patch._id;
+            return runtime.documents.patch('Actor', actorId, patch);
         },
         createActorItem: (actorId: string, item: Record<string, unknown>) =>
             runtime.documents.items.create({ type: 'Actor', id: actorId }, item),
