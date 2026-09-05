@@ -122,7 +122,7 @@ async function generateCharacter(
 }
 
 /** Persist the generated scvm via the PLATFORM actor-create route (core handling). */
-async function createCharacter(fetchWithAuth: FetchWithAuth, character: any) {
+async function createCharacter(fetchWithAuth: FetchWithAuth, character: any, navigate: (target: string) => void) {
     try {
         const actorData = {
             name: character.name,
@@ -157,7 +157,7 @@ async function createCharacter(fetchWithAuth: FetchWithAuth, character: any) {
         if (result.success) {
             // Redirect to sheet — wait briefly for backend stabilization.
             setTimeout(() => {
-                window.location.href = `/actors/${result.id}`;
+                navigate(`/actors/${result.id}`);
             }, 500);
         } else {
             throw new Error(result.error);
@@ -283,7 +283,7 @@ function characterInclusionGroups(
 }
 
 export default function MorkBorgCharacterGenerator() {
-    const { fetchWithAuth } = useSDK();
+    const { fetchWithAuth, navigate } = useSDK();
     const [theme, setTheme] = useState(randomTheme({}));
 
     // Initialize class inclusion state (defaults to true for all defined classes)
@@ -311,7 +311,7 @@ export default function MorkBorgCharacterGenerator() {
             {/* Top Navigation Bar */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
                 <button
-                    onClick={() => window.location.href = '/'}
+                    onClick={() => navigate('/')}
                     className="flex items-center gap-2 text-neutral-400 hover:text-amber-500 transition-colors font-semibold group text-sm uppercase tracking-wide"
                 >
                     <span className="group-hover:-translate-x-1 transition-transform">←</span>
@@ -470,7 +470,7 @@ export default function MorkBorgCharacterGenerator() {
                             style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
                             onClick={() => {
                                 //console.info(character);
-                                createCharacter(fetchWithAuth, character);
+                                createCharacter(fetchWithAuth, character, navigate);
                             }}
                         >
                             <div className="flex items-center justify-center gap-2 cursor-pointer">

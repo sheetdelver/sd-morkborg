@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSDK } from '@sheet-delver/sdk/react';
 import MorkBorgCharacterGenerator from './MorkBorgCharacterGenerator';
 import { Skull } from 'lucide-react';
 
@@ -11,6 +12,7 @@ interface MorkBorgDashboardToolsProps {
 }
 
 export default function MorkBorgDashboardTools({ setLoading, setLoginMessage, theme, token }: MorkBorgDashboardToolsProps) {
+    const { navigate } = useSDK();
 
     return (
         <div className={`p-4 rounded-xl bg-black/40 backdrop-blur-md border border-white/5 shadow-lg`}>
@@ -21,7 +23,7 @@ export default function MorkBorgDashboardTools({ setLoading, setLoginMessage, th
                         setLoading(true);
                         setLoginMessage('CREATING SCVM...');
                         setTimeout(() => {
-                            window.location.href = '/tools/morkborg/generator';
+                            navigate('/tools/morkborg/generator');
                         }, 500);
                     }}
                     className={`px-4 py-4 rounded-lg font-bold ${theme.button} text-white shadow-xl hover:-translate-y-0.5 hover:shadow-2xl flex items-center justify-center gap-2 transition-all duration-300 w-full border border-white/10`}
