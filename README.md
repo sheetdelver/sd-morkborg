@@ -16,6 +16,16 @@ Provides dedicated support for the Mörk Borg RPG system in Sheet Delver:
 - **Broken & Initiative**: Broken condition rolls and individual/party initiative.
 <img src="https://github.com/sheetdelver/sheetdelver/blob/main/images/sheets/morkborg/mb-character-sheet.png" width="25%">
 
+### Distribution
+
+Pull requests and changes to `main` validate the module contract and build its
+distribution package using the pinned Sheet Delver toolchain. To publish a
+release, first set the workflow's Sheet Delver reference to a stable core
+release tag, update `info.json`, and push the matching module tag (for example,
+module version `0.6` uses tag `v0.6`). The release workflow publishes the
+archive, checksum, and `sheet-delver-manifest.json` consumed by the module
+catalog.
+
 ### Third-Party Licenses 
 
 **Mörk Borg RPG**
