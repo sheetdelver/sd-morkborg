@@ -1,0 +1,69 @@
+name: Validate Module
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'module/**'
+      - 'assets/**'
+      - '.github/workflows/**'
+      - 'info.json'
+      - 'package.json'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'src/**'
+      - 'module/**'
+      - 'assets/**'
+      - '.github/workflows/**'
+      - 'info.json'
+      - 'package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env:
+      SHEET_DELVER_DATA: ${{ github.workspace }}/sheet-delver-core/.module-ci-data
+    defaults:
+      run:
+        working-directory: sheet-delver-core
+    steps:
+      - name: Check out pinned Sheet Delver toolchain
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: sheetdelver/sheetdelver
+          ref: manifest-module-distribution
+          path: sheet-delver-core
+          persist-credentials: false
+
+      - name: Check out module source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          path: sheet-delver-core/.module-ci-data/local/modules/morkborg
+          persist-credentials: false
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22.x'
+          cache: npm
+          cache-dependency-path: sheet-delver-core/package-lock.json
+
+      - name: Install reviewed Sheet Delver toolchain
+        run: npm ci
+
+      - name: Generate managed configuration
+        run: npm run managed:generate
+
+      - name: Validate module contract
+        run: npm run module:check -- 'morkborg'
+
+      - name: Verify distributable package
+        run: npm run module:package -- 'morkborg'
