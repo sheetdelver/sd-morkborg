@@ -1,5 +1,11 @@
 import { BaseSystemAdapter, getErrorMessage, resolveImage, logger } from '@sheet-delver/sdk';
-import type { ActorCardData, ActorCardBlock } from '@sheet-delver/sdk';
+import type {
+    ActorCardData,
+    ActorCardBlock,
+    ActorPreparationContext,
+    FoundryActor,
+    PreparedActorData,
+} from '@sheet-delver/sdk';
 import { ChatCards } from '../ui/components/chat/ChatCards';
 import type { MorkBorgDataManager } from '../data/DataManager';
 import {
@@ -40,6 +46,13 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     match(actor: any): boolean {
         const hasMorkborgType = ['character', 'container', 'creature', 'follower', 'misery-tracker'].includes(actor.type?.toLowerCase());
         return actor.systemId === 'morkborg' || hasMorkborgType;
+    }
+
+    prepareActorData(
+        actor: FoundryActor,
+        context: Readonly<ActorPreparationContext>,
+    ): PreparedActorData {
+        return super.prepareActorData(actor, context);
     }
 
     normalizeActorData(actor: any): any {
