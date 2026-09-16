@@ -1,5 +1,11 @@
 import { BaseSystemAdapter, getErrorMessage, resolveImage, logger } from '@sheet-delver/sdk';
-import type { ActorCardData, ActorCardBlock } from '@sheet-delver/sdk';
+import type {
+    ActorCardData,
+    ActorCardBlock,
+    ActorPreparationContext,
+    FoundryActor,
+    PreparedActorData,
+} from '@sheet-delver/sdk';
 import { ChatCards } from '../ui/components/chat/ChatCards';
 import type { MorkBorgDataManager } from '../data/DataManager';
 import {
@@ -42,6 +48,13 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         return actor.systemId === 'morkborg' || hasMorkborgType;
     }
 
+    prepareActorData(
+        actor: FoundryActor,
+        context: Readonly<ActorPreparationContext>,
+    ): PreparedActorData {
+        return super.prepareActorData(actor, context);
+    }
+
     normalizeActorData(actor: any): any {
         const data = super.normalizeActorData(actor);
 
@@ -59,7 +72,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         return data;
     }
 
-    getInitiativeFormula(actor: any): string {
+    getInitiativeFormula(actor: PreparedActorData): string {
         return getInitiativeFormula(actor);
     }
 
@@ -109,7 +122,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         };
     }
 
-    getActorCardData(actor: any): ActorCardData {
+    getActorCardData(actor: PreparedActorData): ActorCardData {
         const charClass = this.getClass(actor).name || actor.type;
         const subtext = charClass;
 
@@ -200,7 +213,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     /**
      * Get roll data or pre-evaluated card content
      */
-    getRollData(actor: any, type: MorkBorgRollType, key: string, options: MorkBorgRollOptions = {}): any {
+    getRollData(actor: PreparedActorData, type: MorkBorgRollType, key: string, options: MorkBorgRollOptions = {}): any {
         return getRollData(actor, type, key, options);
     }
 
