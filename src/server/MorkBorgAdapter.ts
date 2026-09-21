@@ -20,7 +20,6 @@ import {
     MorkBorgRollType, 
     MorkBorgRollOptions 
 } from '../logic/types';
-import { morkborgTheme } from '../ui/themes/morkborg';
 
 /**
  * Adapter for the Mork Borg game system.
@@ -166,12 +165,6 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         return {
             subtext,
             blocks
-        };
-    }
-
-    getConfig() {
-        return {
-            componentStyles: morkborgTheme
         };
     }
 
@@ -780,18 +773,13 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         }
 
         const html = this.generateRollCard(actor, results);
-        // Post the rendered card as a PUBLIC content message. Attach the evaluated rolls so
-        // Foundry registers/animates them (dice-so-nice) — the SDK roll primitive evaluates
-        // synthetically (displayChat:false) and never posts, so without this the dice are
-        // computed but never actually rolled in Foundry. Public + no `type:5` keeps the card
-        // content rendering (the earlier "??? rolled" overlay came from a blind/whisper
-        // rollMode, not from including `rolls`).
+        // Post once, retaining recorded dice and the caller's visibility selection.
         return await client.sendMessage({
             content: html,
             sound: 'sounds/dice.wav',
             speaker,
             ...(collectedRolls.length ? { rolls: collectedRolls } : {}),
-        });
+        }, { rollMode: options?.rollMode ?? 'publicroll', speaker });
     }
 
     /**
@@ -800,7 +788,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
      * rolls a 1d4 for doses, adds the items to the inventory, and prints a chat card.
      */
     public async createDecoctions(actor: any, client: any, options: any, data: MorkBorgDataManager) {
-        const speaker = { alias: actor.name || 'Unknown Actor', actor: actor._id || actor.id };
+        const speaker = options?.speaker ?? { alias: actor.name || 'Unknown Actor', actor: actor._id || actor.id };
         const results: any = { type: 'decoctions', outcomes: [] };
         // Foundry Roll JSONs to attach to the chat card so Foundry registers/animates the dice.
         const collectedRolls: string[] = [];
@@ -880,13 +868,13 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
 
         // 5. Generate and send chat card
         const html = this.generateRollCard(actor, results);
-        // Public content card + the evaluated doses roll so Foundry rolls the dice.
+        // Use the same visibility for the card and its recorded doses roll.
         return await client.sendMessage({
             content: html,
             sound: 'sounds/dice.wav',
             speaker,
             ...(collectedRolls.length ? { rolls: collectedRolls } : {}),
-        });
+        }, { rollMode: options?.rollMode ?? 'publicroll', speaker });
     }
 
     /**

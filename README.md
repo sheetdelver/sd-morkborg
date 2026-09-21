@@ -40,3 +40,21 @@ catalog.
 
 **Mörk Borg RPG**
 Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This product is an independent production by SheetDelver and is not affiliated with Ockult Örtmästare Games or Stockholm Kartell. It is published under the [MÖRK BORG THIRD PARTY LICENSE](https://morkborg.com/license/).
+
+## SDK Feedback Compatibility
+
+The UI manifest now owns shared chat-card styling and requires
+`ui-extension-api >=1.3.0 <2.0.0` (SDK 1.5.0). CI runs module regressions.
+CI and release packaging use Core `v0.13.0`, which supports these client-owned
+theme exports. Notification progress/lifecycle adoption is not required.
+
+The dice tray and its frame use Core defaults. No Shadowdark-derived tray
+theme is applied; a distinct Mork Borg tray design can be added separately.
+
+Roll sequences and decoctions post one chat card with the caller's public, self,
+GM or blind visibility and the original evaluated rolls. Run the offline
+regression from the Core checkout:
+
+```sh
+npx tsx data/local/modules/morkborg/src/tests/roll-visibility.test.ts
+```

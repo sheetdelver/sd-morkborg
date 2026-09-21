@@ -1,11 +1,11 @@
 export const morkborgTheme = {
     chat: {
-        container: "bg-[#ffe900] border-2 border-black shadow-[4px_4px_0_0_#000] rounded-none",
+        container: "text-black bg-[#ffe900] border-2 border-black shadow-[4px_4px_0_0_#000] rounded-none",
         header: "text-black text-sm font-bold uppercase mb-4 border-b-2 border-black pb-2 font-serif tracking-widest",
         msgContainer: (isRoll: boolean) => `p-0 border-2 border-black mb-1 shadow-sm ${isRoll ? 'bg-black text-white' : 'bg-white text-black'}`,
         user: "font-serif font-bold text-xs uppercase tracking-wider px-2 pt-1 block",
-        time: "text-[9px] uppercase font-bold text-neutral-400 tracking-widest px-2 block",
-        flavor: "text-xs italic text-neutral-600 mb-0.5 font-serif leading-tight px-2 block",
+        time: "text-[9px] uppercase font-bold text-inherit opacity-80 tracking-widest px-2 block",
+        flavor: "text-xs italic text-inherit mb-0.5 font-serif leading-tight px-2 block",
         content: `
             text-sm font-serif leading-relaxed messages-content 
             [&_.roll-card]:border-0 [&_.roll-card]:bg-black [&_.roll-card]:text-white
@@ -20,9 +20,9 @@ export const morkborgTheme = {
             [&_.outcome-row]:bg-[#ffe900] [&_.outcome-row]:text-black [&_.outcome-row]:font-bold [&_.outcome-row]:text-center [&_.outcome-row]:py-2 [&_.outcome-row]:my-1 [&_.outcome-row]:font-serif [&_.outcome-row]:text-lg [&_.outcome-row]:uppercase [&_.outcome-row]:tracking-tight
             [&_.outcome-row_span]:px-2
         `,
-        rollResult: "hidden", // We use the custom card structure instead
-        rollFormula: "hidden",
-        rollTotal: "hidden",
+        rollResult: "mt-1 bg-white text-black p-2 text-center border-2 border-black",
+        rollFormula: "text-xs font-mono",
+        rollTotal: "text-xl font-bold font-serif",
         button: "inline-flex items-center gap-1 bg-white hover:bg-black group border-2 border-black px-2 py-0.5 text-xs font-bold text-black hover:text-white transition-colors cursor-pointer my-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none active:translate-y-[2px] rounded-lg",
         buttonText: "uppercase font-sans tracking-widest",
         buttonValue: "font-serif font-bold group-hover:text-white",
@@ -30,28 +30,6 @@ export const morkborgTheme = {
         inputContainer: "col-span-2 flex gap-2 p-1 bg-neutral-50 border-t-2 border-black mt-2",
         inputField: "flex-1 bg-white border-2 border-black rounded-none px-3 py-1.5 text-sm font-serif focus:outline-none focus:bg-neutral-50 text-black placeholder:text-neutral-400",
         sendBtn: "bg-black hover:bg-neutral-800 text-white px-4 py-1.5 rounded-none text-xs font-bold font-serif transition-colors uppercase tracking-widest shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:shadow-none active:translate-y-[2px]"
-    },
-    diceTray: {
-        container: "bg-white border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] p-4",
-        header: "text-black text-sm font-bold uppercase border-b-2 border-black pb-2 font-serif tracking-widest mb-4",
-        textarea: "w-full h-24 bg-white border-2 border-black p-3 font-serif text-lg text-black focus:bg-neutral-50 outline-none resize-none",
-        clearBtn: "absolute top-2 right-2 text-xs text-neutral-400 hover:text-red-600 uppercase font-bold font-serif",
-        diceRow: "flex flex-wrap justify-between gap-2 bg-neutral-50 p-2 border-2 border-black mb-4",
-        diceBtn: "w-10 h-10 flex items-center justify-center bg-white hover:bg-black hover:text-white active:bg-neutral-200 border-2 border-black rounded-lg shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px] text-xs font-bold font-serif transition-all text-black",
-        modGroup: "flex gap-1",
-        modBtn: "px-3 py-2 bg-white border-2 border-black rounded-lg hover:bg-black hover:text-white font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px] transition-all font-serif text-black hover:text-white",
-        rollModeGroup: "flex gap-1 mb-2",
-        rollModeBtn: (active: boolean) => `flex-1 flex items-center justify-center p-2 border-2 border-black transition-all ${active ? 'bg-black text-white shadow-none translate-y-[1px]' : 'bg-white text-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neutral-50'}`,
-        advGroup: "flex bg-neutral-50 border-2 border-black p-1",
-        advBtn: (active: boolean, type: 'normal' | 'adv' | 'dis') => {
-            const base = "px-2 py-1 text-xs font-bold transition-all font-serif ";
-            if (!active) return base + "text-neutral-500 hover:text-black";
-            if (type === 'normal') return base + "bg-black text-white";
-            if (type === 'adv') return base + "bg-green-600 text-white";
-            return base + "bg-red-600 text-white";
-        },
-        sendBtn: "flex-1 bg-black hover:bg-neutral-800 text-white font-bold uppercase tracking-widest py-3 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[2px] transition-all text-xl font-serif",
-        helpText: "text-[10px] text-neutral-400 text-center mt-2 uppercase tracking-widest font-bold"
     },
     modal: {
         overlay: "absolute inset-0 bg-black/60 backdrop-blur-sm",
@@ -97,21 +75,6 @@ export const morkborgTheme = {
         container: "relative z-10 p-8 bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] text-center space-y-4 max-w-sm w-full mx-4",
         spinner: "w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto",
         text: "text-xl font-bold text-black font-serif uppercase tracking-widest"
-    },
-    globalChat: {
-        window: "bg-white border-[4px] border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]",
-        header: "bg-black border-b-[4px] border-black p-3 flex justify-between items-center",
-        title: "text-white font-serif font-bold uppercase tracking-widest text-[12px]",
-        diceWindow: "w-[400px]",
-        chatWindow: "w-[400px] h-[80vh]",
-        toggleBtn: (isOpen: boolean, isDice?: boolean) => {
-            const base = "h-14 w-14 flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 border-2 border-white/10 shadow-lg rounded-full ";
-            if (isDice) {
-                return base + (isOpen ? 'bg-white/10 text-white rotate-90' : 'bg-neutral-900 text-white hover:bg-black');
-            }
-            return base + (isOpen ? 'bg-white/10 text-white rotate-90' : 'bg-pink-600 text-black hover:bg-pink-500');
-        },
-        closeBtn: "text-white hover:text-pink-500 transition-colors"
     },
     richText: {
         container: 'relative group flex flex-col bg-black',

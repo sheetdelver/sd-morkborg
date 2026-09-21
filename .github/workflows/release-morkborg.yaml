@@ -12,7 +12,7 @@ jobs:
   release:
     permissions:
       contents: write
-    uses: sheetdelver/sheetdelver/.github/workflows/module-release.yml@v0.10.0
+    uses: sheetdelver/sheetdelver/.github/workflows/module-release.yml@v0.13.0
     with:
       module_id: 'morkborg'
-      core_ref: 'v0.10.0'
+      core_ref: 'v0.13.0'
