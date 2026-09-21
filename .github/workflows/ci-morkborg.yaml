@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: sheetdelver/sheetdelver
-          ref: v0.10.0
+          ref: v0.12.1
           path: sheet-delver-core
           persist-credentials: false
 
@@ -64,6 +64,12 @@ jobs:
 
       - name: Validate module contract
         run: npm run module:check -- 'morkborg'
+
+      - name: Run module regression tests
+        run: |
+          npx tsx ".module-ci-data/local/modules/morkborg/src/tests/prepared-actor.test.ts"
+          npx tsx ".module-ci-data/local/modules/morkborg/src/tests/presentation.test.ts"
+          npx tsx ".module-ci-data/local/modules/morkborg/src/tests/roll-visibility.test.ts"
 
       - name: Verify distributable package
         run: npm run module:package -- 'morkborg'
