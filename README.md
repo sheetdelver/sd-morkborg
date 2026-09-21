@@ -45,8 +45,7 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 The UI manifest now owns shared chat-card styling and requires
 `ui-extension-api >=1.3.0 <2.0.0` (SDK 1.5.0). CI runs module regressions.
-Before publishing, release the Core theme fix and update the CI/release pins
-from `v0.12.1` to that stable tag. The old pinned host cannot package these new
+CI and release packaging use Core `v0.13.0`, which supports these client-owned
 theme exports. Notification progress/lifecycle adoption is not required.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray

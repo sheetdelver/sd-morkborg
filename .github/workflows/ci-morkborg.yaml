@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: sheetdelver/sheetdelver
-          ref: v0.12.1
+          ref: v0.13.0
           path: sheet-delver-core
           persist-credentials: false
 
