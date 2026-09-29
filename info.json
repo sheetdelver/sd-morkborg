@@ -1,6 +1,6 @@
 {
     "id": "morkborg",
-    "version": "0.7",
+    "version": "0.8",
     "title": "Mörk Borg",
     "aliases": [
         "mork-borg"
@@ -11,9 +11,10 @@
         "server": "module/server"
     },
     "compatibility": {
+        "coreVersion": ">=0.14.2",
         "apiContracts": {
             "module-api": ">=1.1.0 <2.0.0",
-            "ui-extension-api": ">=1.3.0 <2.0.0",
+            "ui-extension-api": ">=2.0.0 <3.0.0",
             "roll-engine-api": ">=1.0.0 <2.0.0"
         }
     },
