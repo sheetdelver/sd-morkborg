@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ModuleInfo, UIModuleManifest } from '@sheet-delver/sdk';
 import { morkborgTheme } from '../src/ui/themes/morkborg';
 import infoJson from '../info.json';
@@ -13,7 +12,9 @@ const uiManifest: UIModuleManifest = {
     tools: {
         'generator': () => import('../src/ui/dashboard/MorkBorgCharacterGenerator')
     },
-    dashboardTools: () => import('../src/ui/dashboard/MorkBorgDashboardTools'),
+    dashboardActions: [
+        { id: 'generator', label: 'SCVM Factory', kind: 'tool', toolId: 'generator' },
+    ],
 };
 
 export default uiManifest;

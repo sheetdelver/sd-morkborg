@@ -302,11 +302,11 @@ export default function MorkBorgCharacterGenerator() {
     }, []);
 
     return (
-        <div className={`min-h-screen text-[#111] $"font-inter" selection:bg-pink-500 selection:text-white`} suppressHydrationWarning>
-
-            {/* Randomly selected theme background */}
-            <div className="fixed inset-0 -z-50" style={{ backgroundColor: theme.colors.background }}>
-            </div>
+        <div
+            className="min-h-screen font-inter selection:bg-pink-500 selection:text-white"
+            style={{ backgroundColor: theme.colors.background, color: theme.colors.text }}
+            suppressHydrationWarning
+        >
 
             {/* Top Navigation Bar */}
             <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
