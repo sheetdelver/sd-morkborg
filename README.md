@@ -1,12 +1,15 @@
 # Sheet Delver - Mörk Borg sheets module
 
 Core owns the single shared-image overlay on player pages. The module keeps its
-SCVM palette on sheets in both Core themes; on phones its opaque section bar
-sits above Core's floating tools and weapon/armor details wrap. A 390×844
-browser check is still required before release.
+SCVM palette on sheets in both Core themes. On phones its opaque section bar
+sits at the viewport bottom: active tab left, one other tab, then More.
+The public SDK footer contract reserves Core Tools/Chat/Players/feedback space
+above it; desktop navigation and other modules' default placement stay unchanged.
+Weapon/armor details wrap. The user accepted the mobile corrections on
+October 13, 2026; the released-Core publication gate below remains.
 
 The sheet retains its SDK `SharedContentModal` mount for Core versions admitted
-by the existing `>=0.14.2` minimum. On Core with ADR-0062's persistent media host,
+by its declared minimum. On Core with ADR-0062's persistent media host,
 that compatibility component is inert and produces no duplicate overlay.
 
 ### About
@@ -55,10 +58,15 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 ## SDK Feedback Compatibility
 
-The module requires SheetDelver Core `>=0.14.2` and
-`ui-extension-api >=2.0.0 <3.0.0` (SDK 2.0.0). Core renders the SCVM Factory
+The footer requires `ui-extension-api >=2.2.0 <3.0.0` (SDK 2.3.0).
+Release target is SheetDelver Core `>=0.17.1`. Local development temporarily
+retains `coreVersion >=0.17.0`; released Core 0.17.0 is rejected by its older
+UI contract. **Before publication**, after Core 0.17.1 exists, promote the
+application minimum to `>=0.17.1` and validate against that tag. Do not publish
+the staging manifest. CI and release pins target `v0.17.1`, unavailable until
+that Core release is published. Core renders the SCVM Factory
 dashboard card; this module retains its generator page, sheets, and shared
-chat-card styling. CI and release packaging use Core `v0.14.2`.
+chat-card styling.
 Notification progress/lifecycle adoption is not required.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray

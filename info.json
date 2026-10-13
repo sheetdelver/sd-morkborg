@@ -11,10 +11,10 @@
         "server": "module/server"
     },
     "compatibility": {
-        "coreVersion": ">=0.14.2",
+        "coreVersion": ">=0.17.0",
         "apiContracts": {
             "module-api": ">=1.1.0 <2.0.0",
-            "ui-extension-api": ">=2.0.0 <3.0.0",
+            "ui-extension-api": ">=2.2.0 <3.0.0",
             "roll-engine-api": ">=1.0.0 <2.0.0"
         }
     },
