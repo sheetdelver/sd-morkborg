@@ -365,7 +365,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                     </header>
 
                     {/* CONTENT AREA - Revert to Yellow */}
-                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-24 text-black">
+                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-60 sm:pb-24 text-black">
                         {/* Inner texture/noise for paper feel */}
                         <div className="absolute inset-0 bg-neutral-900/5 pointer-events-none mix-blend-multiply"></div>
 
@@ -415,9 +415,9 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
             </div>
 
             {/* MOBILE ONLY NAVIGATION - Sticky Viewport */}
-            <nav className="fixed sm:hidden bottom-0 left-0 right-0 z-50 pointer-events-none">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex flex-wrap justify-center gap-2 p-4 pb-24 pointer-events-none">
+            <nav aria-label="Character sections" className="fixed sm:hidden left-0 right-0 z-50 bg-neutral-950 border-t-2 border-pink-600 shadow-[0_-8px_24px_rgba(0,0,0,0.8)] bottom-[calc(6rem+env(safe-area-inset-bottom))]">
+                <div className="max-w-7xl mx-auto px-3">
+                    <div className="grid grid-cols-2 min-[480px]:grid-cols-4 gap-2 py-3">
                         {navItems.map((tab) => {
                             const isActive = activeTab === tab.id;
                             return (
@@ -425,7 +425,6 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                     key={tab.id}
                                     onClick={() => setActiveTab(tab.id as any)}
                                     className={`
-                                        pointer-events-auto
                                         flex flex-col items-center justify-center 
                                         px-4 py-2 transition-all duration-200 active:scale-95
                                         border-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]

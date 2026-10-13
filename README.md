@@ -1,5 +1,14 @@
 # Sheet Delver - Mörk Borg sheets module
 
+Core owns the single shared-image overlay on player pages. The module keeps its
+SCVM palette on sheets in both Core themes; on phones its opaque section bar
+sits above Core's floating tools and weapon/armor details wrap. A 390×844
+browser check is still required before release.
+
+This ADR-0062 checkpoint removes the sheet's shared-media mount. Before release,
+either retain the compatible SDK mount or require the Core release containing
+the persistent host; the current `>=0.14.2` range admits older Core without it.
+
 ### About
 
 Provides dedicated support for the Mörk Borg RPG system in Sheet Delver:
