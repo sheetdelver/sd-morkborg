@@ -43,10 +43,14 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 ## SDK Feedback Compatibility
 
-The module requires SheetDelver Core `>=0.14.2` and
-`ui-extension-api >=2.0.0 <3.0.0` (SDK 2.0.0). Core renders the SCVM Factory
-dashboard card; this module retains its generator page, sheets, and shared
-chat-card styling. CI and release packaging use Core `v0.14.2`.
+The development checkout requires SheetDelver Core `>=0.17.0` and
+`ui-extension-api >=3.0.0 <4.0.0` (SDK 3.0.0). The UI API gate keeps it
+incompatible with released Core 0.17.0. Before module release, raise the
+Core minimum to `>=0.18.0` after Core 0.18.0 is published. Core renders the
+SCVM Factory dashboard card; this module retains its generator page, sheets,
+and shared chat-card styling. This module uses Core's bounded combat-HUD initiative
+dialog; sheet rolls remain module-owned. CI and release packaging target Core
+`v0.18.0`; publish Core first.
 Notification progress/lifecycle adoption is not required.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray
