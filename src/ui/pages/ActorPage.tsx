@@ -20,7 +20,7 @@ export interface MorkBorgActorPageProps {
  */
 export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
     const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray } = useSDK();
-    const { LoadingModal } = useSDKComponents();
+    const { LoadingModal, SharedContentModal } = useSDKComponents();
     const { actor, loading, notFound, refresh, update } = useActorSheet<any>(actorId);
 
     const moduleRoll = useCallback(async (type: string, key: string, options: Record<string, unknown> = {}) => {
@@ -130,6 +130,7 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 />
             </div>
 
+            <SharedContentModal />
         </main>
     );
 }

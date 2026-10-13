@@ -46,6 +46,11 @@ export function run(): void {
     assert.equal(prepared.derived.slotsUsed, 4);
     assert.deepEqual(prepared.categorizedItems?.weapons.map(item => item.name), ['Femur']);
     assert.equal(adapter.getActorCardData(prepared).blocks?.[0]?.value, 5);
+    assert.equal(adapter.getActorCardData(prepared).blocks?.find(block => block.title === 'SILVER')?.value, 13);
+    assert.equal(adapter.getActorCardData({ ...prepared, derived: { ...prepared.derived, silver: '15' } })
+        .blocks?.find(block => block.title === 'SILVER')?.value, '15');
+    assert.equal(adapter.getActorCardData({ ...prepared, derived: { ...prepared.derived, silver: {} } })
+        .blocks?.find(block => block.title === 'SILVER')?.value, 0);
     assert.equal(source.items[1].system.weight, 2);
 
     console.log('morkborg prepared Actor parity: PASS');

@@ -5,9 +5,9 @@ SCVM palette on sheets in both Core themes; on phones its opaque section bar
 sits above Core's floating tools and weapon/armor details wrap. A 390×844
 browser check is still required before release.
 
-This ADR-0062 checkpoint removes the sheet's shared-media mount. Before release,
-either retain the compatible SDK mount or require the Core release containing
-the persistent host; the current `>=0.14.2` range admits older Core without it.
+The sheet retains its SDK `SharedContentModal` mount for Core versions admitted
+by the existing `>=0.14.2` minimum. On Core with ADR-0062's persistent media host,
+that compatibility component is inert and produces no duplicate overlay.
 
 ### About
 
@@ -31,6 +31,9 @@ This module requires Sheet Delver `module-api >=1.1.0`. Its adapter prepares
 each source Actor once per source revision; the dashboard, sheet, card, roll,
 and initiative paths consume that shared prepared model. The hook remains
 deterministic and does not write derived values back to Foundry.
+Card resource shapes are typed inside the module, not added to the generic
+Core SDK. Silver accepts a numeric/text scalar and falls back to zero for an
+invalid non-scalar value; the prepared-Actor fixture covers all three cases.
 
 From this module's local checkout inside the Sheet Delver repository, run the
 behavior-preserving contract check with `npx tsx src/tests/prepared-actor.test.ts`.
