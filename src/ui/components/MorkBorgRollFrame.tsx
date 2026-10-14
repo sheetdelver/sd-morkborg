@@ -4,18 +4,19 @@ import React, { useEffect, useId, useRef, type ReactNode } from 'react';
 import { Dices, Pencil } from 'lucide-react';
 
 /** Shared by sheet rolls and the bounded SDK initiative adapter. */
-export function RollEntryMode({ manual, onChange, canAuto = true, canManual = true }: {
+export function RollEntryMode({ manual, onChange, canAuto = true, canManual = true, manualLabel = 'Manual' }: {
     manual: boolean;
     onChange: (manual: boolean) => void;
     canAuto?: boolean;
     canManual?: boolean;
+    manualLabel?: string;
 }) {
     return <div className="flex border border-neutral-800 mb-4">
         {(['auto', 'manual'] as const).filter(mode => mode === 'auto' ? canAuto : canManual).map(mode => <button
             key={mode} type="button" aria-pressed={(mode === 'manual') === manual}
             onClick={() => onChange(mode === 'manual')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs uppercase tracking-widest font-mono transition-all cursor-pointer ${(mode === 'manual') === manual ? 'bg-pink-900 text-white' : 'bg-black text-neutral-500 hover:text-neutral-300'}`}>
-            {mode === 'auto' ? <><Dices className="w-3.5 h-3.5" /> Auto</> : <><Pencil className="w-3.5 h-3.5" /> Manual</>}
+            {mode === 'auto' ? <><Dices className="w-3.5 h-3.5" /> Auto</> : <><Pencil className="w-3.5 h-3.5" /> {manualLabel}</>}
         </button>)}
     </div>;
 }

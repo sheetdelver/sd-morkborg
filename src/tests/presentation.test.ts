@@ -24,6 +24,7 @@ const html = renderToStaticMarkup(createElement(MorkBorgInitiativeModal, initiat
 assert.match(html, /border-pink-900/);
 assert.match(html, /1d6\+2/);
 assert.match(html, /Public Roll/);
+assert.match(html, /Input Manually/);
 assert.doesNotMatch(html, /<select|Ability Bonus|>Advantage</);
 const manual = renderToStaticMarkup(createElement(MorkBorgInitiativeModal, { ...initiative, rollAvailable: false }));
 assert.match(manual, /Final initiative total/);

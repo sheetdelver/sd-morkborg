@@ -65,8 +65,11 @@ Core minimum to `>=0.18.0` after Core 0.18.0 is published. Core renders the
 SCVM Factory dashboard card; this module retains its generator page, sheets,
 and shared chat-card styling. Its typed combat-HUD initiative adapter reuses
 the sheet roller's module-owned frame and Auto/Manual control, not a Core-skinned
-replacement. It displays Core's read-only formula/audience and returns only
-a roll choice or **final** manual total (zero/fractions permitted); sheet raw-die
+replacement. It displays Core's read-only formula/audience; **Input Manually**
+accepts the final initiative total. Core
+chooses an explicit saved GM override, otherwise module formula, then fallback;
+the native sheet's Auto/Manual labels and raw-die rules are unchanged. It returns
+only a roll choice or **final** manual total (zero/fractions permitted); sheet raw-die
 math, modifiers and audience selection do not run in the HUD. Sheet rolls
 retain their existing rules. CI and release packaging target Core
 `v0.18.0`; publish Core first. The retained development version `0.8.1`

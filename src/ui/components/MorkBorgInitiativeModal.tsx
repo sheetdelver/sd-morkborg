@@ -14,11 +14,11 @@ export default function MorkBorgInitiativeModal(props: InitiativeRollModalProps)
     const value = total.trim() ? Number(total) : Number.NaN;
     const t = morkborgTheme.rollDialog;
     return <MorkBorgRollFrame title={props.title} subtitle={props.combatantName} onClose={props.onClose}>
-        <RollEntryMode manual={manual} onChange={setManual} canAuto={props.rollAvailable} canManual={props.manualAvailable} />
+        <RollEntryMode manual={manual} onChange={setManual} canAuto={props.rollAvailable} canManual={props.manualAvailable} manualLabel="Input Manually" />
         <div className={t.section}>
             <span className={t.label}>Formula</span>
             <code className={`${t.formulaResult} break-words`}>{props.formula || 'Unavailable'}</code>
-            <p className={t.formulaBreakdown}>Source: {props.source === 'module' ? 'System module' : props.source === 'gm' ? 'GM setting' : 'Core fallback'}</p>
+            <p className={t.formulaBreakdown}>Source: {props.source === 'module' ? 'System module' : props.source === 'gm' ? 'GM override' : 'Core fallback'}</p>
         </div>
         <div className="mb-5">
             <span className={t.label}>Roll Mode</span>
