@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Dices, Pencil } from 'lucide-react';
+import MorkBorgRollFrame, { RollEntryMode } from './MorkBorgRollFrame';
 
 
 
@@ -110,13 +110,6 @@ export default function MorkBorgRollModal({
         setManual(toManual);
     };
 
-    useEffect(() => {
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onClose();
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, [onClose]);
 
     // ── SUBMIT HANDLERS ──
     const handleSimpleManualSubmit = () => {
@@ -203,42 +196,8 @@ export default function MorkBorgRollModal({
     );
 
     return (
-        <div
-            className="fixed inset-0 z-[200] overflow-y-auto"
-            onClick={onClose}
-        >
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-                {/* Backdrop Layer */}
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" aria-hidden="true" />
-
-                {/* Modal Container */}
-                <div
-                    className="bg-neutral-950 border-2 border-pink-900 shadow-[8px_8px_0_0_#831843] max-w-sm w-full p-6 relative -rotate-1 text-left inline-block transform transition-all"
-                    onClick={e => e.stopPropagation()}
-                >
-                    <div className="absolute -top-3 -right-3 text-2xl select-none">💀</div>
-
-                    {/* Title */}
-                    <h2 className={`$"font-imfell" text-2xl text-yellow-400 uppercase tracking-wide mb-1 leading-tight`}>
-                        {config.title}
-                    </h2>
-                    <div className="text-pink-500 font-mono text-xs uppercase tracking-widest mb-4">
-                        {config.rollLabel}
-                    </div>
-
-                    {/* Auto / Manual toggle */}
-                    <div className="flex border border-neutral-800 mb-4">
-                        {(['auto', 'manual'] as const).map(m => (
-                            <button
-                                key={m}
-                                onClick={() => handleModeSwitch(m === 'manual')}
-                                className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs uppercase tracking-widest font-mono transition-all cursor-pointer ${(m === 'manual') === manual ? 'bg-pink-900 text-white' : 'bg-black text-neutral-500 hover:text-neutral-300'}`}
-                            >
-                                {m === 'auto' ? <><Dices className="w-3.5 h-3.5" /> Auto</> : <><Pencil className="w-3.5 h-3.5" /> Manual</>}
-                            </button>
-                        ))}
-                    </div>
-
+        <MorkBorgRollFrame title={config.title} subtitle={config.rollLabel} onClose={onClose}>
+            <RollEntryMode manual={manual} onChange={handleModeSwitch} />
                     {/* ── AUTO MODE ── */}
                     {!manual && (
                         <>
@@ -481,8 +440,6 @@ export default function MorkBorgRollModal({
                             )}
                         </>
                     )}
-                </div>
-            </div>
-        </div>
+        </MorkBorgRollFrame>
     );
 }

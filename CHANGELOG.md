@@ -4,7 +4,7 @@ Historical entries are reconstructed from [published releases](https://github.co
 
 ## Unreleased
 
-- Adopted HUD initiative contract
+- Reused native HUD roller
 
 ## 0.8.1
 
