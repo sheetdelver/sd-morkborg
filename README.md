@@ -1,5 +1,17 @@
 # Sheet Delver - Mörk Borg sheets module
 
+Core owns the single shared-image overlay on player pages. The module keeps its
+SCVM palette on sheets in both Core themes. On phones its opaque section bar
+sits at the viewport bottom: active tab left, one other tab, then More.
+The public SDK footer contract reserves Core Tools/Chat/Players/feedback space
+above it; desktop navigation and other modules' default placement stay unchanged.
+Weapon/armor details wrap. The user accepted the mobile corrections on
+October 13, 2026. The footer requires the published Core 0.17.1 contract below.
+
+The sheet retains its SDK `SharedContentModal` mount for Core versions admitted
+by its declared minimum. On Core with ADR-0062's persistent media host,
+that compatibility component is inert and produces no duplicate overlay.
+
 ### About
 
 Provides dedicated support for the Mörk Borg RPG system in Sheet Delver:
@@ -22,6 +34,9 @@ This module requires Sheet Delver `module-api >=1.1.0`. Its adapter prepares
 each source Actor once per source revision; the dashboard, sheet, card, roll,
 and initiative paths consume that shared prepared model. The hook remains
 deterministic and does not write derived values back to Foundry.
+Card resource shapes are typed inside the module, not added to the generic
+Core SDK. Silver accepts a numeric/text scalar and falls back to zero for an
+invalid non-scalar value; the prepared-Actor fixture covers all three cases.
 
 From this module's local checkout inside the Sheet Delver repository, run the
 behavior-preserving contract check with `npx tsx src/tests/prepared-actor.test.ts`.
@@ -43,14 +58,18 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 ## SDK Feedback Compatibility
 
-The development checkout requires SheetDelver Core `>=0.17.0` and
-`ui-extension-api >=3.0.0 <4.0.0` (SDK 3.0.0). The UI API gate keeps it
-incompatible with released Core 0.17.0. Before module release, raise the
+The development checkout requires SheetDelver Core `>=0.17.1` and
+`ui-extension-api >=3.0.0 <4.0.0` (SDK 3.x). The UI API gate keeps it
+incompatible with released Core 0.17.x. Before module release, raise the
 Core minimum to `>=0.18.0` after Core 0.18.0 is published. Core renders the
 SCVM Factory dashboard card; this module retains its generator page, sheets,
 and shared chat-card styling. This module uses Core's bounded combat-HUD initiative
 dialog; sheet rolls remain module-owned. CI and release packaging target Core
-`v0.18.0`; publish Core first.
+`v0.18.0`; publish Core first. The retained development version `0.8.1`
+has already shipped from main; choose an unused module version before releasing
+this HUD branch. This merge does not authorize another release of `0.8.1`.
+The optional SDK footer reservation introduced in Core 0.17.1 is retained
+in this HUD checkout; it keeps Core controls above the module's bottom tabs.
 Notification progress/lifecycle adoption is not required.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray

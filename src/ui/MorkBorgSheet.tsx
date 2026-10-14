@@ -19,6 +19,7 @@ import {
 } from './types';
 import MorkBorgEditScvmModal from './components/MorkBorgEditScvmModal';
 import MorkBorgChatStyles from './components/chat/MorkBorgChatStyles';
+import { MobileSectionNavigation } from './components/MobileSectionNavigation';
 import { getRollData, categorizeItems } from '../logic/rules';
 import { morkborgTheme } from './themes/morkborg';
 
@@ -365,7 +366,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                     </header>
 
                     {/* CONTENT AREA - Revert to Yellow */}
-                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-24 text-black">
+                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-44 sm:pb-24 text-black">
                         {/* Inner texture/noise for paper feel */}
                         <div className="absolute inset-0 bg-neutral-900/5 pointer-events-none mix-blend-multiply"></div>
 
@@ -415,39 +416,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
             </div>
 
             {/* MOBILE ONLY NAVIGATION - Sticky Viewport */}
-            <nav className="fixed sm:hidden bottom-0 left-0 right-0 z-50 pointer-events-none">
-                <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex flex-wrap justify-center gap-2 p-4 pb-24 pointer-events-none">
-                        {navItems.map((tab) => {
-                            const isActive = activeTab === tab.id;
-                            return (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id as any)}
-                                    className={`
-                                        pointer-events-auto
-                                        flex flex-col items-center justify-center 
-                                        px-4 py-2 transition-all duration-200 active:scale-95
-                                        border-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]
-                                        ${tab.rotate}
-                                        ${isActive
-                                            ? 'bg-pink-600 text-white border-black z-20 scale-110'
-                                            : `${tab.color} text-neutral-400 border-neutral-700 hover:border-pink-500 hover:text-pink-500 z-10`
-                                        }
-                                    `}
-                                >
-                                    <div className={`$"font-imfell" uppercase font-bold tracking-[0.2em] text-xs whitespace-nowrap`}>
-                                        {tab.label}
-                                    </div>
-                                    {isActive && (
-                                        <div className="h-1 w-full bg-white mt-1 shadow-[0_0_8px_#fff]"></div>
-                                    )}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-            </nav>
+            <MobileSectionNavigation sections={navItems} activeId={activeTab} onSelect={setActiveTab} />
 
             <RestModal
                 isOpen={isRestModalOpen}
