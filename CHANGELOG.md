@@ -1,8 +1,36 @@
 # Releases
 
+Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
+
 ## 0.8.1
+
 - Added bottom section navigation
 - Coordinated Core tool clearance
 - Improved equipment detail wrapping
 - Hardened Actor card values
 - Required Core 0.17.1
+
+## 0.8
+
+- Standardized SCVM Factory action
+- Preserved rotating generator palettes
+- Required Core 0.14.2
+
+## 0.7
+
+- Preserved private roll modes
+- Restored generic roll totals
+- Moved theme exports client-side
+- Restored Core dice styling
+
+## 0.6
+
+- Adopted prepared Actor lifecycle
+- Typed prepared Actor consumers
+- Added Actor preparation regressions
+
+## 0.5
+
+- Initial standalone module release
+- Migrated to public SDK
+- Added validated release packaging
