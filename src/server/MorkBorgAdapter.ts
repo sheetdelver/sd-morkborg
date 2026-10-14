@@ -30,6 +30,15 @@ interface ClassItem {
     description: string;
 }
 
+interface CardResource { value?: number | string; max?: number | string }
+interface MorkBorgCardSystem {
+    hp?: CardResource; omens?: CardResource; powerUses?: CardResource; silver?: unknown;
+}
+interface MorkBorgCardDerived {
+    currentHp?: number | string; maxHp?: number | string;
+    omens?: CardResource; powers?: CardResource; silver?: unknown;
+}
+
 export class MorkBorgAdapter extends BaseSystemAdapter {
     systemId = 'morkborg';
 
@@ -122,42 +131,46 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     }
 
     getActorCardData(actor: PreparedActorData): ActorCardData {
+        // System shapes belong to the module, not the neutral SDK Actor bags.
+        const system = actor.system as MorkBorgCardSystem;
+        const derived = actor.derived as MorkBorgCardDerived;
         const charClass = this.getClass(actor).name || actor.type;
         const subtext = charClass;
 
         const blocks: ActorCardBlock[] = [];
 
-        if (actor.derived?.maxHp || actor.system?.hp?.max) {
+        if (derived?.maxHp || system?.hp?.max) {
             blocks.push({
                 title: 'HP',
-                value: actor.derived?.currentHp ?? actor.system?.hp?.value ?? '?',
-                subValue: `/ ${actor.derived?.maxHp ?? actor.system?.hp?.max ?? '?'}`,
+                value: derived?.currentHp ?? system?.hp?.value ?? '?',
+                subValue: `/ ${derived?.maxHp ?? system?.hp?.max ?? '?'}`,
                 valueClass: 'text-green-400'
             });
         }
 
-        if (actor.derived?.omens?.max || actor.system?.omens?.max) {
+        if (derived?.omens?.max || system?.omens?.max) {
             blocks.push({
                 title: 'OMENS',
-                value: actor.derived?.omens?.value ?? actor.system?.omens?.value ?? 0,
-                subValue: `/ ${actor.derived?.omens?.max ?? actor.system?.omens?.max ?? 0}`,
+                value: derived?.omens?.value ?? system?.omens?.value ?? 0,
+                subValue: `/ ${derived?.omens?.max ?? system?.omens?.max ?? 0}`,
                 valueClass: 'text-purple-400'
             });
         }
 
-        if (actor.derived?.powers?.max || actor.system?.powerUses?.max) {
+        if (derived?.powers?.max || system?.powerUses?.max) {
             blocks.push({
                 title: 'POWERS',
-                value: actor.derived?.powers?.value ?? actor.system?.powerUses?.value ?? 0,
-                subValue: `/ ${actor.derived?.powers?.max ?? actor.system?.powerUses?.max ?? 0}`,
+                value: derived?.powers?.value ?? system?.powerUses?.value ?? 0,
+                subValue: `/ ${derived?.powers?.max ?? system?.powerUses?.max ?? 0}`,
                 valueClass: 'text-purple-400'
             });
         }
 
         //if (actor.derived?.silver || actor.system?.silver) {
+        const silver = derived?.silver ?? system?.silver ?? 0;
         blocks.push({
             title: 'SILVER',
-            value: actor.derived?.silver ?? actor.system?.silver ?? 0, // if not available it'll be 0
+            value: typeof silver === 'number' || typeof silver === 'string' ? silver : 0,
             valueClass: 'text-yellow-400'
         });
         //}

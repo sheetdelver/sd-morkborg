@@ -1,5 +1,17 @@
 # Sheet Delver - Mörk Borg sheets module
 
+Core owns the single shared-image overlay on player pages. The module keeps its
+SCVM palette on sheets in both Core themes. On phones its opaque section bar
+sits at the viewport bottom: active tab left, one other tab, then More.
+The public SDK footer contract reserves Core Tools/Chat/Players/feedback space
+above it; desktop navigation and other modules' default placement stay unchanged.
+Weapon/armor details wrap. The user accepted the mobile corrections on
+October 13, 2026. The footer requires the published Core 0.17.1 contract below.
+
+The sheet retains its SDK `SharedContentModal` mount for Core versions admitted
+by its declared minimum. On Core with ADR-0062's persistent media host,
+that compatibility component is inert and produces no duplicate overlay.
+
 ### About
 
 Provides dedicated support for the Mörk Borg RPG system in Sheet Delver:
@@ -22,6 +34,9 @@ This module requires Sheet Delver `module-api >=1.1.0`. Its adapter prepares
 each source Actor once per source revision; the dashboard, sheet, card, roll,
 and initiative paths consume that shared prepared model. The hook remains
 deterministic and does not write derived values back to Foundry.
+Card resource shapes are typed inside the module, not added to the generic
+Core SDK. Silver accepts a numeric/text scalar and falls back to zero for an
+invalid non-scalar value; the prepared-Actor fixture covers all three cases.
 
 From this module's local checkout inside the Sheet Delver repository, run the
 behavior-preserving contract check with `npx tsx src/tests/prepared-actor.test.ts`.
@@ -43,10 +58,12 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 ## SDK Feedback Compatibility
 
-The module requires SheetDelver Core `>=0.14.2` and
-`ui-extension-api >=2.0.0 <3.0.0` (SDK 2.0.0). Core renders the SCVM Factory
+The footer requires `ui-extension-api >=2.2.0 <3.0.0` (SDK 2.3.0).
+The module requires SheetDelver Core `>=0.17.1`; Core 0.17.0 lacks the required
+UI contract. CI and release packaging are pinned to the published `v0.17.1`
+toolchain. Core renders the SCVM Factory
 dashboard card; this module retains its generator page, sheets, and shared
-chat-card styling. CI and release packaging use Core `v0.14.2`.
+chat-card styling.
 Notification progress/lifecycle adoption is not required.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray
