@@ -6,7 +6,7 @@ sits at the viewport bottom: active tab left, one other tab, then More.
 The public SDK footer contract reserves Core Tools/Chat/Players/feedback space
 above it; desktop navigation and other modules' default placement stay unchanged.
 Weapon/armor details wrap. The user accepted the mobile corrections on
-October 13, 2026; the released-Core publication gate below remains.
+October 13, 2026. The footer requires the published Core 0.17.1 contract below.
 
 The sheet retains its SDK `SharedContentModal` mount for Core versions admitted
 by its declared minimum. On Core with ADR-0062's persistent media host,
@@ -59,12 +59,9 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 ## SDK Feedback Compatibility
 
 The footer requires `ui-extension-api >=2.2.0 <3.0.0` (SDK 2.3.0).
-Release target is SheetDelver Core `>=0.17.1`. Local development temporarily
-retains `coreVersion >=0.17.0`; released Core 0.17.0 is rejected by its older
-UI contract. **Before publication**, after Core 0.17.1 exists, promote the
-application minimum to `>=0.17.1` and validate against that tag. Do not publish
-the staging manifest. CI and release pins target `v0.17.1`, unavailable until
-that Core release is published. Core renders the SCVM Factory
+The module requires SheetDelver Core `>=0.17.1`; Core 0.17.0 lacks the required
+UI contract. CI and release packaging are pinned to the published `v0.17.1`
+toolchain. Core renders the SCVM Factory
 dashboard card; this module retains its generator page, sheets, and shared
 chat-card styling.
 Notification progress/lifecycle adoption is not required.
