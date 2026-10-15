@@ -79,11 +79,12 @@ The optional SDK footer reservation introduced in Core 0.17.1 is retained
 in this HUD checkout; it keeps Core controls above the module's bottom tabs.
 Notification progress/lifecycle adoption is not required.
 ADR-0061 hardening verification (October 14): offline module tests, explicit
-source typing and isolated packaging pass on the integrated SDK/UI 3.1 host.
+source typing and isolated packaging pass on the integrated SDK3.2/UI3.1 host.
 The rendered native HUD adapter preserves a supplied d6 formula and omits d20
 overrides. Its dark/pink frame is checked at320/375/1280 in both Core appearances;
-native Mörk participation still needs operator acceptance. This
-does not certify party initiative or compatibility with the future release.
+the user accepts the native-themed roller. Core's native owner-write checks on
+v13.351/Shadowdark and v14.367/D&D are not a native Mörk system-hooks test.
+This does not certify party initiative or compatibility with the future release.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray
 theme is applied; a distinct Mork Borg tray design can be added separately.
