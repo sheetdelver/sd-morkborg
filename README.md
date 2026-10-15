@@ -15,7 +15,8 @@ Character sheets and tools for playing Mörk Borg with SheetDelver.
 Requires **SheetDelver Core 0.18.0 or later**.
 
 See the [releases](https://github.com/sheetdelver/sd-morkborg/releases),
-[changelog](CHANGELOG.md) and [developer guide](docs/DEVELOPMENT.md).
+[changelog](CHANGELOG.md), [module architecture](docs/architecture.md) and
+[working guidance](AGENTS.md).
 
 ## Third-party license
 
