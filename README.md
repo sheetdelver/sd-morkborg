@@ -58,10 +58,10 @@ Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This pr
 
 ## SDK Feedback Compatibility
 
-The development checkout requires SheetDelver Core `>=0.17.1` and
-`ui-extension-api >=3.0.0 <4.0.0` (SDK 3.x). The UI API gate keeps it
-incompatible with released Core 0.17.x. Before module release, raise the
-Core minimum to `>=0.18.0` after Core 0.18.0 is published. Core renders the
+This release requires SheetDelver Core `>=0.18.0` and
+`ui-extension-api >=3.1.0 <4.0.0` (SDK 3.x), including the initiative choice
+that preserves Core's resolved formula by default. Core 0.17.x is incompatible.
+Core renders the
 SCVM Factory dashboard card; this module retains its generator page, sheets,
 and shared chat-card styling. Its typed combat-HUD initiative adapter reuses
 the sheet roller's module-owned frame and Auto/Manual control, not a Core-skinned
@@ -72,9 +72,8 @@ the native sheet's Auto/Manual labels and raw-die rules are unchanged. It return
 only a roll choice or **final** manual total (zero/fractions permitted); sheet raw-die
 math, modifiers and audience selection do not run in the HUD. Sheet rolls
 retain their existing rules. CI and release packaging target Core
-`v0.18.0`; publish Core first. The retained development version `0.8.1`
-has already shipped from main; choose an unused module version before releasing
-this HUD branch. This merge does not authorize another release of `0.8.1`.
+`v0.18.0`; publish Core first. Version 0.8.2 follows the already-published 0.8.1
+mobile/footer fixes without reusing that release number.
 The optional SDK footer reservation introduced in Core 0.17.1 is retained
 in this HUD checkout; it keeps Core controls above the module's bottom tabs.
 Notification progress/lifecycle adoption is not required.
@@ -84,7 +83,7 @@ The rendered native HUD adapter preserves a supplied d6 formula and omits d20
 overrides. Its dark/pink frame is checked at320/375/1280 in both Core appearances;
 the user accepts the native-themed roller. Core's native owner-write checks on
 v13.351/Shadowdark and v14.367/D&D are not a native Mörk system-hooks test.
-This does not certify party initiative or compatibility with the future release.
+This does not certify party initiative or universal native system-hook parity.
 
 The dice tray and its frame use Core defaults. No Shadowdark-derived tray
 theme is applied; a distinct Mork Borg tray design can be added separately.

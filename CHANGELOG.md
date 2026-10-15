@@ -4,7 +4,10 @@ Historical entries are reconstructed from [published releases](https://github.co
 
 ## Unreleased
 
+## 0.8.2
+
 - Reused native HUD roller
+- Required Core 0.18.0
 
 ## 0.8.1
 
