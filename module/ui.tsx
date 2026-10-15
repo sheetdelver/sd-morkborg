@@ -9,6 +9,7 @@ const uiManifest: UIModuleManifest = {
     componentStyles: morkborgTheme,
     sheet: () => import('../src/ui/MorkBorgSheet'),
     actorPage: () => import('../src/ui/pages/ActorPage'),
+    rollModal: () => import('../src/ui/components/MorkBorgInitiativeModal'),
     tools: {
         'generator': () => import('../src/ui/dashboard/MorkBorgCharacterGenerator')
     },

@@ -2,6 +2,13 @@
 
 Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
 
+## Unreleased
+
+## 0.8.2
+
+- Reused native HUD roller
+- Required Core 0.18.0
+
 ## 0.8.1
 
 - Added bottom section navigation

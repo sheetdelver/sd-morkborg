@@ -1,66 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import MorkBorgRollModal, { parseFormula } from './MorkBorgRollModal';
-import { type MorkBorgRollConfig } from '../types';
-import { getInitiativeFormula } from '../../logic/rules';
+'use client';
 
-export default function MorkBorgInitiativeModal(props: any) {
-    const { isOpen, title, onClose, onConfirm, actor } = props;
+import React, { useId, useState } from 'react';
+import type { InitiativeRollModalProps } from '@sheet-delver/sdk/react';
+import MorkBorgRollFrame, { RollEntryMode } from './MorkBorgRollFrame';
+import { morkborgTheme } from '../themes/morkborg';
 
-    // We store roll mode inside the wrapper to mimic the default behavior
-    const [rollMode, setRollMode] = useState<string>('publicroll');
-
-    useEffect(() => {
-        if (isOpen) {
-            const saved = localStorage.getItem('sheetdelver_roll_mode');
-            if (saved) setRollMode(saved);
-        }
-    }, [isOpen]);
-
-    const handleRollModeChange = (mode: string) => {
-        setRollMode(mode);
-        localStorage.setItem('sheetdelver_roll_mode', mode);
-    };
-
-    if (!isOpen) return null;
-
-    // Use the shared pure logic to get the standardized formula from the actor
-    const rawFormula = actor ? getInitiativeFormula(actor) : '1d6';
-    const parsed = parseFormula(rawFormula);
-
-    const config: MorkBorgRollConfig = {
-        title: title || 'Initiative',
-        rollLabel: 'Roll Initiative',
-        formula: rawFormula,
-        humanFormula: rawFormula,
-        type: 'ability',
-        key: 'initiative'
-    };
-
-    const handleConfirmWithOptions = (opts: any) => {
-        onConfirm({
-            abilityBonus: parsed.modifier,
-            advantageMode: opts.advantageMode,
-            rollingMode: rollMode
-        });
-    };
-
-    const handleManualConfirm = (result: string) => {
-        onConfirm({
-            abilityBonus: parsed.modifier,
-            rollingMode: rollMode,
-            manualValue: Number(result)
-        });
-    };
-
-    return (
-        <MorkBorgRollModal
-            config={config}
-            rollMode={rollMode}
-            onRollModeChange={handleRollModeChange}
-            onConfirm={() => handleConfirmWithOptions({ advantageMode: 'normal' })}
-            onConfirmWithOptions={handleConfirmWithOptions}
-            onManualConfirm={handleManualConfirm}
-            onClose={onClose}
-        />
-    );
+/** Presentation only: no sheet rules, raw-die math, formula edits or transports. */
+export default function MorkBorgInitiativeModal(props: InitiativeRollModalProps) {
+    const [manual, setManual] = useState(!props.rollAvailable);
+    const [total, setTotal] = useState('');
+    const inputId = useId();
+    if (!props.isOpen) return null;
+    const value = total.trim() ? Number(total) : Number.NaN;
+    const t = morkborgTheme.rollDialog;
+    return <MorkBorgRollFrame title={props.title} subtitle={props.combatantName} onClose={props.onClose}>
+        <RollEntryMode manual={manual} onChange={setManual} canAuto={props.rollAvailable} canManual={props.manualAvailable} manualLabel="Input Manually" />
+        <div className={t.section}>
+            <span className={t.label}>Formula</span>
+            <code className={`${t.formulaResult} break-words`}>{props.formula || 'Unavailable'}</code>
+            <p className={t.formulaBreakdown}>Source: {props.source === 'module' ? 'System module' : props.source === 'gm' ? 'GM override' : 'Core fallback'}</p>
+        </div>
+        <div className="mb-5">
+            <span className={t.label}>Roll Mode</span>
+            <span className="text-white font-mono text-sm">{props.audience === 'gm' ? 'Private GM Roll' : 'Public Roll'}</span>
+        </div>
+        {manual && props.manualAvailable && <div className="mb-4">
+            <label className={t.label} htmlFor={inputId}>Final initiative total</label>
+            <input id={inputId} type="number" step="any" value={total} onChange={event => setTotal(event.target.value)}
+                className="w-full bg-neutral-900 border border-pink-900/60 focus:border-pink-500 text-white text-2xl font-mono text-center py-3 focus:outline-none" />
+        </div>}
+        <div className="flex gap-3">
+            {manual && props.manualAvailable ? <button type="button" aria-label="Submit total" disabled={!Number.isFinite(value)}
+                className={`${t.confirmBtn} disabled:opacity-50`} onClick={() => props.onConfirm({ kind: 'manual', total: value })}>Submit</button>
+                : props.rollAvailable && <button type="button" aria-label="Roll initiative" className={t.confirmBtn}
+                    onClick={() => props.onConfirm({ kind: 'roll' })}>Roll</button>}
+            <button type="button" className={t.cancelBtn} onClick={props.onClose}>Cancel</button>
+        </div>
+        {!manual && props.rollAvailable && props.advantageAvailable && <div className={`${t.advantageGroup} mt-4`}>
+            <button type="button" className={`${t.advantageBtn} ${t.advantageBtnInactive}`}
+                onClick={() => props.onConfirm({ kind: 'roll', advantageMode: 'advantage' })}>Advantage</button>
+            <button type="button" className={`${t.advantageBtn} ${t.advantageBtnInactive}`}
+                onClick={() => props.onConfirm({ kind: 'roll', advantageMode: 'disadvantage' })}>Disadvantage</button>
+        </div>}
+    </MorkBorgRollFrame>;
 }
