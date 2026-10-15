@@ -2,7 +2,9 @@
 
 Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
 
-## Unreleased
+## 0.8.3
+- Centered mobile health values
+- Cleared combat HUD navigation
 
 ## 0.8.2
 

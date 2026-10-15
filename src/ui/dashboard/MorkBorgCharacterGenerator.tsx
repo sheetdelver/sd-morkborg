@@ -309,7 +309,7 @@ export default function MorkBorgCharacterGenerator() {
         >
 
             {/* Top Navigation Bar */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
+            <nav className="relative bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
                 <button
                     onClick={() => navigate('/')}
                     className="flex items-center gap-2 text-neutral-400 hover:text-amber-500 transition-colors font-semibold group text-sm uppercase tracking-wide"
@@ -325,7 +325,7 @@ export default function MorkBorgCharacterGenerator() {
 
             {/* Main Header (Subheader) - Controls & Title */}
             <div
-                className={`${theme.colors.tailwind.text} shadow-md sticky top-[45px] z-10 flex items-center justify-between px-6 border-b-4 border-[${theme.colors.accent}] h-24 mt-[45px]`}
+                className={`${theme.colors.tailwind.text} shadow-md relative flex items-center justify-between px-6 border-b-4 border-[${theme.colors.accent}] h-24`}
                 style={{ backgroundColor: theme.colors.background }}
             >
                 <div className="flex items-center gap-6">

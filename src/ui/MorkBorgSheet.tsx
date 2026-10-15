@@ -38,7 +38,7 @@ interface MorkBorgSheetProps {
 }
 
 const StatBlock = ({ label, value, path, max, min = 0, showMax = true, onUpdate }: { label: string, value: any, path: string, max?: any, min?: number, showMax?: boolean, onUpdate: any }) => (
-    <div className="flex flex-col items-center justify-center w-full bg-black/80 p-2 border border-neutral-700 relative">
+    <div className={`flex flex-col items-center justify-center w-full bg-black/80 p-2 border border-neutral-700 relative ${max !== undefined && showMax ? 'col-span-2 sm:col-span-1' : ''}`}>
         <style dangerouslySetInnerHTML={{
             __html: `
             input[type=number]::-webkit-inner-spin-button, 
@@ -51,9 +51,10 @@ const StatBlock = ({ label, value, path, max, min = 0, showMax = true, onUpdate 
             }
         `}} />
         <span className={`$"font-imfell" text-pink-500 text-sm uppercase tracking-widest mb-1`}>{label}</span>
-        <div className="flex items-center gap-1 font-mono text-2xl text-white">
+        <div className="flex w-full max-w-44 min-w-0 items-center justify-center gap-1 font-mono text-lg md:text-xl xl:text-2xl text-white">
             <input
                 type="number"
+                aria-label={`${label} current`}
                 value={value}
                 onChange={(e) => {
                     let val = Number(e.target.value);
@@ -61,16 +62,17 @@ const StatBlock = ({ label, value, path, max, min = 0, showMax = true, onUpdate 
                     if (max !== undefined) val = Math.min(max, val);
                     onUpdate(path, val);
                 }}
-                className="bg-transparent w-20 text-center focus:outline-none focus:text-pink-500"
+                className="bg-transparent w-0 min-w-0 max-w-20 flex-1 text-center focus:outline-none focus:text-pink-500"
             />
             {max !== undefined && showMax && (
                 <>
-                    <span className="text-neutral-500">/</span>
+                    <span className="shrink-0 text-neutral-500" aria-hidden="true">/</span>
                     <input
                         type="number"
+                        aria-label={`${label} maximum`}
                         value={max}
                         readOnly
-                        className="bg-transparent w-20 text-center text-neutral-500 focus:outline-none"
+                        className="bg-transparent w-0 min-w-0 max-w-20 flex-1 text-center text-neutral-500 focus:outline-none"
                     />
                 </>
             )}
