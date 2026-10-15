@@ -27,6 +27,12 @@ Mörk Borg party initiative or native Foundry turn-hook automation.
 
 ## Validation
 
+ADR-0063 puts sheet/generator navigation in page flow below Core's combat HUD.
+The current/max resource group uses the card's available width and centered
+values at phone widths. HP spans the phone grid row so two four-digit values
+remain readable; update, minimum and maximum semantics are unchanged.
+Validate multi-digit HP at 320/390/820/1440 together with the footer/Tools bar.
+
 From the Core checkout with this module in `data/local/modules/morkborg`:
 
 ```sh

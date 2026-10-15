@@ -107,7 +107,7 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
 
     return (
         <main className="min-h-screen font-sans pb-20">
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
+            <nav className="relative bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
                 <a href="/" className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors font-semibold group text-sm uppercase tracking-wide cursor-pointer">
                     <span className="group-hover:-translate-x-1 transition-transform">←</span>
                     Back to Dashboard
@@ -117,7 +117,7 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 </div>
             </nav>
 
-            <div className="w-full max-w-5xl mx-auto p-4 pt-20">
+            <div className="w-full max-w-5xl mx-auto p-4">
                 <MorkBorgSheet
                     actor={actor}
                     onRoll={moduleRoll}
