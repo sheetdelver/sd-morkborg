@@ -467,3 +467,27 @@ Explicit module typing passes. Core 0.19.3 module check and isolated package pas
 (`/tmp/morkborg-adr0001-g1/`), archive SHA-256
 `5ea07fd832086b09854b9f5d26ba1f96fdc898ed6e589f44cbd48d64aa07557f`.
 Installed/native role checks and remaining command/formula validation stay open.
+
+### Canonical preparation checkpoint
+
+MB-N01/02/10/11: corrected native field preparation and disjoint ammo display
+categories; name-based consolidation removed; numeric handedness editor and
+lossless legacy read normalization. MB-N03 preparation now supplies first armor,
+current reduction and maximum-tier penalties. Tests: native-inventory and corrected
+prepared-actor fixtures pass; source round trips, invalid references, true/false/
+registered-default/unavailable settings and revisions covered. Same-input baseline
+MB-N01/02 passes; the expanded inventory test fails at carrying total 0 vs 3 on
+`ccaf20f` and passes with the new model. Logs under /tmp/morkborg-adr0001-*.
+All existing suites, explicit typing and isolated module check pass. Native setting
+reads/changes and sequenced inventory operations still require execution.
+
+MB-N03 upstream decision: official Bare Bones pp. 30–31 visually verified from
+the publisher-linked PDF (hash and URL in ADR). Rules use natural crit/fumble and
+double damage. Implement natural hit overrides and parenthesize complete fumble
+damage before reduction, documenting deliberate native-code deviations.
+
+`additionalAbilities`: v14 [public SettingConfig](https://foundryvtt.com/api/v14/interfaces/foundry.types.SettingConfig.html)
+requires scope but gives no omitted-scope default. Registered native scope remains
+a disposable-runtime check; do not declare it world-scoped by assumption.
+Handedness read normalization needs no persisted mutation; actual affected worlds
+are unknown. No migration catalog or historical recovery guess introduced.

@@ -24,12 +24,13 @@ reads declared Item/RollTable compendia per request, but still implements privat
 dice/table selection and SCVM generation. The generator posts its client-held
 candidate to platform Actor creation. It currently omits generated companion Actors.
 
-Preparation is **not yet one complete authority**: it totals `weight` instead of
-native `carryWeight`, and the tabs/dialogs/server independently calculate several
-inventory, armor and roll values. The audit identifies duplicate ammo grouping,
-unsafe consolidation, rest/advancement/power differences, ignored class equipment
-dice and name-based reference resolution. Do not copy these paths into new features.
-The proposed ADR requires one typed preparation/action model and public SDK draws.
+Native inventory preparation now uses `carryWeight`, `containerSpace`, carried
+state and canonical owned IDs. The shared inventory model rounds individual stacks,
+counts container members once, retains first-equipped armor, and derives current
+tier reduction separately from maximum-tier penalties. Source fields remain
+unchanged. Invalid or overlapping membership produces a typed validation error.
+The destructive name-based Organize action was removed. Action planning and
+sequenced inventory writes are still being aligned under ADR-0001.
 
 Core owns authorization, world/session lifecycle, roll execution and shared
 chat/media/dice presentation. The module supplies its own sheet and roll styling
@@ -56,13 +57,22 @@ strings also occur). Class-owned Items supply starting formulas/rolls and the Om
 die. Scrolls are Item type `scroll`; tablets use `system.scrollType`, not a separate
 native Item type. Preserve canonical UUIDs when resolving class/table documents.
 
-The module currently declares no world settings or migration catalog. ADR-0001
-proposes proven world carrying/ammo/automation/class-policy settings through Core's
-revisioned context, plus caller-safe mounted consumer refresh. This is a plan,
-not implemented behavior. Client preferences and dynamically registered native
-configuration require separate treatment. No mandatory persistent migration was
-established: evaluate the module-generated malformed handedness shape before
-choosing a deterministic Core-admin repair. Never persist projections as a repair.
+Four proven native world settings are declared for manifest version 6.0.0 only:
+carrying, ammo, hit automation and allowed class policy. Core provides registered
+default provenance and immutable snapshots; unavailable carrying rules yield an
+unknown encumbrance state, never an invented false/default. Other manifest versions
+remain unavailable until verified. Client preferences are not service-account rules.
+`additionalAbilities` has no explicit native scope; the public v14 type documentation
+does not specify an omitted-scope default. Its actual registered scope must still
+be checked in disposable native acceptance before adoption as a world rule.
+
+Handedness is normalized for reads (native numeric/string 1/2 and the module's
+legacy 1h/2h shapes) without changing source. The editor now writes numeric 1/2
+and displays missing damage as unavailable. No affected persisted world data was
+provided. No mass repair is selected: read normalization is deterministic and
+lossless; a future persistent repair requires actual affected scopes and Core's
+reviewed maintenance mechanism. Lost items and historical outcomes are unrecoverable
+without operator evidence.
 
 ## Initiative
 

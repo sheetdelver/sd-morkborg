@@ -20,7 +20,7 @@ import {
 import MorkBorgEditScvmModal from './components/MorkBorgEditScvmModal';
 import MorkBorgChatStyles from './components/chat/MorkBorgChatStyles';
 import { MobileSectionNavigation } from './components/MobileSectionNavigation';
-import { getRollData, categorizeItems } from '../logic/rules';
+import { getRollData } from '../logic/rules';
 import { morkborgTheme } from './themes/morkborg';
 
 
@@ -108,7 +108,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
     }, []);
 
     // Derived logic 
-    const inventory = categorizeItems(actor);
+
     
     // Map categorized items and derived stats into the view model
     const sheetActor = {

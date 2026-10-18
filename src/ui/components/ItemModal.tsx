@@ -114,12 +114,13 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Handed:</span>
                             <select
-                                value={system.handed || '1h'}
-                                onChange={(e) => handleChange('system.handed', e.target.value)}
+                                value={item.handed ?? ''}
+                                onChange={(e) => handleChange('system.handed', Number(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
-                                <option value="1h">1-Handed</option>
-                                <option value="2h">2-Handed</option>
+                                <option value="">Unavailable</option>
+                                <option value="1">1-Handed</option>
+                                <option value="2">2-Handed</option>
                             </select>
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
@@ -135,7 +136,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                             <span className="text-yellow-500">Damage Die:</span>
                             <input
                                 type="text"
-                                value={system.damageDie || '1d4'}
+                                value={system.damageDie ?? ''}
                                 onChange={(e) => handleChange('system.damageDie', e.target.value)}
                                 className="bg-transparent text-right outline-none w-32 font-mono text-white"
                             />

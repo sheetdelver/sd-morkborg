@@ -381,7 +381,7 @@ currently advertised functionality.
 | Discovery | Complete for the pinned source/data baseline | Active audit; controlled offline comparisons; no implementation |
 | G0 | In progress | Documentation baseline `7429db2`; maintained native regressions: 20 of 21 fail before changes (see audit). Additional table/generation/UI cases pending. |
 | G1 | In progress | Typed errors/OWNER preflight/command validation and minimal dependencies pass offline; installed caller and comprehensive payload acceptance pending. |
-| G2 | Open | Settings/preparation/shape work pending |
+| G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
 | G3 | Open | Inventory/action parity pending |
 | G4 | Open | Draw/feat consolidation pending |
 | G5 | Open | Generation completeness pending |
@@ -411,3 +411,22 @@ failures remain). Explicit module typing passes. Released-Core isolated module
 check/package passes, SHA-256
 `5ea07fd832086b09854b9f5d26ba1f96fdc898ed6e589f44cbd48d64aa07557f`.
 No installed/native authorization acceptance is inferred.
+
+Canonical preparation checkpoint (after `ccaf20f`): native inventory tests pass
+for fractional rounding, containerSpace, zero/legacy carried behavior, first
+equipped armor, native/legacy handedness, malformed membership, changed setting
+revisions and source preservation. Original MB-N01/02 cases pass. All three
+existing suites, explicit module typing and isolated module check pass.
+
+Rules-as-written comparison requested by the user: publisher-linked Bare Bones
+PDF SHA-256 `f09678dc12030728c78a9e04ceb3d5d2d805735b55f56c9fd0e1a41959581ad1`,
+printed pp. 30–31 (visually inspected), defines natural crit/fumble and double
+defense-fumble damage. Select natural-die hit/miss overrides and parenthesize the
+complete incoming expression before native-ordered reduction. This deliberately
+corrects the pinned native attack total test and composite multiplication quirks.
+Keep armor/HP effects instructional. Source: [author's free edition](https://jnohr.itch.io/mrk-borg-free),
+linked from [official content](https://morkborg.com/content/).
+
+No persistent migration is selected: deterministic read normalization preserves
+legacy handedness and there is no provided world inventory establishing a needed
+persisted repair. Do not infer that no affected worlds exist.

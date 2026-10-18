@@ -1,4 +1,5 @@
 import { SdkError } from '@sheet-delver/sdk';
+import { prepareInventory, normalizeNativeItem } from './inventory';
 
 /**
  * MorkBorg pure logic rules. 
@@ -9,11 +10,7 @@ import { SdkError } from '@sheet-delver/sdk';
  * Calculate the total item slots used by an actor's inventory
  */
 export function calculateSlotsUsed(items: any[]): number {
-    return items.reduce((acc: number, item: any) => {
-        const weight = Number(item.system?.weight || 0);
-        const quantity = Number(item.system?.quantity || 1);
-        return acc + (weight * quantity);
-    }, 0);
+    return prepareInventory(items).slotsUsed;
 }
 
 /**
@@ -43,45 +40,22 @@ export function getInitiativeFormula(actor: any): string {
  * Normalize item data for UI display
  */
 export function normalizeItem(item: any): any {
-    const system = item.system || {};
-    const type = item.type?.toLowerCase();
-
-    return {
-        id: item._id || item.id,
-        name: item.name,
-        type: type,
-        img: item.img,
-        system: system, // Keep system for sub-components
-        description: system.description || '',
-        weight: system.weight || 0,
-        quantity: system.quantity || 1,
-        // Roll specific data
-        damageDie: system.damageDie || '',
-        damageReductionDie: system.damageReductionDie || '',
-        fumbleOn: system.fumbleOn || 1,
-        critOn: system.critOn || 20,
-        weaponType: system.weaponType || 'melee',
-        equipped: system.equipped || false,
-        tier: system.tier || { value: 0, max: 0 },
-        rollLabel: system.rollLabel || '',
-        rollFormula: system.rollFormula || '',
-        rollMacro: system.rollMacro || ''
-    };
+    return normalizeNativeItem(item);
 }
 
 /**
  * Categorize items by type for display
  */
 export function categorizeItems(actor: any): any {
-    const items = (actor.items || []).map((i: any) => normalizeItem(i));
+    const items = prepareInventory(actor.items || []).items;
     return {
         weapons: items.filter((i: any) => i.type === 'weapon'),
         shields: items.filter((i: any) => i.type === 'shield'),
         ammo: items.filter((i: any) => i.type === 'ammo'),
-        container: items.filter((i: any) => i.type === 'container'),
+        classes: items.filter((i: any) => i.type === 'class'),
         armor: items.filter((i: any) => i.type === 'armor'),
-        equipment: items.filter((i: any) => ['misc', 'container', 'ammo'].includes(i.type)),
-        scrolls: items.filter((i: any) => ['scroll', 'tablet'].includes(i.type)),
+        equipment: items.filter((i: any) => ['misc', 'container'].includes(i.type)),
+        scrolls: items.filter((i: any) => i.type === 'scroll'),
         feats: items.filter((i: any) => i.type === 'feat'),
         uncategorized: items.filter((i: any) => !['class', 'weapon', 'armor', 'shield', 'misc', 'container', 'scroll', 'tablet', 'ammo', 'feat'].includes(i.type))
     };

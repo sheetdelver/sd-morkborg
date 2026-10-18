@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { buildModuleAssetUrl } from '@sheet-delver/sdk';
-import RollModal from './components/RollModal';
 import ItemModal from './components/ItemModal';
 import ItemInfoModal from './components/ItemInfoModal';
 import MorkBorgConfirmModal from './components/MorkBorgConfirmModal';
@@ -18,13 +17,6 @@ interface EquipmentTabProps {
 }
 
 export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, onCreateItem }: EquipmentTabProps) {
-    const [rollModalConfig, setRollModalConfig] = useState<{ isOpen: boolean; title: string; item: any; type: 'attack' | 'defend' }>({
-        isOpen: false,
-        title: '',
-        item: null,
-        type: 'attack'
-    });
-
     const [itemModalConfig, setItemModalConfig] = useState<{ isOpen: boolean; item: any }>({
         isOpen: false,
         item: null
@@ -37,15 +29,6 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
 
     const [confirmModal, setConfirmModal] = useState<{ config: MorkBorgConfirmConfig; onConfirm: () => void } | null>(null);
     const [addModal, setAddModal] = useState(false);
-
-    const openRollModal = (item: any, type: 'attack' | 'defend') => {
-        setRollModalConfig({
-            isOpen: true,
-            title: type === 'attack' ? 'Attack' : 'Defend',
-            item,
-            type
-        });
-    };
 
     const openItemModal = (item: any) => {
         setItemModalConfig({
@@ -73,87 +56,19 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
     };
 
     const handleQuantityChange = (item: any, delta: number) => {
-        const currentQty = Number(item.quantity || item.system?.quantity || 1);
+        const currentQty = Number(item.quantity ?? item.system?.quantity ?? 1);
         const newQty = Math.max(0, currentQty + delta);
         onUpdate(`items.${item._id || item.id}.system.quantity`, newQty);
     };
 
     const handleToggleCarry = (item: any) => {
-        const newStatus = !(item.system?.carried || item.carried);
+        const newStatus = !item.carried;
         onUpdate(`items.${item._id || item.id}.system.carried`, newStatus);
     };
 
     const handleToggleEquipped = (item: any) => {
         const newStatus = !(item.system?.equipped || item.equipped);
         onUpdate(`items.${item._id || item.id}.system.equipped`, newStatus);
-    };
-
-    // Find duplicates and prompt to combine them
-    const handleOrganizeClick = () => {
-        const allItems = [
-            ...(actor.items.weapons || []),
-            ...(actor.items.armor || []),
-            ...(actor.items.shields || []),
-            ...(actor.items.equipment || []),
-            ...(actor.items.misc || []),
-            ...(actor.items.ammo || []),
-            ...(actor.items.uncategorized || [])
-        ];
-
-        // Group by lowercase name
-        const groups: Record<string, any[]> = {};
-        for (const item of allItems) {
-            const key = item.name.toLowerCase().trim();
-            if (!groups[key]) groups[key] = [];
-            groups[key].push(item);
-        }
-
-        const duplicateGroups = Object.values(groups).filter(g => g.length > 1);
-        const totalDupes = duplicateGroups.reduce((acc, g) => acc + g.length - 1, 0);
-
-        if (duplicateGroups.length === 0) {
-            setConfirmModal({
-                config: {
-                    title: 'Already Organized',
-                    body: 'No duplicate items found. Your inventory is already tidy.',
-                    confirmLabel: 'OK',
-                },
-                onConfirm: () => setConfirmModal(null),
-            });
-            return;
-        }
-
-        const preview = duplicateGroups.slice(0, 3).map(g => `• ${g[0].name} (×${g.length})`).join('\n');
-        const more = duplicateGroups.length > 3 ? `\n…and ${duplicateGroups.length - 3} more.` : '';
-
-        setConfirmModal({
-            config: {
-                title: 'Organize Inventory',
-                body: [
-                    `Found ${totalDupes} duplicate entr${totalDupes === 1 ? 'y' : 'ies'} across ${duplicateGroups.length} item${duplicateGroups.length === 1 ? '' : 's'}:`,
-                    preview + more,
-                    'Quantities will be combined and duplicates removed.',
-                ],
-                confirmLabel: 'Combine Duplicates',
-            },
-            onConfirm: () => {
-                for (const group of duplicateGroups) {
-                    // Sort so we keep the one with the highest existing quantity as the base
-                    group.sort((a, b) => (b.system?.quantity || b.quantity || 1) - (a.system?.quantity || a.quantity || 1));
-                    const keeper = group[0];
-                    const totalQty = group.reduce((sum, i) => sum + (Number(i.system?.quantity || i.quantity) || 1), 0);
-
-                    // Update keeper quantity
-                    onUpdate(`items.${keeper._id || keeper.id}.system.quantity`, totalQty);
-
-                    // Delete the rest
-                    for (let i = 1; i < group.length; i++) {
-                        onDeleteItem(group[i]._id || group[i].id);
-                    }
-                }
-                setConfirmModal(null);
-            },
-        });
     };
 
     // Consolidate and sort items
@@ -164,7 +79,8 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
         ...(actor.items.equipment || []),
         ...(actor.items.misc || []),
         ...(actor.items.ammo || []),
-        ...(actor.items.uncategorized || [])
+        ...(actor.items.scrolls || []),
+
     ];
 
     const allEquipment = allItems.sort((a, b) => a.name.localeCompare(b.name));
@@ -226,26 +142,16 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
 
     const renderItemRow = (item: any, isNested: boolean = false, index: number) => {
         const isContainer = item.type === 'container';
-        const quantity = Number(item.quantity || item.system?.quantity || 1);
-        const slots = item.system?.carryWeight || item.weight || 0;
+        const quantity = Number(item.quantity ?? item.system?.quantity ?? 1);
+
         const isEquipped = item.system?.equipped || item.equipped;
-        const isCarried = item.system?.carried || item.carried;
+        const isCarried = item.carried;
 
         const toggleTitle = item.type === 'container'
             ? (isCarried ? 'Uncarry' : 'Carry')
             : (isEquipped ? 'Unequip' : 'Equip');
 
-        // Calculate slots used vs capacity if this is a container
-        let calculatedSlotsUsed = 0;
-        if (isContainer && item.system?.items) {
-            calculatedSlotsUsed = item.system.items.reduce((acc: number, id: string) => {
-                const child = allEquipment.find(i => (i._id || i.id) === id);
-                if (child) {
-                    return acc + (child.system?.carryWeight || child.weight || 1) * (child.system?.quantity || 1);
-                }
-                return acc;
-            }, 0);
-        }
+        const calculatedSlotsUsed = item.totalContainerSpace;
 
         return (
             <div
@@ -273,7 +179,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
                                 {quantity > 1 && <span className="text-white ml-2 opacity-100">({quantity})</span>}
                                 {isContainer && (
                                     <span className="text-yellow-500 ml-2">
-                                        ({calculatedSlotsUsed} / {item.system?.capacity || 7})
+                                        ({calculatedSlotsUsed} / {item.system?.capacity ?? 'Unavailable'})
                                     </span>
                                 )}
                             </button>
@@ -433,29 +339,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
                 </div>
             )}
 
-            {/* Organize Inventory Button */}
-            <div className="flex justify-center mt-6 mb-20">
-                <button
-                    onClick={handleOrganizeClick}
-                    className="flex items-center gap-3 font-morkborg text-lg uppercase tracking-widest font-bold text-white bg-pink-700 border-2 border-pink-500 px-6 py-3 hover:bg-black hover:border-neutral-700 transition-all -rotate-1 shadow-[4px_4px_0_0_#000] cursor-pointer"
-                >
-                    <PackageCheck className="w-5 h-5" />
-                    Organize Inventory
-                </button>
-            </div>
-
-            {/* Modals */}
-            {rollModalConfig.isOpen && (
-                <RollModal
-                    isOpen={rollModalConfig.isOpen}
-                    onClose={() => setRollModalConfig({ ...rollModalConfig, isOpen: false })}
-                    onRoll={onRoll}
-                    title={rollModalConfig.title}
-                    item={rollModalConfig.item}
-                    actor={actor}
-                    type={rollModalConfig.type}
-                />
-            )}
+            <p className="text-neutral-300 text-sm my-6">Stacks retain their individual identities. Automatic consolidation is unavailable.</p>
 
             {itemModalConfig.isOpen && (
                 <ItemModal

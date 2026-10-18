@@ -1,7 +1,7 @@
 {
     "id": "morkborg",
     "version": "0.8.3",
-    "title": "Mörk Borg",
+    "title": "M\u00f6rk Borg",
     "aliases": [
         "mork-borg"
     ],
@@ -31,5 +31,67 @@
                 "hydrate": true
             }
         ]
-    }
+    },
+    "worldSettings": [
+        {
+            "key": "morkborg.trackCarryingCapacity",
+            "scope": "world",
+            "systemVersion": "=6.0.0",
+            "schema": {
+                "type": "boolean"
+            },
+            "default": {
+                "value": true,
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
+                "systemVersion": "=6.0.0"
+            },
+            "affectsPreparation": true,
+            "exposure": "authenticated"
+        },
+        {
+            "key": "morkborg.trackAmmo",
+            "scope": "world",
+            "systemVersion": "=6.0.0",
+            "schema": {
+                "type": "boolean"
+            },
+            "default": {
+                "value": true,
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
+                "systemVersion": "=6.0.0"
+            },
+            "affectsPreparation": true,
+            "exposure": "authenticated"
+        },
+        {
+            "key": "morkborg.hitAutomation",
+            "scope": "world",
+            "systemVersion": "=6.0.0",
+            "schema": {
+                "type": "boolean"
+            },
+            "default": {
+                "value": true,
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
+                "systemVersion": "=6.0.0"
+            },
+            "affectsPreparation": true,
+            "exposure": "authenticated"
+        },
+        {
+            "key": "morkborg.allowedScvmClasses",
+            "scope": "world",
+            "systemVersion": "=6.0.0",
+            "schema": {
+                "type": "object"
+            },
+            "default": {
+                "value": {},
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
+                "systemVersion": "=6.0.0"
+            },
+            "affectsPreparation": true,
+            "exposure": "server"
+        }
+    ]
 }

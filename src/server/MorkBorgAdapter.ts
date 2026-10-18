@@ -6,6 +6,8 @@ import type {
     FoundryActor,
     PreparedActorData,
 } from '@sheet-delver/sdk';
+import { prepareInventory } from '../logic/inventory';
+import { ruleResult } from '../logic/worldRules';
 import { ChatCards } from '../ui/components/chat/ChatCards';
 import type { MorkBorgDataManager } from '../data/DataManager';
 import {
@@ -60,7 +62,14 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         actor: FoundryActor,
         context: Readonly<ActorPreparationContext>,
     ): PreparedActorData {
-        return super.prepareActorData(actor, context);
+        const prepared = super.prepareActorData(structuredClone(actor), context);
+        const carrying = ruleResult(context.world, 'trackCarryingCapacity');
+        prepared.derived.rules = context.world?.settings ?? {};
+        prepared.derived.encumbered = carrying.status === 'unavailable' ? null : carrying.value === true
+            && Number(prepared.derived.slotsUsed) > Number(prepared.derived.maxSlots);
+        prepared.derived.ruleStatus = carrying.status;
+        prepared.derived.worldContextRevision = context.world?.identity.contextRevision ?? null;
+        return prepared;
     }
 
     normalizeActorData(actor: any): any {
@@ -93,7 +102,8 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         const system = actor.system || {};
         const abilities = system.abilities || {};
         const classData = this.getClass(actor);
-        const slotsUsed = this.calculateSlotsUsed(actor.items || []);
+        const inventory = prepareInventory(actor.items || []);
+        const slotsUsed = inventory.slotsUsed;
         const maxSlots = this.calculateMaxSlots(actor);
 
         return {
@@ -118,9 +128,10 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
                 presence: { value: abilities.presence?.value ?? 0 },
                 toughness: { value: abilities.toughness?.value ?? 0 }
             },
+            inventory,
             slotsUsed: slotsUsed,
             maxSlots: maxSlots,
-            encumbered: slotsUsed > maxSlots,
+            encumbered: null,
             encumbranceHelpText: 'STR+8 carried items or DR+2 on AGI/STR tests.',
             weaponCriticalHelpText: 'Critical: X2 damage, target armor reduced one tier. Fumble: Weapon breaks or is lost.',
             armorCriticalHelpText: 'Critical: Gain free attack. Fumble: Take X2 damage, armor reduced one tier.',

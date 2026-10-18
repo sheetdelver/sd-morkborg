@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Prepare native carrying/container/equipment fields once; preserve source data and stack identities.
+- Remove unsafe inventory consolidation; use native handedness values and proven world-rule declarations.
+
 - Preserve typed command errors, preflight actor ownership and reject unsupported actions or unavailable generation content.
 
 Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.

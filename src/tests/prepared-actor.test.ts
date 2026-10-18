@@ -31,7 +31,7 @@ export function run(): void {
         },
         items: [
             { _id: 'class', name: 'Fanged Deserter', type: 'class', system: {} },
-            { _id: 'weapon', name: 'Femur', type: 'weapon', system: { weight: 2, quantity: 2 } },
+            { _id: 'weapon', name: 'Femur', type: 'weapon', system: { carryWeight: 2, containerSpace: 1, quantity: 2 } },
         ],
         effects: [],
     } as unknown as FoundryActor;
@@ -51,7 +51,7 @@ export function run(): void {
         .blocks?.find(block => block.title === 'SILVER')?.value, '15');
     assert.equal(adapter.getActorCardData({ ...prepared, derived: { ...prepared.derived, silver: {} } })
         .blocks?.find(block => block.title === 'SILVER')?.value, 0);
-    assert.equal(source.items[1].system.weight, 2);
+    assert.equal(source.items[1].system.carryWeight, 2);
 
     console.log('morkborg prepared Actor parity: PASS');
 }
