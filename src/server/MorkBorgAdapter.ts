@@ -383,7 +383,10 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
             return await client.useItem(actor._id || actor.id, itemId);
         }
 
-        if (rollData.type === 'attack') {
+        if (rollData.type === 'dice') {
+            const response = await client.roll(rollData.formula, rollData.label, { displayChat: false });
+            parseSyntheticRoll(response, rollData.label);
+        } else if (rollData.type === 'attack') {
             const isRanged = results.item?.system?.weaponType === 'ranged';
             const mod = isRanged ? (actor.system?.abilities?.presence?.value ?? 0) : (actor.system?.abilities?.strength?.value ?? 0);
             const modifiedDR = options.modifiedDR || 12;

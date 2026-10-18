@@ -1,3 +1,5 @@
+import { SdkError } from '@sheet-delver/sdk';
+
 /**
  * MorkBorg pure logic rules. 
  * These functions are environment-agnostic and safe for use in both UI and Server segments.
@@ -95,6 +97,8 @@ import {
  * Resolve roll data or pre-evaluated card content from actor state
  */
 export function getRollData(actor: any, type: MorkBorgRollType, key: string, options: MorkBorgRollOptions = {}): MorkBorgRollData | null {
+    if (!actor || actor.type && actor.type !== 'character') throw new SdkError('validation', 'Unsupported Actor type');
+    if (!['dice', 'ability', 'item', 'feat', 'initiative', 'rest', 'broken', 'spendOmen', 'getBetter'].includes(type)) throw new SdkError('validation', 'Unsupported action');
     const system = actor.system || {};
     const abilities = system.abilities || {};
 
@@ -108,7 +112,8 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
 
     if (type === 'ability') {
         const statLabel = key.charAt(0).toUpperCase() + key.slice(1);
-        const value = abilities[key]?.value ?? 0;
+        if (!Number.isFinite(abilities[key]?.value)) throw new SdkError('validation', 'Unknown or unavailable ability');
+        const value = abilities[key].value;
         const sign = value >= 0 ? '+' : '-';
         return {
             type: 'ability',
@@ -133,7 +138,8 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
                 .find((i: any) => (i as any).uuid === key || (i as any)._id === key || (i as any).id === key);
         }
 
-        const itemData = normalizeItem(item || {});
+        if (!item) throw new SdkError('not_found', 'Owned Item not found');
+        const itemData = normalizeItem(item);
 
         if (options.rollType === 'attack' || options.rollType === 'defend') {
             const isRanged = itemData.type === 'weapon' && itemData.weaponType === 'ranged';
@@ -148,6 +154,8 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
             const encumbered = actor.derived?.encumbered || false;
 
             if (options.rollType === 'attack') {
+                if (itemData.type !== 'weapon') throw new SdkError('validation', 'Attack requires a weapon');
+                if (!itemData.damageDie.trim()) throw new SdkError('not_ready', 'Weapon damage formula is unavailable');
                 return {
                     type: 'attack',
                     itemId: itemData.id,
@@ -157,7 +165,7 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
                     rollLabel: `Attack — ${itemData.name}`,
                     resolvedFormula: `1d20${sign}${absMod}`,
                     humanFormula: `1d20 ${sign} ${absMod} (${attackLabel})`,
-                    damageDie: itemData.damageDie || '1d4',
+                    damageDie: itemData.damageDie,
                     encumbered,
                     dr: 12,
                 };
@@ -200,7 +208,7 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
             };
         }
 
-        if (itemData.type === 'scroll' || itemData.type === 'power') {
+        if (itemData.type === 'scroll') {
             const scrollFormula = itemData.rollFormula || '1d20';
             return {
                 type: 'power',
@@ -243,9 +251,5 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
         return { type: 'decoctions', isAutomated: true, label: 'Brew Decoctions' };
     }
 
-    return {
-        formula: '1d20',
-        type: 'default',
-        label: 'Roll'
-    };
+    throw new SdkError('validation', 'Unsupported action or Item capability');
 }

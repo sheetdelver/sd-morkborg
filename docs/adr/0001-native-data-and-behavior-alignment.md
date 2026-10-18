@@ -380,7 +380,7 @@ currently advertised functionality.
 | --- | --- | --- |
 | Discovery | Complete for the pinned source/data baseline | Active audit; controlled offline comparisons; no implementation |
 | G0 | In progress | Documentation baseline `7429db2`; maintained native regressions: 20 of 21 fail before changes (see audit). Additional table/generation/UI cases pending. |
-| G1 | Open | Command/error/dependency work pending |
+| G1 | In progress | Typed errors/OWNER preflight/command validation and minimal dependencies pass offline; installed caller and comprehensive payload acceptance pending. |
 | G2 | Open | Settings/preparation/shape work pending |
 | G3 | Open | Inventory/action parity pending |
 | G4 | Open | Draw/feat consolidation pending |
@@ -404,3 +404,10 @@ in the active audit. This is an intentional failing-before checkpoint, not a
 passing implementation gate. Attack/defense upstream quirk selection is awaiting
 the user's choice; independent work continues. Non-character sheets/actions
 will expose unsupported status; generation must still preserve companion Actors.
+
+Command-boundary checkpoint: `command-boundaries.test.ts` passes; original
+MB-C01/02 and MB-N04 cases now pass on the same inputs (16 other baseline
+failures remain). Explicit module typing passes. Released-Core isolated module
+check/package passes, SHA-256
+`5ea07fd832086b09854b9f5d26ba1f96fdc898ed6e589f44cbd48d64aa07557f`.
+No installed/native authorization acceptance is inferred.

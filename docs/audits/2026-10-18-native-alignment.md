@@ -456,3 +456,14 @@ failure HP scope, typed route status and empty generation. Expected resources
 and writes derive from pinned native methods, not the module outputs. Local
 full log: `/tmp/morkborg-adr0001-failing-before.log`. Tables/generation/settings,
 manual actions and installed/browser acceptance remain open. No finding closed.
+
+### Command boundary checkpoint
+
+MB-C01/02 and MB-N04: corrected portions pass same-input source regressions;
+20 baseline failures reduced to 16. `command-boundaries.test.ts` additionally
+proves OWNER preflight options, stat rolls independent of unavailable packs,
+invalid commands without dice/chat, concealed missing actors and sanitized 500s.
+Explicit module typing passes. Core 0.19.3 module check and isolated package pass
+(`/tmp/morkborg-adr0001-g1/`), archive SHA-256
+`5ea07fd832086b09854b9f5d26ba1f96fdc898ed6e589f44cbd48d64aa07557f`.
+Installed/native role checks and remaining command/formula validation stay open.

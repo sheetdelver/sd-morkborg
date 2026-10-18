@@ -1,3 +1,5 @@
+import { SdkError } from '@sheet-delver/sdk';
+
 /**
  * MorkBorgDataManager — Mörk Borg system data logic (table draws, item lookups, scvm
  * generation). The pack data (items + roll tables) is no longer bundled offline JSON; it
@@ -183,7 +185,7 @@ export class MorkBorgDataManager {
     }
 
     public generateRandomCharacter(classInclusion: Record<string, boolean>, previousClassId?: string) {
-        if (!this.itemsCache) return null;
+        if (!this.itemsCache.length || !this.tablesCache.length) throw new SdkError('not_ready', 'Character generation requires visible Item and RollTable content');
 
         // 1. Class Selection
         const allClasses = this.getItemsByType(['class']);
@@ -193,9 +195,9 @@ export class MorkBorgDataManager {
         let allowedClasses = allClasses.filter((c: any) => classInclusion[c._id]);
 
         // Safety Fallback: If the user unchecked literally everything, draw from ALL available classes anyway
-        if (allowedClasses.length === 0) {
-            allowedClasses = allClasses;
-        }
+        if (allClasses.length === 0) throw new SdkError('not_ready', 'No visible Class templates');
+        if (Object.keys(classInclusion).length === 0) allowedClasses = allClasses;
+        if (allowedClasses.length === 0) throw new SdkError('validation', 'Select at least one available Class');
 
         // Exclude the previously rolled class to prevent back-to-back duplicates,
         // but ONLY if there are other options available in the allowed pool.

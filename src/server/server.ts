@@ -12,12 +12,31 @@
 
 import type { ModuleServerRequest, ModuleServerParams, ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { json, error } from '@sheet-delver/sdk/server';
-import { getErrorMessage } from '@sheet-delver/sdk';
+import { isSdkError, SdkError } from '@sheet-delver/sdk';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
 import { getRollData } from '../logic/rules';
 import { createMorkBorgData } from '../data/DataManager';
 
 const adapter = new MorkBorgAdapter();
+
+function routeError(cause: unknown) {
+    return isSdkError(cause) ? error(cause.code, cause.message, cause.status)
+        : error('internal', 'Mörk Borg operation failed. Refresh before retrying.');
+}
+
+function validateBody(body: any) {
+    if (!body || typeof body !== 'object' || Array.isArray(body)) throw new SdkError('validation', 'Expected a command object');
+    if (typeof body.type !== 'string' || typeof body.key !== 'string') throw new SdkError('validation', 'Command type and key are required');
+    const options = body.options ?? {};
+    if (!options || typeof options !== 'object' || Array.isArray(options)) throw new SdkError('validation', 'Invalid options');
+    if (options.rollMode !== undefined && !['publicroll', 'gmroll', 'blindroll', 'selfroll'].includes(options.rollMode)) throw new SdkError('validation', 'Invalid roll visibility');
+    if (options.rollAdvantageMode && options.rollAdvantageMode !== 'normal') throw new SdkError('validation', 'Advantage is unsupported');
+    for (const key of ['manualHitDie', 'manualDefendDie', 'manualDamageDie', 'manualIncomingDamage']) {
+        if (options[key] !== undefined && (!Number.isSafeInteger(options[key]) || options[key] < 0)) throw new SdkError('validation', `Invalid ${key}`);
+    }
+    if (options.manualData?.dieResult !== undefined && !Number.isSafeInteger(options.manualData.dieResult)) throw new SdkError('validation', 'Invalid manual die');
+    return options;
+}
 
 /**
  * Drives the (preserved) mechanics engine over `req.runtime`. The engine calls
@@ -63,19 +82,24 @@ export const apiRoutes = {
     'actors/[id]/roll': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
         try {
             const actorId = (await routeParts(params))[1];
-            const body = await req.json<any>().catch(() => ({}));
-            const { type, key, options } = body;
-            const actor = await req.runtime.documents.get('Actor', actorId);
+            const body = await req.json<any>();
+            const options = validateBody(body);
+            const { type, key } = body;
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
             if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character') return error('validation', 'Character actions are unsupported for this Actor type');
+            if (options.speaker?.actor && options.speaker.actor !== actorId) return error('validation', 'Speaker must be the selected Actor');
+            options.speaker = { actor: actorId, alias: actor.name };
 
             const rollData = getRollData(actor, type, key, options ?? {});
             if (!rollData) return error('validation', `Unknown roll: ${type}/${key}`);
 
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const result = await adapter.performAutomatedSequence(engineClient(req.runtime), actor, rollData, options ?? {}, data);
+            const needsContent = ['broken', 'getBetter', 'decoctions', 'power'].includes(rollData.type);
+            const data = needsContent ? await createMorkBorgData(req.runtime.compendium) : undefined;
+            const result = await adapter.performAutomatedSequence(engineClient(req.runtime), actor, rollData, options ?? {}, data!);
             return sequenceResponse(result);
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            return routeError(e);
         }
     },
 
@@ -83,10 +107,10 @@ export const apiRoutes = {
         try {
             const body = await req.json<any>().catch(() => ({}));
             const data = await createMorkBorgData(req.runtime.compendium);
-            const character = data.generateRandomCharacter(body.classInclusion ?? {}, body.previousClassId);
+            const character = await data.generateRandomCharacter(body.classInclusion ?? {}, body.previousClassId);
             return json({ success: true, character });
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            return routeError(e);
         }
     },
 
@@ -98,7 +122,7 @@ export const apiRoutes = {
             const items = types.length ? data.getItemsByType(types) : [];
             return json({ items });
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            return routeError(e);
         }
     },
 };

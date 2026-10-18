@@ -102,3 +102,12 @@ The shared contracts are described in Core's
 [module authoring guide](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_AUTHORING.md),
 [world/maintenance contract](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_MIGRATIONS.md)
 and [release process](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/RELEASING.md).
+
+## ADR-0001 implementation checkpoints
+
+Command routes preserve SDK typed failures and sanitize unexpected errors. Character
+actions preflight OWNER reads, validate command/visibility/manual shapes and bind
+speaker attribution to the selected actor before dice or chat. Ordinary ability
+and initiative rolls no longer load unrelated generation packs. Empty generation
+catalogs return not-ready; an explicitly empty class selection is invalid.
+These source/offline boundaries still require installed caller/native acceptance.
