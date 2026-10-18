@@ -4,6 +4,13 @@ Read this file, then `temp/AGENT-HANDOFF.md` when present and its active task
 references. Read [module architecture](docs/architecture.md) for technical context.
 Do not adopt Shadowdark's audit or the Core handoff as this module's work queue.
 
+Current remediation context is [module ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md)
+and the [active audit index](docs/audits/README.md). Discovery does not authorize
+implementation or Git mutations. Follow the current task's scope, and record
+validated progress/commit evidence at the ADR's checkpoints when implementation
+and commits are authorized. Core compatibility findings MB-C01–04 are carried into
+that ADR; they are not a separate active queue.
+
 ## Scope and repository ownership
 
 This is an independent SheetDelver system-module repository. Keep its code,
@@ -81,6 +88,18 @@ second world cache/lifecycle or treat module-prepared data as native browser dat
 Preserve Mörk Borg resource shapes, roll visibility and its yellow/black/pink
 presentation. Sheet Auto/Manual raw-die inputs and the HUD's final manual total
 have different semantics; do not merge them by convenience.
+
+Use native `carryWeight`/`containerSpace`/`carried` and canonical owned Item IDs.
+Never consolidate destructive inventory operations by name, count overlapping
+categories twice, or infer a missing weapon die. The existing `weight` test
+fixture and repeated UI calculations are known gaps, not authoritative examples.
+Test native-shaped data and independently expected resource changes. Native chat
+instructions are not permission to add automatic HP or inventory mutations.
+
+Record the selected native revision and reported system/Foundry versions. The
+current local reference's 6.0.1 tag and 6.0.0 manifest differ; do not hide that
+distinction or extend support to another native release without evidence. Read
+copied compendium databases for offline audits, leaving the reference untouched.
 
 The mobile section bar uses the public footer-space registration. Verify its
 interaction with host controls and multi-digit current/maximum HP at narrow

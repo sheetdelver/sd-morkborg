@@ -3,14 +3,66 @@
 `info.json` is the compatibility authority. The module requires Core 0.18.0
 and UI API 3.1; the remaining API ranges are declared there.
 
-The adapter prepares Actors deterministically without writing derived values
-back to Foundry. Sheets, cards and rolls use that shared prepared model.
-Keep module-specific resource shapes and system rules inside the module.
+The active [native alignment audit](audits/2026-10-18-native-alignment.md) and
+[proposed ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
+remediation plan. The earlier Core 0.19.3 compatibility review passed build checks,
+but neither it nor the existing tests establish native parity. Manifest ranges,
+CI/release pins and product source remain unchanged during documentation discovery.
+
+## Current implementation and known boundaries
+
+The adapter prepares Actor clones through `BaseSystemAdapter`; it does not write
+derived values back to Foundry. Its resource/card preparation and item categorizer
+feed `MorkBorgSheet`, while the custom ActorPage uses Core's `useActorSheet` for
+loading, updates and realtime. The current sheet has Background, Equipment,
+Violence and Special tabs. There is no independent simplified-sheet projector or
+type-specific creature/follower/container/misery sheet.
+
+Module routes drive a system-specific action engine through a shim over caller-bound
+documents, rolls and chat. Generic Item CRUD uses platform routes. The data manager
+reads declared Item/RollTable compendia per request, but still implements private
+dice/table selection and SCVM generation. The generator posts its client-held
+candidate to platform Actor creation. It currently omits generated companion Actors.
+
+Preparation is **not yet one complete authority**: it totals `weight` instead of
+native `carryWeight`, and the tabs/dialogs/server independently calculate several
+inventory, armor and roll values. The audit identifies duplicate ammo grouping,
+unsafe consolidation, rest/advancement/power differences, ignored class equipment
+dice and name-based reference resolution. Do not copy these paths into new features.
+The proposed ADR requires one typed preparation/action model and public SDK draws.
 
 Core owns authorization, world/session lifecycle, roll execution and shared
 chat/media/dice presentation. The module supplies its own sheet and roll styling
 through the public SDK. Its mobile section bar registers measured footer space
 so Core controls remain accessible above it.
+
+Custom info/edit/rest/confirmation/roll overlays still exist; they do not inherit
+all shared-dialog corrections automatically. Raw description HTML, keyboard/focus
+behavior and lifecycle retirement require the audit's G6 work. Retain module design
+while adopting shared components/helpers where their contracts fit.
+
+## Native authority and settings
+
+The inspected native reference is tag 6.0.1 at
+`d850c094a9452d752307221f42245a73b66bdfbb`; its manifest reports 6.0.0 and Foundry 14.
+The audit distinguishes schema/stored documents, native derived methods, module
+preparation and controlled execution. Native browser methods and add-on CONFIG
+mutations are not automatically available over the public SDK. No v13 support claim
+is established by this reference alone.
+
+Native equipment uses `carryWeight`, `containerSpace`, `carried`, `quantity`,
+`system.items` container membership, `tier.value/max`, and `handed` 1/2 (stored
+strings also occur). Class-owned Items supply starting formulas/rolls and the Omen
+die. Scrolls are Item type `scroll`; tablets use `system.scrollType`, not a separate
+native Item type. Preserve canonical UUIDs when resolving class/table documents.
+
+The module currently declares no world settings or migration catalog. ADR-0001
+proposes proven world carrying/ammo/automation/class-policy settings through Core's
+revisioned context, plus caller-safe mounted consumer refresh. This is a plan,
+not implemented behavior. Client preferences and dynamically registered native
+configuration require separate treatment. No mandatory persistent migration was
+established: evaluate the module-generated malformed handedness shape before
+choosing a deterministic Core-admin repair. Never persist projections as a repair.
 
 ## Initiative
 
@@ -20,8 +72,10 @@ read-only and returns only a roll choice or a final manual total. Omitting an
 advantage mode preserves the formula. Sheet Auto/Manual raw-die rules are
 separate from the HUD's final-total entry.
 
-The managed HUD uses individual initiative; this is not an implementation of
-Mörk Borg party initiative or native Foundry turn-hook automation.
+The managed HUD uses individual initiative. A separate sheet party action currently
+posts a roll result; it does not implement native encounter reordering or turn hooks.
+Those features remain separately scoped. Correct the sheet preview/execution
+inconsistency without changing the HUD's final-total contract.
 
 ## Responsive resources
 
@@ -39,6 +93,12 @@ include the package archive, checksum, catalog manifest and release history.
 A module release tag identifies the matching manifest version.
 
 Repository workflow and verification commands live in [AGENTS.md](../AGENTS.md).
+ADR-0001 proposes qualification and coherent pins against released Core 0.19.3;
+the current 0.18.0 pins remain the actual implementation until that gate is done.
+The [audit index](audits/README.md) selects one active report and preserves earlier
+evidence. Native acceptance, role/privacy cases and installed browser flows remain
+open; static render tests are insufficient to close those gates.
 The shared contracts are described in Core's
-[module authoring guide](https://github.com/sheetdelver/sheetdelver/blob/v0.18.0/docs/MODULE_AUTHORING.md)
-and [release process](https://github.com/sheetdelver/sheetdelver/blob/v0.18.0/docs/RELEASING.md).
+[module authoring guide](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_AUTHORING.md),
+[world/maintenance contract](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_MIGRATIONS.md)
+and [release process](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/RELEASING.md).
