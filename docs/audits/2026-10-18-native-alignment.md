@@ -440,3 +440,19 @@ Git writes, release changes, or native-world changes were made for this audit.
 Documentation validation: seven tracked/new Markdown files, 34 local links and
 whitespace checks passed. Core and native-reference Git status remained clean;
 module changes are documentation only and uncommitted.
+
+## Implementation evidence — ADR-0001
+
+Branch: `fix/adr-0001-native-alignment`. Existing docs checkpoint: `7429db2`.
+Reverified clean native and Core references at the recorded hashes; no connections
+or services started. Native qualification selected: Foundry 14, tag 6.0.1 /
+manifest 6.0.0. v13 remains outside the evidenced claim.
+
+Failing-before regression: `src/tests/native-alignment.test.ts`, executed with
+released Core's tsx on unchanged product source: **20 fail / 1 pass**. Cases cover
+native carryWeight, duplicate ammo IDs, absent weapon die, unsupported action,
+all 12 rest combinations, advancement equality, medium-armor casting, power
+failure HP scope, typed route status and empty generation. Expected resources
+and writes derive from pinned native methods, not the module outputs. Local
+full log: `/tmp/morkborg-adr0001-failing-before.log`. Tables/generation/settings,
+manual actions and installed/browser acceptance remain open. No finding closed.

@@ -1,6 +1,6 @@
 # ADR-0001: Native data, behavior and Core contract alignment
 
-**Status:** Proposed — discovery recorded; implementation not started  
+**Status:** In progress — implementation authorized; native acceptance open
 **Date:** October 18, 2026  
 **Owner:** SheetDelver Mörk Borg module  
 **Evidence:** [Native alignment audit](../audits/2026-10-18-native-alignment.md)
@@ -156,8 +156,8 @@ separate from implementation and closeout authorization.
 
 ## Implementation gates and commit checkpoints
 
-All gates are **open**. Documentation discovery is complete; no implementation
-gate is credited by this audit. Work belongs on a user-approved module branch,
+Implementation is authorized on `fix/adr-0001-native-alignment`. Gates remain
+open until their required evidence is recorded. Work belongs on a user-approved module branch,
 for example `fix/adr-0001-native-alignment`. Git commits/checkpoints require their
 applicable task authorization. At each authorized checkpoint, commit a coherent
 passing slice with its tests, ADR/audit evidence, architecture notes and updated
@@ -379,7 +379,7 @@ currently advertised functionality.
 | Gate | State | Evidence / commit |
 | --- | --- | --- |
 | Discovery | Complete for the pinned source/data baseline | Active audit; controlled offline comparisons; no implementation |
-| G0 | Open | Native support/ambiguity decisions and maintained failing regressions pending |
+| G0 | In progress | Documentation baseline `7429db2`; maintained native regressions: 20 of 21 fail before changes (see audit). Additional table/generation/UI cases pending. |
 | G1 | Open | Command/error/dependency work pending |
 | G2 | Open | Settings/preparation/shape work pending |
 | G3 | Open | Inventory/action parity pending |
@@ -389,3 +389,18 @@ currently advertised functionality.
 | G7 | Open | Repair decision and installed-host qualification pending |
 | G8 | Open | Native matrix pending; no native connection in this audit |
 | G9 | Open | Review and closeout pending |
+
+### Implementation baseline (2026-10-18)
+
+Reverified module `d9d250c` / 0.8.3, released Core `90c13e5` / 0.19.3
+and clean native `d850c094` / exact tag 6.0.1 (manifest 6.0.0, Foundry 14).
+The selected qualification pair is Foundry 14 with this native revision. v13
+is not claimed. Existing documentation was inspected and committed at `7429db2`.
+
+The first maintained regression run used native schema and independently expected
+results from `actor/rest.js`, `get-better.js`, `powers.js`, `actor.js` and
+`item.js`: 20 of 21 cases failed on unchanged product code. Evidence is retained
+in the active audit. This is an intentional failing-before checkpoint, not a
+passing implementation gate. Attack/defense upstream quirk selection is awaiting
+the user's choice; independent work continues. Non-character sheets/actions
+will expose unsupported status; generation must still preserve companion Actors.
