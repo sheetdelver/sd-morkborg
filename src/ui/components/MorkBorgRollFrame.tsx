@@ -1,6 +1,5 @@
 'use client';
 import React, { useEffect, useId, useRef, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import { Dices, Pencil } from 'lucide-react';
 
 export function RollEntryMode({ manual, onChange, canAuto = true, canManual = true, manualLabel = 'Manual' }: {
@@ -53,25 +52,42 @@ export function useDialogFocus(find: () => HTMLElement | null, onClose: () => vo
 export default function MorkBorgRollFrame({ title, subtitle = '', onClose, children, wide = false }: {
     title: string; subtitle?: string; onClose: () => void; children: ReactNode; wide?: boolean;
 }) {
-    const titleId = useId(), root = useRef<HTMLDivElement>(null), layer = useRef<HTMLDivElement>(null);
-    useDialogFocus(() => root.current, onClose);
+    const titleId = useId(), dialog = useRef<HTMLDialogElement>(null);
     useEffect(() => {
+        const node = dialog.current;
+        if (!node) return;
+        const prior = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         const oldOverflow = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
-        const siblings = [...document.body.children].filter(el => el !== layer.current) as HTMLElement[];
-        const previous = siblings.map(el => [el, el.inert] as const);
-        siblings.forEach(el => { el.inert = true; });
-        return () => { previous.forEach(([el, inert]) => { el.inert = inert; }); document.body.style.overflow = oldOverflow; };
+        // The browser top layer supplies containment, focus order and Escape.
+        // Released installed Core does not expose react-dom.createPortal.
+        node.showModal();
+        return () => {
+            if (node.open) node.close();
+            document.body.style.overflow = oldOverflow;
+            queueMicrotask(() => { if (prior?.isConnected && !prior.closest('[inert]')) prior.focus(); });
+        };
     }, []);
-    const content = <div ref={layer} className="sdk-module--morkborg"><div className="fixed inset-0 z-[120] overflow-y-auto bg-black/80 backdrop-blur-sm" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
-        <div className="flex min-h-full items-center justify-center p-4 pointer-events-none">
-            <div ref={root} role="dialog" aria-modal="true" aria-labelledby={titleId} className={`pointer-events-auto bg-neutral-950 text-white border-2 border-pink-900 shadow-[8px_8px_0_0_#831843] ${wide ? 'max-w-2xl' : 'max-w-sm'} w-full p-5 sm:p-6 my-6 relative text-left`}>
+    return <dialog ref={dialog} role="dialog" aria-modal="true" aria-labelledby={titleId}
+        className="sdk-module--morkborg mb-form-dialog"
+        style={{ position: 'fixed', inset: 0, margin: 0, width: '100vw', height: '100dvh', maxWidth: 'none', maxHeight: 'none', padding: 0, border: 0, background: 'transparent', overflowY: 'auto' }}
+        onKeyDown={event => {
+            if (event.key !== 'Tab' || !dialog.current) return;
+            const controls = [...dialog.current.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[contenteditable=true],a[href],[tabindex]:not([tabindex="-1"])')].filter(el => el.getClientRects().length > 0);
+            const first = controls[0], last = controls.at(-1);
+            // Browser chrome is otherwise a native dialog's next Tab stop.
+            if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+            else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+        }}
+        onCancel={event => { event.preventDefault(); onClose(); }}>
+        <style>{`.sdk-module--morkborg.mb-form-dialog::backdrop { background: rgba(0,0,0,.8); backdrop-filter: blur(4px); }`}</style>
+        <div className="flex min-h-full items-center justify-center p-4" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
+            <div className={`bg-neutral-950 text-white border-2 border-pink-900 shadow-[8px_8px_0_0_#831843] ${wide ? 'max-w-2xl' : 'max-w-sm'} w-full p-5 sm:p-6 my-6 relative text-left`}>
                 <button type="button" onClick={onClose} aria-label={`Close ${title}`} className="absolute top-2 right-3 text-xl text-pink-400">×</button>
                 <h2 id={titleId} className="font-imfell text-2xl text-yellow-400 uppercase pr-8 mb-2">{title}</h2>
                 {subtitle && <p className="text-pink-400 text-xs font-mono mb-4">{subtitle}</p>}
                 {children}
             </div>
         </div>
-    </div></div>;
-    return typeof document === 'undefined' ? content : createPortal(content, document.body);
+    </dialog>;
 }

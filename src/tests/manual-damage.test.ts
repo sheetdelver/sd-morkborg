@@ -11,6 +11,7 @@ async function run() {
         async roll(formula: string) { formulas.push(formula); return { _synthetic: true,
             rolls: [JSON.stringify({ formula, total: formulas.length === 1 ? 17 : 10, terms: [] })] }; },
         async sendMessage(data: any) { return data; },
+        async updateActor(_id: string, patch: any) { assert.equal(patch['flags.morkborg.attackDR'], 12); assert.equal(patch['system.hp.value'], undefined); },
     }, actor, { type: 'attack', itemId: 'w', resolvedFormula: '1d20-3', damageDie: '1d6+1', drModifier: 0, automation: true },
     { manualHitDie: 20, manualDamageDie: 4, baseDR: 12 }, undefined as any);
     // RAW p31: natural 20; preserve +1, then double damage. Not a final-total input.

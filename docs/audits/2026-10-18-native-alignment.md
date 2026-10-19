@@ -23,7 +23,7 @@ read-only to distinguish module work from possible external limitations.
 
 At discovery, no live Core/Foundry connection, native browser acceptance, world
 write or rendered interaction was performed. Subsequent isolated installed/browser
-execution is recorded separately below; no native-world acceptance has occurred. Controlled native functions ran with
+execution is recorded separately below, including partial native-world acceptance. At discovery, controlled native functions ran with
 mocked dice/presentation and in-memory actors. UI risks below are source findings
 unless explicitly identified otherwise. This audit does not claim every native
 feature is supported or every possible input has been tested.
@@ -637,6 +637,23 @@ Operator update after isolated qualification: the user supplied `localhost:30000
 Foundry 14, passwordless GM, in response to the bundled disposable-world request.
 Verify the active world, exact build/native identity and available roles before
 fixtures; native results have not yet been credited at this checkpoint.
+
+### Live installed/native correction checkpoint
+
+After `d06f20c`, full installed execution exposed and corrected three defects:
+unsupported portal loading (MB-N13), false resource conflicts under native merge
+semantics (MB-N05/07), and missing remembered combat choices (MB-N03).
+[Before/after evidence and package identity](evidence/2026-10-18-live-corrections.md)
+records 15 passing source suites, explicit typing/check/package, 14 production
+integration cases and 24 actual-rewriter browser cases. Live owner/observer/hidden
+boundaries now qualify MB-C01; all rest combinations, negative HP, powers/Omens
+and advancement equality/bounds qualify MB-N05/06 and the resource portion of N07.
+Independent native executions provide the formula/resource oracle; source and
+inventory remain preserved. These findings are corrected with executed evidence,
+while combat/visibility, setting/access retirement, complete native generation
+creation/recovery and full-host presentation acceptance remain open. Four marked
+Actor fixtures and journaled chat are active for that matrix; cleanup is pending.
+This latest state supersedes the earlier service/account-pending snapshots below.
 
 ### Native runtime checkpoint
 

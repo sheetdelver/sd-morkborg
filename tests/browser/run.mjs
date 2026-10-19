@@ -13,16 +13,21 @@ const {build}=requireCore('esbuild'),postcss=requireCore('postcss'),tailwind=req
 const httpPort=Number(option('--port')??4181),cdpPort=Number(option('--cdp-port')??9418);
 const available=port=>new Promise((resolve,reject)=>{const s=net.createServer();s.once('error',reject);s.listen(port,'127.0.0.1',()=>s.close(resolve))});
 await available(httpPort);await available(cdpPort);
+const rewriterBuild=await build({entryPoints:[path.join(core,'src/server/routes/modules/rewriteModuleImports.ts')],bundle:true,platform:'node',format:'esm',write:false,logLevel:'warning'});
+const {rewriteImportsForBrowser}=await import('data:text/javascript;base64,'+Buffer.from(rewriterBuild.outputFiles[0].text).toString('base64'));
 for(const [flavor,file] of [['installed',archive],['baseline',before??archive]]){
  const target=path.join(output,flavor);fs.mkdirSync(target);
  const result=spawnSync('tar',['-xzf',path.resolve(file),'-C',target],{stdio:'inherit'});if(result.status!==0)throw Error('Archive extraction failed');
+ const ui=path.join(target,'dist/ui.js');fs.writeFileSync(ui,rewriteImportsForBrowser(fs.readFileSync(ui,'utf8')));
  await build({entryPoints:[path.join(here,'harness.jsx')],outfile:path.join(output,flavor+'.js'),bundle:true,nodePaths:[path.join(core,'node_modules')],format:'esm',platform:'browser',jsx:'automatic',target:'es2022',tsconfig:path.join(core,'tsconfig.json'),
   alias:{'host-confirm':path.join(core,'src/client/ui/components/ConfirmationModal.tsx'),'host-editor':path.join(core,'src/client/ui/components/RichTextEditor.tsx'),'host-ui':path.join(core,'src/client/ui/context/UIContext.tsx'),'host-hud':path.join(core,'src/client/ui/components/FloatingHUD.tsx'),
    '@client/ui/context/SessionContext':path.join(here,'fixture-session.js'),'@client/ui/context/ChatContext':path.join(here,'fixture-chat.js'),'next/navigation':path.join(here,'fixture-navigation.js'),'fixture-module':path.join(target,'dist/ui.js'),'fixture-logic':path.join(target,'dist/logic.js')},define:{'process.env.NODE_ENV':'"production"'},logLevel:'warning'});
 }
 const styles=await postcss([tailwind({base:core})]).process(`@import "tailwindcss" source(none);\n@source "${core}/src";`,{from:path.join(core,'src/app/browser-fixture.css')});
 fs.writeFileSync(path.join(output,'host.css'),styles.css+fs.readFileSync(path.join(core,'src/app/globals.css'),'utf8').replace('@import "tailwindcss";',''));
-for(const file of ['cdp.mjs','browser-tests.mjs'])fs.copyFileSync(path.join(here,file),path.join(output,file));
+fs.copyFileSync(path.join(here,'cdp.mjs'),path.join(output,'cdp.mjs'));
+const testScript=option('--test-script')??'browser-tests.mjs';if(path.basename(testScript)!==testScript)throw Error('Test script must be in tests/browser');
+fs.copyFileSync(path.join(here,testScript),path.join(output,'browser-tests.mjs'));
 const server=http.createServer((req,res)=>{
  const url=new URL(req.url,'http://fixture');const flavor=url.searchParams.get('flavor')==='baseline'?'baseline':'installed';
  if(url.pathname==='/'){res.setHeader('Content-Type','text/html');res.end(`<!doctype html><html><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/host.css"><link rel="stylesheet" href="/${flavor}/assets/morkborg.tailwind.css"><body><div id="root"></div><script type="module" src="/${flavor}.js"></script></body></html>`);return}

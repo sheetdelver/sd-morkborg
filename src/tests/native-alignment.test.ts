@@ -8,8 +8,8 @@ import { apiRoutes } from '../server/server';
 // item/item.js, actor/actor.js and schema. Minimal data, no copied pack prose.
 export const nativeActor = () => ({
     _id: 'scvm', name: 'Fixture', type: 'character',
-    system: { hp: { value: 5, max: 10 }, powerUses: { value: 1, max: 4 },
-        omens: { value: 1, max: 2 }, silver: 0,
+    system: { hp: { value: 5, max: 10 }, powerUses: { value: 1, max: 4, min: 0 },
+        omens: { value: 1, max: 2, min: 0 }, silver: 0,
         abilities: Object.fromEntries(['strength', 'agility', 'presence', 'toughness'].map(k => [k, { value: 2 }])) },
     items: [] as any[],
 });

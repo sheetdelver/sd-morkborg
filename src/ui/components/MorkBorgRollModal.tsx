@@ -25,7 +25,8 @@ export default function MorkBorgRollModal({ config, rollMode, onRollModeChange, 
     const valid = (text: string, faces?: number) => text.trim() !== '' && Number.isInteger(Number(text)) && Number(text) >= 1 && Number(text) <= (faces ?? 0);
     const validManual = valid(raw, spec?.faces) && (!combat || valid(damage, damageSpec?.faces));
     const submit = () => {
-        const common = { baseDR, targetArmor: armor, incomingAttack: incoming };
+        const common = !combat ? {} : plan.automation === false ? { baseDR }
+            : attack ? { baseDR, targetArmor: armor } : { baseDR, incomingAttack: incoming };
         if (!manual) return onConfirmWithOptions(common);
         if (attack) onManualConfirm({ ...common, attackDie: Number(raw), damageDie: Number(damage) });
         else if (defend) onManualConfirm({ ...common, defendDie: Number(raw), manualIncomingDamage: Number(damage) });
@@ -47,7 +48,7 @@ export default function MorkBorgRollModal({ config, rollMode, onRollModeChange, 
             </label>
             <p className="text-yellow-400">DR modifier: +{plan.drModifier}. Final DR: {Number.isSafeInteger(baseDR) ? combatDR(baseDR, plan.drModifier) : 'Unavailable'}</p>
             {plan.automation === false && <p className="text-neutral-300">Automation is disabled. Compare the roll manually; use Roll damage for a follow-up weapon roll.</p>}
-            {attack ? field('Target armor formula', armor, setArmor) : field('Incoming damage formula', incoming, setIncoming)}
+            {plan.automation !== false && (attack ? field('Target armor formula', armor, setArmor) : field('Incoming damage formula', incoming, setIncoming))}
         </>}
         {manual && <>
             {field(`Raw die (1–${spec?.faces})`, raw, setRaw, true, spec?.faces)}

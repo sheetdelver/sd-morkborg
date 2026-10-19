@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Open packaged forms through browser dialog containment; preserve native resource minima and remembered combat choices.
 - Recognize verified native 6.0.1 world-rule defaults alongside the checkout’s 6.0.0 manifest.
 
 - Require released Core 0.19.3; align contract/workflow pins and explicitly type-check module code in CI.

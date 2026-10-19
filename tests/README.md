@@ -17,6 +17,12 @@ and stops its server/browser. `--port`, `--cdp-port`, and `--chrome` override de
 `--before-archive` optionally reproduces the old unsafe description behavior; an
 already working predecessor Escape case is recorded separately from new passes.
 Core-only global CSS prevents accidentally supplying module styles from the host.
+The actual released installed import rewriter is applied before loading, with the
+same shared React/SDK globals. This matters: resolving external react-dom normally
+would conceal Core0.19.3's unavailable createPortal export. `--test-script
+installed-smoke.mjs` runs the focused form-opening regression. `MB_CDP_TARGET` can
+select an exact page when using the helper for authorized separate role contexts;
+the helper brings that page forward before native input.
 
 The integration runner archives the exact reviewed Core commit into a new `/tmp`
 directory, symlinks read-only toolchain dependencies, installs the module archive,

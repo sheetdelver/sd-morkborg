@@ -206,8 +206,11 @@ fully hydrated embedded Items; ID-only payloads cannot become successful plans.
 
 ### Presentation and mounted catalogs
 
-System forms share `MorkBorgRollFrame` for labels, focus/Tab/Escape, inert background
-and trigger restoration. Public Core `ConfirmationModal` supplies confirmations;
+System forms share `MorkBorgRollFrame` using HTML `dialog.showModal` for browser
+top-layer containment, labels, cancellation and trigger restoration, plus bounded
+Tab cycling. Released Core's installed import rewriter does not expose
+react-dom.createPortal; forms do not depend on that unavailable export.
+Public Core `ConfirmationModal` supplies confirmations;
 the wrapper adds only keyboard/focus semantics absent from the released shell.
 Item/class descriptions pass through SDK rich-content sanitization and URL handling.
 Item/edit forms use the public rich-text editor. Removed alternate roll/resolver
@@ -240,3 +243,8 @@ Combat plans include native remembered DR/target-armor/incoming-damage defaults.
 UI and execution share DR calculation, validate selected formula variables before
 attack/defense dice, and reject malformed or irrelevant manual controls. The SDK
 remains responsible for dice syntax/evaluation; no duplicate evaluator is added.
+Successful automated combat remembers the selected native base DR/formula flags
+through guarded dotted-field writes, preserving unrelated flags and applying no
+HP/armor changes. Automation-off forms hide unused damage formula inputs.
+Daily resource resets update only native value/max fields, preserving min and
+other source attributes under Foundry's object merge behavior.

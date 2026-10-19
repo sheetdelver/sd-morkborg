@@ -1,7 +1,8 @@
-const target=(await(await fetch(`http://127.0.0.1:${process.env.MB_CDP_PORT}/json/list`)).json()).find(t=>t.type==='page');
+const target=(await(await fetch(`http://127.0.0.1:${process.env.MB_CDP_PORT}/json/list`)).json()).find(t=>t.type==='page'&&(!process.env.MB_CDP_TARGET||t.id===process.env.MB_CDP_TARGET));
+if(!target)throw Error('Requested isolated browser target is unavailable');
 export const ws=new WebSocket(target.webSocketDebuggerUrl);await new Promise(r=>ws.addEventListener('open',r,{once:true}));let sequence=0;const pending=new Map();export const errors=[];ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(m.error):p.resolve(m.result)}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails)};
 export const send=(method,params={})=>new Promise((resolve,reject)=>{const id=++sequence;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}))});
-await send('Network.enable');await send('Network.setCacheDisabled',{cacheDisabled:true});await send('Runtime.enable');await send('Page.enable');
+await send('Network.enable');await send('Network.setCacheDisabled',{cacheDisabled:true});await send('Runtime.enable');await send('Page.enable');await send('Page.bringToFront');
 export async function evaluate(expression){const r=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw new Error(r.exceptionDetails.text+JSON.stringify(r.exceptionDetails.exception));return r.result.value}
 export const pause=ms=>new Promise(r=>setTimeout(r,ms));
 export async function wait(expression){for(let n=0;n<100;n++){if(await evaluate('Boolean('+expression+')'))return;await pause(50)}throw new Error('Timeout: '+expression)}

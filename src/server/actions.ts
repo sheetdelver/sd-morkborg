@@ -59,11 +59,13 @@ export async function executeAction(client: any, actor: any, plan: any, options:
             if (options.restLength === 'long') {
                 resource('powerUses'); resource('omens');
                 const p = await roll(`1d4${signed(abilityValue(actor, 'presence'))}`, 'Powers per day');
-                updates['system.powerUses'] = { value: Math.max(0, p.total), max: Math.max(0, p.total) };
+                updates['system.powerUses.value'] = Math.max(0, p.total);
+                updates['system.powerUses.max'] = Math.max(0, p.total);
                 results.outcomes.push(`POWERS RESET TO ${Math.max(0, p.total)}.`);
                 if (actor.system.omens.value === 0 && omenClass) {
                     const o = await roll(omenFormula(), 'Omens');
-                    updates['system.omens'] = { value: Math.max(0, o.total), max: Math.max(0, o.total) };
+                    updates['system.omens.value'] = Math.max(0, o.total);
+                    updates['system.omens.max'] = Math.max(0, o.total);
                     results.outcomes.push(`OMENS RESET TO ${Math.max(0, o.total)}.`);
                 }
             }
@@ -109,7 +111,8 @@ export async function executeAction(client: any, actor: any, plan: any, options:
         if (plan.type === 'rollOmens' && !omenClass) throw new SdkError('not_ready', 'An owned Class with an Omen die is required');
         const r = await roll(plan.type === 'rollPowers' ? `1d4${signed(abilityValue(actor, 'presence'))}` : omenFormula(), plan.label);
         const total = Math.max(0, r.total);
-        await patch({ [plan.type === 'rollPowers' ? 'system.powerUses' : 'system.omens']: { max: total, value: total } });
+        const resourcePath = plan.type === 'rollPowers' ? 'system.powerUses' : 'system.omens';
+        await patch({ [`${resourcePath}.max`]: total, [`${resourcePath}.value`]: total });
         results.outcomes.push(`RESET TO ${total}.`);
     } else if (plan.type === 'spendOmen') {
         const omens = resource('omens');
@@ -168,6 +171,17 @@ export async function executeAction(client: any, actor: any, plan: any, options:
                 }
                 results.outcomes.push(`${attack ? 'INFLICT' : 'SUFFER'} ${amount} DAMAGE. Apply HP and armor effects manually.`);
             }
+        }
+        if (plan.automation !== false) {
+            // Native dialog callbacks remember the selected base/formula, not
+            // the prepared final DR. Preserve unrelated flags and validate all
+            // executed dice before committing these preferences.
+            const base = options.baseDR ?? plan.dr ?? 12;
+            const preferences: Record<string, unknown> = attack
+                ? { 'flags.morkborg.attackDR': base }
+                : { 'flags.morkborg.defendDR': base, 'flags.morkborg.incomingAttack': options.incomingAttack ?? plan.incomingAttackDefault };
+            if (attack && typeof selectedArmor === 'string') preferences['flags.morkborg.targetArmor'] = selectedArmor;
+            await patch(preferences);
         }
         if (ammo) {
             if (ammo.system.quantity > 1) await client.updateActorItem(id, ammo._id ?? ammo.id, { 'system.quantity': ammo.system.quantity - 1 });

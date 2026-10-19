@@ -21,7 +21,8 @@ async function combat(kind: 'attack' | 'defend', raw: number, ability: number, d
             formulas.push(formula);
             const total = formulas.length === 1 ? raw + (kind === 'attack' ? ability : 2) : 10;
             return { total, formula, rolls: [JSON.stringify({ formula, total, terms: [] })] };
-        }, async sendMessage(m: any) { return m; },
+        }, async updateActor(_id: string, patch: any) { assert.ok(Object.keys(patch).every(k => k.startsWith('flags.morkborg.')), 'combat remembers choices without applying HP'); },
+        async sendMessage(m: any) { return m; },
     }, actor, plan, { manualHitDie: raw, manualDefendDie: raw, manualDamageDie: 4,
         manualIncomingDamage: 4, incomingAttack: '1d6+1', baseDR: 12 }, undefined as any);
     return { formulas, result };

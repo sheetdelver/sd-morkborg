@@ -376,6 +376,21 @@ currently advertised functionality.
 
 ## Progress ledger
 
+Latest G8 correction evidence: [installed/native execution](../audits/evidence/2026-10-18-live-corrections.md).
+The operator authorized isolated Chrome CDP and passwordless player `ptest`;
+`doratheexplorer` remains reserved for the service account. Actual installed UI
+exposed an unavailable react-dom portal export, native `min` resource fields
+exposed false post-write conflicts, and native dialog comparison exposed omitted
+combat preference persistence. Same-input failing-before and passing-after evidence
+is recorded separately. HTML top-layer forms, dotted resource updates and guarded
+native flags correct these defects without Core changes or added HP mutations.
+Current archive `3a7a0bc2f1dd7c4cb0775d4c9657a089e92c07b79ba914058f4237c324232a9e`
+passes 15 source suites, explicit module typing, check/package, 14 actual Core
+production integration cases and 24 browser cases using the actual installed import
+rewriter. Live rest/resource cases pass; independent native executions include all
+12 rest cases and advancement equality/bounds. G8 remains open and fixtures/services
+remain journaled for completion and cleanup.
+
 | Gate | State | Evidence / commit |
 | --- | --- | --- |
 | Discovery | Complete for pinned source/data baseline | Active audit; historical descriptions retain the original defects. |
@@ -387,7 +402,7 @@ currently advertised functionality.
 | G5 | Implemented with explicit unavailable branches | `21e7b18`; complete selected plans and recovery; Pale One and Forlorn broken result remain unavailable. See identity evidence and G8. |
 | G6 | Implemented, isolated browser qualification passed | `18bc9ce` plus installed follow-up; 24 packaged pointer/keyboard cases, real HUD clearance, editor lifecycle and request retirement. Native/full-host acceptance remains G8. |
 | G7 | Isolated qualification complete | No persisted repair selected; Core/API minima and workflow pins justified. Actual development and production registry/13 integration cases pass; checksummed archive below. |
-| G8 | Partial native execution | Runtime14.367/native 6.0.1 verified; five inventory/four unsupported-type cases and twelve previews executed/cleaned. Full native UI, settings/resources and non-GM matrix pending; see native checkpoint. |
+| G8 | Partial native execution | Runtime14.367/native 6.0.1; inventory/unsupported/previews plus live owner/observer/hidden boundaries, all rest combinations, powers/resources and advancement equality/bounds. Installed dialog/resource/preference corrections verified; settings/access retirement, generation creation/recovery and full-host matrix remain open. |
 | G9 | Reconciled to current evidence, closeout open | Per-finding dispositions updated; do not close ADR/archive audit until required native acceptance. |
 
 ### Implementation baseline (2026-10-18)
