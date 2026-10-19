@@ -510,3 +510,18 @@ check/package passes: SHA-256
 `b3c0925fe46f0cc12d6dd4bd3c42224dc1dac8cf14fae252d4bdab17ef76b85e`.
 No installed/native role, concurrent-write, resource-hook or browser acceptance
 is credited from these in-memory traces. G3/finding dispositions stay qualified.
+
+### Exact table and feat checkpoint
+
+MB-N08 and table portions of MB-N07/12: action draws now use public SDK dice/table/
+UUID document services. Exact Broken/root Catastrophes IDs replace copied/wrong
+content. All selected rows and evaluated dice survive into caller-visible chat
+evidence. Multiple/text/Actor references, cycles, missing/denied documents,
+formula overrides, repeated unique totals and exhaustion pass maintained contract
+tests. These correct the P08/P09 inputs (2d6 and same-name identity) recorded above.
+Native macro precedence and reviewed canonical decoction Macro digest are enforced;
+no name-only feat execution, generic item grants or per-item dose multiplication.
+
+Explicit typing and isolated module check pass. G4 remains qualified pending
+actual installed/native service/privacy execution; generator private services
+remain MB-N09/G5 work. Nonreplacement is local orchestration, not native depletion.

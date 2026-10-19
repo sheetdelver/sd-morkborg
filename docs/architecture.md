@@ -146,3 +146,22 @@ HP. Casting uses Presence and remaining uses, with no invented equipment denial 
 automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
 Daily powers, roll Omens and actual Omen spending are distinct controls.
 Table/feat/generation services and installed/browser/native acceptance remain open.
+
+### Exact table and reviewed feat services
+
+Action tables use request-local `NativeContent`: SDK dice evaluate the actual
+formula and SDK tables select with a numeric override. Required formula absence,
+uncovered totals and missing/denied documents fail explicitly. Every matched row
+is retained, including text, nested tables and Actor results. Canonical references
+win over names; legacy CSV resolution requires exactly one match in its declared
+pack. Cycles and exhausted result sets are errors. Non-replacement selection is
+request-local only; no native document depletion is promised. Class unique-total
+policy supports proven single-die table formulas; unsupported uniqueness domains
+fail rather than inventing a distribution or returning incomplete success.
+
+Broken and power catastrophes use their exact native root UUIDs. Chat preserves
+evaluated dice and selected table/row/document identities under the caller's
+visibility. Native macro precedence is macro before formula. The decoction adapter
+requires the reviewed canonical Macro and command digest; it draws twice and
+presents one doses total without granting inventory. Other macros are unsupported.
+Character generation still uses the old data manager until its G5 replacement.

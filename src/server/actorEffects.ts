@@ -44,6 +44,7 @@ export function actorEffects(runtime: ModuleRequestRuntime, source: any, expecte
         return { completedWrites };
     }
     return {
+        guard,
         inventory,
         failure(cause: unknown): never {
             if (!completedWrites) throw cause;

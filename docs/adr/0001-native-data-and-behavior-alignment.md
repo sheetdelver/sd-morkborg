@@ -383,7 +383,7 @@ currently advertised functionality.
 | G1 | In progress | Typed errors/OWNER preflight/command validation and minimal dependencies pass offline; installed caller and comprehensive payload acceptance pending. |
 | G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
 | G3 | In progress | Resource matrix, shared plans/manual combat and sequenced inventory pass offline; SDK table-dependent cases and installed/native races pending. |
-| G4 | Open | Draw/feat consolidation pending |
+| G4 | In progress | SDK exact table traversal and reviewed macro adapter pass offline; installed service/privacy/native acceptance pending. |
 | G5 | Open | Generation completeness pending |
 | G6 | Open | Mounted UI/accessible presentation pending |
 | G7 | Open | Repair decision and installed-host qualification pending |
@@ -441,3 +441,12 @@ SHA-256 `b3c0925fe46f0cc12d6dd4bd3c42224dc1dac8cf14fae252d4bdab17ef76b85e`.
 Resource writes and preflight are verified with offline effect traces, not native
 operator acceptance. Table service integration, full feat identity and generation
 remain G4/G5 work. Source/context checks are optimistic preflight, not atomic CAS.
+
+Table checkpoint (after `b3ee21a`): table-contract tests pass for 2d6 via SDK,
+explicit overrides, same-name exact ID, multiple/text/Actor results, missing
+documents, cycles, repeated totals, exhaustion, invalid formulas and typed denial.
+All module source/UI/hooks/tests explicitly type-check; isolated Core module check
+passes. Actions now use the SDK service; old private generation is isolated pending
+G5 replacement. Macro adapter identity/digest comes from the copied native pack;
+no arbitrary script is executed. Broader complex-dice draws use SDK evaluation,
+while custom complex uniqueness is explicitly unavailable without a proven domain.

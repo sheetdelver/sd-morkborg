@@ -29,7 +29,9 @@ export async function executeAction(client: any, actor: any, plan: any, options:
     const textDraw = async (key: string, override?: number) => {
         if (!data) throw new SdkError('not_ready', 'Required table service is unavailable');
         const drawn = await data.drawFromTable(key, override);
+        recorded.push(...(data.takeRolls?.() ?? []));
         const entries = Array.isArray(drawn) ? drawn : [drawn];
+        results.tableResults = [...(results.tableResults ?? []), ...entries.map((entry: any) => ({ tableUuid: entry.tableUuid, rowId: entry.rowId, documentUuid: entry.uuid, roll: entry.roll }))];
         if (!entries.length) throw new SdkError('not_ready', 'Table returned no results');
         return entries.map((d: any) => d.description || d.name || d.text).join('<br>');
     };
@@ -117,7 +119,7 @@ export async function executeAction(client: any, actor: any, plan: any, options:
     } else if (plan.type === 'broken') {
         results.outcomes.push(await textDraw('broken', raw));
     } else if (plan.type === 'feat-macro' || plan.type === 'decoctions') {
-        if (plan.type !== 'decoctions' && !await data?.isReviewedDecoctionFeat(results.item)) throw new SdkError('validation', 'This native macro is unsupported remotely');
+        if (plan.type !== 'decoctions' && !await data?.isReviewedDecoctionFeat?.(results.item)) throw new SdkError('validation', 'This native macro is unsupported remotely');
         // Native macro draws twice then presents one total doses roll; no inventory grant.
         results.type = 'decoctions';
         results.outcomes.push(await textDraw('occultHerbmasterDecoctions'));
@@ -175,5 +177,5 @@ export async function executeAction(client: any, actor: any, plan: any, options:
         if (plan.type === 'feat-roll') { results.featName = plan.itemName; results.featLabel = plan.label; }
         if (plan.type === 'initiative' && plan.subType === 'party') results.outcomes.push(r.total <= 3 ? 'NPCS GO FIRST' : 'PCS GO FIRST');
     } else throw new SdkError('validation', 'Unsupported action');
-    return client.sendMessage({ content: card(actor, results), speaker, ...(recorded.length ? { rolls: recorded } : {}) }, { rollMode: options.rollMode ?? 'publicroll', speaker });
+    return client.sendMessage({ content: card(actor, results), speaker, ...(results.tableResults ? { flags: { morkborg: { tables: results.tableResults } } } : {}), ...(recorded.length ? { rolls: recorded } : {}) }, { rollMode: options.rollMode ?? 'publicroll', speaker });
 }

@@ -13,6 +13,7 @@
 import type { ModuleServerRequest, ModuleServerParams, ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { json, error } from '@sheet-delver/sdk/server';
 import { isSdkError, SdkError } from '@sheet-delver/sdk';
+import { NativeContent } from '../data/NativeContent';
 import { actorEffects } from './actorEffects';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
 import { getRollData } from '../logic/rules';
@@ -71,8 +72,8 @@ export const apiRoutes = {
             if (!rollData) return error('validation', `Unknown roll: ${type}/${key}`);
 
             const needsContent = ['broken', 'getBetter', 'decoctions', 'power', 'feat-macro'].includes(rollData.type);
-            const data = needsContent ? await createMorkBorgData(req.runtime.compendium) : undefined;
-            const result = await adapter.performAutomatedSequence(effects, prepared, rollData, options ?? {}, data!);
+            const data = needsContent ? new NativeContent(req.runtime, effects.guard) : undefined;
+            const result = await adapter.performAutomatedSequence(effects, prepared, rollData, options ?? {}, data as any);
             return sequenceResponse(result);
         } catch (e) {
             try { effects?.failure(e); } catch (failure) { return routeError(failure); }

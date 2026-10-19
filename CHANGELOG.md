@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Draw action tables through SDK dice and exact document references; retain nested/multiple results and reviewed feat behavior.
+
 - Share action plans and preserve raw manual dice, native DR, ammo identity and armor limits.
 - Correct rest, advancement, casting and resource controls; remove extra HP/inventory grants.
 - Sequence inventory writes and reject stale source/context before side effects.

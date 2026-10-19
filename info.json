@@ -29,6 +29,16 @@
                 "id": "morkborg.mork-borg-tables",
                 "type": "RollTable",
                 "hydrate": true
+            },
+            {
+                "id": "morkborg.mork-borg-actors",
+                "type": "Actor",
+                "hydrate": true
+            },
+            {
+                "id": "morkborg.mork-borg-macros",
+                "type": "Macro",
+                "hydrate": true
             }
         ]
     },
