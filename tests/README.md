@@ -11,8 +11,11 @@ node tests/integration/run.mjs --core /path/to/core-0.19.3 --archive /tmp/morkbo
 
 The browser runner extracts the archive, composes its actual UI with the released
 SDK/Core confirmation, rich editor, UI provider and FloatingHUD, and drives Chrome
-pointer/keyboard input. Session/chat/router and requests are fixtures. It checks
-port availability (4181/9418 by default), uses a fresh temporary browser profile,
+pointer/keyboard input. Session/chat/router and requests are fixtures.
+Core's actual shared-content host and focus helper are included too: a module form
+must yield and preserve the return trigger when an image is shared. The fixture
+Foundry/config/session values supply that host component's context inputs.
+The runner checks port availability (4181/9418 by default), uses a fresh temporary browser profile,
 and stops its server/browser. `--port`, `--cdp-port`, and `--chrome` override defaults.
 `--before-archive` optionally reproduces the old unsafe description behavior; an
 already working predecessor Escape case is recorded separately from new passes.

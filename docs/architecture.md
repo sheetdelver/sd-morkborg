@@ -70,6 +70,9 @@ exact default provenance. Other manifest versions remain unavailable until verif
 native runtime evidence. It is not adopted as a world rule or read from the service
 account. Browser-only additional-ability configuration remains outside the supported
 world configuration; the standard four abilities remain the supported controls.
+Native color/font, last-class and delete-zero client preferences are not read from
+the service connection. Ordinary quantity edits retain a zero stack until explicit
+deletion; native tracked-ammo exhaustion remains an action-specific deletion.
 
 Handedness is normalized for reads (native numeric/string 1/2 and the module's
 legacy 1h/2h shapes) without changing source. The editor now writes numeric 1/2
@@ -113,10 +116,15 @@ A module release tag identifies the matching manifest version.
 
 Repository workflow and verification commands live in [AGENTS.md](../AGENTS.md).
 ADR-0001 tracks qualification against the pinned released host separately from
-native operator acceptance. No module release version bump accompanies these pins.
+native operator acceptance. The selected Foundry14.367/native6.0.1 pair has executed
+[native acceptance](audits/evidence/2026-10-19-native-acceptance.md), including an
+actual production frontend/API. Other runtime pairs are unqualified; the reference
+manifest6.0.0 remains source/default provenance, not a separate running acceptance.
+No module release version bump accompanies these pins.
 The [audit index](audits/README.md) selects one active report and preserves earlier
-evidence. Native acceptance, role/privacy cases and installed browser flows remain
-open; static render tests are insufficient to close those gates.
+evidence. Pale One/Forlorn source identity decisions remain open; selected native
+role/privacy, lifecycle and browser qualifications are recorded per case. Static
+render tests are insufficient to establish those qualifications.
 The shared contracts are described in Core's
 [module authoring guide](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_AUTHORING.md),
 [world/maintenance contract](https://github.com/sheetdelver/sheetdelver/blob/v0.19.3/docs/MODULE_MIGRATIONS.md)
@@ -210,6 +218,11 @@ System forms share `MorkBorgRollFrame` using HTML `dialog.showModal` for browser
 top-layer containment, labels, cancellation and trigger restoration, plus bounded
 Tab cycling. Released Core's installed import rewriter does not expose
 react-dom.createPortal; forms do not depend on that unavailable export.
+Incoming public `content:shared` retires the module top layer so Core owns the
+shared image/journal presentation. Layout-phase cleanup closes the native dialog
+before DOM removal, letting Core capture the real return trigger. Module cleanup
+does not subsequently steal focus from Core's overlay. Actual native sharing and
+the maintained runner with Core's real shared overlay verify this interaction.
 Public Core `ConfirmationModal` supplies confirmations;
 the wrapper adds only keyboard/focus semantics absent from the released shell.
 Item/class descriptions pass through SDK rich-content sanitization and URL handling.

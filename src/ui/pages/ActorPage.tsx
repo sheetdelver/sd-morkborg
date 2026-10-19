@@ -116,8 +116,8 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
             <div className="min-h-screen flex items-center justify-center bg-neutral-900 text-white">
                 <div className="bg-neutral-900 border border-red-900/40 p-8 rounded-xl max-w-md w-full text-center shadow-2xl">
                     <div className="text-5xl mb-4">💀</div>
-                    <h2 className="text-2xl font-bold text-white mb-2">Character Deleted</h2>
-                    <p className="text-neutral-400 mb-8">This character has been deleted from the world.</p>
+                    <h2 className="text-2xl font-bold text-white mb-2">Character unavailable</h2>
+                    <p className="text-neutral-400 mb-8">This character is unavailable in the current access context.</p>
                     <a href="/" className="inline-block bg-red-900 hover:bg-neutral-800 text-white font-bold py-3 px-8 rounded shadow-lg uppercase tracking-widest transition-all w-full">
                         Return to Dashboard
                     </a>

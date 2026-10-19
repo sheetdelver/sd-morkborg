@@ -1,6 +1,7 @@
 'use client';
-import React, { useEffect, useId, useRef, type ReactNode } from 'react';
+import React, { useEffect, useLayoutEffect, useId, useRef, type ReactNode } from 'react';
 import { Dices, Pencil } from 'lucide-react';
+import { useSDK } from '@sheet-delver/sdk/react';
 
 export function RollEntryMode({ manual, onChange, canAuto = true, canManual = true, manualLabel = 'Manual' }: {
     manual: boolean; onChange: (manual: boolean) => void; canAuto?: boolean; canManual?: boolean; manualLabel?: string;
@@ -53,7 +54,17 @@ export default function MorkBorgRollFrame({ title, subtitle = '', onClose, child
     title: string; subtitle?: string; onClose: () => void; children: ReactNode; wide?: boolean;
 }) {
     const titleId = useId(), dialog = useRef<HTMLDialogElement>(null);
-    useEffect(() => {
+    const { events } = useSDK();
+    const close = useRef(onClose); close.current = onClose;
+    const yielded = useRef(false);
+    useEffect(() => events.on('content:shared', ({ kind }) => {
+        if (!kind) return;
+        // Core owns shared presentation. An HTML top-layer form must retire
+        // before Core's overlay can receive pointer/keyboard focus.
+        yielded.current = true;
+        close.current();
+    }), [events]);
+    useLayoutEffect(() => {
         const node = dialog.current;
         if (!node) return;
         const prior = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -63,9 +74,11 @@ export default function MorkBorgRollFrame({ title, subtitle = '', onClose, child
         // Released installed Core does not expose react-dom.createPortal.
         node.showModal();
         return () => {
+            // Close before DOM removal so the browser restores the trigger
+            // before Core's newly mounted overlay captures its return focus.
             if (node.open) node.close();
             document.body.style.overflow = oldOverflow;
-            queueMicrotask(() => { if (prior?.isConnected && !prior.closest('[inert]')) prior.focus(); });
+            queueMicrotask(() => { if (!yielded.current && prior?.isConnected && !prior.closest('[inert]')) prior.focus(); });
         };
     }, []);
     return <dialog ref={dialog} role="dialog" aria-modal="true" aria-labelledby={titleId}

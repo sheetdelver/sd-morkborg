@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Yield forms and focus to Core shared content; distinguish unavailable Actors from deletion.
 - Retire editing on native ownership revocation even when the host projection omits `isOwner`.
 
 - Open packaged forms through browser dialog containment; preserve native resource minima and remembered combat choices.

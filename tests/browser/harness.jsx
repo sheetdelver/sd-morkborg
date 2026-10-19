@@ -5,6 +5,7 @@ import {ConfirmationModal} from 'host-confirm';
 import RichTextEditor from 'host-editor';
 import {UIProvider,useUI} from 'host-ui';
 import FloatingHUD from 'host-hud';
+import {SharedContentHost} from 'host-shared';
 import * as ReactJSX from 'react/jsx-runtime';
 import * as sdkExports from '@sheet-delver/sdk';
 import * as sdkReactExports from '@sheet-delver/sdk/react';
@@ -35,4 +36,4 @@ sdk.fetchWithAuth=async(path,opts)=>{
 window.__events=sdk.events;
 window.__candidate=()=>({candidate:{id:`00000000-0000-4000-8000-${String(++window.__nextCandidate).padStart(12,'0')}`,generated:{actor:{name:'Generated Fixture',system:{abilities:{strength:{value:1}},hp:{max:6},omens:{max:2},powerUses:{max:3},silver:10,description:'<p>Complete preview</p>'},items:[{_id:'generated1',name:'Generated Item',system:{quantity:1}}]},className:'Fixture Class',companions:[{name:'Generated Donkey',type:'container'}]}}});
 function App(){const ui=useUI();const register=useCallback(el=>{window.__footer=el;const dispose=ui.registerBottomNavigation(el);return()=>{window.__footer=null;dispose()}},[ui.registerBottomNavigation]);const context={...sdk,registerBottomNavigation:register};const [scene,setScene]=useState('sheet'),[owner,setOwner]=useState(true),[projection,setProjection]=useState(actor);window.__nativeOwner=value=>setProjection(previous=>({...previous,ownership:{...previous.ownership,u1:value}}));window.__scene=setScene;window.__owner=setOwner;return <MockSDKProvider context={context} components={{...createMockSdkComponents(),ConfirmationModal,RichTextEditor}}><div className="sdk-module--morkborg" id="module-root">{scene==='page'?<ActorPage actorId="a1"/>:scene==='sheet'?<Sheet actor={projection} isOwner={owner} onRoll={(type,key,options)=>window.__calls.push({type,key,options})} onUpdate={(path,value)=>window.__calls.push({path,value})} onDeleteItem={id=>window.__calls.push({delete:id})} onCreateItem={item=>window.__calls.push({create:item})}/>:<Factory/>}</div></MockSDKProvider>}
-createRoot(document.getElementById('root')).render(<UIProvider><App/><FloatingHUD/></UIProvider>);window.__ready=true;
+createRoot(document.getElementById('root')).render(<UIProvider><App/><FloatingHUD/><SharedContentHost/></UIProvider>);window.__ready=true;

@@ -1,6 +1,6 @@
 # ADR-0001: Native data, behavior and Core contract alignment
 
-**Status:** In progress — implementation authorized; native acceptance open
+**Status:** In progress — selected native runtime qualified; pinned data decisions open
 **Date:** October 18, 2026  
 **Owner:** SheetDelver Mörk Borg module  
 **Evidence:** [Native alignment audit](../audits/2026-10-18-native-alignment.md)
@@ -376,43 +376,34 @@ currently advertised functionality.
 
 ## Progress ledger
 
-Latest G8 correction evidence: [installed/native execution](../audits/evidence/2026-10-18-live-corrections.md).
-The initial full-host corrections were committed at `aadde52`. A subsequent actual
-observer downgrade reproduced the released hook's absent-isOwner fallback: the
-server denied OWNER commands404 but the mounted editor stayed open. A conservative
-native-ownership UI gate fixes this module path, using public SDK caller/source
-data and retaining host/server denial. Same-input maintained browser and live native
-regressions now pass, alongside 16 source suites, explicit typing/check/package,
-14 production integration cases and 25 browser cases. Live pack revoke/restore,
-carrying revision retirement and owner revoke/restore all pass. Archive SHA-256
-`947a6f41a30a231eeb21969f6b7711a162b57cbeb46ee355d3d29a5878d7f988`.
-The operator authorized isolated Chrome CDP and passwordless player `ptest`;
-`doratheexplorer` remains reserved for the service account. Actual installed UI
-exposed an unavailable react-dom portal export, native `min` resource fields
-exposed false post-write conflicts, and native dialog comparison exposed omitted
-combat preference persistence. Same-input failing-before and passing-after evidence
-is recorded separately. HTML top-layer forms, dotted resource updates and guarded
-native flags correct these defects without Core changes or added HP mutations.
-Current archive `3a7a0bc2f1dd7c4cb0775d4c9657a089e92c07b79ba914058f4237c324232a9e`
-passes 15 source suites, explicit module typing, check/package, 14 actual Core
-production integration cases and 24 browser cases using the actual installed import
-rewriter. Live rest/resource cases pass; independent native executions include all
-12 rest cases and advancement equality/bounds. G8 remains open and fixtures/services
-remain journaled for completion and cleanup.
+Selected native qualification is recorded in the [final matrix and cleanup review](../audits/evidence/2026-10-19-native-acceptance.md)
+and its [portable metadata ledger](../audits/evidence/2026-10-19-native-acceptance.json).
+Prior full-host fixes were committed at `aadde52` and `1b38ff4`. The final slice
+also yields module forms to Core shared presentation with correct focus return,
+and labels hidden/unavailable Actors truthfully. Actual native execution exposed
+these defects; meaningful old-archive failures remain separate from final passes.
+
+Final module0.8.3 archive SHA-256:
+`1b7e1d48ab878fbaa080f5642d94f9d8b934136cde775410d8bc77967070822b`.
+16 source suites, explicit module/UI/hooks typing, check/package,14 production
+integration cases and26 actual-Core-overlay browser cases pass. A separately built
+production frontend/API ran the native matrix. All task fixtures and services are
+removed; original Actor source and setting identities/values/absence are verified.
+Native Setting audit timestamps/authorship retain the legitimate test history.
 
 | Gate | State | Evidence / commit |
 | --- | --- | --- |
-| Discovery | Complete for pinned source/data baseline | Active audit; historical descriptions retain the original defects. |
-| G0 | Complete offline baseline | `7429db2` documentation; `7a794ea` meaningful 20 fail / 1 pass; later same-input table, identity and browser regressions. Native/RAW decisions and unsupported choices recorded. |
-| G1 | Implemented, isolated acceptance passed | `ccaf20f`; typed errors, OWNER preflight, command/dependency validation; actual production Core boundary cases. Native roles remain G8. |
-| G2 | Implemented, native qualification pending | `540d3bc`; immutable shared inventory/world rules. Four settings verified in isolated Core/live version gate; additionalAbilities client scope verified on14.367, native setting changes remain G8. |
-| G3 | Implemented, native qualification pending | `b3ee21a`; 21/21 baseline, resource matrix/manual combat/sequenced writes; real Core raw combat execution. Native hooks/races remain G8. |
-| G4 | Implemented, native qualification pending | `aadbc9d`; SDK exact tables/reviewed feats; raw hydrated Core identity and attainable exhaustion corrections verified. |
-| G5 | Implemented with explicit unavailable branches | `21e7b18`; complete selected plans and recovery; Pale One and Forlorn broken result remain unavailable. See identity evidence and G8. |
-| G6 | Implemented, isolated browser qualification passed | `18bc9ce` plus installed follow-up; 24 packaged pointer/keyboard cases, real HUD clearance, editor lifecycle and request retirement. Native/full-host acceptance remains G8. |
-| G7 | Isolated qualification complete | No persisted repair selected; Core/API minima and workflow pins justified. Actual development and production registry/13 integration cases pass; checksummed archive below. |
-| G8 | Partial native execution | Runtime14.367/native 6.0.1; inventory/unsupported/previews plus live owner/observer/hidden boundaries, all rest combinations, powers/resources and advancement equality/bounds. Installed dialog/resource/preference corrections verified; settings/access retirement, generation creation/recovery and full-host matrix remain open. |
-| G9 | Reconciled to current evidence, closeout open | Per-finding dispositions updated; do not close ADR/archive audit until required native acceptance. |
+| Discovery | Complete for pinned source/data | Active audit; original defects and source identities retained. |
+| G0 | Complete | `7429db2` existing docs; `7a794ea` meaningful20 fail/1 pass; subsequent same-input regressions and explicit RAW/native decisions. |
+| G1 | Qualified on released Core and native callers | `ccaf20f`; typed errors/OWNER preflight; production and real owner/observer/hidden execution. |
+| G2 | Qualified for selected native pair | `540d3bc`; immutable inventory/rules; actual carrying/ammo/automation/class changes and restoration, client-only additionalAbilities verified. |
+| G3 | Qualified with explicit RAW deviations | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. |
+| G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
+| G5 | Qualified with pinned unavailable branches | `21e7b18`; full selected plans/companions, native creation/cancel/custom catalogs, actual partial recovery/no replay. Pale and stale Forlorn branch remain unavailable. |
+| G6 | Qualified | `18bc9ce`, `1b38ff4` and final presentation slice; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
+| G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
+| G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
+| G9 | Review/cleanup recorded; ADR remains open | Findings reconciled below and in audit. Pale/Owl canonical identity decisions remain pinned; no unsupported12-class or other-runtime claim, no audit archive. |
 
 ### Implementation baseline (2026-10-18)
 

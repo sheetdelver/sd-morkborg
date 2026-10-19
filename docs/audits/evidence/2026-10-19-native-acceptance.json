@@ -1,0 +1,644 @@
+{
+  "recordedUtc": "2026-10-19T04:09:12.371304+00:00",
+  "scope": "Module ADR-0001; same disposable native world/version; no other runtime version acceptance inferred",
+  "identity": {
+    "moduleVersion": "0.8.3",
+    "archiveSha256": "1b7e1d48ab878fbaa080f5642d94f9d8b934136cde775410d8bc77967070822b",
+    "entries": {
+      "dist/server.js": "e9973c8aba0fcb4f5ce592d8c88dbe9fc4899f65b3aa05929e6259103470d2eb",
+      "dist/logic.js": "27de822f365dd21871616b97de91e70a21a0f32edaa2333f6ec1cc25b79794f1",
+      "dist/ui.js": "44f29f4d546184db1aeaf1897fa5dbcdd78774e578ccb8700120b6d6d21bba2b",
+      "assets/morkborg.tailwind.css": "d3fe7b48ec199cc29948acb3aec9de3fdd4a4a17650f2582553b3f4902adcecf"
+    },
+    "coreVersion": "0.19.3",
+    "coreCommit": "90c13e5e57d88913cd3bae6bf6b9e6f0b995bad1",
+    "nativeReferenceTag": "6.0.1",
+    "nativeReferenceCommit": "d850c094a9452d752307221f42245a73b66bdfbb",
+    "referenceManifestVersion": "6.0.0",
+    "runtimeVersion": "6.0.1",
+    "foundry": "14.367",
+    "world": "morkborg"
+  },
+  "sourceQualification": {
+    "servedRulesAndSchemaMatched": 43,
+    "referenceAndCoreTrackedTreesClean": true,
+    "otherRuntimePairsAccepted": false
+  },
+  "maintained": {
+    "sourceSuites": 16,
+    "explicitSourceUiHookTyping": "passed",
+    "moduleCheck": "passed",
+    "isolatedPackage": "passed",
+    "productionCoreIntegrationCases": 14,
+    "browserCases": 26,
+    "actualProductionFrontendBuild": "passed",
+    "latestBrowserOutput": "/tmp/morkborg-browser-wpCNNM",
+    "latestIntegrationOutput": "/tmp/morkborg-installed-sVJrKw"
+  },
+  "nativeCaseReports": {
+    "combat_tables_feats_visibility": {
+      "path": "/tmp/morkborg-native-combat-actions.json",
+      "results": [
+        {
+          "name": "natural critical melee raw20 minus3 with complete composite damage",
+          "status": "passed"
+        },
+        {
+          "name": "natural melee fumble does not break or remove weapon",
+          "status": "passed"
+        },
+        {
+          "name": "armored defense fumble doubles complete incoming damage and applies current armor reduction only",
+          "status": "passed"
+        },
+        {
+          "name": "armored defense natural20 avoids all damage rolls",
+          "status": "passed"
+        },
+        {
+          "name": "ranged Presence raw10 has no melee Strength penalty and consumes selected canonical ammunition",
+          "status": "passed"
+        },
+        {
+          "name": "all exact Broken rows retain table identity and do not apply instructions",
+          "status": "passed"
+        },
+        {
+          "name": "owned formula feat resolves native Presence and preserves Items",
+          "status": "passed"
+        },
+        {
+          "name": "reviewed native macro feat draws twice and presents one doses total without Item grants",
+          "status": "passed"
+        },
+        {
+          "name": "native persisted player ChatMessage visibility publicroll",
+          "status": "passed"
+        },
+        {
+          "name": "native persisted player ChatMessage visibility selfroll",
+          "status": "passed"
+        },
+        {
+          "name": "native persisted player ChatMessage visibility gmroll",
+          "status": "passed"
+        },
+        {
+          "name": "native persisted player ChatMessage visibility blindroll",
+          "status": "passed"
+        }
+      ]
+    },
+    "automation_off": {
+      "path": "/tmp/morkborg-native-noautomation.json",
+      "results": [
+        {
+          "name": "automation-off attack no armor/damage/pref or ammo writes",
+          "status": "passed"
+        },
+        {
+          "name": "automation-off defense no armor/damage/pref or ammo writes",
+          "status": "passed"
+        },
+        {
+          "name": "separate native weapon damage action",
+          "status": "passed"
+        }
+      ]
+    },
+    "mounted_settings_permissions": {
+      "path": "/tmp/morkborg-native-lifecycle.json",
+      "results": [
+        {
+          "name": "native carrying14/capacity5 true to false retires action dialog and prepared penalty",
+          "status": "passed"
+        },
+        {
+          "name": "current installed automation-off form has no ignored incoming-damage control",
+          "status": "passed"
+        },
+        {
+          "name": "mounted pack denial removes warmed content and retains search with explicit error",
+          "status": "passed"
+        },
+        {
+          "name": "pack permission restoration refetches mounted picker",
+          "status": "passed"
+        },
+        {
+          "name": "ownership-only observer downgrade closes SCVM editor and rejects OWNER action",
+          "status": "passed"
+        },
+        {
+          "name": "owner restoration re-enables mounted actor without manual reload",
+          "status": "passed"
+        }
+      ]
+    },
+    "custom_empty_denied_catalogs": {
+      "path": "/tmp/morkborg-native-custom-policy.json",
+      "results": [
+        {
+          "name": "native renamed/custom classless template generates by exact identity and metadata",
+          "status": "passed"
+        },
+        {
+          "name": "native all-class restriction is valid-empty200 and generation400",
+          "status": "passed"
+        },
+        {
+          "name": "denied native class pack503 does not block independent player ability action",
+          "status": "passed"
+        },
+        {
+          "name": "visible classes with denied required native Table pack403 produce no fabricated candidate",
+          "status": "passed"
+        }
+      ]
+    },
+    "factory_pointer_keyboard": {
+      "path": "/tmp/morkborg-native-factory-ui.json",
+      "results": [
+        {
+          "name": "actual factory exact classless preview and keyboard cancel create no Actors",
+          "status": "passed"
+        },
+        {
+          "name": "actual factory confirmation creates reviewed private native Actor and status recovers completion",
+          "status": "passed"
+        },
+        {
+          "name": "mounted factory retires preview and displays valid-empty native class policy",
+          "status": "passed"
+        }
+      ]
+    },
+    "production_viewports_rich_editor": {
+      "path": "/tmp/morkborg-native-full-ui.json + /tmp/morkborg-native-phone-results.json",
+      "results": [
+        {
+          "name": "full host 768 Light HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host 768 Dark HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host 1280 Light HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host 1280 Dark HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host 1920 Light HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host 1920 Dark HP/mobile tools/Rest",
+          "status": "passed"
+        },
+        {
+          "name": "full host long rich Item is safe scrollable and Escape restores trigger",
+          "status": "passed"
+        },
+        {
+          "name": "full host public rich editor save and subsequent form Escape",
+          "status": "passed"
+        },
+        {
+          "name": "production360 light actual Settings, HP, expanded More clearance and keyboard Rest with native Combat HUD",
+          "status": "passed"
+        },
+        {
+          "name": "production360 dark actual Settings, HP, expanded More clearance and keyboard Rest with native Combat HUD",
+          "status": "passed"
+        }
+      ],
+      "earlierAttempts": [
+        {
+          "name": "full host 360 Light HP/mobile tools/Rest",
+          "status": "failed"
+        },
+        {
+          "name": "full host 360 Dark HP/mobile tools/Rest",
+          "status": "failed"
+        }
+      ],
+      "recheckConditions": "Fresh production session; native Combat HUD;2.5s stable world/Actor readiness; measured real hit targets and settled footer/tool transitions"
+    },
+    "native_edge_cases": {
+      "path": "/tmp/morkborg-native-extra.json",
+      "results": [
+        {
+          "name": "actual missing weapon die is unavailable503 before dice/chat/source effects",
+          "status": "passed"
+        },
+        {
+          "name": "actual passive Armored Caster has no fabricated roll result",
+          "status": "passed"
+        },
+        {
+          "name": "automated unarmored defense has no invented armor reduction or HP write",
+          "status": "passed"
+        },
+        {
+          "name": "actual last selected ammo deletion clears container membership and preserves other Items",
+          "status": "passed"
+        }
+      ]
+    },
+    "queued_hidden_action": {
+      "path": "/tmp/morkborg-native-queued-action.json",
+      "results": [
+        {
+          "name": "actual queued raw player action denied404 after hidden access with zero chat/HP effects",
+          "status": "passed"
+        },
+        {
+          "name": "native hidden-to-owner restores mounted sheet without reload",
+          "status": "passed"
+        }
+      ]
+    },
+    "resources": {
+      "path": "/tmp/morkborg-native-resource-actions.json",
+      "results": [
+        {
+          "name": "rest short/eat/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest short/eat/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "rest short/donteat/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest short/donteat/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "rest short/starve/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest short/starve/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/eat/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/eat/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/donteat/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/donteat/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/starve/infected=false",
+          "status": "passed"
+        },
+        {
+          "name": "rest long/starve/infected=true",
+          "status": "passed"
+        },
+        {
+          "name": "negative HP starvation/infection is not clamped",
+          "status": "passed"
+        },
+        {
+          "name": "fed long rest preserves nonzero Omens",
+          "status": "passed"
+        },
+        {
+          "name": "power Presence preview, failure instructions, uses and exact fumble root",
+          "status": "passed"
+        },
+        {
+          "name": "daily powers and Omens are explicit native resource rolls",
+          "status": "passed"
+        }
+      ]
+    }
+  },
+  "independentOracles": {
+    "nativeRestAndArmorCastingCases": 13,
+    "moduleAdvancementTrials": 22,
+    "nativeAdvancementTrials": 16,
+    "hpEqualityObserved": 33,
+    "abilityBoundsObserved": [
+      -3,
+      6
+    ],
+    "rngSubstitution": false
+  },
+  "generation": {
+    "baselinePreviews": 12,
+    "selectedSuccessfulClassPlans": 11,
+    "paleStatus": 409,
+    "classlessAndRenamedNativeMetadataVerified": true,
+    "fullCompanionCreation": [
+      {
+        "id": "CqrFYBEV8vX1RwpY",
+        "index": 0,
+        "type": "character",
+        "itemIds": [
+          "f3290adba32ae9ed",
+          "a81d046963e8fe16",
+          "0207d2f072ef0859",
+          "1bc84beafd42a60a",
+          "8bdda7bc4062a840",
+          "7e1d89896072c21b",
+          "07eaedce9248e9b7",
+          "64725a8ebb51951b",
+          "502cf38a25221a41",
+          "5f6a5f79604b6a11",
+          "7a9de8a1cca3f52a"
+        ],
+        "sourceUuid": null
+      },
+      {
+        "id": "s7rd7yNFNrXtwb1a",
+        "index": 1,
+        "type": "follower",
+        "itemIds": [
+          "Zus6SwUmNDeXoDtT"
+        ],
+        "sourceUuid": "Compendium.morkborg.mork-borg-actors.Actor.ErBhN8ay6l22MKHH"
+      }
+    ],
+    "partial": {
+      "planned": 4,
+      "persistedIds": [
+        "IyqD5o7JPlZlqMoE",
+        "7Egm3k6o4a51XzCv"
+      ],
+      "initialHttp": 503,
+      "initialReason": "Core world unavailable during real native setting revision",
+      "statusReadHttp": 200,
+      "replayHttp": 409,
+      "status": "needs-review",
+      "statusAfterApiRestart": 200
+    }
+  },
+  "presentation": {
+    "nativeNestingBefore": {
+      "moduleFormOpen": true,
+      "hostCloseReceivesPointer": false,
+      "active": "Close Rest"
+    },
+    "nativeNestingAfter": {
+      "moduleFormOpen": false,
+      "hostCloseReceivesPointer": true,
+      "active": "[ADR-0001] Nested presentation"
+    },
+    "nativeAfterAssertions": "Module form retires; Core shared image receives pointer and Tab; Escape dismisses; Rest trigger regains focus",
+    "inlineInstructions": {
+      "name": "Native Broken inline instruction preserved through SDK chat without implicit rolls or resource/Item writes",
+      "status": "passed",
+      "rootUuid": "Compendium.morkborg.mork-borg-tables.RollTable.ncXwgtRMqoiREban",
+      "rowId": "nwxGZlppARgVv6RY",
+      "chatId": "8a0XdnvxptDdSz4g",
+      "author": "OtfXY3J3jzpnlrFQ",
+      "rollCount": 0
+    },
+    "hudFinalTotal": {
+      "combatId": "WCwGSULiLQeCYL1R",
+      "initiative": -2.5,
+      "round": 0,
+      "turn": null
+    },
+    "reconnectOffline": {
+      "reconnecting": true,
+      "visibleItems": 0,
+      "dialog": "\u00d7\nADD ITEM\nBrowse pack\nCustom Item\nSearch\n\nReconnect to the world to load content.\n\nRetry Items"
+    },
+    "reconnectAfter": {
+      "name": "Actual production API restart retires and refetches mounted native catalog, preserves search and session without replay",
+      "status": "passed",
+      "observed": {
+        "reconnecting": false,
+        "search": "Knife",
+        "visible": [
+          "Knife weapon"
+        ]
+      }
+    },
+    "phoneRecheck": [
+      {
+        "name": "production360 light actual Settings, HP, expanded More clearance and keyboard Rest with native Combat HUD",
+        "status": "passed",
+        "target": {
+          "reconnecting": false,
+          "viewport": 360,
+          "rect": {
+            "x": 240,
+            "y": 865,
+            "width": 40,
+            "height": 40,
+            "top": 865,
+            "right": 280,
+            "bottom": 905,
+            "left": 240
+          },
+          "hit": true,
+          "navigation": {
+            "x": 0,
+            "y": 938,
+            "width": 360,
+            "height": 62,
+            "top": 938,
+            "right": 360,
+            "bottom": 1000,
+            "left": 0
+          }
+        },
+        "hp": {
+          "value": "1234",
+          "max": "5678",
+          "width": 78.59375,
+          "required": 43.19970703125,
+          "left": 92,
+          "right": 268
+        }
+      },
+      {
+        "name": "production360 dark actual Settings, HP, expanded More clearance and keyboard Rest with native Combat HUD",
+        "status": "passed",
+        "target": {
+          "reconnecting": false,
+          "viewport": 360,
+          "rect": {
+            "x": 240,
+            "y": 865,
+            "width": 40,
+            "height": 40,
+            "top": 865,
+            "right": 280,
+            "bottom": 905,
+            "left": 240
+          },
+          "hit": true,
+          "navigation": {
+            "x": 0,
+            "y": 938,
+            "width": 360,
+            "height": 62,
+            "top": 938,
+            "right": 360,
+            "bottom": 1000,
+            "left": 0
+          }
+        },
+        "hp": {
+          "value": "1234",
+          "max": "5678",
+          "width": 78.59375,
+          "required": 43.19970703125,
+          "left": 92,
+          "right": 268
+        }
+      }
+    ]
+  },
+  "cleanup": {
+    "verified": {
+      "originalActorSourceExact": true,
+      "originalChatIdsExact": true,
+      "allFixtureIdsAbsent": true,
+      "settingIdentityValuesAbsenceAndOtherFieldsExact": true
+    },
+    "removedActorIds": [
+      "gnIHIuTPeRygqhKa",
+      "MAROu90dF6CLWTVo",
+      "cQo6QZjv1ylDh572",
+      "gnIMAv19KSNVUSwp",
+      "byPF3JOqb6zT3DsC",
+      "zX6KuQ386KN53n2M",
+      "IyqD5o7JPlZlqMoE",
+      "7Egm3k6o4a51XzCv",
+      "LCuJPQO8U8KjHMKv",
+      "CqrFYBEV8vX1RwpY",
+      "s7rd7yNFNrXtwb1a",
+      "QfQcNAtQWbp7YG4N",
+      "hVyZO271QU6YjSB4"
+    ],
+    "removedChatCount": 166,
+    "removedChatIdsSha256": "e4180afcbb6a369082562bff1947957b63c5dd678a73330bcea6a4428da4942a",
+    "removedCombats": [
+      "WCwGSULiLQeCYL1R",
+      "xcFrF0lrD3xNqjkB"
+    ],
+    "removedPackEntries": [
+      {
+        "pack": "morkborg.mork-borg-items",
+        "type": "Item",
+        "id": "XlroYeoGNs8beZBU"
+      },
+      {
+        "pack": "morkborg.mork-borg-tables",
+        "type": "RollTable",
+        "id": "ddIFAE6FR49ZcSuY"
+      }
+    ],
+    "remaining": {
+      "actors": 1,
+      "chats": 2,
+      "combats": 0,
+      "items": 218,
+      "tables": 46
+    },
+    "settings": [
+      {
+        "key": "morkborg.trackCarryingCapacity",
+        "persistedBefore": true,
+        "persistedAfter": true,
+        "id": "Lg5NNb8EnWYR3FXS",
+        "nativeAuditChanges": [
+          "_stats.modifiedTime"
+        ]
+      },
+      {
+        "key": "morkborg.trackAmmo",
+        "persistedBefore": false,
+        "persistedAfter": false,
+        "id": null,
+        "nativeAuditChanges": []
+      },
+      {
+        "key": "morkborg.hitAutomation",
+        "persistedBefore": false,
+        "persistedAfter": false,
+        "id": null,
+        "nativeAuditChanges": []
+      },
+      {
+        "key": "morkborg.allowedScvmClasses",
+        "persistedBefore": false,
+        "persistedAfter": false,
+        "id": null,
+        "nativeAuditChanges": []
+      },
+      {
+        "key": "core.compendiumConfiguration",
+        "persistedBefore": true,
+        "persistedAfter": true,
+        "id": "yPSTY4zTSY3IsxYL",
+        "nativeAuditChanges": [
+          "_stats.modifiedTime",
+          "_stats.lastModifiedBy"
+        ]
+      }
+    ],
+    "auditMetadataPolicy": "Native Setting modifiedTime/lastModifiedBy audit records intentionally retained; no historical metadata fabricated.",
+    "loggedOutCoreAccounts": [
+      "Gamemaster",
+      "ptest"
+    ],
+    "nativeBrowserLoggedOut": true,
+    "finalPublicStatus": {
+      "world": "morkborg",
+      "system": "morkborg",
+      "version": "14.367",
+      "users": 0
+    },
+    "taskServicesRetained": [],
+    "phoneRecheck": {
+      "actorIds": [
+        "hVyZO271QU6YjSB4"
+      ],
+      "combatIds": [
+        "xcFrF0lrD3xNqjkB"
+      ],
+      "originalActorSourceExact": true,
+      "settingsEntireSourceExact": true,
+      "chatIdsExact": true,
+      "counts": {
+        "actors": 1,
+        "chats": 2,
+        "combats": 0
+      }
+    }
+  },
+  "openDecisions": [
+    "Pale One Intuitive Power duplicate IDs: no canonical selection per user instruction",
+    "Forlorn Philosopher stale Owl reference: no identity bridge across 21 readable historical tags; bad branch unavailable"
+  ],
+  "qualifications": [
+    "Copied source/native default provenance does not establish a separate runtime6.0.0 or Foundry13 acceptance",
+    "Selected random plans/trials do not exhaust every possible class outcome",
+    "Full NPC sheets, Misery, party encounter ordering, arbitrary macros and browser-only add-on execution remain deferred"
+  ]
+}

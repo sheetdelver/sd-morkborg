@@ -1,10 +1,16 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; remediation in progress. Execution qualifications are recorded below.
+**Status:** Active; selected native runtime qualified, pinned identity decisions open.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 
 ## Conclusion and evidence boundary
+
+Current qualification and cleanup are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
+Module corrections are implemented and executed on native6.0.1/Foundry14.367 with
+released Core0.19.3, including production loading. MB-N09 remains qualified for the
+user-pinned Pale/Owl identities; this audit is not archived. Earlier ledgers describe
+their historical checkpoints and do not supersede the final dispositions below.
 
 The audited baseline built against Core 0.19.3 but had substantive native parity
 defects. Current implementation dispositions and executed qualifications are recorded
@@ -593,22 +599,22 @@ is inferred. Before and after evidence are identified separately in that ledger.
 
 | Finding | Implemented correction and executed proof | Remaining acceptance / disposition |
 | --- | --- | --- |
-| MB-N01 | Native carrying/container/carried fields, immutable shared projection; native-inventory, preparation, source round trips | Corrected offline; MB-A01 native comparison pending |
-| MB-N02 | Unique owned IDs, destructive organize removed, sequenced membership/equip/delete, stop on prerequisite failure; inventory-actions | Corrected offline; MB-A07 native write/hooks pending |
-| MB-N03 | Shared DR/current-vs-max armor/native flags; natural crit and full-damage RAW decision; sheet raw combat vs HUD total; action/manual suites and real Core dice; Chrome raw payloads | Corrected with explicit native-code deviations; MB-A03/08 pending |
-| MB-N04 | Missing formula/identity/variables unavailable, unsupported actions explicit, invalid inputs before effects; baseline/command/content tests | Corrected offline; native unsupported/permission handling pending |
-| MB-N05 | All 12 rest combinations, negative HP, powers/Omens scope; native-alignment/action-parity | Corrected offline; MB-A04 native snapshots pending |
-| MB-N06 | Advancement equality/bounds/current HP; removed extra debris inventory; action-parity | Corrected offline; MB-A04 native execution pending |
-| MB-N07 | Presence/remaining powers, no invented armor gate or HP write, exact catastrophe root, separate resource actions; native/actions/table tests | Corrected offline; MB-A05 native execution pending |
-| MB-N08 | Removed private evaluator/name resolution; SDK exact multiple/nested/Actor draws, valid-domain exhaustion, hydrated source identity; table/content suites and actual production generation | Corrected offline; MB-A05/06 references/permissions pending |
-| MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | 11 selected plans/14 complete companions proven; Pale One and broken Forlorn branch explicitly unavailable; MB-A06 pending |
-| MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected for declared settings; additionalAbilities client scope verified on14.367; MB-A02 changes/restore pending |
-| MB-N11 | Native numeric handedness, max-tier controls, missing damage unavailable; Chrome Item edit, source tests | Read normalization selected; no persisted repair/catalog. Affected-world inventory unknown; MB-A10 N/A for this slice |
-| MB-N12 | Owned feat capability/precedence, reviewed macro UUID+digest; SDK two draws/one dose result, no invented grants | Corrected offline; native macro presentation MB-A05 pending |
-| MB-N13 | SDK safe rich content/confirmation/editor, one bounded form, labels/focus/keyboard, buffered edits, real footer/HUD clearance; 24 Chrome cases | Executed isolated UI correction; native/full-host nesting/inline reference MB-A09 pending |
-| MB-C01 | Preserve SDK/known world-retirement status, OWNER/hidden boundary, sanitized 500; actual production Core roles/visibility/revocation | Isolated qualification passes; native/session boundary MB-A08 pending |
-| MB-C02 | Denied/unavailable/empty catalog distinctions, no invalid candidate success; actual Core packs and maintained suites | Isolated qualification passes; native catalog MB-A06 pending |
-| MB-C03 | Mounted refetch and late picker/action/generation/status retirement on keys-empty/access/reconnect; no replay; actual Chrome and Core context cases | Isolated qualification passes; native cross-session MB-A08/09 pending |
+| MB-N01 | Native carrying/container/carried fields, immutable shared projection; native-inventory, preparation, source round trips | Corrected; native source/derived comparison and unchanged original source verified (MB-A01) |
+| MB-N02 | Unique owned IDs, destructive organize removed, sequenced membership/equip/delete, stop on prerequisite failure; inventory-actions | Corrected; actual native source round trips, distinct IDs and safe deletion verified (MB-A07) |
+| MB-N03 | Shared DR/current-vs-max armor/native flags; natural crit and full-damage RAW decision; sheet raw combat vs HUD total; action/manual suites and real Core dice; Chrome raw payloads | Corrected with explicit RAW/native-code deviations; actual combat/visibility/HUD total qualified (MB-A03/08) |
+| MB-N04 | Missing formula/identity/variables unavailable, unsupported actions explicit, invalid inputs before effects; baseline/command/content tests | Corrected; actual unsupported types, passive feat and missing die unavailable before source effects |
+| MB-N05 | All 12 rest combinations, negative HP, powers/Omens scope; native-alignment/action-parity | Corrected; all12 native rest combinations and native resource fields verified (MB-A04) |
+| MB-N06 | Advancement equality/bounds/current HP; removed extra debris inventory; action-parity | Corrected; actual equality/bounds/current HP and independent native trials verified (MB-A04) |
+| MB-N07 | Presence/remaining powers, no invented armor gate or HP write, exact catastrophe root, separate resource actions; native/actions/table tests | Corrected; actual powers/resources/catastrophe and no added HP effects verified (MB-A05) |
+| MB-N08 | Removed private evaluator/name resolution; SDK exact multiple/nested/Actor draws, valid-domain exhaustion, hydrated source identity; table/content suites and actual production generation | Corrected; actual multiple/nested tables and caller-bound concealed dependency verified (MB-A05/06/08) |
+| MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | Qualified: copied-native11 plans/14 companions plus actual complete/partial/create/cancel/custom cases; Pale/stale Forlorn identities remain pinned and unavailable (MB-A06) |
+| MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected; all four native changes and identity/value/absence restoration verified; additionalAbilities client scope retained (MB-A02) |
+| MB-N11 | Native numeric handedness, max-tier controls, missing damage unavailable; Chrome Item edit, source tests | Read normalization selected; original disposable Actor10 Items has no legacy1h/2h; other historical worlds unknown. No repair/catalog; MB-A10 N/A |
+| MB-N12 | Owned feat capability/precedence, reviewed macro UUID+digest; SDK two draws/one dose result, no invented grants | Corrected; actual reviewed two draws/one doses roll, passive capability and no extra grant verified (MB-A05) |
+| MB-N13 | SDK safe rich content/confirmation/editor, one bounded form, labels/focus/keyboard, buffered edits, real footer/HUD clearance; 24 Chrome cases | Corrected; actual production UI, safe native inline instructions, host shared-image nesting/focus and reconnect qualified (MB-A09) |
+| MB-C01 | Preserve SDK/known world-retirement status, OWNER/hidden boundary, sanitized 500; actual production Core roles/visibility/revocation | Corrected; actual native caller/visibility/queued-action denial and durable recovery qualified (MB-A08) |
+| MB-C02 | Denied/unavailable/empty catalog distinctions, no invalid candidate success; actual Core packs and maintained suites | Corrected; actual custom/classless/empty/denied catalogs and dependency isolation qualified (MB-A06) |
+| MB-C03 | Mounted refetch and late picker/action/generation/status retirement on keys-empty/access/reconnect; no replay; actual Chrome and Core context cases | Corrected; actual mounted revoke/restore, held late200 retirement and production reconnect qualified (MB-A08/09) |
 | MB-C04 | Core >=0.19.3, module API1.5/UI3.2 justified, coherent v0.19.3 workflow pins, explicit CI module typing | Corrected and executed against released Core; no version/release bump |
 
 **Identity disposition:** user requested historical verification for the Forlorn Owl
@@ -688,3 +694,26 @@ These are partial native dispositions, not resolved findings. Full native UI,
 settings/resource/action, non-GM permissions and recovery cases remain open.
 Computer Use has no available browser; browser/CDP authorization and non-GM
 account access requests remain pending. No external Core blocker is established.
+
+### Final selected native qualification and review — October19
+
+The [final matrix](evidence/2026-10-19-native-acceptance.md) and
+[metadata ledger](evidence/2026-10-19-native-acceptance.json) supersede the remaining
+pending-native statements in historical checkpoints.16 source suites, explicit
+source/UI/hooks typing, module check/package,14 production integrations and26
+browser interactions pass. Actual production Core/native execution includes every
+MB-A01–09 category with explicit native-data qualifications; MB-A10 is N/A.
+The final archive is `1b7e1d48ab878fbaa080f5642d94f9d8b934136cde775410d8bc77967070822b`.
+
+The final presentation correction retires HTML top-layer forms on public shared
+content and closes them in layout cleanup, preserving Core overlay focus/return.
+Old-archive and actual native failures are retained separately from final passes.
+Hidden actors now display unavailable rather than claiming deletion. Server/logic
+bundles remain byte-identical to the live action slice; no rule-version bump occurs.
+
+All13 final-run Actors,166 messages,2 pack entries and2 unstarted Combats are absent;
+earlier5 fixtures were already removed. Original Actor source compares equal,
+setting IDs/values/absence and pack configuration are restored. Legitimate native
+Setting audit metadata remains. All owned services stopped, sessions logged out,
+native users0; Core/native trees clean. Pale/Owl canonical identities remain pinned,
+other runtime pairs unqualified, audit active. No Core blocker is established.

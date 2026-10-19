@@ -55,6 +55,9 @@ second world cache/lifecycle or treat module-prepared data as native browser dat
   privacy, source-preservation and failure behavior in regression coverage.
 - Use SDK rich-text/URL handling and shared roll/confirmation components.
   Never use native browser alert/confirm/prompt for application flows.
+- Exercise module forms with Core's actual shared-content overlay. Top-layer forms
+  must yield through the public presentation signal and preserve return focus;
+  a mocked dismissal signal alone does not verify nested host behavior.
 - Treat host .env/settings as production-connected. Do not start Core or connect
   to live Foundry for a test without task-specific authority. Prefer offline
   fixtures and isolated outputs; never copy credentials into documentation.
