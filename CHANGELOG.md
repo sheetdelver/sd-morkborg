@@ -1,6 +1,8 @@
 # Releases
 
-## Unreleased
+Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
+
+## 0.9.0
 
 - Align native inventory preparation
 - Restore shield and ammo controls
@@ -13,8 +15,6 @@
 - Improve mobile and shared overlays
 - Target Foundry v14 systems
 - Require Core 0.19.3
-
-Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
 
 ## 0.8.3
 - Centered mobile health values
