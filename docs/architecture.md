@@ -164,4 +164,27 @@ evaluated dice and selected table/row/document identities under the caller's
 visibility. Native macro precedence is macro before formula. The decoction adapter
 requires the reviewed canonical Macro and command digest; it draws twice and
 presents one doses total without granting inventory. Other macros are unsupported.
-Character generation still uses the old data manager until its G5 replacement.
+Character generation now uses this same content service. `Generation` reads a
+caller-scoped Class catalog and native starting metadata, honors weapon/armor
+formula overrides and scroll rules, retains full Item effects/flags and every
+companion Actor, and builds traits/notes into the created description. New owned
+Items receive fresh IDs; template UUID provenance is retained. Source templates
+remain unchanged. Creation drops collection metadata/old ownership and gives the
+caller private OWNER access, with native token defaults represented explicitly.
+
+### Generation review and recovery
+
+The server stores candidates under caller identity and a random candidate ID.
+Creation checks world/runtime/context identity, allowed class policy, every exact
+source dependency and the bound write subject before native creation. All proposed
+Actor writes are reviewed together; native create authorization remains authoritative.
+Confirmed writes are journaled. A failed/in-progress candidate is never blindly
+replayed; a caller-authorized status route rechecks access to confirmed Actors.
+There is no atomic multi-Actor or exactly-once guarantee, especially across an
+acknowledgement/persistence gap. Recovery requires inspection of the actual world.
+
+The factory retires catalog/previews/pending responses on public context, access,
+connection and world signals, including ownership-only notifications. Errors have
+retry, and creation uses the server candidate ID rather than client Actor data.
+Native lookup ambiguity remains explicit: Pale One's Intuitive Power legacy CSV
+matches two IDs in the same pack; no identity was chosen by name.

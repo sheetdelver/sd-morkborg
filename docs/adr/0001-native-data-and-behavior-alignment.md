@@ -384,7 +384,7 @@ currently advertised functionality.
 | G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
 | G3 | In progress | Resource matrix, shared plans/manual combat and sequenced inventory pass offline; SDK table-dependent cases and installed/native races pending. |
 | G4 | In progress | SDK exact table traversal and reviewed macro adapter pass offline; installed service/privacy/native acceptance pending. |
-| G5 | Open | Generation completeness pending |
+| G5 | In progress | Shared native generation/creation recovery tests pass; copied native 11 classes complete, Pale One ambiguous identity awaits decision; installed/native acceptance pending. |
 | G6 | Open | Mounted UI/accessible presentation pending |
 | G7 | Open | Repair decision and installed-host qualification pending |
 | G8 | Open | Native matrix pending; no native connection in this audit |
@@ -450,3 +450,27 @@ passes. Actions now use the SDK service; old private generation is isolated pend
 G5 replacement. Macro adapter identity/digest comes from the copied native pack;
 no arbitrary script is executed. Broader complex-dice draws use SDK evaluation,
 while custom complex uniqueness is explicitly unavailable without a proven domain.
+
+Generation checkpoint (after `aadbc9d`): private DataManager dice/name logic removed.
+Maintained generation tests pass for custom/renamed classes, exact scoped references,
+weapon/armor overrides, full traits/effects, legitimate repeated Items with unique
+owned IDs, companion Actors, class restrictions, stale candidates, typed partial
+creation failures and replay prevention. All maintained suites and explicit module
+typing pass; released-Core isolated check/package passes, SHA-256
+`5a4b371d71e62859eb7c1a11d41ec89b6fad9b6b799eca576d2e383bb0bc4877`.
+
+Copied native document run: **11 complete plans / 14 companions**, source templates
+unchanged, Herbmaster weapon <=6 and armor <=2 proven. Deterministic dice substitute
+and actual SDK table helper were used; this is not installed/native acceptance.
+Pale One (`wLJV0VJT5I234obT`) is truthfully unavailable because its legacy starting
+reference `morkborg.mork-borg-items,Intuitive Power` matches distinct IDs
+`BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz` in the same native pack. The user was asked
+which canonical identity to select or whether to retain unavailable behavior.
+No name-only tie break was introduced. Local evidence: module ignored
+`temp/adr0001/native-generation.ts`, `/tmp/morkborg-adr0001-native-generation.json`.
+
+Public `world.assertRevision` in the released implementation can throw a plain
+Error. Module guards compare the public snapshot and translate revision retirement
+to typed conflict/not-ready, preserving unexpected-error sanitization. No Core
+change or external blocker is inferred. Native permission for Actor creation is
+enforced on create; public zero-op commit preflights bound subject/store only.

@@ -22,7 +22,7 @@ export interface MorkBorgActorPageProps {
 export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
     const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray } = useSDK();
     const { LoadingModal, SharedContentModal } = useSDKComponents();
-    const { actor, loading, notFound, refresh, update } = useActorSheet<any>(actorId);
+    const { actor, loading, notFound, isOwner, refresh, update } = useActorSheet<any>(actorId);
 
     const moduleRoll = useCallback(async (type: string, key: string, options: Record<string, unknown> = {}) => {
         if (!actor) return;
@@ -69,9 +69,11 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
         }
     }, [actor, fetchWithAuth, addNotification, refresh]);
 
-    const onCreateItem = useCallback((itemData: any) =>
-        itemRequest({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
-            itemData?.name ? `Created ${itemData.name}` : 'Item created'), [itemRequest]);
+    const onCreateItem = useCallback((itemData: any) => {
+        if (itemData?.sourceUuid && actor) return fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/add-item`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sourceUuid: itemData.sourceUuid, expectedSource: actorActionFingerprint(actor), contextRevision: actor.derived?.worldContextRevision }) }).then(async response => { const data = await response.json(); if (!response.ok) throw new Error(data.error ?? 'Item unavailable'); refresh(); }).catch(e => addNotification(e.message, 'error'));
+        return itemRequest({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
+            itemData?.name ? `Created ${itemData.name}` : 'Item created');
+    }, [actor, fetchWithAuth, refresh, addNotification, itemRequest]);
 
     const onUpdateItem = useCallback((itemData: any) =>
         itemRequest({ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
@@ -113,6 +115,8 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
         );
     }
 
+    if (actor.type !== 'character') return <main className="bg-black text-yellow-400 p-8 min-h-screen"><h1 className="text-3xl">{actor.name}</h1><p className="my-4">This {actor.type} Actor is preserved. Its sheet and character actions are unsupported in this module.</p><a href="/">Return to dashboard</a></main>;
+
     const className = actor.items?.find((item: any) => item.type === 'class')?.name;
 
     return (
@@ -130,6 +134,7 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
             <div className="w-full max-w-5xl mx-auto p-4">
                 <MorkBorgSheet
                     actor={actor}
+                    isOwner={isOwner}
                     onRoll={moduleRoll}
                     onUpdate={updateNative}
                     onInventoryAction={inventoryAction}

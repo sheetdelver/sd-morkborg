@@ -13,11 +13,12 @@
 import type { ModuleServerRequest, ModuleServerParams, ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { json, error } from '@sheet-delver/sdk/server';
 import { isSdkError, SdkError } from '@sheet-delver/sdk';
+import { newDocument } from '../data/Generation';
 import { NativeContent } from '../data/NativeContent';
 import { actorEffects } from './actorEffects';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
 import { getRollData } from '../logic/rules';
-import { createMorkBorgData } from '../data/DataManager';
+import * as generation from './generationRoutes';
 
 const adapter = new MorkBorgAdapter();
 
@@ -81,6 +82,26 @@ export const apiRoutes = {
         }
     },
 
+    'actors/[id]/add-item': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
+        try {
+            const actorId = (await routeParts(params))[1];
+            const body = await req.json<any>();
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
+            if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character' || typeof body?.sourceUuid !== 'string' || typeof body.expectedSource !== 'string') return error('validation', 'Select a current Item for a character');
+            effects = actorEffects(req.runtime, actor, body.expectedSource, body.contextRevision);
+            const source = await new NativeContent(req.runtime, effects.guard).document(body.sourceUuid);
+            if (!['ammo', 'armor', 'container', 'misc', 'scroll', 'shield', 'weapon', 'feat'].includes(source.type)) return error('validation', 'Unsupported Item template');
+            const item = newDocument(source, body.sourceUuid, true);
+            const created = await effects.createActorItem(item);
+            await effects.guard();
+            return json({ success: true, item: created });
+        } catch (e) {
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
+            return routeError(e);
+        }
+    },
     'actors/[id]/inventory': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
         let effects: ReturnType<typeof actorEffects> | undefined;
         try {
@@ -98,23 +119,27 @@ export const apiRoutes = {
         }
     },
 
+    'classes': async (req: ModuleServerRequest) => {
+        try { return await generation.classes(req); } catch (e) { return routeError(e); }
+    },
     'generate-character': async (req: ModuleServerRequest) => {
-        try {
-            const body = await req.json<any>().catch(() => ({}));
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const character = await data.generateRandomCharacter(body.classInclusion ?? {}, body.previousClassId);
-            return json({ success: true, character });
-        } catch (e) {
-            return routeError(e);
-        }
+        try { return await generation.generate(req); } catch (e) { return routeError(e); }
+    },
+    'creation-status': async (req: ModuleServerRequest) => {
+        try { return await generation.creationStatus(req); } catch (e) { return routeError(e); }
+    },
+    'create-character': async (req: ModuleServerRequest) => {
+        try { return await generation.createCharacter(req); } catch (e) { return routeError(e); }
     },
 
     'items': async (req: ModuleServerRequest) => {
         try {
             const url = new URL(req.url, 'http://local');
             const types = (url.searchParams.get('types') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const items = types.length ? data.getItemsByType(types) : [];
+            const supported = ['ammo', 'armor', 'container', 'misc', 'scroll', 'shield', 'weapon', 'feat'];
+            if (types.some(type => !supported.includes(type))) return error('validation', 'Unsupported Item picker type');
+            if (req.runtime.access && !req.runtime.access.canReadPack('morkborg.mork-borg-items')) return error('permission_denied', 'Item pack is not visible');
+            const items = types.length ? (await req.runtime.compendium.findAll('Item')).filter(i => types.includes(String(i.type))) : [];
             return json({ items });
         } catch (e) {
             return routeError(e);

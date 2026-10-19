@@ -2,21 +2,22 @@ import { SdkError, isSdkError } from '@sheet-delver/sdk';
 import type { ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { actorActionFingerprint } from '../logic/rules';
 import { planInventoryOperation } from '../logic/inventoryActions';
+import { assertWorldRevision, currentWorld } from '../logic/worldRules';
 
 /** No transaction is claimed. Recheck authority, source and context before each effect. */
 export function actorEffects(runtime: ModuleRequestRuntime, source: any, expectedSource?: string, revision?: number) {
     const id = source._id ?? source.id;
     let expected = structuredClone(source);
     let completedWrites = 0;
-    const initialRevision = runtime.world?.snapshot().identity.contextRevision;
+    const initialRevision = runtime.world ? currentWorld(runtime.world).identity.contextRevision : undefined;
     if (expectedSource !== undefined && expectedSource !== actorActionFingerprint(source)) throw new SdkError('conflict', 'Actor changed. Refresh and review the action.');
     if (revision !== undefined && initialRevision !== revision) throw new SdkError('conflict', 'World rules changed. Refresh and review the action.');
     async function guard() {
-        if (initialRevision !== undefined) runtime.world!.assertRevision(initialRevision);
+        if (initialRevision !== undefined) assertWorldRevision(runtime.world!, initialRevision);
         const current = await runtime.documents.get('Actor', id, { minOwnership: 'owner' });
         if (!current) throw new SdkError('not_found', 'Actor unavailable');
         if (actorActionFingerprint(current) !== actorActionFingerprint(expected)) throw new SdkError('conflict', 'Actor changed during the action. Refresh before retrying.');
-        if (initialRevision !== undefined) runtime.world!.assertRevision(initialRevision);
+        if (initialRevision !== undefined) assertWorldRevision(runtime.world!, initialRevision);
     }
     function apply(target: any, patch: Record<string, unknown>) {
         for (const [path, value] of Object.entries(patch)) {
@@ -56,6 +57,10 @@ export function actorEffects(runtime: ModuleRequestRuntime, source: any, expecte
             completedWrites++; apply(expected, patch); return result;
         },
         updateActorItem,
+        async createActorItem(data: Record<string, unknown>) {
+            await guard(); const result = await runtime.documents.items.create({ type: 'Actor', id }, data);
+            completedWrites++; expected.items.push(result); return result;
+        },
         async deleteActorItem(_: string, itemId: string) { return inventory({ op: 'delete', itemId }); },
         async sendMessage(message: any, options: any) { await guard(); return runtime.chat.send(message, options); },
     };

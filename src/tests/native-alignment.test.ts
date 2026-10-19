@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import { SdkError } from '@sheet-delver/sdk';
 import { calculateSlotsUsed, categorizeItems, getRollData } from '../logic/rules';
 import { MorkBorgAdapter } from '../server/MorkBorgAdapter';
-import { MorkBorgDataManager } from '../data/DataManager';
 import { apiRoutes } from '../server/server';
 
 // Oracle: native d850c094, actor/rest.js, get-better.js, powers.js,
@@ -31,7 +30,7 @@ export async function sequence(actor: any, type: string, options: any, totals: n
         async createActorItem(_: string, item: any) { created.push(item); },
         async sendMessage(message: any) { return message; },
     };
-    const result = await adapter.performAutomatedSequence(client, actor, { type, ...extra }, options, new MorkBorgDataManager([], []));
+    const result = await adapter.performAutomatedSequence(client, actor, { type, ...extra }, options, undefined as any);
     return { patches, formulas, created, result };
 }
 

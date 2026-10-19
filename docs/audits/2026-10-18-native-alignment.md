@@ -525,3 +525,28 @@ no name-only feat execution, generic item grants or per-item dose multiplication
 Explicit typing and isolated module check pass. G4 remains qualified pending
 actual installed/native service/privacy execution; generator private services
 remain MB-N09/G5 work. Nonreplacement is local orchestration, not native depletion.
+
+### Authoritative generation checkpoint
+
+MB-N09/C02: factory catalog now honors exact allowed class identities, uses Class
+metadata and SDK dice/table services, preserves complete traits/starting content
+and Actor companions, and refuses invalid/empty/stale selections. No hardcoded
+class-name branches or discarded overrides remain. Source templates survive
+unchanged; repeated legitimate Item templates receive distinct owned IDs.
+Server candidates revalidate content/context before create; creation outcomes
+retain confirmed writes and never automatically replay a partial/uncertain attempt.
+Caller-authorized status reads preserve recovery without cached content disclosure.
+
+Maintained generation and all preceding suites pass; explicit module typing and
+isolated released-Core package/check pass. Archive SHA-256
+`5a4b371d71e62859eb7c1a11d41ec89b6fad9b6b799eca576d2e383bb0bc4877`.
+Actual copied native content: **11 classes, 14 companions**, all source documents
+unchanged and Herbmaster override bounds correct. Dice were substituted; SDK table
+helper was real. Installed/native permissions and lifecycle execution still pending.
+
+**New native ambiguity:** Pale One's pack/name Intuitive Power reference matches
+`BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz`. Both descriptions match; identities differ.
+Generation stops with conflict, never selects by name/order. User identity choice
+pending. This is an upstream data ambiguity, not a Core blocker or a completed
+12-class acceptance claim. MB-N09/G5 stays open until the selected disposition and
+required installed/native verification are recorded.

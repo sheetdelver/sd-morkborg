@@ -10,7 +10,7 @@ import { executeAction } from './actions';
 import { prepareInventory } from '../logic/inventory';
 import { ruleResult } from '../logic/worldRules';
 import { ChatCards } from '../ui/components/chat/ChatCards';
-import type { MorkBorgDataManager } from '../data/DataManager';
+
 import {
     getRollData, 
     calculateMaxSlots, 
@@ -63,6 +63,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         actor: FoundryActor,
         context: Readonly<ActorPreparationContext>,
     ): PreparedActorData {
+        if (actor.type !== 'character') return { ...structuredClone(actor), id: actor._id, img: resolveImage(actor.img ?? '', this.foundryUrl), derived: { supported: false, reason: 'This Actor type has no supported module sheet or character actions' }, categorizedItems: {} };
         const prepared = super.prepareActorData(structuredClone(actor), context);
         const carrying = ruleResult(context.world, 'trackCarryingCapacity');
         prepared.derived.rules = Object.fromEntries(['trackCarryingCapacity', 'trackAmmo', 'hitAutomation'].map(k => [`morkborg.${k}`, context.world?.settings[`morkborg.${k}`] ?? { status: 'unavailable', reason: 'not-ready' }]));
@@ -143,6 +144,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     }
 
     getActorCardData(actor: PreparedActorData): ActorCardData {
+        if (actor.type !== 'character') return { subtext: `${actor.type} — sheet unsupported`, blocks: [] };
         // System shapes belong to the module, not the neutral SDK Actor bags.
         const system = actor.system as MorkBorgCardSystem;
         const derived = actor.derived as MorkBorgCardDerived;
@@ -363,7 +365,7 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
     /**
      * Perform an automated roll sequence (Attack, Defense, Initiative)
      */
-    async performAutomatedSequence(client: any, actor: any, rollData: any, options: any, data: MorkBorgDataManager): Promise<any> {
+    async performAutomatedSequence(client: any, actor: any, rollData: any, options: any, data: any): Promise<any> {
         return executeAction(client, actor, rollData, options, data, (a, r) => this.generateRollCard(a, r));
     }
 }

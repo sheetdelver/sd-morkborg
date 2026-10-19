@@ -1,5 +1,15 @@
-import { SdkError } from '@sheet-delver/sdk';
-import type { ModuleWorldSnapshot, WorldSettingResult } from '@sheet-delver/sdk';
+import { SdkError, isSdkError } from '@sheet-delver/sdk';
+import type { ModuleWorldSnapshot, ModuleWorldContext, WorldSettingResult } from '@sheet-delver/sdk';
+
+export function currentWorld(world: ModuleWorldContext): Readonly<ModuleWorldSnapshot> {
+    try { return world.snapshot(); }
+    catch (e) { if (isSdkError(e)) throw e; throw new SdkError('not_ready', 'World context is unavailable'); }
+}
+export function assertWorldRevision(world: ModuleWorldContext, revision: number): void {
+    if (currentWorld(world).identity.contextRevision !== revision) throw new SdkError('conflict', 'World rules or access changed. Refresh this action.');
+    try { world.assertRevision(revision); }
+    catch (e) { if (isSdkError(e)) throw e; throw new SdkError('conflict', 'World rules or access changed. Refresh this action.'); }
+}
 
 export type NativeRuleKey = 'trackCarryingCapacity' | 'trackAmmo' | 'hitAutomation' | 'allowedScvmClasses';
 export function ruleResult(world: Readonly<ModuleWorldSnapshot> | undefined, key: NativeRuleKey): WorldSettingResult {

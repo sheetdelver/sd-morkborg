@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Generate from caller-visible native class metadata, exact starting content and full companion plans.
+- Review server-held candidates and report confirmed partial creation without replaying writes.
+
 - Draw action tables through SDK dice and exact document references; retain nested/multiple results and reviewed feat behavior.
 
 - Share action plans and preserve raw manual dice, native DR, ammo identity and armor limits.
