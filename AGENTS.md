@@ -4,12 +4,13 @@ Read this file, then `temp/AGENT-HANDOFF.md` when present and its active task
 references. Read [module architecture](docs/architecture.md) for technical context.
 Do not adopt Shadowdark's audit or the Core handoff as this module's work queue.
 
-Current remediation context is [module ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md)
-and the [active audit index](docs/audits/README.md). Discovery does not authorize
-implementation or Git mutations. Follow the current task's scope, and record
-validated progress/commit evidence at the ADR's checkpoints when implementation
-and commits are authorized. Core compatibility findings MB-C01–04 are carried into
-that ADR; they are not a separate active queue.
+[Module ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md) is closed
+for its agreed scope; the [audit index](docs/audits/README.md) links completed
+evidence and separately scoped follow-ups. There is no active remediation queue.
+Do not reopen historical checklists by inference. Release publication still needs
+its own authority. For new work, follow the current task and record verified
+progress/checkpoints in its owning plan. Core findings MB-C01–04 were resolved
+within ADR-0001; they are not a separate queue.
 
 ## Scope and repository ownership
 
@@ -108,6 +109,13 @@ categories twice, or infer a missing weapon die. The existing `weight` test
 fixture and repeated UI calculations are known gaps, not authoritative examples.
 Test native-shaped data and independently expected resource changes. Native chat
 instructions are not permission to add automatic HP or inventory mutations.
+
+Follow the upstream system's Foundry support boundary. The user selected the
+native6.0.x / Foundry14 line and declined retaining native5.1.2 / Foundry13 support.
+MB-V13-01 is a recorded out-of-scope decision, not an implementation or closeout
+blocker. Do not resume its compatibility proposal without a new user decision.
+Future native versions still need source and acceptance evidence before support
+claims; following upstream does not authorize unreviewed version-range expansion.
 
 Record the selected native revision and reported system/Foundry versions. The
 current local reference's 6.0.1 tag and 6.0.0 manifest differ; do not hide that

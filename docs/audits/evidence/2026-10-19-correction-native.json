@@ -1,0 +1,396 @@
+{
+  "recordedUtc": "2026-10-19T20:55:14.732030+00:00",
+  "scope": "Focused MB-R01\u201305 native follow-up; retained earlier full matrix is not counted as a new full-matrix run",
+  "identity": {
+    "moduleCommit": "ae69c76cc9119833bfabfc6efc3e8297cd91db80",
+    "moduleVersion": "0.8.3",
+    "coreCommit": "90c13e5e57d88913cd3bae6bf6b9e6f0b995bad1",
+    "coreVersion": "0.19.3",
+    "archiveSha256": "adb3001ef1eb4dd526982297df8e31dfc63dc5ce1106fbf513827cac9c32ab2c",
+    "installedFiles": {
+      "dist/server.js": "948c4999a687ed157517e00539c80f4f372255ceb7d54f73ea3d4c18caa1cea1",
+      "dist/logic.js": "3ca342211b40d1734e3c1a71dba07fd41609a01e13f31427ad8c86cb498fc874",
+      "dist/ui.js": "80262674d26ae25f928da118183be6ab92e71b249fa49e5ea8502b092593ea6b",
+      "assets/morkborg.tailwind.css": "d077e5724dd1d33e520485276cabbf28fbac2879566a39542019b96961f0b44c",
+      "info.json": "2177934e087d9c0210dc55c1855fe2d44bd29cb33597e3b2b828912c1d3e4295"
+    },
+    "native": {
+      "foundry": "14.367",
+      "system": "morkborg",
+      "nativeVersion": "6.0.1",
+      "world": "morkborg",
+      "gm": {
+        "id": "OtfXY3J3jzpnlrFQ",
+        "name": "Gamemaster",
+        "role": 4
+      }
+    },
+    "referenceTag": "6.0.1",
+    "referenceCommit": "d850c094a9452d752307221f42245a73b66bdfbb",
+    "referenceManifestVersion": "6.0.0"
+  },
+  "cases": [
+    {
+      "name": "MB-R01 native shield UI cycle/exclusivity/source and observer denial",
+      "status": "passed",
+      "denialStatus": 404,
+      "sourcePreserved": true,
+      "finalEquipped": false
+    },
+    {
+      "name": "MB-R01 native keyboard activation",
+      "status": "passed",
+      "key": "Space"
+    },
+    {
+      "name": "MB-R02 native browse/custom ammo, owned selection, depletion and replenishment",
+      "status": "passed",
+      "firstId": "eEz0KO9mV7ABoJGu",
+      "replacementId": "v0oUsztgcrswkjWp",
+      "sourceUuid": "Compendium.morkborg.mork-borg-items.Item.4wvSoapM7f0FczOH",
+      "independentNativeFieldsEqual": true,
+      "oneInventoryRepresentation": true,
+      "customKeyboardCreation": true
+    },
+    {
+      "name": "MB-R03 native mounted details refresh and retirement",
+      "status": "passed",
+      "width": 360,
+      "updated": [
+        "description",
+        "damageDie"
+      ],
+      "retiredOn": [
+        "unequip",
+        "ownership loss",
+        "Actor navigation",
+        "deletion"
+      ],
+      "focusAndScrollCleanup": true,
+      "escapeReturnsTrigger": true
+    },
+    {
+      "name": "MB-R03 native Equipment and Special current-item controls",
+      "status": "passed",
+      "equipmentDetails": true,
+      "specialEditor": true
+    },
+    {
+      "name": "MB-R04 native formula UI execution",
+      "status": "passed",
+      "messageId": "VHNmVJSiJMDBJ3Y0",
+      "formulas": [
+        "1d4"
+      ],
+      "sourceUnchanged": true
+    },
+    {
+      "name": "MB-R04 native macro UI execution",
+      "status": "passed",
+      "messageId": "RcdSAL3KYK1J9767",
+      "formulas": [
+        "1d8",
+        "1d8",
+        "1d4"
+      ],
+      "sourceUnchanged": true
+    },
+    {
+      "name": "MB-R04 native passive and unsupported capability",
+      "status": "passed",
+      "passiveDetails": true,
+      "noPassiveUse": true,
+      "passiveStatus": 400,
+      "unsupportedExplained": true,
+      "noMessagesOrDocumentChanges": true
+    },
+    {
+      "name": "MB-R05 native four abilities by four visibility modes",
+      "status": "passed",
+      "cases": 16,
+      "allEqualFormula": "10+1",
+      "allTotals": 11,
+      "sourceUnchanged": true,
+      "actualCoreChatVisible": true
+    }
+  ],
+  "abilityCards": [
+    {
+      "ability": "strength",
+      "mode": "publicroll",
+      "messageId": "wbpzfh6SUZ6dZeJu",
+      "label": "Test Strength",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [],
+      "blind": false
+    },
+    {
+      "ability": "strength",
+      "mode": "gmroll",
+      "messageId": "fzYBTejrmaS0GU1W",
+      "label": "Test Strength",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL",
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "strength",
+      "mode": "blindroll",
+      "messageId": "NIb9t5fQYx6b36RB",
+      "label": "Test Strength",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL"
+      ],
+      "blind": true
+    },
+    {
+      "ability": "strength",
+      "mode": "selfroll",
+      "messageId": "3fKsWKWg18LWPIUW",
+      "label": "Test Strength",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "agility",
+      "mode": "publicroll",
+      "messageId": "EwyvyfXbBg9TSzqf",
+      "label": "Test Agility",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [],
+      "blind": false
+    },
+    {
+      "ability": "agility",
+      "mode": "gmroll",
+      "messageId": "PydkYWVVjdK96aUf",
+      "label": "Test Agility",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL",
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "agility",
+      "mode": "blindroll",
+      "messageId": "foz3SaqPcSXImQDH",
+      "label": "Test Agility",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL"
+      ],
+      "blind": true
+    },
+    {
+      "ability": "agility",
+      "mode": "selfroll",
+      "messageId": "apXisgCmOAhFzp1F",
+      "label": "Test Agility",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "presence",
+      "mode": "publicroll",
+      "messageId": "Ot3RoSBo37rD8J1J",
+      "label": "Test Presence",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [],
+      "blind": false
+    },
+    {
+      "ability": "presence",
+      "mode": "gmroll",
+      "messageId": "2VKKF1WWm9CShwzK",
+      "label": "Test Presence",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL",
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "presence",
+      "mode": "blindroll",
+      "messageId": "xXloBhACmqnRXGFh",
+      "label": "Test Presence",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL"
+      ],
+      "blind": true
+    },
+    {
+      "ability": "presence",
+      "mode": "selfroll",
+      "messageId": "r0KvYHBiXt0ngzeq",
+      "label": "Test Presence",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "toughness",
+      "mode": "publicroll",
+      "messageId": "2CrZg7RRC983SHpL",
+      "label": "Test Toughness",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [],
+      "blind": false
+    },
+    {
+      "ability": "toughness",
+      "mode": "gmroll",
+      "messageId": "00xDX8PujfOiw2bz",
+      "label": "Test Toughness",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL",
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    },
+    {
+      "ability": "toughness",
+      "mode": "blindroll",
+      "messageId": "S7SWYTHsyCPHPHau",
+      "label": "Test Toughness",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "OtfXY3J3jzpnlrFQ",
+        "1g74dE4LXmwRmMNL"
+      ],
+      "blind": true
+    },
+    {
+      "ability": "toughness",
+      "mode": "selfroll",
+      "messageId": "BxoBmWBP1mN2ysDG",
+      "label": "Test Toughness",
+      "formula": "10+1",
+      "total": 11,
+      "recipients": [
+        "DFey1b6NXKgqPnNG"
+      ],
+      "blind": false
+    }
+  ],
+  "cleanup": {
+    "identity": {
+      "foundry": "14.367",
+      "system": "morkborg",
+      "nativeVersion": "6.0.1",
+      "world": "morkborg",
+      "gm": {
+        "id": "OtfXY3J3jzpnlrFQ",
+        "name": "Gamemaster",
+        "role": 4
+      }
+    },
+    "removed": {
+      "actors": [
+        "P9OsCVzcI25LSMN6",
+        "q5oq07oF6h6uU5m7"
+      ],
+      "messages": [
+        "OF0WzhAI8UHK6ixW",
+        "JKgQGF2rrXVn1Q0o",
+        "WexxMpWchd6lGqjR",
+        "VHNmVJSiJMDBJ3Y0",
+        "RcdSAL3KYK1J9767",
+        "wbpzfh6SUZ6dZeJu",
+        "fzYBTejrmaS0GU1W",
+        "NIb9t5fQYx6b36RB",
+        "3fKsWKWg18LWPIUW",
+        "EwyvyfXbBg9TSzqf",
+        "PydkYWVVjdK96aUf",
+        "foz3SaqPcSXImQDH",
+        "apXisgCmOAhFzp1F",
+        "Ot3RoSBo37rD8J1J",
+        "2VKKF1WWm9CShwzK",
+        "xXloBhACmqnRXGFh",
+        "r0KvYHBiXt0ngzeq",
+        "2CrZg7RRC983SHpL",
+        "00xDX8PujfOiw2bz",
+        "S7SWYTHsyCPHPHau",
+        "BxoBmWBP1mN2ysDG"
+      ],
+      "users": [
+        "DFey1b6NXKgqPnNG"
+      ]
+    },
+    "verified": {
+      "actorsExact": true,
+      "settingsExact": true,
+      "usersExact": true,
+      "messagesExact": true,
+      "combatsExact": true
+    },
+    "remaining": {
+      "actors": 2,
+      "settings": 14,
+      "users": 3,
+      "messages": 2,
+      "combats": 0
+    },
+    "sourceSnapshotIncludesAuditFields": true,
+    "worldItemsAndPacks": "read only; no mutations",
+    "foundryProcess": "operator owned; retained",
+    "services": {
+      "stoppedPorts": [
+        3971,
+        3972,
+        9420
+      ],
+      "nativeBrowserLoggedOut": true,
+      "ownerLoggedOut": true,
+      "foundry30000Retained": true
+    }
+  },
+  "qualifications": [
+    "Denied/empty catalog behavior retains prior native and current isolated correction evidence; world pack access settings were not changed in this focused run.",
+    "Mobile current-details lifecycle ran at 360 CSS px; Equipment/Special and chat inspection ran at 1280 CSS px. Earlier four-width/two-appearance browser evidence retained.",
+    "Native v13/5.1.2 is outside user-selected scope. Runtime 6.0.0 has isolated/source provenance, not a separate native acceptance run.",
+    "Temporary driver setup/selector repairs created no product changes or product regression claims.",
+    "Original user comparison covers id/name/role; full original Actors, Settings, ChatMessages and Combats include source audit fields. World Items/packs were read only."
+  ],
+  "supplementalLocalEvidence": "/tmp/morkborg-corrections-native-5f0gr0k6",
+  "releaseAuthority": "No Git mutations, version bumps, remote or release operations performed"
+}

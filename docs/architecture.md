@@ -5,13 +5,15 @@ module API 1.5 and UI API 3.2; roll API remains 1.0. World snapshots/settings an
 context lifecycle signals justify the newer API floors; no relation/migration
 catalog is used, so module API 1.6 is not required merely because Core offers it.
 
-The active [native alignment audit](audits/2026-10-18-native-alignment.md) and
-[ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
-remediation plan. The earlier Core 0.19.3 compatibility review passed build checks,
+The completed [native alignment audit](audits/completed/2026-10-18-native-alignment.md) and
+[ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the accepted
+implementation and its qualification. The earlier Core 0.19.3 compatibility review passed build checks,
 but does not establish native parity. Selected-pair native acceptance and the
 later independent review are recorded separately. The [independent review](audits/evidence/2026-10-19-independent-review.md)
 identified MB-R01–05; their [correction evidence](audits/evidence/2026-10-19-review-corrections.md)
-records isolated verification while G9 independent closeout remains pending.
+records isolated verification. The [independent correction review](audits/evidence/2026-10-19-correction-review.md)
+confirms all five fixes; the [focused native run](audits/evidence/2026-10-19-correction-native.md)
+now qualifies the final archive and closes the agreed ADR scope.
 
 ## Current implementation and known boundaries
 
@@ -45,7 +47,8 @@ System info/edit/rest/roll forms share a bounded composition for raw dice and
 native fields. Confirmations and rich-text editing use public SDK components;
 descriptions use SDK sanitization and URL handling. Scoped catalogs retire stale
 responses on lifecycle/access changes. Prior native/browser evidence is retained;
-independent review identified remaining module UI/card gaps before closeout.
+the five module UI/card review findings are corrected and independently verified
+offline and through focused native acceptance on Foundry14.367/native6.0.1.
 
 Equipment exposes shields through the canonical owned-ID equip handler, and ammo
 through the existing browse/custom Item picker. Violence details keep only an owned
@@ -65,6 +68,13 @@ chat uses that label without interpreting dice formulas. No Core extension,
 additional cache, migration or resource mutation is introduced.
 
 ## Native authority and settings
+
+The current support policy follows upstream Mörk Borg6.0.x on Foundry14.
+The user explicitly declined native5.1.2 / Foundry13 support after the
+[v13 preflight](audits/evidence/2026-10-19-v13-preflight.md). Its version refusal
+is retained as an unsupported-profile result, not an outstanding correction.
+The existing declarations remain unchanged; future upstream releases require
+explicit qualification before their versions are added.
 
 The inspected native reference is tag 6.0.1 at
 `d850c094a9452d752307221f42245a73b66bdfbb`; its manifest reports 6.0.0 and Foundry 14.
@@ -141,7 +151,7 @@ native operator acceptance. The selected Foundry14.367/native6.0.1 pair has exec
 actual production frontend/API. Other runtime pairs are unqualified; the reference
 manifest6.0.0 remains source/default provenance, not a separate running acceptance.
 No module release version bump accompanies these pins.
-The [audit index](audits/README.md) selects one active report and preserves earlier
+The [audit index](audits/README.md) records completed scope, follow-ups and earlier
 evidence. Pale One/Forlorn source identity decisions remain open; selected native
 role/privacy, lifecycle and browser qualifications are recorded per case. Static
 render tests are insufficient to establish those qualifications.
@@ -158,7 +168,8 @@ speaker attribution to the selected actor before dice or chat. Ordinary ability
 and initiative rolls no longer load unrelated generation packs. Empty generation
 catalogs return not-ready; an explicitly empty class selection is invalid.
 The installed archive also passes real released Core Store/runtime boundaries
-with a deterministic transport fixture; native caller acceptance remains open.
+with a deterministic transport fixture; separate native caller/visibility and
+cleanup evidence is recorded in the completed audit.
 
 ### Shared action and inventory execution
 
@@ -184,8 +195,8 @@ HP. Casting uses Presence and remaining uses, with no invented equipment denial 
 automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
 Daily powers, roll Omens and actual Omen spending are distinct controls.
 Exact table/feat/generation services are described below. Recorded native acceptance
-is scoped to its artifacts; MB-R01–05 now have isolated corrective verification; fresh native reruns and
-independent G9 closeout remain pending.
+is scoped to its artifacts; MB-R01–05 now have isolated and focused native
+verification. Independent G9 closeout is complete for the agreed scope.
 
 ### Exact table and reviewed feat services
 

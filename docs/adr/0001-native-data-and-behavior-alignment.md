@@ -1,9 +1,9 @@
 # ADR-0001: Native data, behavior and Core contract alignment
 
-**Status:** In progress — selected native evidence retained; independent review corrections MB-R01–05 open
+**Status:** Closed — agreed implementation and selected native qualification complete, October 19, 2026. Release publication remains separate. v13 support declined.
 **Date:** October 18, 2026  
 **Owner:** SheetDelver Mörk Borg module  
-**Evidence:** [Native alignment audit](../audits/2026-10-18-native-alignment.md)
+**Evidence:** [Native alignment audit](../audits/completed/2026-10-18-native-alignment.md)
 
 ## Context
 
@@ -24,7 +24,7 @@ the Core target inspected is 0.19.3 (`90c13e5`).
 This ADR starts the module's own numbering. It references released Core contracts;
 it does not reopen Core ADR-0064 or adopt Shadowdark's implementation queue.
 
-## Decision proposed
+## Accepted decision
 
 ### 1. Native documents and proven rules are the authority
 
@@ -394,17 +394,17 @@ Native Setting audit timestamps/authorship retain the legitimate test history.
 
 | Gate | State | Evidence / commit |
 | --- | --- | --- |
-| Discovery | Complete for pinned source/data | Active audit; original defects and source identities retained. |
+| Discovery | Complete for pinned source/data | Completed audit; original defects and source identities retained. |
 | G0 | Complete | `7429db2` existing docs; `7a794ea` meaningful20 fail/1 pass; subsequent same-input regressions and explicit RAW/native decisions. |
 | G1 | Qualified on released Core and native callers | `ccaf20f`; typed errors/OWNER preflight; production and real owner/observer/hidden execution. |
 | G2 | Qualified for selected native pair | `540d3bc`; immutable inventory/rules; actual carrying/ammo/automation/class changes and restoration, client-only additionalAbilities verified. |
-| G3 | Native paths qualified; residual UI/card gaps open | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. MB-R01/02/05 require correction at the consumer/card boundary. |
+| G3 | Qualified for selected native pair | Prior action/resource evidence retained; `33d3291`/`ae69c76` shield/ammo/named-card corrections pass source, compiled and fresh native checks. |
 | G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
 | G5 | Qualified with operator-reviewed content policies | Prior full-plan/recovery qualification at `21e7b18` and `006019b`; `20fda1a` token defaults. Current native execution observes both Pale choices, creates both plus the complete mapped Owl, and verifies source preservation/cleanup. |
-| G6 | Executed cases retained; residual controls/lifecycle gaps open | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. Independent probes expose MB-R01–05. |
+| G6 | Qualified for selected native pair | Prior UI/overlay/reconnect evidence retained. Current archive passes 36 compiled browser cases and focused native shield/ammo/detail/feat controls, including 360px modal retirement and keyboard cleanup. |
 | G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
-| G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
-| G9 | Independent review requires corrections | MB-R01–05 remain open after review at `f48332e`; see the final addendum. Prior native qualification and approved content policies remain attributed to their tested artifacts. Audit remains active. |
+| G8 | Complete for selected pair and scope | Native6.0.1/Foundry14.367 MB-A01–09 matrix retained, MB-A10 N/A; all five changed paths pass focused native execution on the reviewed final archive with exact cleanup. v13 declined; other pairs unqualified. |
+| G9 | Complete | Independent review at `ae69c76`: 19 suites, explicit typing, check/package, 40 installed and 36 browser cases; focused native acceptance and cleanup now pass. Required findings resolved, audit archived, MB-F01–06/content policies preserved. |
 
 ### Implementation baseline (2026-10-18)
 
@@ -751,3 +751,107 @@ remain open pending independent review.** Fresh native reruns of corrected paths
 remain pending current scoped authority; earlier native receipts retain their
 original artifact identities and do not qualify this final archive. Core and the
 reference remained read-only; no task-owned service is retained.
+
+
+### G9 independent correction review — October 19
+
+The [independent correction review](../audits/evidence/2026-10-19-correction-review.md)
+at `ae69c76cc9119833bfabfc6efc3e8297cd91db80` passes MB-R01–05. It supersedes
+the pending-independent-review status in checkpoint 2. All 19 source suites,
+explicit module/UI/hook/test typing, module validation/isolated packaging, 20
+installed Core cases for each native identity and 36 compiled browser cases pass.
+No new implementation blocker or Core dependency was found. Current summaries
+above now distinguish completed corrections from the remaining native evidence.
+
+Fresh review archive SHA-256:
+`adb3001ef1eb4dd526982297df8e31dfc63dc5ce1106fbf513827cac9c32ab2c`.
+This is a new isolated build of the reviewed commit, not the implementer's
+`fe891efa...` archive or either historically native-qualified package.
+
+**Remaining:** execute the five focused native rows in the review (shield, ammo,
+current details, feat capability and named ability chat), record independent source
+results and cleanup, then reconcile G8/G9 and archive/close. The previously
+qualified Foundry14.367/native6.0.1 pair is sufficient for this existing scope;
+there is no new v13 requirement or instruction to rerun the entire native matrix.
+Preserve prior qualifications, MB-F01–06 and provisional Pale/Owl decisions.
+Native work and release operations require their own current scoped authority.
+
+No application/compatibility/version changes or Git/remote mutations were made.
+Core and native reference state were preserved; review-owned services stopped.
+
+
+### User-selected v13 preflight — October 19
+
+The user subsequently selected v13 verification before v14. The running pair is
+Foundry13.351/native5.1.2, world `morkborg`. [Preflight evidence](../audits/evidence/2026-10-19-v13-preflight.md)
+records MB-V13-01: the module's four setting/default declarations exclude5.1.2.
+The current archive, in actual released-Core request services with this synthetic
+context, returns503 for Strength and classes with zero effects, both with absent
+and explicitly stored settings. This is a module version-profile gap, not a Core
+migration or authorization defect. No native action acceptance is claimed.
+
+The four settings/schema and Item/table content comparison support a narrow
+compatibility investigation; companion token shapes and native macro inventories
+differ and must remain version-specific. The evidence report defines correction
+and qualification checkpoints. The request to approve that module change is
+pending. No source/manifest changes or native document writes occurred. Earlier
+v14-only scope assumptions do not prevent the newly selected v13 investigation,
+but neither prior v14 nor isolated evidence qualifies v13 automatically.
+
+
+### Support decision — follow upstream Foundry14 support
+
+The user explicitly accepted dropping Foundry13 support and following the native
+system's support boundary. The current line is Mörk Borg6.0.x / Foundry14; the
+selected native acceptance pair remains6.0.1 /14.367 on Core0.19.3.
+
+**MB-V13-01: out of scope by user decision.** The earlier support-change approval
+question is resolved. Its investigation and proposed5.1.2 checkpoints are retained
+as history, with no obligation to implement them or qualify v13 for this release.
+The existing setting declarations already exclude5.1.2, so no application,
+compatibility metadata, SDK or release-version changes are needed for this decision.
+Do not resume legacy support unless the user explicitly selects it later. Future
+upstream releases still require source/acceptance qualification before expansion.
+
+Remaining G8/G9 work is the five corrected paths in the independent review on
+v14:shield controls,ammo lifecycle,current details,feat capabilities and named
+ability chat. Verify source outcomes and fixture cleanup, then reconcile/close
+and archive. The earlier full v14 matrix and reviewed Pale/Owl policies retain
+their exact evidence scope. No v13 world writes or fixtures were made; switching
+the operator instance requires no task cleanup. Git and release actions remain
+separately authorized operations.
+
+
+### Final focused native qualification and closeout — October 19
+
+The user launched the selected v14 world and authorized the bounded native run.
+[Final correction acceptance](../audits/evidence/2026-10-19-correction-native.md)
+and its [portable ledger](../audits/evidence/2026-10-19-correction-native.json)
+qualify all five MB-R01–05 paths at `ae69c76`, on released Core0.19.3,
+Foundry14.367/native6.0.1, world `morkborg`. The managed archive is exactly
+`adb3001ef1eb4dd526982297df8e31dfc63dc5ce1106fbf513827cac9c32ab2c`.
+
+Nine result groups cover shield controls/Observer denial, canonical ammo
+browse/custom/depletion/replenishment, mounted details and authority retirement,
+passive/formula/reviewed/unsupported feats, and sixteen ability/visibility cases.
+Native primary documents verify outcomes independently. The actual production
+frontend verifies controls, phone focus cleanup and named/concealed chat cards.
+Unchanged denied catalogs and broader lifecycle/generation cases retain their
+prior native and current isolated evidence; a full-matrix rerun is not claimed.
+
+All 2 fixture Actors, 1 user and 21 messages were removed. Complete original Actor,
+Setting, ChatMessage and Combat source matches the baseline, including audit
+fields; original user IDs/names/roles match. No world Item/pack mutations occurred.
+Task services stopped; operator Foundry remains running. No Core/sibling/reference,
+source, version, compatibility or Git/remote changes were made in this review.
+
+G3/G6/G8/G9 and MB-N01–13/MB-C01–04/MB-R01–05 are reconciled. **ADR-0001 is
+closed for its agreed scope**, superseding earlier pending review/native statuses.
+The report is archived. MB-A10 remains evidence-backed N/A: no selected persistent
+repair. MB-F01–06 and provisional Pale One/Owl policies remain explicit boundaries,
+not reopened gates; v13/native5.1.2 remains declined. Future scope/version expansion
+needs a new decision. Core floor0.19.3 and API ranges stay unchanged.
+
+Next is separately authorized module release preparation. No release/version,
+commit/push/merge/tag authority is inferred from acceptance or closeout. The ADR
+was saved locally before this reconciliation.

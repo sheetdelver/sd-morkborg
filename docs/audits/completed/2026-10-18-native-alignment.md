@@ -1,44 +1,79 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; MB-R01–05 corrected with isolated execution; independent closeout and fresh native reruns pending. Prior native qualification retained.
-**Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
+**Status:** Completed October 19, 2026; agreed corrections independently verified offline and on the selected native pair. ADR-0001 closed; release publication separate.
+**Implementation plan:** [Module ADR-0001](../../adr/0001-native-data-and-behavior-alignment.md)
+
+## Final reconciliation
+
+[Focused native correction acceptance](../evidence/2026-10-19-correction-native.md)
+qualifies the final reviewed archive on Core0.19.3 / Foundry14.367 / native6.0.1.
+MB-N01–13, MB-C01–04 and MB-R01–05 are resolved within the accepted scope.
+G8/G9 are complete; MB-A10 is N/A. Nine correction groups and sixteen ability
+visibility cases pass, with exact original-source comparisons and fixture cleanup.
+No fresh full-matrix rerun or another native version is claimed. This closeout
+supersedes pending statuses in historical checkpoint sections below.
+
+MB-F01–06 remain separately scoped: full non-character/container sheets, Misery,
+native encounter/turn automation, journal/hotbar scripting and browser extensions.
+Safe type handling, complete generated companions, safe references and settings
+scope were completed within ADR-0001. The exact Pale One/Owl policies remain
+provisional; no generic same-name resolution is authorized. Release/Git operations
+remain separate. See the audit index for the current follow-up dispositions.
+
+## Subsequent v13 qualification preflight
+
+User-selected Foundry13.351/native5.1.2 verification exposes **MB-V13-01**, the
+module's version declaration excluding this native release. The [preflight and
+proposed correction](../evidence/2026-10-19-v13-preflight.md) record read-only native
+identity/source evidence, actual-Core isolated503 refusal with zero effects, and
+version-specific content considerations. The user subsequently declined v13 support
+and selected the upstream native6.0.x / Foundry14 boundary. MB-V13-01 is explicitly
+out of scope, not a corrective queue item or closeout blocker. MB-R01–05 remain
+corrected and v14 evidence remains valid at its original scope. The focused v14
+follow-up now passes with cleanup; no v13 acceptance is claimed.
 
 ## Review correction progress
 
-MB-R01–05 pass maintained compiled-browser and installed Core0.19.3 cases.
+MB-R01–05 pass independent source review and freshly executed compiled-browser
+and installed Core0.19.3 cases at `ae69c76`. No additional implementation blocker
+was found. The [review and bounded native checklist](../evidence/2026-10-19-correction-review.md)
+record the acceptance scope, now completed in the
+[focused native follow-up](../evidence/2026-10-19-correction-native.md).
 
 | Finding | Current disposition | Executed evidence |
 | --- | --- | --- |
-| MB-R01 | Corrected, fresh native rerun pending | Shield cycle, exclusivity, reduction, source preservation and Observer denial in rendered controls and compiled inventory route. |
-| MB-R02 | Corrected, fresh native rerun pending | Ammo browse/custom types, exact native source provenance, owned selection/depletion/replenishment, one representation, denied/empty catalog. |
-| MB-R03 | Corrected, fresh native rerun pending | Open Violence description/damage refresh; deletion, unequip, Actor and authority retirement at mobile width, keyboard/focus cleanup; Equipment/Special refresh control. |
-| MB-R04 | Corrected, fresh native rerun pending | Passive details without executable Use; shared formula plan, reviewed macro before invalid formula, unsupported native macro explicit error, zero invented writes. |
-| MB-R05 | Corrected, fresh native rerun pending | Actual renderer and compiled cards name all four abilities with equal formulas, preserved modifiers, four visibility modes and no writes. |
+| MB-R01 | Corrected; focused native acceptance passed | Shield cycle, exclusivity, reduction, source preservation and Observer denial in rendered controls and compiled inventory route. |
+| MB-R02 | Corrected; focused native acceptance passed | Ammo browse/custom types, exact native source provenance, owned selection/depletion/replenishment, one representation, denied/empty catalog. |
+| MB-R03 | Corrected; focused native acceptance passed | Open Violence description/damage refresh; deletion, unequip, Actor and authority retirement at mobile width, keyboard/focus cleanup; Equipment/Special refresh control. |
+| MB-R04 | Corrected; focused native acceptance passed | Passive details without executable Use; shared formula plan, reviewed macro before invalid formula, unsupported native macro explicit error, zero invented writes. |
+| MB-R05 | Corrected; focused native acceptance passed | Actual renderer and compiled cards name all four abilities with equal formulas, preserved modifiers, four visibility modes and no writes. |
 
-The [correction evidence](evidence/2026-10-19-review-corrections.md) distinguishes
+The [correction evidence](../evidence/2026-10-19-review-corrections.md) distinguishes
 failing-before receipts from final-archive execution. Earlier native acceptance
-retains its original artifacts; the corrections do not close G9 without
-independent review. No new native authorization or execution is inferred.
+retains its original artifacts. Independent offline review and all five focused
+native follow-up rows now pass; cleanup is independently verified. G8/G9 are
+complete for the selected pair and this report is archived.
 
 ## Conclusion and evidence boundary
 
-The [October 19 independent review](evidence/2026-10-19-independent-review.md)
+The [October 19 independent review](../evidence/2026-10-19-independent-review.md)
 at `f48332e` reran all maintained source, installed and browser checks successfully,
 then reproduced five residual gaps: shield equip controls, ammunition addition,
 stale Violence details, passive-feat no-op actions and unnamed ability chat cards.
 These findings required module corrections before closeout; the executed
-corrections above still await independent G9 review. No new Core dependency was established.
+corrections above now pass independent offline G9 review and focused native
+execution on the reviewed final archive; no new Core dependency was established.
 The new findings qualify the earlier broad “Corrected” dispositions below without
 invalidating their executed cases. The review made no native connection or source
 change and does not claim another supported runtime pair.
 
-Qualification and cleanup for checkpoint `006019b` are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
+Qualification and cleanup for checkpoint `006019b` are in the [final native matrix](../evidence/2026-10-19-native-acceptance.md).
 Module corrections are implemented and executed on native6.0.1/Foundry14.367 with
 released Core0.19.3, including production loading. MB-N09's later reviewed content
-policies have their own [follow-up qualification](evidence/2026-10-19-content-decisions.md); this audit is not archived. Earlier ledgers describe
+policies have their own [follow-up qualification](../evidence/2026-10-19-content-decisions.md). This audit is now archived. Earlier ledgers describe
 their historical checkpoints and do not supersede the final dispositions below.
-The later [Brevel token-default correction](evidence/2026-10-19-brevel-generation.md)
+The later [Brevel token-default correction](../evidence/2026-10-19-brevel-generation.md)
 has source/installed regression evidence and is now exercised by the native
 reviewed-content follow-up. Its previous pending-native statements remain historical.
 
@@ -85,7 +120,7 @@ stored table results include `documentUuid`; weapons store `handed` as `"1"`/`"2
 No ActiveEffect entries were found in the inspected Item records. That observation
 does not prove arbitrary world effects or add-ons are supported.
 
-The earlier [Core compatibility review](2026-10-18-core-0193-compatibility.md)
+The earlier [Core compatibility review](../2026-10-18-core-0193-compatibility.md)
 is retained as predecessor evidence. MB-C01–04 remain open and are incorporated
 below; its statement that native rules/settings had not been audited describes
 that earlier review, not this expanded one.
@@ -115,12 +150,12 @@ Native `module/actor/actor.js` and `module/item/item.js` calculate equipment wei
 using `carryWeight`, `carried`, quantity rounding and container membership.
 Container space uses **containerSpace**, a different measure; uncarried containers
 and their contents are excluded from the character's carrying total.
-[rules.ts](../../src/logic/rules.ts) instead sums `system.weight * quantity` across
+[rules.ts](../../../src/logic/rules.ts) instead sums `system.weight * quantity` across
 all items. An actual native-method probe with `carryWeight: 2, quantity: 2` returns
 **4**, while the module returns **0**. The prepared-actor test currently supplies
 the invented `weight` field, masking the discrepancy.
 
-[EquipmentTab](../../src/ui/EquipmentTab.tsx) independently calculates container
+[EquipmentTab](../../../src/ui/EquipmentTab.tsx) independently calculates container
 usage from carrying weight, while the adapter computes another total. Armor DR is
 also repeated in the Violence tab and server. Zero quantity becomes one through
 several `|| 1` conversions. The native getter has its own zero-quantity quirk:
@@ -165,12 +200,12 @@ while **current** tier determines reduction. Native defense distinguishes natura
 critical/fumble results and doubles incoming damage on a failed fumble. Native
 attack decrements the selected `ammoId` when `usesAmmo` and `trackAmmo` apply.
 
-[MorkBorgAdapter](../../src/server/MorkBorgAdapter.ts) omits ammo consumption and
+[MorkBorgAdapter](../../../src/server/MorkBorgAdapter.ts) omits ammo consumption and
 defense critical/fumble handling, chooses the highest equipped armor tier instead
 of the native first equipped armor, and accepts client `modifiedDR` as final.
-[MorkBorgRollModal](../../src/ui/components/MorkBorgRollModal.tsx) adds encumbrance
+[MorkBorgRollModal](../../../src/ui/components/MorkBorgRollModal.tsx) adds encumbrance
 to ranged attacks too and omits armor penalties. No unarmored Defend control exists
-in [ViolenceTab](../../src/ui/ViolenceTab.tsx); its controls are attached to equipped
+in [ViolenceTab](../../../src/ui/ViolenceTab.tsx); its controls are attached to equipped
 armor/shields. Native defense is actor-level and works without armor.
 
 Manual raw d20 values are converted to numeric formulas, losing the natural-die
@@ -338,7 +373,7 @@ four proven world settings; current Core already provides the contract.
 ### MB-N11 — item editor writes unsupported handedness values (P1)
 
 Native schema/config/editor and all inspected weapon records use numeric/string
-1/2 for `system.handed`. [ItemModal](../../src/ui/components/ItemModal.tsx) offers
+1/2 for `system.handed`. [ItemModal](../../../src/ui/components/ItemModal.tsx) offers
 `1h`/`2h`. The power engine checks a different `twoHanded` field. Missing weapon
 damage is also displayed as a real 1d4 value. Sheet tier buttons do not follow the
 native character sheet's disabled-above-max controls. The native standalone Item
@@ -619,7 +654,7 @@ module typing and isolated released-Core check/package pass.
 ### Released-host qualification and current finding dispositions
 
 G6 was committed as `18bc9ce`. The following installed G7 slice is supported by the
-[checksummed execution ledger](evidence/2026-10-18-installed-checkpoint.md):
+[checksummed execution ledger](../evidence/2026-10-18-installed-checkpoint.md):
 13 maintained suites (original 21/21), explicit module/UI/hooks typing, module
 check/package, actual released-Core development loading, **13 production integration
 cases**, and **24 packaged browser pointer/keyboard cases**, all passing. Requests
@@ -651,7 +686,7 @@ is inferred. Before and after evidence are identified separately in that ledger.
 reference. All 24 local tags 3.0.0–6.0.1 were copied/read where possible; the 21
 readable snapshots contain the same stale reference and two Pale feat identities.
 Three tagged DB snapshots are unreadable and were not repaired. The
-[metadata-only history](evidence/2026-10-18-native-identities.json) preserves exact
+[metadata-only history](../evidence/2026-10-18-native-identities.json) preserves exact
 IDs/revisions/failures. No same-name Owl substitution or Pale tie break is selected.
 This is not proof about published ZIPs or additional supported runtime versions.
 
@@ -690,7 +725,7 @@ native responses and full-host presentation/reconnect acceptance remain open.
 After `d06f20c`, full installed execution exposed and corrected three defects:
 unsupported portal loading (MB-N13), false resource conflicts under native merge
 semantics (MB-N05/07), and missing remembered combat choices (MB-N03).
-[Before/after evidence and package identity](evidence/2026-10-18-live-corrections.md)
+[Before/after evidence and package identity](../evidence/2026-10-18-live-corrections.md)
 records 15 passing source suites, explicit typing/check/package, 14 production
 integration cases and 24 actual-rewriter browser cases. Live owner/observer/hidden
 boundaries now qualify MB-C01; all rest combinations, negative HP, powers/Omens
@@ -711,7 +746,7 @@ unsupported-version503 was reproduced, then corrected with verified exact6.0.1
 setting/default provenance; class catalog now 200/12. All 13 source suites, explicit
 module typing, package/check and14 production integration cases pass.
 
-[Native runtime evidence](evidence/2026-10-18-native-runtime-checkpoint.md) records
+[Native runtime evidence](../evidence/2026-10-18-native-runtime-checkpoint.md) records
 archive identity and exact cleanup for five persisted inventory cases (N01/02/03),
 four unsupported Actor types (N04/F01),12 generation previews/11 successes/6 complete
 selected companions (N09/C02), and live exact native identities (N08/09). Native
@@ -729,8 +764,8 @@ account access requests remain pending. No external Core blocker is established.
 
 Implementation checkpoint: `006019b563b7edf1946da240290a7c057d021d6a`.
 
-The [final matrix](evidence/2026-10-19-native-acceptance.md) and
-[metadata ledger](evidence/2026-10-19-native-acceptance.json) supersede the remaining
+The [final matrix](../evidence/2026-10-19-native-acceptance.md) and
+[metadata ledger](../evidence/2026-10-19-native-acceptance.json) supersede the remaining
 pending-native statements in historical checkpoints.16 source suites, explicit
 source/UI/hooks typing, module check/package,14 production integrations and26
 browser interactions pass. Actual production Core/native execution includes every
@@ -752,7 +787,7 @@ other runtime pairs unqualified, audit active. No Core blocker is established.
 
 ### MB-N09 follow-up: operator-generated Pale One
 
-The [Brevel comparison](evidence/2026-10-19-brevel-generation.md) records the
+The [Brevel comparison](../evidence/2026-10-19-brevel-generation.md) records the
 operator's Foundry14.367/native6.0.1 export separately from module execution. Its
 resources match the native generator formulas. Pale One is present and native
 generation succeeds; the module's conflict concerns duplicate Intuitive Power
@@ -773,7 +808,7 @@ The user approved temporary random choice between the two exact identical Intuit
 Power documents, and explicitly approved mapping the broken Forlorn Philosopher
 row to existing Hegelian Owl `HLu7lgwoNPlhfx3W`. This supersedes earlier unavailable
 dispositions, without claiming an upstream canonical identity or modifying native
-compendia. The [decision evidence](evidence/2026-10-19-content-decisions.md) records
+compendia. The [decision evidence](../evidence/2026-10-19-content-decisions.md) records
 both source regressions failing before and passing after, all12 copied-native class
 plans through the installed package, complete Owl data, chosen source provenance,
 creation without redrawing, and rejection if the unselected feat source changes.

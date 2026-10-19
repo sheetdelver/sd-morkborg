@@ -2,14 +2,16 @@
 
 **Date:** October 18, 2026
 
-**Status:** Review complete; module adoption corrections recommended, not implemented.
+**Historical status at discovery:** Review complete; corrections recommended.
+**Final disposition:** MB-C01–04 were subsequently corrected and qualified in closed ADR-0001.
 
-**Successor:** The broader [native alignment audit](2026-10-18-native-alignment.md)
-is now the active report. [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
+**Successor:** The broader [native alignment audit](completed/2026-10-18-native-alignment.md)
+carried these findings into completed remediation. [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 carries MB-C01–04 forward alongside native data/action findings. This report
 retains the earlier bounded evidence and conclusions; its lack of a native-setting
 finding is superseded by the successor's actual native-source inspection. It is
-not a second implementation queue, and its findings have not been marked fixed.
+not a second implementation queue. The successor records the corrective evidence;
+the observations below retain their original baseline.
 
 ## Conclusion
 
@@ -74,7 +76,7 @@ enforcement themselves; caller-bound document writes remain authoritative.
 
 ### MB-C02 — missing caller-visible catalogs return an invalid character (required correction)
 
-[createMorkBorgData](../../src/data/DataManager.ts) loads Items and RollTables from
+[createMorkBorgData](https://github.com/sheetdelver/sd-morkborg/blob/d9d250ca96c31d978f902850e51a8c7a9300c7a6/src/data/DataManager.ts) loads Items and RollTables from
 the supplied request compendium. This is the correct caller-bound direction.
 Current Core `createModuleRequestRuntime` filters bulk reads by effective native
 pack visibility after awaiting the read. A denied pack can therefore yield an

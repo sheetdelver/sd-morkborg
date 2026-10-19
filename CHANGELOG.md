@@ -2,37 +2,17 @@
 
 ## Unreleased
 
-- Restore shield equipment controls and ammunition browse/custom creation.
-- Refresh and retire Violence details by owned identity; keep passive feat details without a no-op Use action.
-- Preserve ability names through shared plans into chat cards.
-
-- Randomize the reviewed Pale One starting feat sources; resolve the approved Hegelian Owl companion reference.
-- Preserve native token sight defaults during character and companion generation.
-- Yield forms and focus to Core shared content; distinguish unavailable Actors from deletion.
-- Retire editing on native ownership revocation even when the host projection omits `isOwner`.
-
-- Open packaged forms through browser dialog containment; preserve native resource minima and remembered combat choices.
-- Recognize verified native 6.0.1 world-rule defaults alongside the checkout’s 6.0.0 manifest.
-
-- Require released Core 0.19.3; align contract/workflow pins and explicitly type-check module code in CI.
-- Preserve request-retirement errors and reject invalid manual/formula inputs before effects.
-- Retain field drafts, retire stale action/status feedback and clear mobile tools above expanded navigation.
-
-- Refresh mounted catalogs safely; share accessible forms and SDK confirmations/rich content.
-
-- Generate from caller-visible native class metadata, exact starting content and full companion plans.
-- Review server-held candidates and report confirmed partial creation without replaying writes.
-
-- Draw action tables through SDK dice and exact document references; retain nested/multiple results and reviewed feat behavior.
-
-- Share action plans and preserve raw manual dice, native DR, ammo identity and armor limits.
-- Correct rest, advancement, casting and resource controls; remove extra HP/inventory grants.
-- Sequence inventory writes and reject stale source/context before side effects.
-
-- Prepare native carrying/container/equipment fields once; preserve source data and stack identities.
-- Remove unsafe inventory consolidation; use native handedness values and proven world-rule declarations.
-
-- Preserve typed command errors, preflight actor ownership and reject unsupported actions or unavailable generation content.
+- Align native inventory preparation
+- Restore shield and ammo controls
+- Unify combat and resource actions
+- Preserve named ability cards
+- Resolve exact native content
+- Complete reviewed character generation
+- Guard partial creation recovery
+- Refresh dialogs and caller access
+- Improve mobile and shared overlays
+- Target Foundry v14 systems
+- Require Core 0.19.3
 
 Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
 
