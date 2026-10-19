@@ -1,0 +1,133 @@
+{
+  "moduleVersion": "0.8.3",
+  "branch": "fix/adr-0001-native-alignment",
+  "previousCheckpoint": "20fda1a4a4b7649d86a49610772e485424833724",
+  "core": {
+    "version": "0.19.3",
+    "commit": "90c13e5e57d88913cd3bae6bf6b9e6f0b995bad1"
+  },
+  "nativeReference": {
+    "tag": "6.0.1",
+    "commit": "d850c094a9452d752307221f42245a73b66bdfbb",
+    "manifestVersion": "6.0.0",
+    "foundryGeneration": 14
+  },
+  "archive": {
+    "sha256": "9927b43a3e882dcac3bd3379d1d5ab4802e1c68ff290dd2ed5920208b00f631f",
+    "installedFilesMatch": true,
+    "installedFileCount": 9
+  },
+  "decisions": {
+    "intuitivePower": "operator-approved random choice between exact identical sources, pending canonical evidence",
+    "forlornOwl": "operator-approved exact table/row/stale-reference override to existing Actor UUID; source table unchanged"
+  },
+  "before": {
+    "sourceFailures": [
+      {
+        "policy": "Intuitive Power",
+        "code": "conflict",
+        "status": 409
+      },
+      {
+        "policy": "Forlorn Owl",
+        "code": "not_ready",
+        "status": 503
+      }
+    ],
+    "installed": {
+      "archiveSha256": "89bf785188263d1de344d58299bb960448bd0a0460dcdd1cd01805b1ff018c2f",
+      "passed": 12,
+      "failed": 4,
+      "primaryPolicyFailures": 2,
+      "dependentCaseFailures": 2
+    }
+  },
+  "after": {
+    "sourceSuites": 17,
+    "explicitModuleTypecheck": "passed",
+    "moduleCheck": "passed",
+    "isolatedPackage": "passed",
+    "installedProductionCases": 16,
+    "copiedNativeClassPlans": 12,
+    "browserCases": 26,
+    "browserErrors": []
+  },
+  "actualNative": {
+    "status": "passed",
+    "archive": "9927b43a3e882dcac3bd3379d1d5ab4802e1c68ff290dd2ed5920208b00f631f",
+    "identity": {
+      "world": "morkborg",
+      "system": "6.0.1",
+      "foundry": "14.367"
+    },
+    "paleAttempts": 3,
+    "owlAttempts": 1,
+    "choices": [
+      "Compendium.morkborg.mork-borg-items.Item.BtoSeh36zY8IqOQJ",
+      "Compendium.morkborg.mork-borg-items.Item.YcKA0JHLezBYt3fz"
+    ],
+    "created": [
+      "AtTUgd2pLnKONncd",
+      "C1GLB2jxAPPotVw7",
+      "cf7cR2uNPaLNjcUA",
+      "L5XwFu01krv4LBSc",
+      "DGQSUfxHsrVkKAP7"
+    ],
+    "createdCount": 5,
+    "nativeSourcePreserved": true,
+    "existingActorsPreserved": true,
+    "settingsPreserved": true,
+    "messagesPreserved": true
+  },
+  "actualNativeUI": {
+    "results": [
+      {
+        "name": "native production Pale One preview, Tab containment, Escape and trigger focus",
+        "status": "passed"
+      },
+      {
+        "name": "native production360px reviewed Owl preview, keyboard cancellation and focus",
+        "status": "passed",
+        "attempts": 4
+      }
+    ],
+    "errors": [],
+    "actorIdsUnchanged": true,
+    "noCreateRequests": true
+  },
+  "cleanup": {
+    "status": "passed",
+    "deleted": [
+      "AtTUgd2pLnKONncd",
+      "C1GLB2jxAPPotVw7",
+      "cf7cR2uNPaLNjcUA",
+      "L5XwFu01krv4LBSc",
+      "DGQSUfxHsrVkKAP7"
+    ],
+    "allFixturesAbsent": true,
+    "originalActorSourcesExact": true,
+    "originalActorCount": 2,
+    "originalMessageIdsExact": true,
+    "messageCount": 2,
+    "allWorldSettingsSourceExact": true,
+    "settingCount": 14,
+    "nativeSourceDocumentsExact": true,
+    "combats": 0
+  },
+  "retainedServices": [],
+  "suppliedFoundryLeftActive": true,
+  "finalNativeUsers": 0,
+  "fixtureSetupAttempts": [
+    {
+      "phase": "actual UI helper",
+      "outcome": "retired API cookie returned401 after a new browser login",
+      "correction": "use browser current session"
+    },
+    {
+      "phase": "actual UI helper",
+      "outcome": "unscoped article selector encountered a host article without a label",
+      "correction": "select class articles containing a checkbox"
+    }
+  ],
+  "qualification": "Selected Foundry14.367/native6.0.1 pair; reviewed provisional policies, not absolute upstream identity or another-runtime qualification; prior full matrix retains its original archive identity."
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { type MorkBorgRollType, type MorkBorgRollOptions } from './types';
 import { Swords, Shield, Heart, User, Skull, Info } from 'lucide-react';
 import ItemInfoModal from './components/ItemInfoModal';
@@ -12,10 +12,6 @@ interface ViolenceTabProps {
 function getArmor(actor: any) {
     return [...actor.items.armor.filter((a: any) => a.equipped || a.system?.equipped),
     ...actor.items.shields.filter((s: any) => s.equipped || s.system?.equipped)];
-}
-
-function hasArmor(actor: any) {
-    return getArmor(actor).length > 0;
 }
 
 function getArmorTier(item: any) {
@@ -39,6 +35,7 @@ function createArmorTierDiv(item: any, onUpdate: (path: string, value: any) => v
 
                     return (
                         <button
+                            disabled={tierVal > Number(item.system?.tier?.max)}
                             key={tierVal}
                             onClick={() => onUpdate(`items.${item._id || item.id}.system.tier.value`, tierVal)}
                             className={`w-10 h-10 flex items-center justify-center font-morkborg text-lg font-bold rounded-lg transition-all duration-200 border-2 ${isSelected
@@ -57,17 +54,14 @@ function createArmorTierDiv(item: any, onUpdate: (path: string, value: any) => v
 }
 
 export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProps) {
-    const [infoModalConfig, setInfoModalConfig] = useState<{ isOpen: boolean; item: any }>({
-        isOpen: false,
-        item: null
-    });
-
-    const openInfoModal = (item: any) => {
-        setInfoModalConfig({
-            isOpen: true,
-            item
-        });
-    };
+    const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const weapons = actor.items.weapons.filter((w: any) => w.equipped || w.system?.equipped);
+    const armor = getArmor(actor);
+    const selectedItem = [...weapons, ...armor].find(i => (i._id || i.id) === selectedItemId);
+    // Keep only the owned identity. Retire it when it leaves this tab's scope,
+    // so later re-equipping the same Item cannot reopen a dismissed dialog.
+    useEffect(() => { if (selectedItemId && !selectedItem) setSelectedItemId(null); }, [selectedItemId, selectedItem]);
+    const openInfoModal = (item: any) => setSelectedItemId(item._id || item.id);
 
     return (
         <div className="p-1 flex flex-col gap-6">
@@ -92,11 +86,12 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                 </div>
             </div>
 
+            <button className="bg-pink-600 text-black p-3 font-bold" onClick={() => onRoll('defend', '')}>Defend</button>
             {/* Weapons */}
             <div>
                 <h3 className="font-morkborg text-3xl mb-4 border-b-4 border-pink-500 text-pink-500 inline-block pr-6 transform -rotate-1">Weapons</h3>
                 <div className="grid grid-cols-1 gap-4 my-2">
-                    {actor.items.weapons.filter((w: any) => w.equipped || w.system?.equipped).map((w: any, index: number) => (
+                    {weapons.map((w: any, index: number) => (
                         <div key={w._id + (index ? index : w.name)} className={`bg-neutral-900/80 p-3 border-l-8 border-red-900 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'}`}>
                             <div className="flex items-center gap-4 flex-1 min-w-0">
                                 <img src={w.img} alt={w.name} className="w-10 h-10 sm:w-12 sm:h-12 border border-neutral-600 flex-shrink-0" />
@@ -108,7 +103,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                                         {w.name}
                                     </button>
                                     <div className="text-xs sm:text-sm text-slate-400 font-mono tracking-tighter whitespace-normal break-words">
-                                        Damage: {w.damageDie || '1d4'} | Fumble: {w.fumbleOn} | Critical: {w.critOn}
+                                        Damage: {w.damageDie || 'Unavailable'} | Fumble: {w.fumbleOn} | Critical: {w.critOn}
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +113,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                             >
                                 Attack
                             </button>
+                            <button onClick={() => onRoll('damage', w._id || w.id)} className="text-pink-400 p-2">Roll damage</button>
                         </div>
                     ))}
                     {!actor.items.weapons.filter((w: any) => w.equipped || w.system?.equipped).length && (
@@ -138,7 +134,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                     <h3 className="font-morkborg text-3xl text-pink-500 inline-block pr-6">Armor</h3>
                 </div>
                 <div className="grid grid-cols-1 gap-4 my-2">
-                    {getArmor(actor).map((a: any, index: number) => (
+                    {armor.map((a: any, index: number) => (
                         <div key={(a._id || a.id) + index} className={`bg-neutral-900/80 p-3 border-l-8 border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${((index + actor.items.weapons.length) % 2 === 0) ? '-rotate-1' : 'rotate-1'}`}>
                             <div className="flex items-center gap-4 flex-1 min-w-0">
                                 <img src={a.img} alt={a.name} className="w-10 h-10 sm:w-12 sm:h-12 border border-neutral-600 grayscale flex-shrink-0" />
@@ -184,7 +180,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                             </div>
                         </div>
                     ))}
-                    {!hasArmor(actor) && (
+                    {!armor.length && (
                         <div className="text-neutral-500 italic p-4 border border-dashed border-neutral-700 font-mono text-sm leading-relaxed">
                             No armor or shield equipped. Equip armor or shield in the Equipment tab to use the Tier selector.
                         </div>
@@ -202,11 +198,11 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                 &quot;Violence is not the answer. It is the question. The answer is yes.&quot;
             </div>
 
-            {infoModalConfig.isOpen && (
+            {selectedItem && (
                 <ItemInfoModal
-                    isOpen={infoModalConfig.isOpen}
-                    onClose={() => setInfoModalConfig({ ...infoModalConfig, isOpen: false })}
-                    item={infoModalConfig.item}
+                    isOpen={true}
+                    onClose={() => setSelectedItemId(null)}
+                    item={selectedItem}
                 />
             )}
         </div>

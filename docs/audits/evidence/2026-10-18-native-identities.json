@@ -1,0 +1,865 @@
+{
+  "source": "fvtt-fria-ligan/morkborg-foundry-vtt",
+  "method": "git archive into isolated copies; ClassicLevel reads only those copies; no repair of unreadable snapshots",
+  "scope": "Every local tag 3.0.0 through 6.0.1; source identity history, not runtime compatibility acceptance",
+  "records": [
+    {
+      "tag": "3.0.0",
+      "commit": "a0d4de28609a945a9a310386a86e30e13a8ca6b8",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": 11,
+        "verified": 11
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.0.1",
+      "commit": "143dd5f66e3541a46cfa9064ba1e40805d919e0a",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": 11,
+        "verified": 11
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.0.2",
+      "commit": "61e8abf40f59fd4f04d9df55b2909b51ed3c559d",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": 11.3,
+        "verified": 11.3
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.0.3",
+      "commit": "d2c7bc9e7b67881af43cba5e95ef0a6f4cddf5a9",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.1.0",
+      "commit": "3d71d5b9d5207d4db2289ddf73c72068a51f1074",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.2.0",
+      "commit": "891d534b61596d2d46d06e4184f891c8133c7365",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.2.1",
+      "commit": "329e5bf6758ec6b005a14c704be8a32a72d60099",
+      "manifestVersion": "2.0.0",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.3.0",
+      "commit": "6c0541b81281c676b5deb5e459e4fc6a6e3fba6f",
+      "manifestVersion": "3.2.1",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.3.1",
+      "commit": "e088e506720be28a65e18a7fe7be11675b5fac19",
+      "manifestVersion": "3.2.1",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "3.3.2",
+      "commit": "cdb9e539a16e92123a5d61a8b065ffe2c593cf3e",
+      "manifestVersion": "3.2.1",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower"
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.0",
+      "commit": "5ba91237ce305b77377e3f375c4561f3a9df1f8b",
+      "manifestVersion": "3.2.1",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.1",
+      "commit": "c56c0264012f629d4e110788f97d5e21d8d2fe77",
+      "manifestVersion": "3.2.1",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "11.300"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.2",
+      "commit": "e24ef42d028be1c2c16d84b7850ffaed1805cb68",
+      "manifestVersion": "4.0.2",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "12.331"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.3",
+      "commit": "44826ce66932465cd4057d49f41c6821b82c7850",
+      "manifestVersion": "4.0.2",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "12.331"
+      },
+      "readFailures": [
+        {
+          "pack": "mork-borg-actors",
+          "reason": "MANIFEST-000499 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-tables",
+          "reason": "MANIFEST-000428 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-items",
+          "reason": "MANIFEST-000425 missing in tagged snapshot"
+        }
+      ],
+      "owlActors": [],
+      "forlornResultReferences": [],
+      "paleFeatIdentities": []
+    },
+    {
+      "tag": "4.0.4",
+      "commit": "867813d06efaae703f4afae4e1df5a6eb38c5e3c",
+      "manifestVersion": "4.0.2",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "12.331"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.5",
+      "commit": "ce8acb4470a945c34942fc60f2eb0a0427a2eb5e",
+      "manifestVersion": "4.0.2",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "12.331"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "4.0.6",
+      "commit": "affb4cc790d011ae1905471ff0f3439b3a8aeaeb",
+      "manifestVersion": "4.0.2",
+      "compatibility": {
+        "minimum": "11.300",
+        "verified": "12.331"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "documentCollection": "morkborg.morkborg-actors",
+          "documentId": "6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "5.0.0",
+      "commit": "638ec23ba8b93618f145aca0ebf85f3a16286050",
+      "manifestVersion": "5.0.0",
+      "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+      },
+      "readFailures": [
+        {
+          "pack": "mork-borg-actors",
+          "reason": "MANIFEST-000542 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-tables",
+          "reason": "MANIFEST-000471 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-items",
+          "reason": "MANIFEST-000468 missing in tagged snapshot"
+        }
+      ],
+      "owlActors": [],
+      "forlornResultReferences": [],
+      "paleFeatIdentities": []
+    },
+    {
+      "tag": "5.0.1",
+      "commit": "768d69dd9ab0467ec75babac213309f47b2a6a15",
+      "manifestVersion": "5.0.0",
+      "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+      },
+      "readFailures": [
+        {
+          "pack": "mork-borg-actors",
+          "reason": "MANIFEST-000542 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-tables",
+          "reason": "MANIFEST-000471 missing in tagged snapshot"
+        },
+        {
+          "pack": "mork-borg-items",
+          "reason": "MANIFEST-000468 missing in tagged snapshot"
+        }
+      ],
+      "owlActors": [],
+      "forlornResultReferences": [],
+      "paleFeatIdentities": []
+    },
+    {
+      "tag": "5.1.0",
+      "commit": "9e9c3e17beb3992b2ac4e988db16f812b2292be7",
+      "manifestVersion": "5.0.0",
+      "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "name": "Hegelian Owl",
+          "documentUuid": "Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "5.1.1",
+      "commit": "bbf1eb7fc28d01ca8f1f9f9c0be2b69462c30531",
+      "manifestVersion": "5.0.0",
+      "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "name": "Hegelian Owl",
+          "documentUuid": "Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "5.1.2",
+      "commit": "b9554fed5445fcd1938b0b574741e8ef87b5c14f",
+      "manifestVersion": "5.0.0",
+      "compatibility": {
+        "minimum": "13",
+        "verified": "13"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "name": "Hegelian Owl",
+          "documentUuid": "Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "6.0.0",
+      "commit": "81bede17b8befd6173de9d4ea10af88a5b529797",
+      "manifestVersion": "6.0.0",
+      "compatibility": {
+        "minimum": "14",
+        "maximum": "14",
+        "verified": "14"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "name": "Hegelian Owl",
+          "documentUuid": "Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    },
+    {
+      "tag": "6.0.1",
+      "commit": "d850c094a9452d752307221f42245a73b66bdfbb",
+      "manifestVersion": "6.0.0",
+      "compatibility": {
+        "minimum": "14",
+        "maximum": "14",
+        "verified": "14"
+      },
+      "readFailures": [],
+      "owlActors": [
+        {
+          "key": "!actors!HLu7lgwoNPlhfx3W",
+          "id": "HLu7lgwoNPlhfx3W",
+          "name": "Hegelian Owl",
+          "type": "follower",
+          "duplicateSource": null,
+          "compendiumSource": null
+        }
+      ],
+      "forlornResultReferences": [
+        {
+          "key": "!tables.results!DfILdvixuR0LyIcT.RaRYtTXoANahK7PP",
+          "id": "RaRYtTXoANahK7PP",
+          "name": "Hegelian Owl",
+          "documentUuid": "Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf"
+        }
+      ],
+      "paleFeatIdentities": [
+        {
+          "key": "!items!BtoSeh36zY8IqOQJ",
+          "id": "BtoSeh36zY8IqOQJ"
+        },
+        {
+          "key": "!items!YcKA0JHLezBYt3fz",
+          "id": "YcKA0JHLezBYt3fz"
+        }
+      ]
+    }
+  ]
+}

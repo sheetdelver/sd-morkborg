@@ -1,485 +1,119 @@
 'use client';
-
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { processHtmlContent } from '@sheet-delver/sdk';
 import { useSDK } from '@sheet-delver/sdk/react';
-import { logger } from '@sheet-delver/sdk';
-
-import { randomRotation } from '../components/utils';
-import { AlignCenterHorizontal, AlignCenterVertical, Skull, Bone } from 'lucide-react';
-
-
-
-
-function randomTheme(currentTheme: any) {
-    const themes = [
-        {
-            name: 'Classic',
-            colors: {
-                background: '#ffe900',
-                text: '#000000',
-                accent: '#ffffff',
-                rgba: 'rgba(0, 0, 0, 0.5)',
-                tailwind: {
-                    background: 'bg-yellow',
-                    backgroundAccent: 'bg-white',
-                    text: 'text-black',
-                    accent: 'white',
-                }
-            },
-        },
-        {
-            name: 'DarkWhite',
-            colors: {
-                background: '#000000',
-                text: '#ffffff',
-                accent: '#ffe900',
-                rgba: 'rgba(255, 255, 255, 0.5)',
-                tailwind: {
-                    background: 'bg-black',
-                    backgroundAccent: 'bg-yellow-500',
-                    text: 'text-white',
-                    accent: 'yellow',
-                }
-            },
-        },
-        {
-            name: 'DarkPink',
-            colors: {
-                background: '#000000',
-                text: '#ffffff',
-                accent: '#ff00ff',
-                rgba: 'rgba(255, 255, 255, 0.5)',
-                tailwind: {
-                    background: 'bg-black',
-                    backgroundAccent: 'bg-pink-500',
-                    text: 'text-white',
-                    accent: 'pink',
-                }
-            },
-        },
-        {
-            name: 'Dark',
-            colors: {
-                background: '#000000',
-                text: '#ffffff',
-                accent: 'gray',
-                rgba: 'rgba(255, 255, 255, 0.5)',
-                tailwind: {
-                    background: 'bg-black',
-                    backgroundAccent: 'bg-gray-500',
-                    text: 'text-white',
-                    accent: 'gray',
-                }
-            },
-        },
-        {
-            name: 'Pink',
-            colors: {
-                background: '#ff00ff',
-                text: '#ffffff',
-                accent: 'yellow',
-                rgba: 'rgba(0, 0, 0, 0.5)',
-                tailwind: {
-                    background: 'bg-pink',
-                    backgroundAccent: 'bg-yellow-500',
-                    text: 'text-white',
-                    accent: 'yellow',
-                }
-            },
-        },
-    ];
-
-    const availableThemes = currentTheme?.name
-        ? themes.filter(t => t.name !== currentTheme.name)
-        : themes;
-
-    return availableThemes[Math.floor(Math.random() * availableThemes.length)];
-}
-
-type FetchWithAuth = (input: string, init?: RequestInit) => Promise<Response>;
-
-/**
- * Generate a scvm via the module's server route (ADR-0027: scvm generation reads the
- * declared compendium packs server-side; no bundled data).
- */
-async function generateCharacter(
-    fetchWithAuth: FetchWithAuth,
-    classInclusion: Record<string, boolean>,
-    previousClassId?: string,
-): Promise<any> {
-    try {
-        const res = await fetchWithAuth('/api/modules/morkborg/generate-character', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ classInclusion, previousClassId }),
-        });
-        const data = await res.json();
-        return data.success ? data.character : null;
-    } catch (error) {
-        logger.error('Error generating character:', error);
-        return null;
-    }
-}
-
-/** Persist the generated scvm via the PLATFORM actor-create route (core handling). */
-async function createCharacter(fetchWithAuth: FetchWithAuth, character: any, navigate: (target: string) => void) {
-    try {
-        const actorData = {
-            name: character.name,
-            type: 'character',
-            img: character.class.img,
-            system: {
-                abilities: character.abilities,
-                description: character.class.system.description + '\n\n' + character.classNotes,
-                hp: character.hp,
-                omens: character.omens,
-                powerUses: character.powers,
-                notes: character.classNotes,
-                silver: character.silver
-            },
-            items: character.items,
-            flags: {},
-            prototypeToken: {
-                name: character.name,
-                texture: {
-                    src: character.class.img,
-                },
-            },
-        };
-
-        const res = await fetchWithAuth('/api/actors', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(actorData)
-        });
-
-        const result = await res.json();
-        if (result.success) {
-            // Redirect to sheet — wait briefly for backend stabilization.
-            setTimeout(() => {
-                navigate(`/actors/${result.id}`);
-            }, 500);
-        } else {
-            throw new Error(result.error);
-        }
-    } catch (error) {
-        logger.error('Error creating character:', error);
-    }
-}
-
-const AVAILABLE_CLASSES = [
-    {
-        name: "Classless",
-        groups: [{
-            id: 'p693pMIVYXMSRl8S',
-            name: 'Adventurer',
-        }]
-    },
-    {
-        name: "Core",
-        groups: [
-            { id: '2hjl45o4vXOgRgfq', name: 'Fanged Deserter' },
-            { id: 'gAx8MWLiZcjiWQvc', name: 'Gutterborn Scum' },
-            { id: 'ifSBk6ORiHgq3Xhr', name: 'Esoteric Hermit' },
-            { id: '0h5xOAtzV4mm7X7D', name: 'Wretched Royalty' },
-            { id: '8CTmhMvQ5BJlGD2o', name: 'Heretical Priest' },
-            { id: '59HKbdpBIXfiJt91', name: 'Occult Herbmaster' },
-        ]
-    },
-    {
-        name: "Feretory",
-        groups: [
-            { id: 'ZuSWpDI76OliQUrE', name: 'Cursed Skinwalker' },
-            { id: 'wLJV0VJT5I234obT', name: 'Pale One' },
-            { id: 'BNOhaA4ebt6Bzx4E', name: 'Dead God\'s Prophet' },
-            { id: 'L9Vwzbx5o0OMdJm0', name: 'Forlorn Philosopher' },
-        ]
-    },
-    {
-        name: "Heretic",
-        groups: [
-            { id: 'Y0KSTCrUAQNoBKEX', name: 'Sacrilegious Songbird' },
-        ]
-    },
-];
-
-function characterInclusionGroups(
-    theme: any,
-    classInclusion: Record<string, boolean>,
-    setClassInclusion: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
-) {
-    const handleToggleAll = (state: boolean) => {
-        const next = { ...classInclusion };
-        for (const cat of AVAILABLE_CLASSES) {
-            for (const item of cat.groups) {
-                next[item.id] = state;
-            }
-        }
-        setClassInclusion(next);
-    };
-
-    return (
-        <div
-            className={`m-2 p-2 ${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] ${theme.colors.tailwind.background} col-span-2`}
-            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-        >
-            <h3 className={`text-2xl font-bold border-b-${theme.colors.tailwind.backgroundAccent} text-center ${theme.colors.tailwind.backgroundAccent}`}>Included Classes</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {AVAILABLE_CLASSES.map((category) => {
-                    // Check if all items in this category are currently selected
-                    const isAllSelected = category.groups.every(item => classInclusion[item.id] !== false);
-
-                    return (
-                        <div key={category.name} className="col-span-1 border border-white/10 p-2 md:border-none md:p-0 text-center">
-                            <div
-                                className="text-center text-md p-2 font-semibold capitalize col-span-2 font-sans tracking-widest uppercase mb-1 cursor-pointer hover:opacity-75 transition-opacity"
-                                onClick={() => {
-                                    const nextState = { ...classInclusion };
-                                    const newState = !isAllSelected;
-                                    category.groups.forEach(item => {
-                                        nextState[item.id] = newState;
-                                    });
-                                    setClassInclusion(nextState);
-                                }}
-                            >
-                                {category.name}
-                            </div>
-                            {category.groups.map(item => (
-                                <label key={item.id} className="flex items-center gap-2 col-span-1 mb-1 cursor-pointer hover:text-pink-500 transition-colors">
-                                    <input
-                                        type="checkbox"
-                                        className="accent-pink-500 w-4 h-4"
-                                        checked={classInclusion[item.id] ?? true}
-                                        onChange={(e) => {
-                                            setClassInclusion(prev => ({
-                                                ...prev,
-                                                [item.id]: e.target.checked
-                                            }));
-                                        }}
-                                    />
-                                    <span className="text-sm font-morkborg">{item.name}</span>
-                                </label>
-                            ))}
-                        </div>
-                    );
-                })}
-            </div>
-            <div className="flex justify-center gap-4 mt-4 pt-4 border-t border-white/20">
-                <button
-                    onClick={() => handleToggleAll(false)}
-                    className={`px-4 py-2 font-morkborg uppercase tracking-widest border-2 border-[${theme.colors.accent}] hover:bg-white hover:text-black transition-colors ${theme.colors.tailwind.backgroundAccent}`}
-                >
-                    Clear All
-                </button>
-                <button
-                    onClick={() => handleToggleAll(true)}
-                    className={`px-4 py-2 font-morkborg uppercase tracking-widest border-2 border-[${theme.colors.accent}] hover:bg-white hover:text-black transition-colors ${theme.colors.tailwind.backgroundAccent}`}
-                >
-                    Select All
-                </button>
-            </div>
-        </div>
-    );
-}
+import { useScopedCatalog } from '../hooks/useScopedCatalog';
+import MorkBorgConfirmModal from '../components/MorkBorgConfirmModal';
+import { MobileSectionNavigation } from '../components/MobileSectionNavigation';
 
 export default function MorkBorgCharacterGenerator() {
-    const { fetchWithAuth, navigate } = useSDK();
-    const [theme, setTheme] = useState(randomTheme({}));
-
-    // Initialize class inclusion state (defaults to true for all defined classes)
-    const [classInclusion, setClassInclusion] = useState<Record<string, boolean>>(() => {
-        const initial: Record<string, boolean> = {};
-        AVAILABLE_CLASSES.forEach(cat => cat.groups.forEach(c => initial[c.id] = true));
-        return initial;
-    });
-
-    // Generation runs server-side now (compendium-backed), so the first scvm is fetched on
-    // mount rather than computed synchronously; the preview is guarded on `character`.
-    const [character, setCharacter] = useState<any>(null);
+    const sdk = useSDK();
+    const catalog = useScopedCatalog<{ classes: { uuid: string; name: string; img: string; description: string }[] }>('/api/modules/morkborg/classes');
+    const [selected, setSelected] = useState<Set<string>>(new Set());
+    const initialized = useRef(false);
+    const request = useRef(0);
+    const [lastAttempt, setLastAttempt] = useState<string | null>(null);
+    const scopeKey = JSON.stringify([sdk.worldId, sdk.currentUser?.id, sdk.currentUser?.role, sdk.isConnected]);
+    const scopeRef = useRef(scopeKey); scopeRef.current = scopeKey;
+    const [candidate, setCandidate] = useState<any>(null);
+    const [outcome, setOutcome] = useState<any>(null);
+    const [busy, setBusy] = useState(false);
+    const [error, setError] = useState('');
+    const [confirm, setConfirm] = useState(false);
+    const [tab, setTab] = useState('classes');
     useEffect(() => {
-        generateCharacter(fetchWithAuth, classInclusion).then(setCharacter);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    return (
-        <div
-            className="min-h-screen font-inter selection:bg-pink-500 selection:text-white"
-            style={{ backgroundColor: theme.colors.background, color: theme.colors.text }}
-            suppressHydrationWarning
-        >
-
-            {/* Top Navigation Bar */}
-            <nav className="relative bg-neutral-900 border-b border-neutral-800 px-4 py-3 shadow-md flex items-center justify-between backdrop-blur-sm bg-opacity-95">
-                <button
-                    onClick={() => navigate('/')}
-                    className="flex items-center gap-2 text-neutral-400 hover:text-amber-500 transition-colors font-semibold group text-sm uppercase tracking-wide"
-                >
-                    <span className="group-hover:-translate-x-1 transition-transform">←</span>
-                    Back to Dashboard
-                </button>
-                <div className="text-xs text-neutral-600 font-mono hidden md:block">
-                    Generating New Character
-                </div>
-            </nav>
-
-
-            {/* Main Header (Subheader) - Controls & Title */}
-            <div
-                className={`${theme.colors.tailwind.text} shadow-md relative flex items-center justify-between px-6 border-b-4 border-[${theme.colors.accent}] h-24`}
-                style={{ backgroundColor: theme.colors.background }}
-            >
-                <div className="flex items-center gap-6">
-                    <div
-                        className={`w-16 h-16 border-2 border-[${theme.colors.accent}] flex items-center justify-center rounded`}
-                        style={{ backgroundColor: theme.colors.background }}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={`w-8 h-8 ${theme.colors.tailwind.text}`}>
-                            <path d="M5.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM2.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM18.75 7.5a.75.75 0 00-1.5 0v2.25H15a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H21a.75.75 0 000-1.5h-2.25V7.5z" />
-                        </svg>
-                    </div>
-                    <div className="py-2">
-                        <h1 className={`text-3xl ${theme.colors.tailwind.text} font-serif font-bold leading-none tracking-tight`}>Create Character</h1>
-                        <p className={`${theme.colors.tailwind.text} text-xs font-sans tracking-widest uppercase mt-1`}>
-                            MÖRK BORG
-                        </p>
-                    </div>
-                </div>
-
-                <div className="flex gap-6 items-center pr-2">
-                    {/* Randomize Button */}
-                    <button
-                        onClick={() => {
-                            setTheme(randomTheme(theme));
-                            generateCharacter(fetchWithAuth, classInclusion, character?.class?._id).then(setCharacter);
-                        }}
-                        className={`relative flex items-center justify-center -mb-2 ${!Object.values(classInclusion).some(Boolean) ? 'opacity-50 grayscale cursor-not-allowed' : 'cursor-pointer group'}`}
-                        title="Randomize All"
-                        disabled={!Object.values(classInclusion).some(Boolean)}
-                    >
-                        <div className={`w-14 h-14 flex items-center justify-center transition-transform ${!Object.values(classInclusion).some(Boolean) ? '' : 'group-hover:scale-110 group-hover:border-[' + theme.colors.accent + ']'} bg-neutral-800 rounded-full border-2 border-[${theme.colors.accent}] shadow-lg`}>
-                            <img src="/icons/dice-d20.svg" alt="Randomize" className={`w-12 h-12 brightness-0 invert transition-all`} />
-                        </div>
-                    </button>
-                </div>
+        request.current++; setCandidate(null); setOutcome(null); setConfirm(false); setBusy(false); setError('');
+        if (!initialized.current && catalog.status === 'ready' && catalog.data) {
+            initialized.current = true; setSelected(new Set(catalog.data.classes.map(c => c.uuid)));
+        }
+    }, [catalog.generation, catalog.status]);
+    useEffect(() => { setLastAttempt(null); setOutcome(null); }, [scopeKey]);
+    const current = candidate && candidate.generation === catalog.generation && catalog.status === 'ready' ? candidate : null;
+    const eligible = catalog.data?.classes.filter(c => selected.has(c.uuid)) ?? [];
+    const generate = async () => {
+        if (catalog.status !== 'ready' || !eligible.length || busy) return;
+        const token = ++request.current, generation = catalog.generation;
+        setBusy(true); setCandidate(null); setOutcome(null); setError('');
+        try {
+            const response = await sdk.fetchWithAuth('/api/modules/morkborg/generate-character', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ classUuids: eligible.map(c => c.uuid) }) });
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error ?? 'Generation failed');
+            if (token !== request.current || !catalog.isCurrent(generation)) return;
+            setCandidate({ ...data.candidate, generation }); setTab('preview');
+        } catch (e) { if (token === request.current && catalog.isCurrent(generation)) setError(e instanceof Error ? e.message : 'Generation failed'); }
+        finally { if (token === request.current) setBusy(false); }
+    };
+    const create = async () => {
+        if (!current || busy) return;
+        const token = ++request.current, generation = catalog.generation, creationScope = scopeKey;
+        setLastAttempt(current.id);
+        setConfirm(false); setBusy(true); setError('');
+        try {
+            const response = await sdk.fetchWithAuth('/api/modules/morkborg/create-character', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ candidateId: current.id }) });
+            const data = await response.json();
+            if (token !== request.current || !catalog.isCurrent(generation) || scopeRef.current !== creationScope) return;
+            if (data.outcome) setOutcome(data.outcome);
+            if (!response.ok) throw new Error(data.error ?? 'Creation failed');
+            setCandidate(null);
+        } catch (e) { if (token === request.current && scopeRef.current === creationScope) setError(e instanceof Error ? e.message : 'Creation failed. Inspect the world before retrying.'); }
+        finally { if (token === request.current) setBusy(false); }
+    };
+    const generated = current?.generated;
+    return <main className="bg-[#ffe900] text-black min-h-screen p-4 sm:p-8 pb-36">
+        <header className="bg-black text-yellow-400 border-b-8 border-pink-600 p-5 mb-6">
+            <h1 className="font-morkborg text-4xl">SCVM Factory</h1>
+            <p className="text-neutral-300 mt-2">Choose classes, review the complete result, then create the character and companions.</p>
+        </header>
+        <nav className="flex gap-4 my-4" aria-label="Factory sections">
+            <button className="bg-black text-pink-400 p-3" onClick={() => setTab('classes')}>Classes</button>
+            <button className="bg-black text-pink-400 p-3" onClick={() => setTab('preview')}>Preview</button>
+        </nav>
+        {catalog.status === 'loading' && <p role="status">Loading current class catalog…</p>}
+        {catalog.status === 'failed' && <div role="alert"><p>{catalog.error}</p><button onClick={catalog.retry} className="bg-black text-white p-3 my-3">Retry catalog</button></div>}
+        {tab === 'classes' && catalog.status === 'ready' && <section>
+            {!catalog.data?.classes.length && <p>No classes are allowed by the current world policy.</p>}
+            <div className="grid sm:grid-cols-2 gap-4">
+                {catalog.data?.classes.map(c => <article key={c.uuid} className="bg-black text-white border-l-8 border-pink-600 p-4">
+                    <label className="font-bold text-yellow-400"><input type="checkbox" checked={selected.has(c.uuid)} onChange={e => setSelected(old => { const next = new Set(old); if (e.target.checked) next.add(c.uuid); else next.delete(c.uuid); return next; })} className="mr-3" />{c.name}</label>
+                    <div className="text-sm mt-3" dangerouslySetInnerHTML={{ __html: processHtmlContent(c.description, sdk.foundryUrl) }} />
+                </article>)}
             </div>
-            <div className="flex-1 px-4 max-w-7xl mx-auto w-full mb-2 space-y-8">
-                {characterInclusionGroups(theme, classInclusion, setClassInclusion)}
-            </div>
-
-            {character && (
-                <div className="flex-1 px-4 max-w-7xl mx-auto w-full pt-6 mb-20 space-y-8">
-                    <div className={`grid grid-cols-2 lg:grid-cols-4 gap-5 text-center ${theme.colors.tailwind.text} p-2`}>
-                        <div
-                            className={`border-4 border-[${theme.colors.accent}] ${theme.colors.tailwind.backgroundAccent} font-bold text-xl md:text-2xl p-2 ${randomRotation()}`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div>Name</div>
-                            <div>{character.name}</div>
-                        </div>
-                        <div
-                            className={`border-4 border-[${theme.colors.accent}] ${theme.colors.tailwind.backgroundAccent} font-bold text-xl md:text-2xl p-2 ${randomRotation()}`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div>Class</div>
-                            <div>{character.class?.name}</div>
-                        </div>
-                        <div
-                            className={`border-4 border-[${theme.colors.accent}] ${theme.colors.tailwind.backgroundAccent} font-bold text-xl md:text-2xl p-2 ${randomRotation()}`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div>HP</div>
-                            <div>{character.hp?.max}</div>
-                        </div>
-                        <div
-                            className={`border-4 border-[${theme.colors.accent}] ${theme.colors.tailwind.backgroundAccent} font-bold text-xl md:text-2xl p-2 ${randomRotation()}`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div>Omens</div>
-                            <div>{character.omens?.max}</div>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                        <div
-                            className={`${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] p-2 ${randomRotation()} mt-4 flex flex-col`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div className={`text-2xl font-bold`}>
-                                <h3 className={`${theme.colors.tailwind.backgroundAccent} p-2`}>{character.name}</h3>
-                            </div>
-                            <div className={`text-sm font-bold uppercase tracking-widest mt-2 p-2`}>{character.class?.name || 'Classless'}</div>
-                            <div className={`mt-1 leading-relaxed flex-1 p-2`}>
-                                {character.class?.system?.description && <div className="mb-2 italic" dangerouslySetInnerHTML={{ __html: character.class.system.description }} />}
-                                {character.traits && <div className="mb-2">{character.traits}</div>}
-                                {character.classNotes && <div className="whitespace-pre-line">{character.classNotes}</div>}
-                            </div>
-                        </div>
-                        <div
-                            className={`${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] p-2 ${randomRotation()} mt-4 flex flex-col`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div className={`text-2xl font-bold ${theme.colors.tailwind.backgroundAccent} p-2`}>Class</div>
-                            <div className={`text-sm uppercase tracking-widest flex-1 space-y-4 overflow-y-auto p-2`}>
-                                {character.items?.filter((i: any) => i.type === 'feat' || i.type === 'power').map((feat: any, idx: number) => (
-                                    <div key={`${feat._id}-${idx}`} className="mb-2">
-                                        <div className="font-bold border-b border-black font-sans tracking-widest">{feat.name}</div>
-                                        <div className="mt-1 normal-case tracking-normal leading-relaxed" dangerouslySetInnerHTML={{ __html: feat.system?.description || '' }} />
-                                    </div>
-                                ))}
-                                {character.items?.filter((i: any) => i.type === 'feat' || i.type === 'power').length === 0 && (
-                                    <div className="italic">None</div>
-                                )}
-                            </div>
-                        </div>
-                        <div
-                            className={`${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] p-2 ${randomRotation()} mt-4`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div className={`text-2xl font-bold ${theme.colors.tailwind.backgroundAccent} p-2`}>Abilities</div>
-                            <div className={`text-sm font-bold uppercase tracking-widest p-2`}>
-                                <ul className="list-none space-y-2">
-                                    <li className="flex justify-between"><span>Strength</span> <span>{character.abilities?.strength.value > 0 ? '+' : ''}{character.abilities?.strength.value}</span></li>
-                                    <li className="flex justify-between"><span>Agility</span> <span>{character.abilities?.agility.value > 0 ? '+' : ''}{character.abilities?.agility.value}</span></li>
-                                    <li className="flex justify-between"><span>Presence</span> <span>{character.abilities?.presence.value > 0 ? '+' : ''}{character.abilities?.presence.value}</span></li>
-                                    <li className="flex justify-between"><span>Toughness</span> <span>{character.abilities?.toughness.value > 0 ? '+' : ''}{character.abilities?.toughness.value}</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div
-                            className={`${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] p-2 ${randomRotation()} mt-4`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                        >
-                            <div className={`text-2xl font-bold ${theme.colors.tailwind.backgroundAccent} p-2`}>Equipment</div>
-                            <div className={`text-sm font-bold uppercase tracking-widest p-2`}>
-                                <div className={`mb-2 border-b border-[${theme.colors.accent}] p-2 text-right`}>
-                                    {character.silver} Silver Pieces
-                                </div>
-                                <ul className="list-none space-y-1">
-                                    {character.items?.filter((i: any) => !['feat', 'power'].includes(i.type)).map((item: any, idx: number) => (
-                                        item.name.toLowerCase() !== 'nothing' ? <li key={`${item.name}-${idx}`} className="flex justify-between items-center group">
-                                            <span>{item.name}</span>
-                                            {item.system?.quantity > 1 && <span className="ml-2">x{item.system.quantity}</span>}
-                                        </li> : ''
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <button
-                            className={`w-full mt-4 p-4 text-2xl md:text-4xl ${theme.colors.tailwind.backgroundAccent} ${theme.colors.tailwind.text} border-4 border-[${theme.colors.accent}] cursor-pointer ${randomRotation()}`}
-                            style={{ boxShadow: `15px 15px 0 0 ${theme.colors.rgba}` }}
-                            onClick={() => {
-                                //console.info(character);
-                                createCharacter(fetchWithAuth, character, navigate);
-                            }}
-                        >
-                            <div className="flex items-center justify-center gap-2 cursor-pointer">
-                                💀 SAVE THIS ONE 💀
-                            </div>
-                        </button>
-                    </div>
+        </section>}
+        {tab === 'preview' && <section>
+            {!generated ? <p>Generate a current preview to review it here.</p> : <>
+                <h2 className="font-morkborg text-4xl my-4">{generated.actor.name} — {generated.className}</h2>
+                <div className="bg-black text-white p-4 font-mono grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {Object.entries(generated.actor.system.abilities).map(([key, value]: any) => <p key={key}>{key}: {value.value}</p>)}
+                    <p>HP: {generated.actor.system.hp.max}</p><p>Omens: {generated.actor.system.omens.max}</p>
+                    <p>Powers: {generated.actor.system.powerUses.max}</p><p>Silver: {generated.actor.system.silver}</p>
                 </div>
-            )}
-        </div>
-    );
+                <div className="my-4" dangerouslySetInnerHTML={{ __html: processHtmlContent(generated.actor.system.description, sdk.foundryUrl) }} />
+                <h3 className="font-bold text-2xl">Starting Items ({generated.actor.items.length})</h3>
+                <ul className="list-disc pl-6 my-3">{generated.actor.items.map((i: any) => <li key={i._id}>{i.name}{i.system.quantity !== undefined ? ` ×${i.system.quantity}` : ''}</li>)}</ul>
+                <h3 className="font-bold text-2xl">Companions ({generated.companions.length})</h3>
+                <ul className="list-disc pl-6 my-3">{generated.companions.map((a: any, index: number) => <li key={index}>{a.name} ({a.type})</li>)}</ul>
+                <button disabled={busy || lastAttempt === current.id} className="bg-pink-600 border-2 border-black p-3 font-bold" onClick={() => setConfirm(true)}>Create reviewed character and companions</button>
+            </>}
+        </section>}
+        <button disabled={busy || catalog.status !== 'ready' || !eligible.length} onClick={generate} className="bg-black text-yellow-400 border-4 border-pink-600 p-4 my-6 font-bold disabled:opacity-40">{busy ? 'Working…' : 'Generate new preview'}</button>
+        {error && <p role="alert" className="bg-black text-pink-400 p-4">{error}</p>}
+        {lastAttempt && <button className="bg-black text-pink-400 p-3" onClick={async () => {
+            const observedScope = scopeKey, observedGeneration = catalog.generation;
+            try {
+                const response = await sdk.fetchWithAuth('/api/modules/morkborg/creation-status', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ candidateId: lastAttempt }) });
+                const data = await response.json();
+                if (observedScope !== scopeRef.current || !catalog.isCurrent(observedGeneration)) return;
+                if (!response.ok) throw new Error(data.error ?? 'Status unavailable');
+                setOutcome(data.outcome);
+            } catch (e) { if (observedScope === scopeRef.current && catalog.isCurrent(observedGeneration)) setError(e instanceof Error ? e.message : 'Status unavailable'); }
+        }}>Inspect creation status</button>}
+        {outcome && <section className="bg-black text-white p-4"><h2>Creation: {outcome.status}</h2>
+            {outcome.confirmedWriteCount !== undefined && <p>{outcome.confirmedWriteCount} document write(s) confirmed. Current access does not expose the saved document details.</p>}
+            {(outcome.created ?? []).map((a: any) => <p key={a.id}>{a.name}: {a.id} <button onClick={() => sdk.navigate(`/actors/${a.id}`)} className="text-pink-400 underline">Open</button></p>)}
+            {outcome.status !== 'complete' && <p>Inspect these documents and the world before manual recovery. The reviewed plan remains on the server; no retry or rollback ran.</p>}
+        </section>}
+        {confirm && current && <MorkBorgConfirmModal config={{ title: 'Create reviewed SCVM', body: `Create ${generated.actor.name} and ${generated.companions.length} companion Actor(s)? This can partially complete if a later write fails.`, confirmLabel: 'Create' }} onConfirm={create} onClose={() => setConfirm(false)} />}
+        <MobileSectionNavigation sections={[{ id: 'classes', label: 'Classes' }, { id: 'preview', label: 'Preview' }]} activeId={tab} onSelect={setTab} />
+    </main>;
 }

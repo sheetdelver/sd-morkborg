@@ -13,7 +13,7 @@ export type MorkBorgRollType =
     | 'getBetter' 
     | 'decoctions' 
     | 'feat' 
-    | 'item';
+    | 'item' | 'defend' | 'damage' | 'rollOmens' | 'rollPowers';
 
 export interface BaseRollOptions {
     rollMode?: string;
@@ -46,6 +46,9 @@ export interface CommonRollProperties {
     damageDie?: string;
     encumbered?: boolean;
     incomingAttackDefault?: string;
+    drModifier?: number;
+    reduction?: string;
+    automation?: boolean;
 }
 
 /**

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSDK, useSDKComponents } from '@sheet-delver/sdk/react';
 import { morkborgTheme } from '../themes/morkborg';
 
-import { buildModuleAssetUrl } from '@sheet-delver/sdk';
-import { randomRotation } from './utils';
+import { BufferedInput } from './BufferedInput';
+import MorkBorgRollFrame from './MorkBorgRollFrame';
 
 
 
@@ -15,20 +15,10 @@ interface ItemModalProps {
     actor: any;
 }
 
-export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModalProps) {
+export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: ItemModalProps) {
     const { resolveImageUrl } = useSDK();
     const { RichTextEditor } = useSDKComponents();
     const [activeTab, setActiveTab] = useState<'description' | 'details'>('description');
-
-    React.useEffect(() => {
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onClose();
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, [onClose]);
-
-    const memoizedRotation = React.useMemo(() => randomRotation(), []);
 
     if (!isOpen || !item) return null;
 
@@ -59,10 +49,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                     <>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Price:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Price"
                                 type="number"
                                 value={system.price ?? 0}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                     handleChange('system.price', isNaN(val) ? 0 : val);
                                 }}
@@ -71,11 +62,12 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Carry Weight:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Carry Weight"
                                 type="number"
                                 step="0.1"
                                 value={system.carryWeight ?? 0}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
                                     handleChange('system.carryWeight', isNaN(val) ? 0 : val);
                                 }}
@@ -85,11 +77,12 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         {type !== 'container' && (
                             <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                                 <span className="text-yellow-500">Container Space:</span>
-                                <input
+                                <BufferedInput
+                                aria-label="Container Space"
                                     type="number"
                                     step="0.1"
                                     value={system.containerSpace ?? 1}
-                                    onChange={(e) => handleChange('system.containerSpace', parseFloat(e.target.value))}
+                                    onCommit={(e) => handleChange('system.containerSpace', parseFloat(e.target.value))}
                                     className="bg-transparent text-right outline-none w-20 font-mono text-white"
                                 />
                             </div>
@@ -103,6 +96,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Weapon Type:</span>
                             <select
+                                aria-label="Weapon Type"
                                 value={system.weaponType || 'melee'}
                                 onChange={(e) => handleChange('system.weaponType', e.target.value)}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
@@ -114,38 +108,49 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Handed:</span>
                             <select
-                                value={system.handed || '1h'}
-                                onChange={(e) => handleChange('system.handed', e.target.value)}
+                                aria-label="Handed"
+                                value={item.handed ?? ''}
+                                onChange={(e) => handleChange('system.handed', Number(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
-                                <option value="1h">1-Handed</option>
-                                <option value="2h">2-Handed</option>
+                                <option value="">Unavailable</option>
+                                <option value="1">1-Handed</option>
+                                <option value="2">2-Handed</option>
                             </select>
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Uses Ammo:</span>
                             <input
+                                aria-label="Uses Ammo"
                                 type="checkbox"
                                 checked={system.usesAmmo ?? false}
                                 onChange={(e) => handleChange('system.usesAmmo', e.target.checked)}
                                 className="w-5 h-5 accent-yellow-500"
                             />
                         </div>
+                        {system.usesAmmo && <label className="block text-yellow-500">Ammunition
+                            <select aria-label="Ammunition" value={system.ammoId ?? ''} onChange={e => handleChange('system.ammoId', e.target.value)} className="bg-neutral-800 text-white w-full">
+                                <option value="">None selected</option>
+                                {(actor.items?.ammo ?? []).map((ammo: any) => <option key={ammo.id} value={ammo.id}>{ammo.name}</option>)}
+                            </select>
+                        </label>}
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Damage Die:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Damage Die"
                                 type="text"
-                                value={system.damageDie || '1d4'}
-                                onChange={(e) => handleChange('system.damageDie', e.target.value)}
+                                value={system.damageDie ?? ''}
+                                onCommit={(e) => handleChange('system.damageDie', e.target.value)}
                                 className="bg-transparent text-right outline-none w-32 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Crit On:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Crit On"
                                 type="number"
                                 value={system.critOn ?? 20}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 20 : parseInt(e.target.value);
                                     handleChange('system.critOn', isNaN(val) ? 20 : val);
                                 }}
@@ -154,10 +159,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Fumble On:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Fumble On"
                                 type="number"
                                 value={system.fumbleOn ?? 1}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 1 : parseInt(e.target.value);
                                     handleChange('system.fumbleOn', isNaN(val) ? 1 : val);
                                 }}
@@ -172,20 +178,19 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Current Tier:</span>
                             <select
-                                value={system.tier?.value ?? 1}
+                                aria-label="Current Tier"
+                                value={item.tier?.value ?? ''}
                                 onChange={(e) => handleChange('system.tier.value', parseInt(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
-                                <option value="0">0 (None)</option>
-                                <option value="1">1 (Light)</option>
-                                <option value="2">2 (Medium)</option>
-                                <option value="3">3 (Heavy)</option>
+                                {[0, 1, 2, 3].filter(tier => tier <= Number(item.tier?.max)).map(tier => <option key={tier} value={tier}>{tier} ({['None', 'Light', 'Medium', 'Heavy'][tier]})</option>)}
                             </select>
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Max Tier:</span>
                             <select
-                                value={system.tier?.max ?? 1}
+                                aria-label="Max Tier"
+                                value={item.tier?.max ?? ''}
                                 onChange={(e) => handleChange('system.tier.max', parseInt(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
@@ -200,10 +205,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                 {type === 'container' && (
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Capacity:</span>
-                        <input
+                        <BufferedInput
+                                aria-label="Capacity"
                             type="number"
                             value={system.capacity ?? 7}
-                            onChange={(e) => {
+                            onCommit={(e) => {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                 handleChange('system.capacity', isNaN(val) ? 0 : val);
                             }}
@@ -215,10 +221,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                 {(type === 'misc' || type === 'ammo') && (
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Quantity:</span>
-                        <input
+                        <BufferedInput
+                                aria-label="Quantity"
                             type="number"
                             value={system.quantity ?? 1}
-                            onChange={(e) => {
+                            onCommit={(e) => {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                 handleChange('system.quantity', isNaN(val) ? 0 : val);
                             }}
@@ -231,28 +238,31 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                     <>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Label:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Label"
                                 type="text"
                                 value={system.rollLabel || ''}
-                                onChange={(e) => handleChange('system.rollLabel', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollLabel', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Formula:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Formula"
                                 type="text"
                                 value={system.rollFormula || ''}
-                                onChange={(e) => handleChange('system.rollFormula', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollFormula', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Macro:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Macro"
                                 type="text"
                                 value={system.rollMacro || ''}
-                                onChange={(e) => handleChange('system.rollMacro', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollMacro', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
@@ -263,6 +273,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Scroll Type:</span>
                         <select
+                                aria-label="Scroll Type"
                             value={system.scrollType || 'unclean'}
                             onChange={(e) => handleChange('system.scrollType', e.target.value)}
                             className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
@@ -276,95 +287,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
         );
     };
 
-    return (
-        <div
-            className="fixed inset-0 z-[100] overflow-y-auto animate-in fade-in duration-300"
-            onClick={onClose}
-        >
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div
-                    className="fixed inset-0 bg-black/90 backdrop-blur-sm"
-                    aria-hidden="true"
-                />
-                <div
-                    className={`relative w-full max-w-2xl bg-black border-[4px] border-black shadow-[15px_15px_0_0_rgba(255,20,147,0.2)] overflow-hidden transform ${memoizedRotation} flex flex-col max-h-[90vh] my-8`}
-                    onClick={e => e.stopPropagation()}
-                >
-                    {/* Grunge Texture Overlay */}
-                    <div
-                        className="absolute inset-0 opacity-40 pointer-events-none mix-blend-overlay"
-                        style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'grunge.png')})`, backgroundSize: 'cover' }}
-                    />
-
-                    <button
-                        onClick={onClose}
-                        className="absolute top-2 right-4 text-3xl text-neutral-500 hover:text-white transition-colors z-20 font-bold"
-                    >
-                        ×
-                    </button>
-
-                    {/* Header */}
-                    <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-center border-b-2 border-pink-500/50 bg-neutral-900 relative z-10">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
-                            <img src={resolveImageUrl(item.img || 'icons/svg/item-bag.svg')} alt={item.name} className="w-full h-full object-contain" />
-                        </div>
-                        <div className="flex-1 w-full text-center sm:text-left">
-                            <input
-                                type="text"
-                                value={item.name}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                className={`bg-transparent $"font-imfell" uppercase text-3xl sm:text-4xl text-white tracking-widest leading-none mb-1 w-full outline-none border-none focus:ring-0 text-center sm:text-left`}
-                            />
-                            <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-500/50 to-transparent sm:from-pink-500/50 sm:to-transparent w-full mb-2 shadow-[0_0_10px_rgba(236,72,153,0.5)]"></div>
-                            <div className="font-morkborg text-xl sm:text-2xl text-pink-500 tracking-tighter uppercase opacity-90">
-                                {item.type}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Tabs */}
-                    <div className="flex font-morkborg text-xl sm:text-2xl px-4 sm:px-6 relative z-10 bg-black/40 border-b border-pink-500/20 overflow-x-auto scrollbar-hide">
-                        <button
-                            onClick={() => setActiveTab('description')}
-                            className={`flex-1 sm:flex-none px-4 sm:px-8 py-2 relative transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'description' ? 'text-pink-400 bg-black/60 shadow-[inset_0_-2px_0_0_#f472b6]' : 'text-neutral-500 hover:text-white'}`}
-                        >
-                            Description
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('details')}
-                            className={`flex-1 sm:flex-none px-4 sm:px-8 py-2 relative transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'details' ? 'text-pink-400 bg-black/60 shadow-[inset_0_-2px_0_0_#f472b6]' : 'text-neutral-500 hover:text-white'}`}
-                        >
-                            Details
-                        </button>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-black/60 relative z-10 scrollbar-thin scrollbar-thumb-pink-900 scrollbar-track-transparent">
-                        {activeTab === 'description' ? (
-                            <div className="font-serif text-base sm:text-lg leading-relaxed text-neutral-300">
-                                <RichTextEditor
-                                    content={item.system?.description || ''}
-                                    onSave={(html: string) => handleChange('system.description', html)}
-                                    editButtonText="Edit Item Description"
-                                    theme={morkborgTheme.richText}
-                                />
-                            </div>
-                        ) : (
-                            renderDetails()
-                        )}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="p-4 bg-white relative z-10 w-full">
-                        <button
-                            onClick={onClose}
-                            className="w-full bg-white hover:bg-neutral-100 text-black py-4 border-2 border-black flex items-center justify-center gap-3 shadow-[6px_6px_0_0_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all group"
-                        >
-                            <span className={`$"font-imfell" text-4xl font-bold tracking-tighter uppercase`}>Confirm</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    return <MorkBorgRollFrame title={`Edit ${item.name}`} subtitle={item.type} onClose={onClose} wide>
+        <label className="block text-pink-400">Item name<BufferedInput aria-label="Item name" value={item.name} onCommit={e => handleChange('name', e.target.value)} className="block bg-black border border-pink-700 p-2 w-full my-2 text-white" /></label>
+        <div className="flex gap-3 my-4"><button onClick={() => setActiveTab('description')}>Description</button><button onClick={() => setActiveTab('details')}>Details</button></div>
+        {activeTab === 'description' ? <RichTextEditor content={item.system?.description ?? ''} onSave={(html: string) => handleChange('system.description', html)} editButtonText="Edit Item Description" theme={morkborgTheme.richText} /> : renderDetails()}
+        <p className="text-neutral-400 text-sm my-4">Fields save when focus leaves them. Descriptions use Save.</p>
+        <button onClick={onClose} className="bg-pink-700 p-3 text-white w-full mt-4">Done</button>
+    </MorkBorgRollFrame>;
 }

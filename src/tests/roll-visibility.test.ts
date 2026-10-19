@@ -10,7 +10,7 @@ export async function run(): Promise<void> {
             const recorded: string[] = [];
             let created = 0;
             let draws = 0;
-            const speaker = { actor: 'actor-1', alias: 'Custom speaker' };
+            const speaker = { actor: 'actor-1', alias: 'Scvm' };
             const posted = { _id: 'chat-1', author: 'user-1', rolls: [] };
             const client = {
                 async roll(formula: string, _label: string, options: Record<string, unknown>) {
@@ -39,17 +39,17 @@ export async function run(): Promise<void> {
                 getItemByName() { return undefined; },
             };
             const result = await new MorkBorgAdapter().performAutomatedSequence(
-                client, actor, { type, subType: 'party' }, { rollMode, speaker }, data as never,
+                client, actor, { type, subType: 'party', resolvedFormula: '1d6', label: 'Party order roll' }, { rollMode, speaker }, data as never,
             );
             assert.equal(result, posted, 'keep the original persisted acknowledgement');
             assert.equal(sends.length, 1, 'post exactly one final card');
             assert.deepEqual(sends[0].options, { rollMode: rollMode ?? 'publicroll', speaker });
-            assert.equal(sends[0].message.speaker, speaker);
+            assert.deepEqual(sends[0].message.speaker, speaker);
             assert.equal(sends[0].message.whisper, undefined, 'SDK resolves recipients, not the module');
             assert.equal(sends[0].message.blind, undefined, 'do not override SDK visibility');
             assert.deepEqual(sends[0].message.rolls, recorded, 'preserve original evaluated dice');
             assert.ok(sends[0].message.content.length > 0);
-            assert.equal(created, type === 'decoctions' ? 1 : 0);
+            assert.equal(created, 0, 'native decoction workflow does not grant inventory');
         }
     }
     console.log('morkborg roll visibility: PASS (normal/decoction paths, four modes and default)');

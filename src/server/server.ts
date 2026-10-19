@@ -12,39 +12,43 @@
 
 import type { ModuleServerRequest, ModuleServerParams, ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { json, error } from '@sheet-delver/sdk/server';
-import { getErrorMessage } from '@sheet-delver/sdk';
+import { isSdkError, SdkError } from '@sheet-delver/sdk';
+import { newDocument } from '../data/Generation';
+import { NativeContent } from '../data/NativeContent';
+import { actorEffects } from './actorEffects';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
+import { normalizeWorldFailure } from '../logic/worldRules';
 import { getRollData } from '../logic/rules';
-import { createMorkBorgData } from '../data/DataManager';
+import * as generation from './generationRoutes';
 
 const adapter = new MorkBorgAdapter();
 
-/**
- * Drives the (preserved) mechanics engine over `req.runtime`. The engine calls
- * `roll` / `updateActor` / `createActorItem` / `sendMessage` / `useItem` — this shim maps
- * each onto the runtime (document store / rolls / chat) so the engine body is unchanged.
- * These are document-store operations now; the old Foundry-socket vocabulary is gone.
- */
-function engineClient(runtime: ModuleRequestRuntime) {
-    return {
-        roll: (formula: string, label?: string, opts?: Record<string, unknown>) => runtime.rolls.roll(formula, label, opts),
-        // Patch an actor's document via the document store (was a Foundry socket dispatch).
-        updateActor: (actorId: string, updates: Record<string, unknown>) => {
-            const patch = { ...updates };
-            delete patch._id;
-            return runtime.documents.patch('Actor', actorId, patch);
-        },
-        createActorItem: (actorId: string, item: Record<string, unknown>) =>
-            runtime.documents.items.create({ type: 'Actor', id: actorId }, item),
-        // The engine calls sendMessage both as (data, options) and (data, undefined, options);
-        // accept either and forward rollMode/speaker so chat visibility (public/gm/blind/self)
-        // is honored.
-        sendMessage: (data: Record<string, unknown>, arg2?: any, arg3?: any) => {
-            const opts = (arg3 && typeof arg3 === 'object') ? arg3 : (arg2 && typeof arg2 === 'object' ? arg2 : {});
-            return runtime.chat.send(data, { rollMode: opts.rollMode, speaker: opts.speaker });
-        },
-        useItem: (actorId: string, itemId: string) => runtime.chat.useItem(actorId, itemId),
-    };
+function routeError(cause: unknown) {
+    cause = normalizeWorldFailure(cause);
+    return isSdkError(cause) ? error(cause.code, cause.message, cause.status)
+        : error('internal', 'Mörk Borg operation failed. Refresh before retrying.');
+}
+
+function validateBody(body: any) {
+    if (!body || typeof body !== 'object' || Array.isArray(body)) throw new SdkError('validation', 'Expected a command object');
+    if (typeof body.type !== 'string' || typeof body.key !== 'string') throw new SdkError('validation', 'Command type and key are required');
+    const options = body.options ?? {};
+    if (!options || typeof options !== 'object' || Array.isArray(options)) throw new SdkError('validation', 'Invalid options');
+    for (const key of ['targetArmor', 'incomingAttack', 'flavor', 'expectedSource']) {
+        if (options[key] !== undefined && (typeof options[key] !== 'string' || options[key].length > 100000)) throw new SdkError('validation', `Invalid ${key}`);
+    }
+    if (options.contextRevision !== undefined && (!Number.isSafeInteger(options.contextRevision) || options.contextRevision < 1)) throw new SdkError('validation', 'Invalid context revision');
+    if (options.baseDR !== undefined && !Number.isSafeInteger(options.baseDR)) throw new SdkError('validation', 'Invalid base DR');
+    if (options.rollType !== undefined && !['attack', 'defend'].includes(options.rollType)) throw new SdkError('validation', 'Invalid roll type');
+    if (options.manualData !== undefined && (!options.manualData || typeof options.manualData !== 'object' || Array.isArray(options.manualData) || !Number.isSafeInteger(options.manualData.dieResult))) throw new SdkError('validation', 'Invalid manual die');
+    if (options.speaker !== undefined && (!options.speaker || typeof options.speaker !== 'object' || Array.isArray(options.speaker) || options.speaker.actor !== undefined && typeof options.speaker.actor !== 'string')) throw new SdkError('validation', 'Invalid speaker');
+    if (options.rollMode !== undefined && !['publicroll', 'gmroll', 'blindroll', 'selfroll'].includes(options.rollMode)) throw new SdkError('validation', 'Invalid roll visibility');
+    if (options.rollAdvantageMode && options.rollAdvantageMode !== 'normal') throw new SdkError('validation', 'Advantage is unsupported');
+    for (const key of ['manualHitDie', 'manualDefendDie', 'manualDamageDie', 'manualIncomingDamage']) {
+        if (options[key] !== undefined && (!Number.isSafeInteger(options[key]) || options[key] < 0)) throw new SdkError('validation', `Invalid ${key}`);
+    }
+    if (options.manualData?.dieResult !== undefined && !Number.isSafeInteger(options.manualData.dieResult)) throw new SdkError('validation', 'Invalid manual die');
+    return options;
 }
 
 async function routeParts(params: ModuleServerParams['params']): Promise<string[]> {
@@ -61,44 +65,98 @@ function sequenceResponse(result: unknown) {
 
 export const apiRoutes = {
     'actors/[id]/roll': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
         try {
             const actorId = (await routeParts(params))[1];
-            const body = await req.json<any>().catch(() => ({}));
-            const { type, key, options } = body;
-            const actor = await req.runtime.documents.get('Actor', actorId);
+            const body = await req.json<any>();
+            const options = validateBody(body);
+            const { type, key } = body;
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
             if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character') return error('validation', 'Character actions are unsupported for this Actor type');
+            if (options.speaker?.actor && options.speaker.actor !== actorId) return error('validation', 'Speaker must be the selected Actor');
+            options.speaker = { actor: actorId, alias: actor.name };
 
-            const rollData = getRollData(actor, type, key, options ?? {});
+            effects = actorEffects(req.runtime, actor, options.expectedSource, options.contextRevision);
+            const prepared = adapter.prepareActorData(actor as any, { worldEpoch: 0, sourceRevision: 0, systemId: 'morkborg', world: req.runtime.world?.snapshot() });
+            const rollData = getRollData(prepared, type, key, options ?? {});
             if (!rollData) return error('validation', `Unknown roll: ${type}/${key}`);
+            for (const [field, kind] of [['manualHitDie', 'attack'], ['manualDamageDie', 'attack'], ['manualDefendDie', 'defend'], ['manualIncomingDamage', 'defend']]) {
+                if (options[field] !== undefined && rollData.type !== kind) throw new SdkError('validation', `${field} is unsupported for this action`);
+            }
+            if (options.manualData !== undefined && !['ability', 'initiative', 'feat-roll', 'dice', 'power', 'broken'].includes(rollData.type)) throw new SdkError('validation', 'Raw die entry is unsupported for this action');
 
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const result = await adapter.performAutomatedSequence(engineClient(req.runtime), actor, rollData, options ?? {}, data);
+            const needsContent = ['broken', 'getBetter', 'decoctions', 'power', 'feat-macro'].includes(rollData.type);
+            const data = needsContent ? new NativeContent(req.runtime, effects.guard) : undefined;
+            const result = await adapter.performAutomatedSequence(effects, prepared, rollData, options ?? {}, data as any);
             return sequenceResponse(result);
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
+            return routeError(e);
         }
     },
 
-    'generate-character': async (req: ModuleServerRequest) => {
+    'actors/[id]/add-item': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
         try {
-            const body = await req.json<any>().catch(() => ({}));
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const character = data.generateRandomCharacter(body.classInclusion ?? {}, body.previousClassId);
-            return json({ success: true, character });
+            const actorId = (await routeParts(params))[1];
+            const body = await req.json<any>();
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
+            if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character' || typeof body?.sourceUuid !== 'string' || typeof body.expectedSource !== 'string') return error('validation', 'Select a current Item for a character');
+            effects = actorEffects(req.runtime, actor, body.expectedSource, body.contextRevision);
+            const source = await new NativeContent(req.runtime, effects.guard).document(body.sourceUuid);
+            if (!['ammo', 'armor', 'container', 'misc', 'scroll', 'shield', 'weapon', 'feat'].includes(source.type)) return error('validation', 'Unsupported Item template');
+            const item = newDocument(source, body.sourceUuid, true);
+            const created = await effects.createActorItem(item);
+            await effects.guard();
+            return json({ success: true, item: created });
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
+            return routeError(e);
         }
+    },
+    'actors/[id]/inventory': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
+        try {
+            const actorId = (await routeParts(params))[1];
+            const body = await req.json<any>();
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
+            if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character') return error('validation', 'Inventory actions are unsupported for this Actor type');
+            if (typeof body?.expectedSource !== 'string') return error('validation', 'Refresh the inventory before editing');
+            effects = actorEffects(req.runtime, actor, body.expectedSource, body.contextRevision);
+            return json({ success: true, ...await effects.inventory(body) });
+        } catch (e) {
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
+            return routeError(e);
+        }
+    },
+
+    'classes': async (req: ModuleServerRequest) => {
+        try { return await generation.classes(req); } catch (e) { return routeError(e); }
+    },
+    'generate-character': async (req: ModuleServerRequest) => {
+        try { return await generation.generate(req); } catch (e) { return routeError(e); }
+    },
+    'creation-status': async (req: ModuleServerRequest) => {
+        try { return await generation.creationStatus(req); } catch (e) { return routeError(e); }
+    },
+    'create-character': async (req: ModuleServerRequest) => {
+        try { return await generation.createCharacter(req); } catch (e) { return routeError(e); }
     },
 
     'items': async (req: ModuleServerRequest) => {
         try {
             const url = new URL(req.url, 'http://local');
             const types = (url.searchParams.get('types') ?? '').split(',').map((s) => s.trim()).filter(Boolean);
-            const data = await createMorkBorgData(req.runtime.compendium);
-            const items = types.length ? data.getItemsByType(types) : [];
+            const supported = ['ammo', 'armor', 'container', 'misc', 'scroll', 'shield', 'weapon', 'feat'];
+            if (types.some(type => !supported.includes(type))) return error('validation', 'Unsupported Item picker type');
+            if (req.runtime.access && !req.runtime.access.canReadPack('morkborg.mork-borg-items')) return error('permission_denied', 'Item pack is not visible');
+            const items = types.length ? (await req.runtime.compendium.findAll('Item')).filter(i => types.includes(String(i.type))) : [];
             return json({ items });
         } catch (e) {
-            return error('internal', getErrorMessage(e));
+            return routeError(e);
         }
     },
 };

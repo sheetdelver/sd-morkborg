@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { canEditActor } from '../logic/authority';
+const player = { id: 'player', isGM: false };
+assert.equal(canEditActor({ ownership: { default: 0, player: 3 } }, player, true), true);
+assert.equal(canEditActor({ ownership: { default: 0, player: 2 } }, player, true), false, 'native observer is read-only despite absent Core isOwner projection');
+assert.equal(canEditActor({ ownership: { default: 3, player: 0 } }, player, true), false, 'explicit native NONE overrides default OWNER');
+assert.equal(canEditActor({ ownership: { default: 3 } }, player, true), true);
+assert.equal(canEditActor({}, player, true), false, 'unknown ownership never grants editing');
+assert.equal(canEditActor({ ownership: { player: 3 } }, null, true), false);
+assert.equal(canEditActor({}, { ...player, isGM: true }, true), true);
+assert.equal(canEditActor({}, { ...player, isGM: true }, false), false, 'host denial remains authoritative');
+console.log('morkborg native ownership presentation: PASS');

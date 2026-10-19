@@ -1,0 +1,234 @@
+{
+  "endpoint": "http://localhost:30000",
+  "world": "morkborg",
+  "foundry": "14.367",
+  "reportedSystemVersion": "6.0.1",
+  "referenceTag": "6.0.1",
+  "referenceCommit": "d850c094a9452d752307221f42245a73b66bdfbb",
+  "referenceManifest": "6.0.0",
+  "files": [
+    {
+      "path": "module/exporter.js",
+      "matchesPinnedTag": true,
+      "sha256": "b905273c696d9e237fbe7fc3b1730ce5dd7d0a353fc8553f210a04f018a43b0d"
+    },
+    {
+      "path": "module/settings.js",
+      "matchesPinnedTag": true,
+      "sha256": "460cc9e8a497c5fe284e71f06686866d8fc7e39da215eb8f17a3adfa86b1ad1c"
+    },
+    {
+      "path": "module/utils.js",
+      "matchesPinnedTag": true,
+      "sha256": "46c8492eef1ba075d379136f2982fccf4c5eb89026e1ee1151583926711baaf4"
+    },
+    {
+      "path": "module/dice.js",
+      "matchesPinnedTag": true,
+      "sha256": "ef0805a22e417ca25cb2a0d1d844d092015c7957aa78a9d570292f9b78e6985b"
+    },
+    {
+      "path": "module/enricher.js",
+      "matchesPinnedTag": true,
+      "sha256": "407f54f5a47e056e6999f387fe1e1389afd400fc1ae31b85784c0a9d0d8d3471"
+    },
+    {
+      "path": "module/combat.js",
+      "matchesPinnedTag": true,
+      "sha256": "7621b5999c8d9ab7d0615f2404f893b292da554fb9a40e3df7fa4552b96d4de3"
+    },
+    {
+      "path": "module/morkborg.js",
+      "matchesPinnedTag": true,
+      "sha256": "8bd8cd343058adc8cdc60a0f230789b606c596b2e2e26ca7913de1add6c771f8"
+    },
+    {
+      "path": "module/config.js",
+      "matchesPinnedTag": true,
+      "sha256": "0e80ab4c527383b6b9a8d474105f31dc7516b08e4481ef1a418a61a7e3686ded"
+    },
+    {
+      "path": "module/macros.js",
+      "matchesPinnedTag": true,
+      "sha256": "39e370564a1b234e93ca7e048db22c9a327a0374b5b5f495a2c10b67e8a420ff"
+    },
+    {
+      "path": "module/miseries.js",
+      "matchesPinnedTag": true,
+      "sha256": "dd992b7cb35e0e77717a986c202625cfe593b59656d7d1ec760f2aff535327a1"
+    },
+    {
+      "path": "module/fonts.js",
+      "matchesPinnedTag": true,
+      "sha256": "294a479287e9156c49ba12bc9ec6caa654ded840dbd262f31aad6a8704f24cf9"
+    },
+    {
+      "path": "module/hooks.js",
+      "matchesPinnedTag": true,
+      "sha256": "894d9dec1220f813b4c223727afc93d27f4677bd1d1f822473eafb16e95ee733"
+    },
+    {
+      "path": "module/sounds.js",
+      "matchesPinnedTag": true,
+      "sha256": "34007c069883e7168c2b69ec086b370da6ede71045eecada27c848602e56ffea"
+    },
+    {
+      "path": "module/packutils.js",
+      "matchesPinnedTag": true,
+      "sha256": "b4204da2ffd5da7d1a63d0ef1ad42511dc8d329341a819bf6a30f6e61ac9e646"
+    },
+    {
+      "path": "module/handlebars.js",
+      "matchesPinnedTag": true,
+      "sha256": "b8893cb46b9b7e94b21edc33477a4478eae0a182746ea2b240ecba74eecc11e3"
+    },
+    {
+      "path": "module/actor/omens.js",
+      "matchesPinnedTag": true,
+      "sha256": "2fa9f07b7f9995353cacdd0e9f86116e121489aa6d645e8efbb043488d845104"
+    },
+    {
+      "path": "module/actor/get-better.js",
+      "matchesPinnedTag": true,
+      "sha256": "72526c8649c4ea1fd4d7aab8417a708a5f55014cf8ca4a092652b7e466462d48"
+    },
+    {
+      "path": "module/actor/powers.js",
+      "matchesPinnedTag": true,
+      "sha256": "7a3b91d3e6f90d9f0305f0d448af86584f2469c58665d02b492c91c7127e1778"
+    },
+    {
+      "path": "module/actor/morale.js",
+      "matchesPinnedTag": true,
+      "sha256": "c57cbbb2e9002d97e51c1eaec62933bfd909e265d63caa5356af351cd908f10f"
+    },
+    {
+      "path": "module/actor/defend.js",
+      "matchesPinnedTag": true,
+      "sha256": "2002274f889c4d52153e55c4922803fe267de766c8b11b8c405d4817708fabd0"
+    },
+    {
+      "path": "module/actor/test-abilities.js",
+      "matchesPinnedTag": true,
+      "sha256": "8c902866e3d0e52c68d21995e807ab849e3824fe7d5172cab182bb5ff50df2ac"
+    },
+    {
+      "path": "module/actor/initiative.js",
+      "matchesPinnedTag": true,
+      "sha256": "0ea49396083f0603fd47835963a707a56ca74b3e87ac2a1a66222b34544c8651"
+    },
+    {
+      "path": "module/actor/rest.js",
+      "matchesPinnedTag": true,
+      "sha256": "a8891f53313fd8133f2f7bacf3cdac01f484383001935dbd292474f351c3c601"
+    },
+    {
+      "path": "module/actor/broken.js",
+      "matchesPinnedTag": true,
+      "sha256": "6eb0e4e84ce8e8f4163a7a416ad5d591d1c3182df1f6f6befc09f94ac4221398"
+    },
+    {
+      "path": "module/actor/reaction.js",
+      "matchesPinnedTag": true,
+      "sha256": "b61b63a92056462572057c19bb86dd0883889ddbc42db683bc2e1aa1240968d1"
+    },
+    {
+      "path": "module/actor/actor.js",
+      "matchesPinnedTag": true,
+      "sha256": "ad4161c1c4a5dd568182580e7b5d36938b8e4f4746322d761573cacf418fb80f"
+    },
+    {
+      "path": "module/actor/feats.js",
+      "matchesPinnedTag": true,
+      "sha256": "656cab54e3174149311206566704830a8589e6c25381a483dcd97a182031917e"
+    },
+    {
+      "path": "module/actor/attack.js",
+      "matchesPinnedTag": true,
+      "sha256": "55e5b2c4e8bc5231a483fcb27a15b0c3d059be1d0bcc2a00a90f30e72946dbe0"
+    },
+    {
+      "path": "module/journal/journal-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "e861607c907498fcab2d47bac58c36845c0afb84f6dbd10883b9cd8d090d0ff9"
+    },
+    {
+      "path": "module/chat/roll-card.js",
+      "matchesPinnedTag": true,
+      "sha256": "7087cd67ed23ca8ed2a38e6f7d533c277d2c96d5f38662b4a87cc60b5fde1a7e"
+    },
+    {
+      "path": "module/item/item.js",
+      "matchesPinnedTag": true,
+      "sha256": "b0d62884036dbc4ab42d50e1182e437aee391ebf8ec41d2a6d78c7e9d23b4c29"
+    },
+    {
+      "path": "module/settings/allowed-scvm-classes-dialog.js",
+      "matchesPinnedTag": true,
+      "sha256": "bec39f049bb0e1372a6ea60088c2aeeaecd2cb398d1106f84c3eeb5ac3614dbf"
+    },
+    {
+      "path": "module/scvm/scvm-dialog.js",
+      "matchesPinnedTag": true,
+      "sha256": "3dddc7296825017a3d82722fca84e283f7ea3da12ae1b72af755aed69250dadc"
+    },
+    {
+      "path": "module/scvm/scvmfactory.js",
+      "matchesPinnedTag": true,
+      "sha256": "d5f45d662638d6fe00fab145f4ce203ffa0a671a49a4a70ca0ad4679d83fa7cc"
+    },
+    {
+      "path": "module/actor/sheet/container-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "8e75419b2fba64bb303e277b6ce3e01ab97901f95ebeff308fac6e791be89ef3"
+    },
+    {
+      "path": "module/actor/sheet/rest-dialog.js",
+      "matchesPinnedTag": true,
+      "sha256": "36da0483a77e10c3e0a3c1f1bb2ea4e1754de87e317ebf8f2662fd728a07be62"
+    },
+    {
+      "path": "module/actor/sheet/misery-tracker-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "76ad2a10922e551c941351fb38f14b06702c9a1c2ea77e16adf031e34e133208"
+    },
+    {
+      "path": "module/actor/sheet/creature-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "855dfd6a17b0ee5eecf4b1bdb63f4f2fcd10a3718293964700c91fa3590f010b"
+    },
+    {
+      "path": "module/actor/sheet/character-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "57741da53148a9f3cafef1c5daf668ae4fa49bb746111a0623f8dfa07c923858"
+    },
+    {
+      "path": "module/actor/sheet/actor-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "71014553d5f7f4954268a81fa3b7d7a8e0fea32010d35f940874ad9f331e9d1c"
+    },
+    {
+      "path": "module/actor/sheet/follower-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "ac958dc494dec61ec3eab9b98fbaddf5d2a51e10ff54fcc2e323e1aeefb1dd83"
+    },
+    {
+      "path": "module/item/sheet/item-sheet.js",
+      "matchesPinnedTag": true,
+      "sha256": "08ff2a213e2e60eb801a84a5236eb74fd3b7162ec671d1544157eb661e0b6e06"
+    },
+    {
+      "path": "template.json",
+      "matchesPinnedTag": true,
+      "sha256": "c3e00c635cf7b24da6d69a3d6d17c03d26e04e680cbb8cb922515280302d38c3"
+    }
+  ],
+  "foundryRegistration": {
+    "url": "http://localhost:30000/scripts/foundry.mjs",
+    "sha256": "d34e6bc53a26f794b41b89b51e27c7a5c899318cf2632d2c8a6c39f8434afdfb",
+    "method": "ClientSettings.register",
+    "observedRule": "Unrecognized or omitted scope becomes CONST.SETTING_SCOPES.CLIENT",
+    "nativeAdditionalAbilities": "registerSystemSettings omits scope, therefore client scoped on this verified build",
+    "qualification": "served implementation inspected; native UI registration object still to inspect if browser becomes available"
+  }
+}
