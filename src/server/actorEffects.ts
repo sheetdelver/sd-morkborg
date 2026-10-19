@@ -2,7 +2,7 @@ import { SdkError, isSdkError } from '@sheet-delver/sdk';
 import type { ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { actorActionFingerprint } from '../logic/rules';
 import { planInventoryOperation } from '../logic/inventoryActions';
-import { assertWorldRevision, currentWorld } from '../logic/worldRules';
+import { assertWorldRevision, currentWorld, normalizeWorldFailure } from '../logic/worldRules';
 
 /** No transaction is claimed. Recheck authority, source and context before each effect. */
 export function actorEffects(runtime: ModuleRequestRuntime, source: any, expectedSource?: string, revision?: number) {
@@ -48,6 +48,7 @@ export function actorEffects(runtime: ModuleRequestRuntime, source: any, expecte
         guard,
         inventory,
         failure(cause: unknown): never {
+            cause = normalizeWorldFailure(cause);
             if (!completedWrites) throw cause;
             throw new SdkError(isSdkError(cause) ? cause.code : 'internal', `${completedWrites} document write(s) completed before failure. Refresh and inspect before retrying.`, isSdkError(cause) ? cause.status : 500);
         },

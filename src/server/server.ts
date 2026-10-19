@@ -17,12 +17,14 @@ import { newDocument } from '../data/Generation';
 import { NativeContent } from '../data/NativeContent';
 import { actorEffects } from './actorEffects';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
+import { normalizeWorldFailure } from '../logic/worldRules';
 import { getRollData } from '../logic/rules';
 import * as generation from './generationRoutes';
 
 const adapter = new MorkBorgAdapter();
 
 function routeError(cause: unknown) {
+    cause = normalizeWorldFailure(cause);
     return isSdkError(cause) ? error(cause.code, cause.message, cause.status)
         : error('internal', 'Mörk Borg operation failed. Refresh before retrying.');
 }
@@ -32,6 +34,14 @@ function validateBody(body: any) {
     if (typeof body.type !== 'string' || typeof body.key !== 'string') throw new SdkError('validation', 'Command type and key are required');
     const options = body.options ?? {};
     if (!options || typeof options !== 'object' || Array.isArray(options)) throw new SdkError('validation', 'Invalid options');
+    for (const key of ['targetArmor', 'incomingAttack', 'flavor', 'expectedSource']) {
+        if (options[key] !== undefined && (typeof options[key] !== 'string' || options[key].length > 100000)) throw new SdkError('validation', `Invalid ${key}`);
+    }
+    if (options.contextRevision !== undefined && (!Number.isSafeInteger(options.contextRevision) || options.contextRevision < 1)) throw new SdkError('validation', 'Invalid context revision');
+    if (options.baseDR !== undefined && !Number.isSafeInteger(options.baseDR)) throw new SdkError('validation', 'Invalid base DR');
+    if (options.rollType !== undefined && !['attack', 'defend'].includes(options.rollType)) throw new SdkError('validation', 'Invalid roll type');
+    if (options.manualData !== undefined && (!options.manualData || typeof options.manualData !== 'object' || Array.isArray(options.manualData) || !Number.isSafeInteger(options.manualData.dieResult))) throw new SdkError('validation', 'Invalid manual die');
+    if (options.speaker !== undefined && (!options.speaker || typeof options.speaker !== 'object' || Array.isArray(options.speaker) || options.speaker.actor !== undefined && typeof options.speaker.actor !== 'string')) throw new SdkError('validation', 'Invalid speaker');
     if (options.rollMode !== undefined && !['publicroll', 'gmroll', 'blindroll', 'selfroll'].includes(options.rollMode)) throw new SdkError('validation', 'Invalid roll visibility');
     if (options.rollAdvantageMode && options.rollAdvantageMode !== 'normal') throw new SdkError('validation', 'Advantage is unsupported');
     for (const key of ['manualHitDie', 'manualDefendDie', 'manualDamageDie', 'manualIncomingDamage']) {
@@ -71,6 +81,10 @@ export const apiRoutes = {
             const prepared = adapter.prepareActorData(actor as any, { worldEpoch: 0, sourceRevision: 0, systemId: 'morkborg', world: req.runtime.world?.snapshot() });
             const rollData = getRollData(prepared, type, key, options ?? {});
             if (!rollData) return error('validation', `Unknown roll: ${type}/${key}`);
+            for (const [field, kind] of [['manualHitDie', 'attack'], ['manualDamageDie', 'attack'], ['manualDefendDie', 'defend'], ['manualIncomingDamage', 'defend']]) {
+                if (options[field] !== undefined && rollData.type !== kind) throw new SdkError('validation', `${field} is unsupported for this action`);
+            }
+            if (options.manualData !== undefined && !['ability', 'initiative', 'feat-roll', 'dice', 'power', 'broken'].includes(rollData.type)) throw new SdkError('validation', 'Raw die entry is unsupported for this action');
 
             const needsContent = ['broken', 'getBetter', 'decoctions', 'power', 'feat-macro'].includes(rollData.type);
             const data = needsContent ? new NativeContent(req.runtime, effects.guard) : undefined;

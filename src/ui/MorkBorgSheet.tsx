@@ -8,6 +8,7 @@ import BackgroundTab from './BackgroundTab';
 import EquipmentTab from './EquipmentTab';
 import ViolenceTab from './ViolenceTab';
 import SpecialTab from './SpecialTab';
+import { BufferedInput } from './components/BufferedInput';
 import RestModal from './components/RestModal';
 import MorkBorgRollModal from './components/MorkBorgRollModal';
 import MorkBorgConfirmModal from './components/MorkBorgConfirmModal';
@@ -55,14 +56,16 @@ const StatBlock = ({ label, value, path, max, min = 0, showMax = true, onUpdate 
         `}} />
         <span className={`$"font-imfell" text-pink-500 text-sm uppercase tracking-widest mb-1`}>{label}</span>
         <div className="flex w-full max-w-44 min-w-0 items-center justify-center gap-1 font-mono text-lg md:text-xl xl:text-2xl text-white">
-            <input
+            <BufferedInput
                 type="number"
                 aria-label={`${label} current`}
                 value={value}
-                onChange={(e) => {
+                onCommit={(e) => {
                     let val = Number(e.target.value);
+                    if (!e.target.value.trim() || !Number.isFinite(val)) { e.target.value = String(value ?? ''); return; }
                     if (min !== undefined) val = Math.max(min, val);
                     if (max !== undefined) val = Math.min(max, val);
+                    e.target.value = String(val);
                     onUpdate(path, val);
                 }}
                 className="bg-transparent w-0 min-w-0 max-w-20 flex-1 text-center focus:outline-none focus:text-pink-500"
@@ -116,6 +119,8 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
     
     useEffect(() => { setRollModal(null); setIsRestModalOpen(false); setConfirmModal(null); }, [actorActionFingerprint(actor), actor.derived?.worldContextRevision]);
 
+    useEffect(() => { setIsEditModalOpen(false); }, [actor.id, isOwner]);
+
     // Map categorized items and derived stats into the view model
     const sheetActor = {
         ...actor,
@@ -157,7 +162,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
             setRollModal({
                 title: overrides.title || rollData.rollLabel || rollData.label || key,
                 rollLabel: rollData.rollLabel || rollData.label || '',
-                formula: rollData.resolvedFormula || rollData.formula || '1d20',
+                formula: rollData.resolvedFormula || rollData.formula || '',
                 humanFormula: rollData.humanFormula || rollData.resolvedFormula || rollData.formula || '',
                 dr: rollData.dr,
                 type,
@@ -197,8 +202,13 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
             return;
         }
 
-        if (type === 'initiative' || type === 'damage' || type === 'dice') {
+        if (type === 'initiative') {
             openModal({ title: key === 'party' ? 'Party Initiative' : 'Initiative' });
+            return;
+        }
+
+        if (type === 'damage' || type === 'dice') {
+            openModal({ title: rollData.rollLabel || rollData.label });
             return;
         }
 
@@ -227,18 +237,16 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
     // Manual roll: inject manual terms into standard `onRoll` options
     const manualRoll = useCallback((result: any) => {
         if (!rollModal) return;
-        const manualData = rollModal.rollData || { resolvedFormula: rollModal.formula, rollLabel: rollModal.rollLabel };
-        const dieResult = typeof result === 'number' ? result : (result.attackDie ?? result.defendDie ?? 0);
-
+        const kind = rollModal.rollData?.type || rollModal.type;
+        const manual = kind === 'attack'
+            ? { manualHitDie: result.attackDie, manualDamageDie: result.damageDie, baseDR: result.baseDR, targetArmor: result.targetArmor }
+            : kind === 'defend'
+                ? { manualDefendDie: result.defendDie, manualIncomingDamage: result.manualIncomingDamage, baseDR: result.baseDR, incomingAttack: result.incomingAttack }
+                : { manualData: { dieResult: result } };
         onRoll(rollModal.type, rollModal.key, {
             ...rollModal.options,
             rollMode,
-            manualData: { ...manualData, type: rollModal.rollData?.type || rollModal.type, dieResult },
-            manualHitDie: result.attackDie,
-            manualDefendDie: result.defendDie,
-            manualDamageDie: result.damageDie,
-            // Attack/defend extra fields
-            ...(typeof result === 'object' ? result : {}),
+            ...manual,
         });
         setRollModal(null);
     }, [rollModal, onRoll, rollMode]);
@@ -386,10 +394,10 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
 
                         <div className="relative z-10">
                             {activeTab === 'background' && <BackgroundTab actor={sheetActor} onUpdate={onUpdate} />}
-                            {activeTab === 'equipment' && <EquipmentTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem}
+                            {activeTab === 'equipment' && <EquipmentTab key={`${actor.id}:${isOwner}`} actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem}
                             onInventoryAction={onInventoryAction} onCreateItem={onCreateItem} />}
                             {activeTab === 'violence' && <ViolenceTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} />}
-                            {activeTab === 'special' && <SpecialTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem} onCreateItem={onCreateItem} />}
+                            {activeTab === 'special' && <SpecialTab key={`${actor.id}:${isOwner}`} actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem} onCreateItem={onCreateItem} />}
                         </div>
                     </fieldset></main>
 

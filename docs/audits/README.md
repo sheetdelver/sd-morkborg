@@ -4,9 +4,9 @@
 
 [2026-10-18 native data and behavior alignment](2026-10-18-native-alignment.md)
 is the single active module report. It owns MB-N01–13, carries MB-C01–04 forward,
-and records feature follow-ups MB-F01–06. Implementation is proposed in
+and records feature follow-ups MB-F01–06. Implementation and qualified execution are tracked in
 [module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md), with G0–G9
-checkpoints and native acceptance cases MB-A01–10. No implementation gate is closed.
+checkpoints and native acceptance cases MB-A01–10. G0/G7 have offline/isolated evidence; G8 native acceptance and G9 closeout remain open.
 
 ## Predecessor evidence
 

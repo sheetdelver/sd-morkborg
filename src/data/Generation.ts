@@ -22,6 +22,10 @@ function lines(value: unknown, counts = false): { reference: string; count: numb
     });
 }
 export function newDocument(source: any, uuid: string, item = false): any {
+    if (!item) {
+        if (!Array.isArray(source.items) || source.items.some((i: any) => !i || typeof i !== 'object' || typeof (i._id ?? i.id) !== 'string' || !i.system || typeof i.system !== 'object')) throw new SdkError('not_ready', 'Companion template has incomplete embedded Item data');
+        if (new Set(source.items.map((i: any) => i._id ?? i.id)).size !== source.items.length) throw new SdkError('validation', 'Companion template has duplicate embedded Item identities');
+    }
     const copy = structuredClone(source);
     delete copy._id; delete copy.id; delete copy.uuid; delete copy.pack; delete copy._stats; delete copy.folder; delete copy.ownership;
     copy.flags = { ...copy.flags, morkborg: { ...copy.flags?.morkborg, sourceUuid: uuid } };

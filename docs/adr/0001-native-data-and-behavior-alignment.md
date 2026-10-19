@@ -378,17 +378,17 @@ currently advertised functionality.
 
 | Gate | State | Evidence / commit |
 | --- | --- | --- |
-| Discovery | Complete for the pinned source/data baseline | Active audit; controlled offline comparisons; no implementation |
-| G0 | In progress | Documentation baseline `7429db2`; maintained native regressions: 20 of 21 fail before changes (see audit). Additional table/generation/UI cases pending. |
-| G1 | In progress | Typed errors/OWNER preflight/command validation and minimal dependencies pass offline; installed caller and comprehensive payload acceptance pending. |
-| G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
-| G3 | In progress | Resource matrix, shared plans/manual combat and sequenced inventory pass offline; SDK table-dependent cases and installed/native races pending. |
-| G4 | In progress | SDK exact table traversal and reviewed macro adapter pass offline; installed service/privacy/native acceptance pending. |
-| G5 | In progress | Shared native generation/creation recovery tests pass; copied native 11 classes complete, Pale One identity explicitly held unresolved; installed/native acceptance pending. |
-| G6 | In progress | Packaged Chrome pointer/keyboard, picker retirement, safe content and eight width/theme cases pass; full host/native lifecycle and nesting acceptance pending. |
-| G7 | Open | Repair decision and installed-host qualification pending |
-| G8 | Open | Native matrix pending; no native connection in this audit |
-| G9 | Open | Review and closeout pending |
+| Discovery | Complete for pinned source/data baseline | Active audit; historical descriptions retain the original defects. |
+| G0 | Complete offline baseline | `7429db2` documentation; `7a794ea` meaningful 20 fail / 1 pass; later same-input table, identity and browser regressions. Native/RAW decisions and unsupported choices recorded. |
+| G1 | Implemented, isolated acceptance passed | `ccaf20f`; typed errors, OWNER preflight, command/dependency validation; actual production Core boundary cases. Native roles remain G8. |
+| G2 | Implemented, native qualification pending | `540d3bc`; immutable shared inventory/world rules. Four settings verified in isolated Core; additionalAbilities registration scope remains G8. |
+| G3 | Implemented, native qualification pending | `b3ee21a`; 21/21 baseline, resource matrix/manual combat/sequenced writes; real Core raw combat execution. Native hooks/races remain G8. |
+| G4 | Implemented, native qualification pending | `aadbc9d`; SDK exact tables/reviewed feats; raw hydrated Core identity and attainable exhaustion corrections verified. |
+| G5 | Implemented with explicit unavailable branches | `21e7b18`; complete selected plans and recovery; Pale One and Forlorn broken result remain unavailable. See identity evidence and G8. |
+| G6 | Implemented, isolated browser qualification passed | `18bc9ce` plus installed follow-up; 24 packaged pointer/keyboard cases, real HUD clearance, editor lifecycle and request retirement. Native/full-host acceptance remains G8. |
+| G7 | Isolated qualification complete | No persisted repair selected; Core/API minima and workflow pins justified. Actual development and production registry/13 integration cases pass; checksummed archive below. |
+| G8 | Pending operator environment and authorization | MB-A01–09 not executed natively; MB-A10 N/A for selected read-only normalization. Bundled disposable-world request pending. |
+| G9 | Reconciled to current evidence, closeout open | Per-finding dispositions updated; do not close ADR/archive audit until required native acceptance. |
 
 ### Implementation baseline (2026-10-18)
 
@@ -401,8 +401,8 @@ The first maintained regression run used native schema and independently expecte
 results from `actor/rest.js`, `get-better.js`, `powers.js`, `actor.js` and
 `item.js`: 20 of 21 cases failed on unchanged product code. Evidence is retained
 in the active audit. This is an intentional failing-before checkpoint, not a
-passing implementation gate. Attack/defense upstream quirk selection is awaiting
-the user's choice; independent work continues. Non-character sheets/actions
+passing implementation gate. Attack/defense upstream quirk selection was pending at this baseline; the later
+RAW decision below supersedes it. Non-character sheets/actions
 will expose unsupported status; generation must still preserve companion Actors.
 
 Command-boundary checkpoint: `command-boundaries.test.ts` passes; original
@@ -459,8 +459,9 @@ creation failures and replay prevention. All maintained suites and explicit modu
 typing pass; released-Core isolated check/package passes, SHA-256
 `5a4b371d71e62859eb7c1a11d41ec89b6fad9b6b799eca576d2e383bb0bc4877`.
 
-Copied native document run: **11 complete plans / 14 companions**, source templates
-unchanged, Herbmaster weapon <=6 and armor <=2 proven. Deterministic dice substitute
+The original copied native run produced **11 plans / 14 companion roots**, source
+templates unchanged and Herbmaster weapon <=6 / armor <=2 proven. Its initial
+embedded-Item hydration was incomplete; full-companion proof is corrected at G7 below. Deterministic dice substitute
 and actual SDK table helper were used; this is not installed/native acceptance.
 Pale One (`wLJV0VJT5I234obT`) is truthfully unavailable because its legacy starting
 reference `morkborg.mork-borg-items,Intuitive Power` matches distinct IDs
@@ -507,3 +508,58 @@ G6 archive SHA-256 `545b074d924b1222e9139426fe2f361265911c1e41de4d27b61363bc6fd1
 local driver/results `/tmp/morkborg-adr0001-browser/{browser-tests.mjs,browser-results.json}`.
 All maintained suites, explicit source/UI/hook typing and isolated package/check
 pass. G6 remains qualified until required installed/native acceptance.
+
+
+### Released-host and installed UI checkpoint
+
+G6 commit: `18bc9ceee9a965b877b23d69cf0b5d2d85ccf1fa`. The subsequent G7 slice
+sets Core >=0.19.3, module API >=1.5.0 and UI API >=3.2.0 with matching CI/release
+pins. These are delivered public dependencies, not a blanket API 1.6 bump.
+Module version remains 0.8.3; no release action was performed.
+
+All **13 maintained suites**, explicit source/UI/hook typing, module check and
+isolated packaging pass. Final archive SHA-256:
+`c5676bc0d2c9144c3cf6b4f3bf0854cd799395b1eea6081003408021ee3481c4`.
+Actual released Core development source loading and production archive-only loading
+pass. **13 installed integration cases / 24 actual-pointer/keyboard browser cases**
+pass, zero browser runtime errors. The real Core FloatingHUD clears expanded More;
+styles are checked with Core-only CSS. Resource/name drafts survive asynchronous
+source updates; permission changes close editors. Manual combat sends only the
+appropriate raw fields, and real Core dice execution verifies the same inputs.
+Late feedback/status retires even on ownership-only context events.
+
+Installed execution exposed two assumptions that mocks had missed: compendium
+queries operate on raw fields before synthetic pack/UUID decoration, and hydrated
+UUID reads can return raw source without UUID. Exact request identity is added to
+a clone, validated and fenced consistently. Plain released world-retirement errors
+are narrowly mapped to typed conflict/unavailable; unexpected errors stay sanitized.
+These have actual-host failing-before evidence and maintained regressions.
+
+The [installed evidence ledger](../audits/evidence/2026-10-18-installed-checkpoint.md)
+records case inputs, predecessor failures, package/output identities, qualifications
+and reproducible runners. It also corrects the earlier companion evidence: full
+embedded Item rows are now reconstructed and incomplete companions are rejected.
+The 11 selected native plans retain 14 complete companions and unchanged sources;
+this is not a claim that every class/outcome succeeds.
+
+User-requested version-history verification inspected every local tag 3.0.0–6.0.1
+in isolated copies: all 21 readable snapshots retain the broken Forlorn Owl result
+and both Pale One feat IDs; 3 snapshots are unreadable, not repaired. See the
+[portable identity ledger](../audits/evidence/2026-10-18-native-identities.json).
+Forlorn table `DfILdvixuR0LyIcT`, row `RaRYtTXoANahK7PP`, references missing
+`Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf`; matching Owl name at
+`HLu7lgwoNPlhfx3W` is insufficient canonical evidence. Retain unavailable for that
+branch, without substituting or changing the reference checkout. Pale One remains
+pinned unresolved per user direction. These are native data issues, not Core blockers.
+
+G8 awaits the pending bundled disposable Foundry 14 endpoint/world/build/account
+and scoped fixture/settings/permission-write/cleanup authorization request.
+No native endpoint or production Core was contacted. AdditionalAbilities scope,
+native hooks and the full MB-A01–09 matrix remain open; MB-A10 is N/A for this
+implementation's evidence-backed no-persisted-repair decision. All test services
+were stopped. G9 does not authorize closeout while this acceptance remains pending.
+
+Operator update after isolated qualification: the user supplied `localhost:30000`,
+Foundry 14, passwordless GM, in response to the bundled disposable-world request.
+Verify the active world, exact build/native identity and available roles before
+fixtures; native results have not yet been credited at this checkpoint.

@@ -42,8 +42,22 @@ export function withManualDie(formula: string, raw: unknown): string {
     if (!Number.isInteger(raw) || Number(raw) < 1 || Number(raw) > spec.faces) throw new SdkError('validation', `Raw die must be 1–${spec.faces}`);
     return formula.replace(spec.token, String(raw));
 }
+export function combatDR(base: number, modifier: number): number {
+    if (!Number.isSafeInteger(base)) throw new SdkError('validation', 'Invalid base DR');
+    if (!Number.isFinite(modifier)) throw new SdkError('not_ready', 'Action modifiers are unavailable');
+    return base + modifier;
+}
+function combatDefaults(actor: any, kind: 'attack' | 'defend') {
+    const flags = actor.flags?.morkborg ?? {};
+    const dr = flags[kind === 'attack' ? 'attackDR' : 'defendDR'] || 12;
+    if (!Number.isSafeInteger(dr)) throw new SdkError('not_ready', 'Remembered native DR is unavailable');
+    const incomingAttackDefault = flags.incomingAttack || '1d4'; // Pinned native defend dialog default.
+    const targetArmorDefault = flags.targetArmor || '0';
+    if (typeof incomingAttackDefault !== 'string' || typeof targetArmorDefault !== 'string') throw new SdkError('not_ready', 'Remembered native combat formula is unavailable');
+    return { dr, incomingAttackDefault, targetArmorDefault };
+}
 export function actorActionFingerprint(actor: any): string {
-    return JSON.stringify([actor._id ?? actor.id, actor.type, actor.system, (actor.items ?? []).map((i: any) => [i._id ?? i.id, i.type, i.system])]);
+    return JSON.stringify([actor._id ?? actor.id, actor.type, actor.system, actor.flags?.morkborg, (actor.items ?? []).map((i: any) => [i._id ?? i.id, i.type, i.system])]);
 }
 function carryingPenalty(actor: any): number {
     if (typeof actor.derived?.encumbered !== 'boolean') throw new SdkError('not_ready', 'Carrying rules are unavailable');
@@ -73,7 +87,7 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
     if (type === 'defend' || (type === 'item' && options.rollType === 'defend')) {
         const inv = actor.derived?.inventory ?? prepareInventory(actor.items ?? []);
         if (key && type === 'item' && !inv.items.some((i: any) => i.id === key && ['armor', 'shield'].includes(i.type))) throw new SdkError('not_found', 'Owned defensive Item not found');
-        return simple('defend', `1d20${signed(abilityValue(actor, 'agility'))}`, 'Defend', { itemId: key, dr: 12,
+        return simple('defend', `1d20${signed(abilityValue(actor, 'agility'))}`, 'Defend', { itemId: key, ...combatDefaults(actor, 'defend'),
             drModifier: carryingPenalty(actor) + inv.defenseModifier, reduction: inv.reduction, automation: booleanRule(actor, 'hitAutomation') });
     }
     if (!['item', 'feat', 'damage'].includes(type)) throw new SdkError('validation', 'Unsupported action');
@@ -81,13 +95,13 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
     if (!item) throw new SdkError('not_found', 'Owned Item not found');
     const id = item._id ?? item.id;
     if (item.type === 'weapon' && (options.rollType === 'attack' || type === 'damage')) {
-        if (!item.system?.damageDie?.trim()) throw new SdkError('not_ready', 'Weapon damage formula is unavailable');
+        if (typeof item.system?.damageDie !== 'string' || !item.system.damageDie.trim()) throw new SdkError('not_ready', 'Weapon damage formula is unavailable');
         const damageDie = resolveFormula(item.system.damageDie, actor, item);
         if (type === 'damage') return simple('dice', damageDie, `Damage: ${item.name}`, { itemId: id });
         if (!['melee', 'ranged'].includes(item.system.weaponType)) throw new SdkError('not_ready', 'Weapon type is unavailable');
         const ranged = item.system.weaponType === 'ranged';
         return simple('attack', `1d20${signed(abilityValue(actor, ranged ? 'presence' : 'strength'))}`, `Attack: ${item.name}`, {
-            itemId: id, damageDie, dr: 12, drModifier: ranged ? 0 : carryingPenalty(actor), encumbered: !ranged && actor.derived.encumbered,
+            itemId: id, damageDie, ...combatDefaults(actor, 'attack'), drModifier: ranged ? 0 : carryingPenalty(actor), encumbered: !ranged && actor.derived.encumbered,
             automation: booleanRule(actor, 'hitAutomation'), trackAmmo: booleanRule(actor, 'trackAmmo'),
         });
     }

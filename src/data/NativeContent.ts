@@ -13,6 +13,16 @@ export function documentUuid(document: any, type: string): string {
     if (document.pack && document._id) return `Compendium.${document.pack}.${type}.${document._id}`;
     throw new SdkError('not_ready', 'Document has no canonical identity');
 }
+function projectIdentity(source: any, uuid: string) {
+    const projection = structuredClone(source);
+    // A hydrated source has no persisted UUID. The successful exact request
+    // supplies canonical context without changing the stored document.
+    if ((projection._id ?? projection.id) !== uuid.split('.').at(-1)) throw new SdkError('conflict', 'Resolved document identity does not match the requested UUID');
+    const canonical = (value: string) => value.replace(/\.(Item|Actor|RollTable|Macro)\.([^.]+)$/, '.$2');
+    if (projection.uuid && canonical(projection.uuid) !== canonical(uuid)) throw new SdkError('conflict', 'Resolved document UUID changed');
+    if (!projection.uuid) projection.uuid = uuid;
+    return projection;
+}
 /** Request-local orchestration. The SDK owns dice, pack privacy and exact reads. */
 export class NativeContent {
     readonly dependencies = new Map<string, string>();
@@ -25,10 +35,11 @@ export class NativeContent {
         const doc = await this.runtime.documents.fetchByUuid(uuid);
         await this.guard();
         if (!doc) throw new SdkError('not_ready', `Required content is unavailable: ${uuid}`);
-        const hash = contentHash(doc);
+        const projection = projectIdentity(doc, uuid);
+        const hash = contentHash(projection);
         if (this.dependencies.has(uuid) && this.dependencies.get(uuid) !== hash) throw new SdkError('conflict', 'Required content changed during the request');
         this.dependencies.set(uuid, hash);
-        return structuredClone(doc);
+        return projection;
     }
     async legacy(type: 'Item' | 'RollTable' | 'Macro', reference: string): Promise<any> {
         if (/^(Compendium\.|Item\.|RollTable\.|Macro\.)/.test(reference)) return this.document(reference);
@@ -36,7 +47,7 @@ export class NativeContent {
         if (parts.length !== 2 || !parts.every(Boolean)) throw new SdkError('validation', 'A pack-qualified content reference is required');
         const [pack, name] = parts;
         if (this.runtime.access && !this.runtime.access.canReadPack(pack)) throw new SdkError('permission_denied', 'Required pack is not visible');
-        const matches = (await this.runtime.compendium.findAll(type, { pack, name })).filter(d => d.pack === pack && d.name === name);
+        const matches = (await this.runtime.compendium.findAll(type, { name })).filter(d => d.pack === pack && d.name === name);
         if (!matches.length) throw new SdkError('not_ready', `Required ${type} is unavailable in ${pack}`);
         if (matches.length !== 1) throw new SdkError('conflict', `Ambiguous ${type} reference in ${pack}`);
         return this.document(documentUuid(matches[0], type));
@@ -69,14 +80,17 @@ export class NativeContent {
         const eligible = table.results.filter((row: any) => table.replacement !== false || !row.drawn && !used.has(row._id));
         if (!eligible.length) throw new SdkError('conflict', 'Table results are exhausted');
         if (options.uniqueTotals) {
-            if (!/^1?d\d+$/i.test(options.formula ?? table.formula)) throw new SdkError('not_ready', 'Unique-total draws require a supported single-die source formula');
+            const single = (options.formula ?? table.formula).match(/^1?d(\d+)$/i);
+            if (!single) throw new SdkError('not_ready', 'Unique-total draws require a supported single-die source formula');
+            const faces = Number(single[1]);
+            if (!Number.isSafeInteger(faces) || faces < 1 || faces > 100000) throw new SdkError('not_ready', 'Unique-total source die domain is unsupported');
             // This checks exhaustion, not a replacement dice evaluator. The SDK
             // still evaluates the original formula for every attempted total.
             const covered = new Set<number>();
             for (const row of eligible) {
-                if (row.range[1] - row.range[0] > 100_000) throw new SdkError('validation', 'Table range is too large for uniqueness validation');
-                for (let n = row.range[0]; n <= row.range[1]; n++) covered.add(n);
+                for (let n = Math.max(1, row.range[0]); n <= Math.min(faces, row.range[1]); n++) covered.add(n);
             }
+            if (!covered.size) throw new SdkError('not_ready', 'Unique table has no attainable source-die totals');
             if ([...covered].every(n => options.uniqueTotals!.has(n))) throw new SdkError('conflict', 'Unique table totals exhausted');
         }
         let total: number;
@@ -96,10 +110,11 @@ export class NativeContent {
             }
             break;
         }
+        if (uuid === native.brokenForlornOwl.tableUuid && matched.some(row => row._id === native.brokenForlornOwl.rowId && row.documentUuid === native.brokenForlornOwl.documentUuid)) throw new SdkError('not_ready', 'Native Forlorn Philosopher result references a missing Actor identity. Review the table reference before generation; no substitute was selected.');
         await this.guard();
         const drawn = await this.runtime.tables.draw(uuid, { rollOverride: total });
         await this.guard();
-        if (contentHash(drawn.table) !== contentHash(table) || contentHash(drawn.results) !== contentHash(matched)) throw new SdkError('conflict', 'Table content changed while drawing');
+        if (contentHash(projectIdentity(drawn.table, uuid)) !== contentHash(table) || contentHash(drawn.results) !== contentHash(matched)) throw new SdkError('conflict', 'Table content changed while drawing');
         options.uniqueTotals?.add(total);
         const output: NativeEntry[] = [];
         for (const [index, row] of drawn.results.entries()) {

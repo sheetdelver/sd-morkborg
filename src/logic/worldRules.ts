@@ -1,6 +1,18 @@
 import { SdkError, isSdkError } from '@sheet-delver/sdk';
 import type { ModuleWorldSnapshot, ModuleWorldContext, WorldSettingResult } from '@sheet-delver/sdk';
 
+/** Compatibility bridge for plain errors observed from the public world context
+ * through released Core 0.19.3's request services (installed reproduction in ADR).
+ * Exact known failures only: arbitrary backend errors remain sanitized 500s. */
+export function normalizeWorldFailure(cause: unknown): unknown {
+    if (isSdkError(cause) || !(cause instanceof Error)) return cause;
+    if (cause.message === 'World context changed; refresh this action')
+        return new SdkError('conflict', 'World rules or access changed. Refresh this action.');
+    if (cause.message === 'World context retired' || cause.message === 'World context unavailable')
+        return new SdkError('not_ready', 'World context is unavailable. Reconnect and refresh.');
+    return cause;
+}
+
 export function currentWorld(world: ModuleWorldContext): Readonly<ModuleWorldSnapshot> {
     try { return world.snapshot(); }
     catch (e) { if (isSdkError(e)) throw e; throw new SdkError('not_ready', 'World context is unavailable'); }

@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Require released Core 0.19.3; align contract/workflow pins and explicitly type-check module code in CI.
+- Preserve request-retirement errors and reject invalid manual/formula inputs before effects.
+- Retain field drafts, retire stale action/status feedback and clear mobile tools above expanded navigation.
+
 - Refresh mounted catalogs safely; share accessible forms and SDK confirmations/rich content.
 
 - Generate from caller-visible native class metadata, exact starting content and full companion plans.

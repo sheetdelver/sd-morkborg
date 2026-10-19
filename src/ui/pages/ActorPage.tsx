@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
+import { useRequestFence } from '../hooks/useRequestFence';
 import { actorActionFingerprint } from '../../logic/rules';
 import { processHtmlContent } from '@sheet-delver/sdk';
 import { useSDK, useSDKComponents, useActorSheet } from '@sheet-delver/sdk/react';
@@ -23,9 +24,11 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
     const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray } = useSDK();
     const { LoadingModal, SharedContentModal } = useSDKComponents();
     const { actor, loading, notFound, isOwner, refresh, update } = useActorSheet<any>(actorId);
+    const captureRequest = useRequestFence(`${actorId}:${isOwner}`);
 
     const moduleRoll = useCallback(async (type: string, key: string, options: Record<string, unknown> = {}) => {
         if (!actor) return;
+        const isCurrent = captureRequest();
         const rollMode = (typeof window !== 'undefined' && window.localStorage.getItem('sheetdelver_roll_mode')) || 'publicroll';
         const rollOptions = {
             expectedSource: actorActionFingerprint(actor),
@@ -41,6 +44,7 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 body: JSON.stringify({ type, key, options: rollOptions }),
             });
             const data = await res.json();
+            if (!isCurrent()) return;
             if (data.success) {
                 if (data.html) addNotification(processHtmlContent(data.html, foundryUrl), 'success', { html: true });
                 else if (data.result?.total !== undefined) addNotification(`Rolled ${data.label || 'Result'}: ${data.result.total}`, 'success');
@@ -48,16 +52,18 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 addNotification('Roll failed: ' + (data.error ?? 'Unknown error'), 'error');
             }
         } catch (e: any) {
-            addNotification('Error: ' + e.message, 'error');
+            if (isCurrent()) addNotification('Error: ' + e.message, 'error');
         }
-    }, [actor, fetchWithAuth, addNotification, foundryUrl]);
+    }, [actor, fetchWithAuth, addNotification, foundryUrl, captureRequest]);
 
     // Item CRUD goes to the PLATFORM actor-item surface (generic, no system logic).
     const itemRequest = useCallback(async (init: RequestInit, label: string, refreshAfter = true) => {
         if (!actor) return;
+        const isCurrent = captureRequest();
         try {
             const res = await fetchWithAuth(`/api/actors/${actor.id}/items`, init);
             const data = await res.json();
+            if (!isCurrent()) return;
             if (data.success) {
                 if (refreshAfter) refresh();
                 if (label) addNotification(label, 'success');
@@ -65,15 +71,16 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 addNotification('Failed: ' + (data.error ?? 'Unknown error'), 'error');
             }
         } catch (e: any) {
-            addNotification('Error: ' + e.message, 'error');
+            if (isCurrent()) addNotification('Error: ' + e.message, 'error');
         }
-    }, [actor, fetchWithAuth, addNotification, refresh]);
+    }, [actor, fetchWithAuth, addNotification, refresh, captureRequest]);
 
     const onCreateItem = useCallback((itemData: any) => {
-        if (itemData?.sourceUuid && actor) return fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/add-item`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sourceUuid: itemData.sourceUuid, expectedSource: actorActionFingerprint(actor), contextRevision: actor.derived?.worldContextRevision }) }).then(async response => { const data = await response.json(); if (!response.ok) throw new Error(data.error ?? 'Item unavailable'); refresh(); }).catch(e => addNotification(e.message, 'error'));
+        const isCurrent = captureRequest();
+        if (itemData?.sourceUuid && actor) return fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/add-item`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ sourceUuid: itemData.sourceUuid, expectedSource: actorActionFingerprint(actor), contextRevision: actor.derived?.worldContextRevision }) }).then(async response => { const data = await response.json(); if (!isCurrent()) return; if (!response.ok) throw new Error(data.error ?? 'Item unavailable'); refresh(); }).catch(e => { if (isCurrent()) addNotification(e.message, 'error'); });
         return itemRequest({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
             itemData?.name ? `Created ${itemData.name}` : 'Item created');
-    }, [actor, fetchWithAuth, refresh, addNotification, itemRequest]);
+    }, [actor, fetchWithAuth, refresh, addNotification, itemRequest, captureRequest]);
 
     const onUpdateItem = useCallback((itemData: any) =>
         itemRequest({ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
@@ -81,16 +88,18 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
 
     const inventoryAction = useCallback(async (command: Record<string, unknown>) => {
         if (!actor) return;
+        const isCurrent = captureRequest();
         try {
             const response = await fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/inventory`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...command, expectedSource: actorActionFingerprint(actor), contextRevision: actor.derived?.worldContextRevision }),
             });
             const result = await response.json();
+            if (!isCurrent()) return;
             if (!response.ok) throw new Error(result.error ?? 'Inventory action failed');
             refresh();
-        } catch (e: any) { refresh(); addNotification(e.message, 'error'); }
-    }, [actor, fetchWithAuth, refresh, addNotification]);
+        } catch (e: any) { if (isCurrent()) { refresh(); addNotification(e.message, 'error'); } }
+    }, [actor, fetchWithAuth, refresh, addNotification, captureRequest]);
     const onDeleteItem = (itemId: string) => inventoryAction({ op: 'delete', itemId });
     const updateNative = (path: string, value: any) => {
         const match = path.match(/^items\.([^.]+)\.system\.(equipped|carried|tier\.value)$/);

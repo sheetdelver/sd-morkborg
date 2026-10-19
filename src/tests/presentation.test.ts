@@ -6,8 +6,9 @@ import manifest from '../../module/ui';
 import { morkborgTheme as theme } from '../ui/themes/morkborg';
 
 assert.equal(manifest.componentStyles, theme, 'UI manifest must own shared styles');
-assert.equal(manifest.info.compatibility?.coreVersion, '>=0.18.0');
-assert.equal(manifest.info.compatibility?.apiContracts?.['ui-extension-api'], '>=3.1.0 <4.0.0');
+assert.equal(manifest.info.compatibility?.coreVersion, '>=0.19.3');
+assert.equal(manifest.info.compatibility?.apiContracts?.['module-api'], '>=1.5.0 <2.0.0');
+assert.equal(manifest.info.compatibility?.apiContracts?.['ui-extension-api'], '>=3.2.0 <4.0.0');
 assert.deepEqual(manifest.dashboardActions?.map(action => [action.id, action.kind]), [['generator', 'tool']]);
 const generatorAction = manifest.dashboardActions?.[0];
 assert.equal(generatorAction?.kind === 'tool' ? generatorAction.toolId : null, 'generator');

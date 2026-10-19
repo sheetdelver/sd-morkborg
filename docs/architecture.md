@@ -1,13 +1,15 @@
 # Mörk Borg module architecture
 
-`info.json` is the compatibility authority. The module requires Core 0.18.0
-and UI API 3.1; the remaining API ranges are declared there.
+`info.json` is the compatibility authority. The module requires Core 0.19.3,
+module API 1.5 and UI API 3.2; roll API remains 1.0. World snapshots/settings and
+context lifecycle signals justify the newer API floors; no relation/migration
+catalog is used, so module API 1.6 is not required merely because Core offers it.
 
 The active [native alignment audit](audits/2026-10-18-native-alignment.md) and
-[proposed ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
+[ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
 remediation plan. The earlier Core 0.19.3 compatibility review passed build checks,
-but neither it nor the existing tests establish native parity. Manifest ranges,
-CI/release pins and product source remain unchanged during documentation discovery.
+but does not establish native parity. Implementation evidence and outstanding
+installed/native acceptance are recorded separately in the ADR and active audit.
 
 ## Current implementation and known boundaries
 
@@ -18,29 +20,29 @@ loading, updates and realtime. The current sheet has Background, Equipment,
 Violence and Special tabs. There is no independent simplified-sheet projector or
 type-specific creature/follower/container/misery sheet.
 
-Module routes drive a system-specific action engine through a shim over caller-bound
-documents, rolls and chat. Generic Item CRUD uses platform routes. The data manager
-reads declared Item/RollTable compendia per request, but still implements private
-dice/table selection and SCVM generation. The generator posts its client-held
-candidate to platform Actor creation. It currently omits generated companion Actors.
+Module routes drive shared action plans through caller-bound public document,
+dice, table and chat services. Generic Item CRUD uses platform routes. NativeContent
+resolves exact references per request; Generation uses class metadata and the same
+service to produce complete Actor/Item/companion plans. Server-held candidates are
+reviewed and revalidated before creation; partial outcomes require inspection.
 
 Native inventory preparation now uses `carryWeight`, `containerSpace`, carried
 state and canonical owned IDs. The shared inventory model rounds individual stacks,
 counts container members once, retains first-equipped armor, and derives current
 tier reduction separately from maximum-tier penalties. Source fields remain
 unchanged. Invalid or overlapping membership produces a typed validation error.
-The destructive name-based Organize action was removed. Action planning and
-sequenced inventory writes are still being aligned under ADR-0001.
+The destructive name-based Organize action was removed. Shared action plans and
+sequenced inventory writes validate prerequisites and stop on failed operations.
 
 Core owns authorization, world/session lifecycle, roll execution and shared
 chat/media/dice presentation. The module supplies its own sheet and roll styling
 through the public SDK. Its mobile section bar registers measured footer space
 so Core controls remain accessible above it.
 
-Custom info/edit/rest/confirmation/roll overlays still exist; they do not inherit
-all shared-dialog corrections automatically. Raw description HTML, keyboard/focus
-behavior and lifecycle retirement require the audit's G6 work. Retain module design
-while adopting shared components/helpers where their contracts fit.
+System info/edit/rest/roll forms share a bounded composition for raw dice and
+native fields. Confirmations and rich-text editing use public SDK components;
+descriptions use SDK sanitization and URL handling. Scoped catalogs retire stale
+responses on lifecycle/access changes. Full native/browser acceptance stays open.
 
 ## Native authority and settings
 
@@ -84,27 +86,31 @@ separate from the HUD's final-total entry.
 
 The managed HUD uses individual initiative. A separate sheet party action currently
 posts a roll result; it does not implement native encounter reordering or turn hooks.
-Those features remain separately scoped. Correct the sheet preview/execution
-inconsistency without changing the HUD's final-total contract.
+Those features remain separately scoped. Sheet party preview/execution both use
+native 1d6; the HUD's final-total contract is unchanged.
 
 ## Responsive resources
 
 Core ADR-0063 moved sheet/generator navigation into page flow below Core's combat HUD.
 Current/maximum resources use the available card width and centered values.
-HP spans the phone grid row so two four-digit values remain readable; update,
-minimum and maximum semantics are unchanged. Footer-space registration lets the
+HP spans the phone grid row so two four-digit values remain readable.
+HP may remain negative as native resource actions require. Footer-space registration lets the
 host reserve space for the module's mobile section bar.
+Expanded More content stays in the registered footer flow so measured clearance
+includes it. Its Escape control restores focus without hardcoded host offsets.
 
 ## Distribution and verification
 
 `info.json` declares the module version and API compatibility. CI/release
-workflows currently use the released Core `v0.18.0` toolchain. Release assets
+checkout, reusable release workflow and core_ref consistently pin released Core
+`v0.19.3`. Explicit module typing includes source, UI, hooks and tests; root Core
+TypeScript alone excludes these files. CI runs every maintained module suite. Release assets
 include the package archive, checksum, catalog manifest and release history.
 A module release tag identifies the matching manifest version.
 
 Repository workflow and verification commands live in [AGENTS.md](../AGENTS.md).
-ADR-0001 proposes qualification and coherent pins against released Core 0.19.3;
-the current 0.18.0 pins remain the actual implementation until that gate is done.
+ADR-0001 tracks qualification against the pinned released host separately from
+native operator acceptance. No module release version bump accompanies these pins.
 The [audit index](audits/README.md) selects one active report and preserves earlier
 evidence. Native acceptance, role/privacy cases and installed browser flows remain
 open; static render tests are insufficient to close those gates.
@@ -120,7 +126,8 @@ actions preflight OWNER reads, validate command/visibility/manual shapes and bin
 speaker attribution to the selected actor before dice or chat. Ordinary ability
 and initiative rolls no longer load unrelated generation packs. Empty generation
 catalogs return not-ready; an explicitly empty class selection is invalid.
-These source/offline boundaries still require installed caller/native acceptance.
+The installed archive also passes real released Core Store/runtime boundaries
+with a deterministic transport fixture; native caller acceptance remains open.
 
 ### Shared action and inventory execution
 
@@ -145,7 +152,7 @@ Omens using the owned class die. Advancement handles equality and preserves curr
 HP. Casting uses Presence and remaining uses, with no invented equipment denial or
 automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
 Daily powers, roll Omens and actual Omen spending are distinct controls.
-Table/feat/generation services and installed/browser/native acceptance remain open.
+Exact table/feat/generation services are described below. Native acceptance remains open.
 
 ### Exact table and reviewed feat services
 
@@ -188,6 +195,11 @@ connection and world signals, including ownership-only notifications. Errors hav
 retry, and creation uses the server candidate ID rather than client Actor data.
 Native lookup ambiguity remains explicit: Pale One's Intuitive Power legacy CSV
 matches two IDs in the same pack; no identity was chosen by name.
+Forlorn Philosopher's selected Owl row references a missing pack/Actor identity.
+Readable historical tags retain the defect; the same-name existing Owl does not
+justify replacement. This branch is unavailable until canonical source evidence
+or an explicit reviewed data decision resolves it. Companion templates must have
+fully hydrated embedded Items; ID-only payloads cannot become successful plans.
 
 ### Presentation and mounted catalogs
 
@@ -197,9 +209,31 @@ the wrapper adds only keyboard/focus semantics absent from the released shell.
 Item/class descriptions pass through SDK rich-content sanitization and URL handling.
 Item/edit forms use the public rich-text editor. Removed alternate roll/resolver
 implementations are not supported entry points. Observer sheets disable writes.
+Text/number fields retain a local draft until blur, committing one changed native
+field through the public update contract. Source changes retire old drafts;
+Actor/ownership changes close editors. Saved rich-editor focus falling to body
+is recovered within the active form's bounded Escape/Tab handling.
 
 `useScopedCatalog` owns only consumer requests, never a second world cache. It
 retires response generations and refetches on public context/access, connection,
 world and invalidation signals, including changes with no setting keys. Failed,
 empty and loading states differ; retry preserves harmless search/tab state. Browse
 selection sends canonical source UUID for server revalidation.
+Actor action/Item feedback and factory status use a consumer request fence as well;
+retirement discards stale presentation without cancelling or replaying native writes.
+Factory recovery disables repeating a submitted candidate and shows confirmed
+write counts without cached document details when access no longer permits them.
+
+### Released Core request retirement
+
+Core 0.19.3's public request services can propagate plain world-context errors
+before the first module document read. An installed reproduction establishes the
+exact changed/retired/unavailable messages. The module narrowly translates those
+known errors to conflict/not-ready, including partial-effect reports. It preserves
+SDK typed failures and sanitizes every other unexpected error. This compatibility
+bridge does not invent an SDK field or require a Core modification.
+
+Combat plans include native remembered DR/target-armor/incoming-damage defaults.
+UI and execution share DR calculation, validate selected formula variables before
+attack/defense dice, and reject malformed or irrelevant manual controls. The SDK
+remains responsible for dice syntax/evaluation; no duplicate evaluator is added.

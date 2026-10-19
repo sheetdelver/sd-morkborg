@@ -26,14 +26,18 @@ export function useDialogFocus(find: () => HTMLElement | null, onClose: () => vo
             root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true');
             if (!root.hasAttribute('aria-label') && !root.hasAttribute('aria-labelledby')) root.setAttribute('aria-label', root.querySelector('h2,h3')?.textContent ?? 'Confirmation');
             dialogs.push(root);
-            const controls = () => [...root.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),a[href],[tabindex]:not([tabindex="-1"])')].filter(el => el.getClientRects().length > 0);
+            const controls = () => [...root.querySelectorAll<HTMLElement>('button:not(:disabled),input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[contenteditable=true],a[href],[tabindex]:not([tabindex="-1"])')].filter(el => el.getClientRects().length > 0);
             controls()[0]?.focus();
             const onKey = (e: KeyboardEvent) => {
-                if (dialogs.at(-1) !== root || !root.contains(document.activeElement)) return;
+                // A saved editor can remove its focused button. Recover only body
+                // focus; another mounted dialog's focused control retains authority.
+                const lostFocus = document.activeElement === document.body;
+                if (dialogs.at(-1) !== root || (!root.contains(document.activeElement) && !lostFocus)) return;
                 if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); close.current(); }
                 if (e.key === 'Tab') {
                     const all = controls(), first = all[0], last = all.at(-1);
-                    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+                    if (lostFocus) { e.preventDefault(); (e.shiftKey ? last : first)?.focus(); }
+                    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
                     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
                 }
             };

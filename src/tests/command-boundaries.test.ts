@@ -29,4 +29,27 @@ const unexpected = await call({ type: 'ability', key: 'strength' }, { documents:
 assert.equal(unexpected.status, 500);
 assert.doesNotMatch(JSON.stringify(await unexpected.json()), /secret backend detail/);
 assert.equal((await call({ type: 'ability', key: 'strength' }, { documents: { get: async () => null } })).status, 404);
+// Observed through released Core 0.19.3's actual request runtime, before the
+// route's first document read. Preserve its world-retirement meaning safely.
+for (const [message, status] of [
+    ['World context changed; refresh this action', 409],
+    ['World context retired', 503],
+    ['World context unavailable', 503],
+] as const) {
+    const retired = await call({ type: 'ability', key: 'strength' }, {
+        documents: { get: async () => { throw new Error(message); } },
+    });
+    assert.equal(retired.status, status);
+}
+effects = 0;
+for (const body of [
+    { type: 'ability', key: 'strength', options: { manualHitDie: 1 } },
+    { type: 'ability', key: 'strength', options: { targetArmor: 123 } },
+    { type: 'ability', key: 'strength', options: { contextRevision: '1' } },
+    { type: 'ability', key: 'strength', options: { manualData: [] } },
+]) assert.equal((await call(body)).status, 400);
+assert.equal(effects, 0, 'malformed or irrelevant manual controls cannot silently roll');
+const missingIncoming = await call({ type: 'defend', key: '', options: { incomingAttack: '@missing' } });
+assert.equal(missingIncoming.status, 503);
+assert.equal(effects, 0, 'incoming dependencies validate before defense dice, even on success');
 console.log('morkborg command boundaries: PASS');

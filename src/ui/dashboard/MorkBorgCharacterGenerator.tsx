@@ -53,7 +53,7 @@ export default function MorkBorgCharacterGenerator() {
             const response = await sdk.fetchWithAuth('/api/modules/morkborg/create-character', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ candidateId: current.id }) });
             const data = await response.json();
             if (token !== request.current || !catalog.isCurrent(generation) || scopeRef.current !== creationScope) return;
-            if (data.outcome) setOutcome({ status: data.outcome.status, created: data.outcome.created });
+            if (data.outcome) setOutcome(data.outcome);
             if (!response.ok) throw new Error(data.error ?? 'Creation failed');
             setCandidate(null);
         } catch (e) { if (token === request.current && scopeRef.current === creationScope) setError(e instanceof Error ? e.message : 'Creation failed. Inspect the world before retrying.'); }
@@ -93,22 +93,23 @@ export default function MorkBorgCharacterGenerator() {
                 <ul className="list-disc pl-6 my-3">{generated.actor.items.map((i: any) => <li key={i._id}>{i.name}{i.system.quantity !== undefined ? ` ×${i.system.quantity}` : ''}</li>)}</ul>
                 <h3 className="font-bold text-2xl">Companions ({generated.companions.length})</h3>
                 <ul className="list-disc pl-6 my-3">{generated.companions.map((a: any, index: number) => <li key={index}>{a.name} ({a.type})</li>)}</ul>
-                <button disabled={busy} className="bg-pink-600 border-2 border-black p-3 font-bold" onClick={() => setConfirm(true)}>Create reviewed character and companions</button>
+                <button disabled={busy || lastAttempt === current.id} className="bg-pink-600 border-2 border-black p-3 font-bold" onClick={() => setConfirm(true)}>Create reviewed character and companions</button>
             </>}
         </section>}
         <button disabled={busy || catalog.status !== 'ready' || !eligible.length} onClick={generate} className="bg-black text-yellow-400 border-4 border-pink-600 p-4 my-6 font-bold disabled:opacity-40">{busy ? 'Working…' : 'Generate new preview'}</button>
         {error && <p role="alert" className="bg-black text-pink-400 p-4">{error}</p>}
         {lastAttempt && <button className="bg-black text-pink-400 p-3" onClick={async () => {
-            const observedScope = scopeKey;
+            const observedScope = scopeKey, observedGeneration = catalog.generation;
             try {
                 const response = await sdk.fetchWithAuth('/api/modules/morkborg/creation-status', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ candidateId: lastAttempt }) });
                 const data = await response.json();
-                if (observedScope !== scopeRef.current) return;
+                if (observedScope !== scopeRef.current || !catalog.isCurrent(observedGeneration)) return;
                 if (!response.ok) throw new Error(data.error ?? 'Status unavailable');
                 setOutcome(data.outcome);
-            } catch (e) { if (observedScope === scopeRef.current) setError(e instanceof Error ? e.message : 'Status unavailable'); }
+            } catch (e) { if (observedScope === scopeRef.current && catalog.isCurrent(observedGeneration)) setError(e instanceof Error ? e.message : 'Status unavailable'); }
         }}>Inspect creation status</button>}
         {outcome && <section className="bg-black text-white p-4"><h2>Creation: {outcome.status}</h2>
+            {outcome.confirmedWriteCount !== undefined && <p>{outcome.confirmedWriteCount} document write(s) confirmed. Current access does not expose the saved document details.</p>}
             {(outcome.created ?? []).map((a: any) => <p key={a.id}>{a.name}: {a.id} <button onClick={() => sdk.navigate(`/actors/${a.id}`)} className="text-pink-400 underline">Open</button></p>)}
             {outcome.status !== 'complete' && <p>Inspect these documents and the world before manual recovery. The reviewed plan remains on the server; no retry or rollback ran.</p>}
         </section>}

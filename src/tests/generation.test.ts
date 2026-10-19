@@ -11,7 +11,7 @@ const clazz = { _id: 'herb', uuid: classUuid, pack: 'custom.classes', name: 'Ren
     weaponTableDie: '1d6', armorTableDie: '1d2', startingItems: 'custom.items,Repeated', startingRolls: 'custom.tables,Class results,2', description: 'Class fixture',
 } };
 const docs = new Map<string, any>([[classUuid, clazz]]);
-const item = (uuid: string, id: string, type = 'misc', system: any = {}) => docs.set(uuid, { _id: id, uuid, name: id, type, effects: [{ _id: 'effect', name: 'preserved' }], flags: { custom: { keep: true } }, system: { quantity: 1, carryWeight: 1, containerSpace: 1, ...system } });
+const item = (uuid: string, id: string, type = 'misc', system: any = {}) => docs.set(uuid, { _id: uuid.split('.').at(-1), uuid, name: id, type, effects: [{ _id: 'effect', name: 'preserved' }], flags: { custom: { keep: true } }, system: { quantity: 1, carryWeight: 1, containerSpace: 1, ...system } });
 item(native.food, 'food'); item(native.water, 'water');
 item('Item.w', 'weapon', 'weapon', { damageDie: '1d6', weaponType: 'melee' });
 item('Item.a', 'armor', 'armor', { tier: { value: 1, max: 1 } });

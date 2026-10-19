@@ -53,4 +53,11 @@ assert.equal(getRollData(p, 'defend', '')?.drModifier, 4, 'armor max penalty + c
 assert.equal(getRollData(p, 'ability', 'agility')?.drModifier, 6, 'heavy max Agility + carrying');
 assert.equal(getRollData(p, 'item', 'w', { rollType: 'attack' })?.resolvedFormula, '1d20+2');
 assert.equal(getRollData(p, 'initiative', 'party')?.resolvedFormula, '1d6');
+const remembered = { ...p, flags: { morkborg: { attackDR: 14, defendDR: 10, incomingAttack: '1d8+2', targetArmor: '1d4' } } };
+const attackPlan: any = getRollData(remembered, 'item', 'w', { rollType: 'attack' });
+const defensePlan: any = getRollData(remembered, 'defend', '');
+assert.equal(attackPlan.dr, 14);
+assert.equal(attackPlan.targetArmorDefault, '1d4');
+assert.equal(defensePlan.dr, 10);
+assert.equal(defensePlan.incomingAttackDefault, '1d8+2');
 console.log('morkborg native/RAW action parity: PASS');

@@ -57,3 +57,17 @@ assert.equal(formulas.length, before, 'no fallback dice for invalid table');
 const denied = new NativeContent({ ...runtime, documents: { fetchByUuid: async () => { throw new SdkError('permission_denied', 'Denied'); } } });
 await assert.rejects(() => denied.draw(uuid), (e: any) => e.code === 'permission_denied');
 console.log('morkborg SDK table identity/selection contract: PASS');
+// Single-die uniqueness is bounded by attainable totals, even when one native
+// row covers a wider range. Never reroll forever for totals the die cannot reach.
+source = { ...source, formula: '1d2', replacement: true, results: [
+    { _id: 'wide', type: 'text', description: 'wide range', range: [1, 100] },
+] };
+const diceBeforeExhaustion = formulas.length;
+await assert.rejects(() => new NativeContent(runtime).draw(uuid, { uniqueTotals: new Set([1, 2]) }), /exhausted/);
+assert.equal(formulas.length, diceBeforeExhaustion, 'attainable domain exhausted before any retry');
+const brokenUuid = 'Compendium.morkborg.mork-borg-tables.RollTable.DfILdvixuR0LyIcT';
+const brokenSource = { _id: 'DfILdvixuR0LyIcT', name: 'Forlorn Philosopher Items', formula: '1d6', replacement: true,
+    results: [{ _id: 'RaRYtTXoANahK7PP', type: 'document', range: [2, 2], documentUuid: 'Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf' }] };
+const broken = new NativeContent({ ...runtime, documents: { async fetchByUuid() { return brokenSource; } },
+    tables: { async draw() { throw new Error('Known broken identity must be rejected before SDK traversal'); } } });
+await assert.rejects(() => broken.draw(brokenUuid, { override: 2 }), (e: any) => e.code === 'not_ready' && /missing Actor identity/.test(e.message));

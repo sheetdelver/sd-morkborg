@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSDK, useSDKComponents } from '@sheet-delver/sdk/react';
 import { morkborgTheme } from '../themes/morkborg';
 
-import { buildModuleAssetUrl } from '@sheet-delver/sdk';
+import { BufferedInput } from './BufferedInput';
 import MorkBorgRollFrame from './MorkBorgRollFrame';
 
 
@@ -49,10 +49,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                     <>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Price:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Price"
                                 type="number"
                                 value={system.price ?? 0}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                     handleChange('system.price', isNaN(val) ? 0 : val);
                                 }}
@@ -61,11 +62,12 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Carry Weight:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Carry Weight"
                                 type="number"
                                 step="0.1"
                                 value={system.carryWeight ?? 0}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
                                     handleChange('system.carryWeight', isNaN(val) ? 0 : val);
                                 }}
@@ -75,11 +77,12 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         {type !== 'container' && (
                             <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                                 <span className="text-yellow-500">Container Space:</span>
-                                <input
+                                <BufferedInput
+                                aria-label="Container Space"
                                     type="number"
                                     step="0.1"
                                     value={system.containerSpace ?? 1}
-                                    onChange={(e) => handleChange('system.containerSpace', parseFloat(e.target.value))}
+                                    onCommit={(e) => handleChange('system.containerSpace', parseFloat(e.target.value))}
                                     className="bg-transparent text-right outline-none w-20 font-mono text-white"
                                 />
                             </div>
@@ -93,6 +96,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Weapon Type:</span>
                             <select
+                                aria-label="Weapon Type"
                                 value={system.weaponType || 'melee'}
                                 onChange={(e) => handleChange('system.weaponType', e.target.value)}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
@@ -104,6 +108,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Handed:</span>
                             <select
+                                aria-label="Handed"
                                 value={item.handed ?? ''}
                                 onChange={(e) => handleChange('system.handed', Number(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
@@ -116,6 +121,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Uses Ammo:</span>
                             <input
+                                aria-label="Uses Ammo"
                                 type="checkbox"
                                 checked={system.usesAmmo ?? false}
                                 onChange={(e) => handleChange('system.usesAmmo', e.target.checked)}
@@ -130,19 +136,21 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         </label>}
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Damage Die:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Damage Die"
                                 type="text"
                                 value={system.damageDie ?? ''}
-                                onChange={(e) => handleChange('system.damageDie', e.target.value)}
+                                onCommit={(e) => handleChange('system.damageDie', e.target.value)}
                                 className="bg-transparent text-right outline-none w-32 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Crit On:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Crit On"
                                 type="number"
                                 value={system.critOn ?? 20}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 20 : parseInt(e.target.value);
                                     handleChange('system.critOn', isNaN(val) ? 20 : val);
                                 }}
@@ -151,10 +159,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Fumble On:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Fumble On"
                                 type="number"
                                 value={system.fumbleOn ?? 1}
-                                onChange={(e) => {
+                                onCommit={(e) => {
                                     const val = e.target.value === '' ? 1 : parseInt(e.target.value);
                                     handleChange('system.fumbleOn', isNaN(val) ? 1 : val);
                                 }}
@@ -169,20 +178,19 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Current Tier:</span>
                             <select
-                                value={system.tier?.value ?? 1}
+                                aria-label="Current Tier"
+                                value={item.tier?.value ?? ''}
                                 onChange={(e) => handleChange('system.tier.value', parseInt(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
-                                <option value="0">0 (None)</option>
-                                <option value="1">1 (Light)</option>
-                                <option value="2">2 (Medium)</option>
-                                <option value="3">3 (Heavy)</option>
+                                {[0, 1, 2, 3].filter(tier => tier <= Number(item.tier?.max)).map(tier => <option key={tier} value={tier}>{tier} ({['None', 'Light', 'Medium', 'Heavy'][tier]})</option>)}
                             </select>
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Max Tier:</span>
                             <select
-                                value={system.tier?.max ?? 1}
+                                aria-label="Max Tier"
+                                value={item.tier?.max ?? ''}
                                 onChange={(e) => handleChange('system.tier.max', parseInt(e.target.value))}
                                 className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
                             >
@@ -197,10 +205,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                 {type === 'container' && (
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Capacity:</span>
-                        <input
+                        <BufferedInput
+                                aria-label="Capacity"
                             type="number"
                             value={system.capacity ?? 7}
-                            onChange={(e) => {
+                            onCommit={(e) => {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                 handleChange('system.capacity', isNaN(val) ? 0 : val);
                             }}
@@ -212,10 +221,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                 {(type === 'misc' || type === 'ammo') && (
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Quantity:</span>
-                        <input
+                        <BufferedInput
+                                aria-label="Quantity"
                             type="number"
                             value={system.quantity ?? 1}
-                            onChange={(e) => {
+                            onCommit={(e) => {
                                 const val = e.target.value === '' ? 0 : parseInt(e.target.value);
                                 handleChange('system.quantity', isNaN(val) ? 0 : val);
                             }}
@@ -228,28 +238,31 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                     <>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Label:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Label"
                                 type="text"
                                 value={system.rollLabel || ''}
-                                onChange={(e) => handleChange('system.rollLabel', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollLabel', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Formula:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Formula"
                                 type="text"
                                 value={system.rollFormula || ''}
-                                onChange={(e) => handleChange('system.rollFormula', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollFormula', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Roll Macro:</span>
-                            <input
+                            <BufferedInput
+                                aria-label="Roll Macro"
                                 type="text"
                                 value={system.rollMacro || ''}
-                                onChange={(e) => handleChange('system.rollMacro', e.target.value)}
+                                onCommit={(e) => handleChange('system.rollMacro', e.target.value)}
                                 className="bg-transparent text-right outline-none w-48 font-mono text-white"
                             />
                         </div>
@@ -260,6 +273,7 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
                     <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                         <span className="text-yellow-500">Scroll Type:</span>
                         <select
+                                aria-label="Scroll Type"
                             value={system.scrollType || 'unclean'}
                             onChange={(e) => handleChange('system.scrollType', e.target.value)}
                             className="bg-neutral-800 text-right outline-none w-32 font-mono text-white border-none"
@@ -274,10 +288,10 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
     };
 
     return <MorkBorgRollFrame title={`Edit ${item.name}`} subtitle={item.type} onClose={onClose} wide>
-        <label className="block text-pink-400">Item name<input aria-label="Item name" value={item.name} onChange={e => handleChange('name', e.target.value)} className="block bg-black border border-pink-700 p-2 w-full my-2 text-white" /></label>
+        <label className="block text-pink-400">Item name<BufferedInput aria-label="Item name" value={item.name} onCommit={e => handleChange('name', e.target.value)} className="block bg-black border border-pink-700 p-2 w-full my-2 text-white" /></label>
         <div className="flex gap-3 my-4"><button onClick={() => setActiveTab('description')}>Description</button><button onClick={() => setActiveTab('details')}>Details</button></div>
         {activeTab === 'description' ? <RichTextEditor content={item.system?.description ?? ''} onSave={(html: string) => handleChange('system.description', html)} editButtonText="Edit Item Description" theme={morkborgTheme.richText} /> : renderDetails()}
-        <p className="text-neutral-400 text-sm my-4">Edits save when changed.</p>
+        <p className="text-neutral-400 text-sm my-4">Fields save when focus leaves them. Descriptions use Save.</p>
         <button onClick={onClose} className="bg-pink-700 p-3 text-white w-full mt-4">Done</button>
     </MorkBorgRollFrame>;
 }

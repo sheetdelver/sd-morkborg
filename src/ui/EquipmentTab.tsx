@@ -218,6 +218,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
 
                     {/* Edit Button - Simple Monochrome SVG */}
                     <button
+                        aria-label={`Edit ${item.name}`}
                         onClick={() => openItemModal(item)}
                         className="w-12 h-12 flex items-center justify-center text-white hover:text-yellow-500 transition-colors"
                     >
@@ -226,6 +227,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
 
                     {/* Delete Button - Simple Monochrome SVG */}
                     <button
+                        aria-label={`Delete ${item.name}`}
                         onClick={() => onDeleteItem(item._id || item.id)}
                         className="w-12 h-12 flex items-center justify-center text-white hover:text-red-500 transition-colors"
                     >

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { manualDieSpec } from '../../logic/rules';
+import { manualDieSpec, combatDR } from '../../logic/rules';
 import MorkBorgRollFrame, { RollEntryMode } from './MorkBorgRollFrame';
 import type { MorkBorgRollConfig } from '../types';
 
@@ -11,9 +11,9 @@ interface Props {
 }
 export default function MorkBorgRollModal({ config, rollMode, onRollModeChange, onConfirmWithOptions, onManualConfirm, onClose }: Props) {
     const [manual, setManual] = useState(false);
-    const [baseDR, setBaseDR] = useState(12);
-    const [armor, setArmor] = useState('0');
-    const [incoming, setIncoming] = useState('1d4'); // Native defend dialog default.
+    const [baseDR, setBaseDR] = useState(config.rollData?.dr ?? 12);
+    const [armor, setArmor] = useState((config.rollData as any)?.targetArmorDefault ?? '0');
+    const [incoming, setIncoming] = useState(config.rollData?.incomingAttackDefault ?? '1d4'); // Shared native plan default.
     const [raw, setRaw] = useState('');
     const [damage, setDamage] = useState('');
     const plan: any = config.rollData;
@@ -45,7 +45,7 @@ export default function MorkBorgRollModal({ config, rollMode, onRollModeChange, 
             <label className="block text-neutral-200">Base DR
                 <input aria-label="Base DR" type="number" value={baseDR} onChange={e => setBaseDR(Number(e.target.value))} className="bg-black border border-pink-600 ml-3 w-20 p-2" />
             </label>
-            <p className="text-yellow-400">DR modifier: +{plan.drModifier}. Final DR: {baseDR + plan.drModifier}</p>
+            <p className="text-yellow-400">DR modifier: +{plan.drModifier}. Final DR: {Number.isSafeInteger(baseDR) ? combatDR(baseDR, plan.drModifier) : 'Unavailable'}</p>
             {plan.automation === false && <p className="text-neutral-300">Automation is disabled. Compare the roll manually; use Roll damage for a follow-up weapon roll.</p>}
             {attack ? field('Target armor formula', armor, setArmor) : field('Incoming damage formula', incoming, setIncoming)}
         </>}

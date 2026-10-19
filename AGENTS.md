@@ -115,11 +115,15 @@ Run from a configured Core/toolchain checkout with this repository available at
 `data/local/modules/morkborg` (or adapt that path to the isolated CI data root):
 
 ```sh
-npx tsx data/local/modules/morkborg/src/tests/prepared-actor.test.ts
-npx tsx data/local/modules/morkborg/src/tests/presentation.test.ts
-npx tsx data/local/modules/morkborg/src/tests/roll-visibility.test.ts
+node data/local/modules/morkborg/scripts/typecheck.mjs
+for test in data/local/modules/morkborg/src/tests/*.test.ts; do npx tsx "$test" || exit 1; done
 npm run module:check -- morkborg
 ```
+
+For installed-package and actual browser interaction regressions, use the isolated
+runners in [tests/README.md](tests/README.md). They keep runtime test dependencies,
+copied native records and temporary Core/browser state outside the product and
+do not establish native-world acceptance by themselves.
 
 Root TypeScript excludes module source; explicitly include the module when
 checking types. Use isolated package output when validating distribution.

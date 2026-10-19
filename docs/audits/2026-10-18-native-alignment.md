@@ -6,8 +6,9 @@
 
 ## Conclusion and evidence boundary
 
-The current module builds against Core 0.19.3 but has substantive native parity
-defects. These include incorrect carrying weight, inventory consolidation that
+The audited baseline built against Core 0.19.3 but had substantive native parity
+defects. Current implementation dispositions and executed qualifications are recorded
+in the implementation ledger below. These include incorrect carrying weight, inventory consolidation that
 can delete the item it intends to retain, resource/action differences, discarded
 class equipment dice, and table resolution by name rather than document identity.
 Existing passing tests do not cover these behaviors with native-shaped data.
@@ -20,8 +21,9 @@ The module's adapter, routes, data manager, sheet/tabs, generator, item dialogs,
 roll dialogs and tests were traced against them. Core contracts were inspected
 read-only to distinguish module work from possible external limitations.
 
-No live Core/Foundry connection, native browser acceptance, world write or rendered
-interaction was performed in this slice. Controlled native functions ran with
+At discovery, no live Core/Foundry connection, native browser acceptance, world
+write or rendered interaction was performed. Subsequent isolated installed/browser
+execution is recorded separately below; no native-world acceptance has occurred. Controlled native functions ran with
 mocked dice/presentation and in-memory actors. UI risks below are source findings
 unless explicitly identified otherwise. This audit does not claim every native
 feature is supported or every possible input has been tested.
@@ -33,8 +35,8 @@ feature is supported or every possible input has been tested.
 | SheetDelver module | 0.8.3, `main`, `d9d250ca96c31d978f902850e51a8c7a9300c7a6` |
 | Core | Released 0.19.3 checkout, `90c13e5e57d88913cd3bae6bf6b9e6f0b995bad1` |
 | Public contracts | SDK 3.4.0; module-api 1.6.0; UI 3.2.0; roll 1.0.0 |
-| Current module requirements | Core >=0.18.0; module-api >=1.1.0 <2.0.0; UI >=3.1.0 <4.0.0; roll >=1.0.0 <2.0.0 |
-| Current CI/release host | v0.18.0 |
+| Baseline module requirements | Core >=0.18.0; module-api >=1.1.0 <2.0.0; UI >=3.1.0 <4.0.0; roll >=1.0.0 <2.0.0 |
+| Baseline CI/release host | v0.18.0 |
 | Local native reference | Core workspace `temp/morkborg`, clean at `d850c094a9452d752307221f42245a73b66bdfbb`, exact lightweight tag `6.0.1` |
 | Native version qualification | `system.json` still says **6.0.0**, compatibility minimum/maximum/verified **14**; changelog/tag say 6.0.1. Record both; neither proves a running world's reported version. No claim about the latest online release. |
 | Native pack contents inspected | 218 Items (12 classes), 46 RollTables / 601 embedded results, 26 Actors, 5 Macros, excluding folder records |
@@ -231,7 +233,7 @@ truthful resource controls. Do not infer formulas or class gates from prose/name
 
 ### MB-N08 — private table/dice engine discards authoritative content (P1)
 
-[DataManager](../../src/data/DataManager.ts) parses a table's formula as a single
+The former `DataManager` (baseline `d9d250c`) parses a table's formula as a single
 die size, uses Math.random, chooses only one result, falls back to the last result,
 ignores replacement/uniqueness semantics and resolves documents by name. A `2d6`
 table with random .99 yields its 2–6 band instead of 12's band. A result targeting
@@ -540,8 +542,10 @@ Caller-authorized status reads preserve recovery without cached content disclosu
 Maintained generation and all preceding suites pass; explicit module typing and
 isolated released-Core package/check pass. Archive SHA-256
 `5a4b371d71e62859eb7c1a11d41ec89b6fad9b6b799eca576d2e383bb0bc4877`.
-Actual copied native content: **11 classes, 14 companions**, all source documents
-unchanged and Herbmaster override bounds correct. Dice were substituted; SDK table
+The original copied-content probe produced **11 class plans, 14 companion roots**,
+all sources unchanged and Herbmaster bounds correct. Its initial embedded Item
+hydration was incomplete; see the corrected G7 evidence below before claiming
+complete companions. Dice were substituted; SDK table
 helper was real. Installed/native permissions and lifecycle execution still pending.
 
 **New native ambiguity:** Pale One's pack/name Intuitive Power reference matches
@@ -574,3 +578,62 @@ offline with qualified browser evidence, not resolved native acceptance.
 G6 package SHA-256 `545b074d924b1222e9139426fe2f361265911c1e41de4d27b61363bc6fd1c2bd`.
 Driver/results `/tmp/morkborg-adr0001-browser/`; all maintained suites, explicit
 module typing and isolated released-Core check/package pass.
+
+
+### Released-host qualification and current finding dispositions
+
+G6 was committed as `18bc9ce`. The following installed G7 slice is supported by the
+[checksummed execution ledger](evidence/2026-10-18-installed-checkpoint.md):
+13 maintained suites (original 21/21), explicit module/UI/hooks typing, module
+check/package, actual released-Core development loading, **13 production integration
+cases**, and **24 packaged browser pointer/keyboard cases**, all passing. Requests
+use real Core Stores/world context/public caller services with a transport fixture;
+browser session/requests are fixtures. No full Core HTTP/native-world acceptance
+is inferred. Before and after evidence are identified separately in that ledger.
+
+| Finding | Implemented correction and executed proof | Remaining acceptance / disposition |
+| --- | --- | --- |
+| MB-N01 | Native carrying/container/carried fields, immutable shared projection; native-inventory, preparation, source round trips | Corrected offline; MB-A01 native comparison pending |
+| MB-N02 | Unique owned IDs, destructive organize removed, sequenced membership/equip/delete, stop on prerequisite failure; inventory-actions | Corrected offline; MB-A07 native write/hooks pending |
+| MB-N03 | Shared DR/current-vs-max armor/native flags; natural crit and full-damage RAW decision; sheet raw combat vs HUD total; action/manual suites and real Core dice; Chrome raw payloads | Corrected with explicit native-code deviations; MB-A03/08 pending |
+| MB-N04 | Missing formula/identity/variables unavailable, unsupported actions explicit, invalid inputs before effects; baseline/command/content tests | Corrected offline; native unsupported/permission handling pending |
+| MB-N05 | All 12 rest combinations, negative HP, powers/Omens scope; native-alignment/action-parity | Corrected offline; MB-A04 native snapshots pending |
+| MB-N06 | Advancement equality/bounds/current HP; removed extra debris inventory; action-parity | Corrected offline; MB-A04 native execution pending |
+| MB-N07 | Presence/remaining powers, no invented armor gate or HP write, exact catastrophe root, separate resource actions; native/actions/table tests | Corrected offline; MB-A05 native execution pending |
+| MB-N08 | Removed private evaluator/name resolution; SDK exact multiple/nested/Actor draws, valid-domain exhaustion, hydrated source identity; table/content suites and actual production generation | Corrected offline; MB-A05/06 references/permissions pending |
+| MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | 11 selected plans/14 complete companions proven; Pale One and broken Forlorn branch explicitly unavailable; MB-A06 pending |
+| MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected for declared settings; additionalAbilities registered scope and MB-A02 pending |
+| MB-N11 | Native numeric handedness, max-tier controls, missing damage unavailable; Chrome Item edit, source tests | Read normalization selected; no persisted repair/catalog. Affected-world inventory unknown; MB-A10 N/A for this slice |
+| MB-N12 | Owned feat capability/precedence, reviewed macro UUID+digest; SDK two draws/one dose result, no invented grants | Corrected offline; native macro presentation MB-A05 pending |
+| MB-N13 | SDK safe rich content/confirmation/editor, one bounded form, labels/focus/keyboard, buffered edits, real footer/HUD clearance; 24 Chrome cases | Executed isolated UI correction; native/full-host nesting/inline reference MB-A09 pending |
+| MB-C01 | Preserve SDK/known world-retirement status, OWNER/hidden boundary, sanitized 500; actual production Core roles/visibility/revocation | Isolated qualification passes; native/session boundary MB-A08 pending |
+| MB-C02 | Denied/unavailable/empty catalog distinctions, no invalid candidate success; actual Core packs and maintained suites | Isolated qualification passes; native catalog MB-A06 pending |
+| MB-C03 | Mounted refetch and late picker/action/generation/status retirement on keys-empty/access/reconnect; no replay; actual Chrome and Core context cases | Isolated qualification passes; native cross-session MB-A08/09 pending |
+| MB-C04 | Core >=0.19.3, module API1.5/UI3.2 justified, coherent v0.19.3 workflow pins, explicit CI module typing | Corrected and executed against released Core; no version/release bump |
+
+**Identity disposition:** user requested historical verification for the Forlorn Owl
+reference. All 24 local tags 3.0.0–6.0.1 were copied/read where possible; the 21
+readable snapshots contain the same stale reference and two Pale feat identities.
+Three tagged DB snapshots are unreadable and were not repaired. The
+[metadata-only history](evidence/2026-10-18-native-identities.json) preserves exact
+IDs/revisions/failures. No same-name Owl substitution or Pale tie break is selected.
+This is not proof about published ZIPs or additional supported runtime versions.
+
+The G5 “complete companions” statement is qualified above: only G7 reconstructed
+all 13 embedded Item rows and rejected ID-only companion payloads. The current
+copied-native run proves 11 selected plans/14 full companions, source preservation
+and equipment bounds; Forlorn total 2 and Pale One are explicitly unavailable.
+The native record defects remain pinned; do not close MB-N09 from selected successes.
+
+No demonstrated Core blocker or selected persistent migration exists. G8 awaits
+one bundled disposable Foundry14 environment/account + fixture/settings/access
+write/cleanup authorization request; no production/native contact has occurred.
+MB-A01–09 remain pending, MB-A10 N/A for this implementation. The active audit is
+not resolved or archived. Full NPC sheets, Misery, encounter ordering, arbitrary
+macros and browser-only add-ons remain deferred; generated companions stay in scope.
+Task-owned browser services have been stopped; no service retained.
+
+Operator update after isolated qualification: the user supplied `localhost:30000`,
+Foundry 14, passwordless GM, in response to the bundled disposable-world request.
+Verify the active world, exact build/native identity and available roles before
+fixtures; native results have not yet been credited at this checkpoint.

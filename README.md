@@ -12,7 +12,7 @@ Character sheets and tools for playing Mörk Borg with SheetDelver.
 
 <img src="https://github.com/sheetdelver/sheetdelver/blob/main/images/sheets/morkborg/mb-character-sheet.png" alt="Mörk Borg character sheet" width="25%">
 
-Requires **SheetDelver Core 0.18.0 or later**.
+Requires **SheetDelver Core 0.19.3 or later**.
 
 See the [releases](https://github.com/sheetdelver/sd-morkborg/releases),
 [changelog](CHANGELOG.md), [module architecture](docs/architecture.md) and

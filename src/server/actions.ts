@@ -1,5 +1,5 @@
 import { SdkError } from '@sheet-delver/sdk';
-import { abilityValue, resolveFormula, signed, withManualDie } from '../logic/rules';
+import { abilityValue, resolveFormula, signed, withManualDie, combatDR } from '../logic/rules';
 
 // Pure plans are shared with the UI; only this request-bound executor performs effects.
 export async function executeAction(client: any, actor: any, plan: any, options: any, data: any, card: (actor: any, results: any) => string) {
@@ -126,10 +126,7 @@ export async function executeAction(client: any, actor: any, plan: any, options:
         results.outcomes.push(await textDraw('occultHerbmasterDecoctions'));
         const doses = await roll('1d4', 'Doses'); results.outcomes.push(`${doses.total} doses. Allocate them manually.`);
     } else if (plan.type === 'attack' || plan.type === 'defend') {
-        const base = options.baseDR ?? 12;
-        if (!Number.isFinite(base) || !Number.isInteger(base)) throw new SdkError('validation', 'Invalid base DR');
-        const dr = base + plan.drModifier;
-        if (!Number.isFinite(dr)) throw new SdkError('not_ready', 'Action modifiers are unavailable');
+        const dr = combatDR(options.baseDR ?? plan.dr ?? 12, plan.drModifier);
         results.options.modifiedDR = dr;
         const attack = plan.type === 'attack';
         const item = results.item;
@@ -138,11 +135,16 @@ export async function executeAction(client: any, actor: any, plan: any, options:
             ammo = actor.items.find((i: any) => (i._id ?? i.id) === item.system.ammoId && i.type === 'ammo');
             if (!ammo || !Number.isSafeInteger(ammo.system.quantity) || ammo.system.quantity < 1) throw new SdkError('not_ready', 'Selected owned ammunition is unavailable');
         }
+        // Resolve all selected formula dependencies before even a successful
+        // defense can bypass a missing incoming value. The SDK evaluates syntax.
+        const incoming = !attack && plan.automation !== false ? resolveFormula(options.incomingAttack ?? plan.incomingAttackDefault, actor) : undefined;
+        const selectedArmor = options.targetArmor ?? plan.targetArmorDefault;
+        const targetArmor = attack && plan.automation !== false && selectedArmor?.trim() ? resolveFormula(selectedArmor, actor) : undefined;
         const manual = attack ? options.manualHitDie : options.manualDefendDie;
         // Validate every manual expression before evaluating any dice.
         withManualDie(plan.resolvedFormula, manual);
         if (attack) withManualDie(plan.damageDie, options.manualDamageDie);
-        else if (options.manualIncomingDamage !== undefined) withManualDie(options.incomingAttack ?? '', options.manualIncomingDamage);
+        else if (options.manualIncomingDamage !== undefined) withManualDie(incoming ?? '', options.manualIncomingDamage);
         const r = await roll(plan.resolvedFormula, attack ? 'Attack' : 'Defense', attack ? { isAttack: true } : { isDefend: true }, manual);
         const fumble = r.natural <= (attack ? item.system.fumbleOn ?? 1 : 1);
         const crit = r.natural >= (attack ? item.system.critOn ?? 20 : 20);
@@ -152,13 +154,13 @@ export async function executeAction(client: any, actor: any, plan: any, options:
             const pass = crit || !fumble && r.total >= dr;
             results.outcomes.push(crit ? 'CRITICAL SUCCESS!' : fumble ? 'FUMBLE!' : pass ? (attack ? 'HIT!' : 'SUCCESS!') : (attack ? 'MISS!' : 'FAILED!'));
             if (attack && pass || !attack && !pass) {
-                const source = attack ? plan.damageDie : options.incomingAttack;
+                const source = attack ? plan.damageDie : incoming;
                 if (!source) throw new SdkError('validation', 'Incoming damage formula is required');
                 const manualDamage = attack ? options.manualDamageDie : options.manualIncomingDamage;
                 let formula = withManualDie(source, manualDamage);
                 if (attack ? crit : fumble) formula = `(${formula}) * 2`;
                 const damage = await roll(formula, 'Damage', attack ? { isDamage: true } : { isAttack: true });
-                const reduction = attack ? options.targetArmor?.trim() : plan.reduction;
+                const reduction = attack ? targetArmor : plan.reduction;
                 let amount = damage.total;
                 if (reduction && reduction !== '0') {
                     const armor = await roll(reduction, 'Armor reduction', attack ? { isTargetArmor: true } : { isArmor: true });

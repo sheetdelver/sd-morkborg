@@ -4,7 +4,7 @@ import { json } from '@sheet-delver/sdk/server';
 import type { ModuleServerRequest } from '@sheet-delver/sdk/server';
 import { NativeContent, contentHash } from '../data/NativeContent';
 import { CharacterGeneration, sameIdentity } from '../data/Generation';
-import { assertWorldRevision, currentWorld } from '../logic/worldRules';
+import { assertWorldRevision, currentWorld, normalizeWorldFailure } from '../logic/worldRules';
 
 const creating = new Set<string>();
 function scope(req: ModuleServerRequest) {
@@ -73,6 +73,7 @@ export async function createCharacter(req: ModuleServerRequest) {
             await req.runtime.dataStore.set(key, candidate);
             return statusForCandidate(req, candidate, current);
         } catch (cause) {
+            cause = normalizeWorldFailure(cause);
             candidate.status = 'needs-review';
             await req.runtime.dataStore.set(key, candidate);
             let outcome: any = { status: candidate.status, confirmedWriteCount: candidate.created.length };

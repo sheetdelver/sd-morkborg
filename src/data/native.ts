@@ -3,6 +3,9 @@ const table = (id: string) => `Compendium.morkborg.mork-borg-tables.RollTable.${
 const item = (id: string) => `Compendium.morkborg.mork-borg-items.Item.${id}`;
 export const native = {
     revision: 'd850c094a9452d752307221f42245a73b66bdfbb',
+    // Pinned upstream result has both a nonexistent pack and stale Actor ID.
+    // No name-only substitution to the differently identified Hegelian Owl.
+    brokenForlornOwl: { tableUuid: table('DfILdvixuR0LyIcT'), rowId: 'RaRYtTXoANahK7PP', documentUuid: 'Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf' },
     classless: item('p693pMIVYXMSRl8S'),
     food: item('4kuVcY67MIDA6Imc'), water: item('Zrs4ubq4fDBNPmnN'),
     names: table('tBHfdSGFvfmrLreR'),
