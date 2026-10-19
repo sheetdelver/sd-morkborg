@@ -640,6 +640,17 @@ fixtures; native results have not yet been credited at this checkpoint.
 
 ### Live installed/native correction checkpoint
 
+Initial fixes committed `aadde52`. Follow-up MB-N13/C03 native ownership execution
+found the public sheet hook's default-owner fallback when `isOwner` is absent.
+Module UI now conservatively gates editing from native ownership + SDK caller as
+well as host ownership. Server OWNER enforcement was already correct. Same-input
+failed-before browser and native downgrade now pass; 16 source suites, explicit
+typing/check/package, 14 production integration and25 installed-browser cases pass.
+Six actual mounted settings/pack/ownership cases pass;12 combat/table/feat/visibility
+cases and3 automation-off/separate-damage cases pass. These qualify MB-N03/08/10/12
+and C01/03 further, while generation creation/recovery, concealed references, late
+native responses and full-host presentation/reconnect acceptance remain open.
+
 After `d06f20c`, full installed execution exposed and corrected three defects:
 unsupported portal loading (MB-N13), false resource conflicts under native merge
 semantics (MB-N05/07), and missing remembered combat choices (MB-N03).

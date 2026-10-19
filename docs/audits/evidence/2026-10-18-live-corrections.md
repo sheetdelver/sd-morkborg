@@ -117,3 +117,46 @@ original Actor source, original chat IDs and setting records (including absence)
 Full cleanup and the remaining settings/access/generation/full-host cases must
 finish before G8/ADR closeout. No version switch or Core change is authorized by
 these observations.
+
+## Native ownership follow-up
+
+The previous three fixes were committed at `aadde52`. Actual native owner3→observer2
+left the Edit SCVM dialog and controls writable, while the identical caller's server
+command returned404. Raw caller-prepared Actor ownership was2, with no `isOwner`
+field. Released public `useActorSheet` uses `Boolean(actor?.isOwner ?? true)`;
+this actual reproduction is independent of mocks and does not require a Core edit.
+
+Module sheet/page now combine the host gate with native explicit/default ownership
+and public SDK caller identity. Unknown ownership is read-only; explicit user0 wins
+over default3; GM semantics and host denial are retained. Server authorization still
+owns every effect. The maintained fixture changes only native ownership while
+leaving host isOwner true: old archive times out waiting for editor retirement
+(`/tmp/morkborg-native-ownership-before.log`, `/tmp/morkborg-browser-UsBLEb`).
+The same case passes in the complete **25-case** current browser suite, zero errors,
+`/tmp/morkborg-browser-DfZ8kn`. Eight native authority cases pass in the source suite.
+
+Current archive **947a6f41a30a231eeb21969f6b7711a162b57cbeb46ee355d3d29a5878d7f988**
+passes16 source suites, explicit source/UI/hooks typing, isolated module check/package,
+14 production integration cases (`/tmp/morkborg-installed-uEVf2P`) and25 browser cases.
+The actual installed native app passes6 mounted cases after the fix:
+carrying14/capacity5 adds native +2 DR then disabling tracking removes the penalty
+and stale form; automation-off form has no ignored damage control; warmed pack
+content disappears on native denial with explicit403/retry and preserved search;
+pack restoration refetches; ownership-only observer downgrade retires editing and
+OWNER command404; restoring owner re-enables the sheet without reload.
+`/tmp/morkborg-native-lifecycle.json`, `…-lifecycle-after.log`.
+
+Actual native/installed combat results (`…-combat-actions.json`) pass12 cases:
+natural melee crit/fumble, complete composite damage multiplication, armored defense
+crit/fumble using current1d2 reduction/max-tier2 DR, ranged Presence + selected ammo
+3→2, every Broken total including total2's multiple/nested rows, owned formula feat,
+reviewed macro two draws/one doses roll with no inventory grant, and every player
+visibility mode with exact author/speaker/recipient/blind data. Native Broken metadata
+is root `ncXwgtRMqoiREban` (1d4); feat HVtEy2VmsOh5aBOE uses
+`1d20+@abilities.presence.value`, resolving the modifier in parentheses. Initial
+wrong driver identity/formula and an out-of-scope ammo search were corrected against
+actual native records; they are not product regressions. Three further live cases
+pass with real hitAutomation/trackAmmo false: one roll per attack/defense, unchanged
+preferences/HP/Items/ammo, separate weapon-damage action. Settings values and pack
+configuration were restored after this slice; created Setting-document absence still
+requires final baseline cleanup. Four marked Actors/journaled chat remain active.

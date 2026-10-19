@@ -24,6 +24,7 @@ import MorkBorgChatStyles from './components/chat/MorkBorgChatStyles';
 import { MobileSectionNavigation } from './components/MobileSectionNavigation';
 import { getRollData, actorActionFingerprint } from '../logic/rules';
 import { morkborgTheme } from './themes/morkborg';
+import { canEditActor } from '../logic/authority';
 
 
 
@@ -97,8 +98,9 @@ const AbilityBlock = ({ label, value, onRoll }: { label: string, value: number, 
     </button>
 );
 
-export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, onCreateItem, onInventoryAction, isOwner = true }: MorkBorgSheetProps) {
-    const { foundryUrl } = useSDK();
+export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, onCreateItem, onInventoryAction, isOwner: hostOwner = true }: MorkBorgSheetProps) {
+    const { foundryUrl, currentUser } = useSDK();
+    const isOwner = canEditActor(actor, currentUser, hostOwner);
     const [activeTab, setActiveTab] = useState('violence');
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isRestModalOpen, setIsRestModalOpen] = useState(false);

@@ -377,6 +377,15 @@ currently advertised functionality.
 ## Progress ledger
 
 Latest G8 correction evidence: [installed/native execution](../audits/evidence/2026-10-18-live-corrections.md).
+The initial full-host corrections were committed at `aadde52`. A subsequent actual
+observer downgrade reproduced the released hook's absent-isOwner fallback: the
+server denied OWNER commands404 but the mounted editor stayed open. A conservative
+native-ownership UI gate fixes this module path, using public SDK caller/source
+data and retaining host/server denial. Same-input maintained browser and live native
+regressions now pass, alongside 16 source suites, explicit typing/check/package,
+14 production integration cases and 25 browser cases. Live pack revoke/restore,
+carrying revision retirement and owner revoke/restore all pass. Archive SHA-256
+`947a6f41a30a231eeb21969f6b7711a162b57cbeb46ee355d3d29a5878d7f988`.
 The operator authorized isolated Chrome CDP and passwordless player `ptest`;
 `doratheexplorer` remains reserved for the service account. Actual installed UI
 exposed an unavailable react-dom portal export, native `min` resource fields

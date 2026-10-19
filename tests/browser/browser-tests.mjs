@@ -59,6 +59,10 @@ await check('SCVM editor closes when write authority is revoked',async()=>{
  await go();await click(button('EDIT SCVM'));await wait('document.querySelector("[role=dialog]")');await evaluate('window.__owner(false)');await wait('!document.querySelector("[role=dialog]")');
 });
 
+await check('native observer ownership retires editor despite host owner fallback',async()=>{
+ await go();await click(button('EDIT SCVM'));await wait('document.querySelector("dialog[open]")');await evaluate('window.__nativeOwner(2)');await wait('!document.querySelector("dialog[open]")');assert.equal(await evaluate(`document.querySelector('[aria-label="Test Strength"]').matches(':disabled')`),true);await evaluate('window.__nativeOwner(3)');await wait('!document.querySelector("[aria-label=\\"Test Strength\\"]").matches(":disabled")');
+});
+
 for(const kind of ['attack','defend'])await check(`sheet manual ${kind} uses the discriminated server input contract`,async()=>{
  await go();await click(button(kind==='attack'?'Attack':'Defend'));await click(button('Manual'));await click(`document.querySelector('[aria-label="Raw die (1–20)"]')`);await text(kind==='attack'?'20':'1');await click(`document.querySelector('[aria-label^="Raw damage die"]')`);await text('4');await click(button('Use raw dice'));
  const call=(await evaluate('window.__calls')).find(c=>c.type===(kind==='attack'?'item':'defend'));assert.ok(call);fs.writeFileSync(`manual-${kind}-payload.json`,JSON.stringify(call,null,2));assert.equal(call.options.manualData,undefined,'combat uses its explicit raw attack/defense field');assert.equal(call.options[kind==='attack'?'manualHitDie':'manualDefendDie'],kind==='attack'?20:1);

@@ -6,6 +6,7 @@ import { actorActionFingerprint } from '../../logic/rules';
 import { processHtmlContent } from '@sheet-delver/sdk';
 import { useSDK, useSDKComponents, useActorSheet } from '@sheet-delver/sdk/react';
 import MorkBorgSheet from '../MorkBorgSheet';
+import { canEditActor } from '../../logic/authority';
 
 export interface MorkBorgActorPageProps {
     actorId: string;
@@ -21,9 +22,10 @@ export interface MorkBorgActorPageProps {
  * MODULE routes; item CRUD hits the platform actor-item surface. No hand-rolled fetch/realtime.
  */
 export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
-    const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray } = useSDK();
+    const { fetchWithAuth, addNotification, foundryUrl, isDiceTrayOpen, toggleDiceTray, currentUser } = useSDK();
     const { LoadingModal, SharedContentModal } = useSDKComponents();
-    const { actor, loading, notFound, isOwner, refresh, update } = useActorSheet<any>(actorId);
+    const { actor, loading, notFound, isOwner: hostOwner, refresh, update } = useActorSheet<any>(actorId);
+    const isOwner = canEditActor(actor, currentUser, hostOwner);
     const captureRequest = useRequestFence(`${actorId}:${isOwner}`);
 
     const moduleRoll = useCallback(async (type: string, key: string, options: Record<string, unknown> = {}) => {

@@ -23,6 +23,8 @@ would conceal Core0.19.3's unavailable createPortal export. `--test-script
 installed-smoke.mjs` runs the focused form-opening regression. `MB_CDP_TARGET` can
 select an exact page when using the helper for authorized separate role contexts;
 the helper brings that page forward before native input.
+`ownership-smoke.mjs` isolates native observer ownership with the host's owner
+fallback; the full suite includes that same editor-retirement case.
 
 The integration runner archives the exact reviewed Core commit into a new `/tmp`
 directory, symlinks read-only toolchain dependencies, installs the module archive,

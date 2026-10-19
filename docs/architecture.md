@@ -215,6 +215,12 @@ the wrapper adds only keyboard/focus semantics absent from the released shell.
 Item/class descriptions pass through SDK rich-content sanitization and URL handling.
 Item/edit forms use the public rich-text editor. Removed alternate roll/resolver
 implementations are not supported entry points. Observer sheets disable writes.
+The UI additionally checks native `ownership` against the SDK caller, retaining
+explicit NONE/default semantics and GM access. Released Core0.19.3's sheet hook
+defaults an absent `isOwner` field to true; this conservative presentation gate
+prevents observer editing despite that fallback. Host denial still wins, and
+caller-bound Core services remain authoritative for all writes. Ownership changes
+retire editors and pending feedback without a second document cache.
 Text/number fields retain a local draft until blur, committing one changed native
 field through the public update contract. Source changes retire old drafts;
 Actor/ownership changes close editors. Saved rich-editor focus falling to body
