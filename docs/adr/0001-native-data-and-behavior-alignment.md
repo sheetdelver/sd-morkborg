@@ -400,7 +400,7 @@ Native Setting audit timestamps/authorship retain the legitimate test history.
 | G2 | Qualified for selected native pair | `540d3bc`; immutable inventory/rules; actual carrying/ammo/automation/class changes and restoration, client-only additionalAbilities verified. |
 | G3 | Qualified with explicit RAW deviations | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. |
 | G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
-| G5 | Qualified with pinned unavailable branches | `21e7b18`; full selected plans/companions, native creation/cancel/custom catalogs, actual partial recovery/no replay. Pale and stale Forlorn branch remain unavailable. |
+| G5 | Qualified with pinned unavailable branches; token follow-up | `21e7b18`; full selected plans/companions, native creation/cancel/custom catalogs, actual partial recovery/no replay. Pale and stale Forlorn branch remain unavailable. Brevel token-default follow-up has source/installed regressions; amended native creation not rerun. |
 | G6 | Qualified | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
 | G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
 | G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
@@ -559,7 +559,7 @@ The 11 selected native plans retain 14 complete companions and unchanged sources
 this is not a claim that every class/outcome succeeds.
 
 User-requested version-history verification inspected every local tag 3.0.0–6.0.1
-in isolated copies: all 21 readable snapshots retain the broken Forlorn Owl result
+in isolated copies: all 21 readable snapshots retain Forlorn Philosopher's broken Hegelian Owl result
 and both Pale One feat IDs; 3 snapshots are unreadable, not repaired. See the
 [portable identity ledger](../audits/evidence/2026-10-18-native-identities.json).
 Forlorn table `DfILdvixuR0LyIcT`, row `RaRYtTXoANahK7PP`, references missing
@@ -605,3 +605,22 @@ selected. G8 is partial: native UI/settings/actions/resources/full role and reco
 acceptance remains pending. Computer Use has no available browser; connected
 browser or explicit isolated CDP authorization and non-GM account access have been
 requested. No Core limitation is inferred from that tooling/access gap.
+
+### G5 follow-up: operator-generated Pale One evidence
+
+The operator supplied Brevel, a native-generated Pale One on Foundry14.367/native
+6.0.1. The [comparison and regression evidence](../audits/evidence/2026-10-19-brevel-generation.md)
+confirms compatible resource formulas, the starting feat and rolled blessing.
+The new owned feat has no source provenance; it cannot select either duplicate
+Intuitive Power source ID. The pinned identity decision remains open. Pale One
+and Forlorn Philosopher exist; the stale Hegelian Owl result is a companion branch,
+not a class named "Forlorn Owl".
+
+The comparison exposed a module defect: generation translated native legacy
+`vision` defaults into modern token sight. Brevel's stored native sight is false.
+Generation now leaves absent sight to native creation and preserves explicit
+companion token source. Same-input source and installed-route regressions reproduce
+the old forced setting and verify its removal. This is a post-qualification change;
+the previous native matrix remains evidence for its recorded artifact. Fresh native
+creation with the amended payload has not been rerun. No world writes or new native
+acceptance are claimed by the operator-export comparison.

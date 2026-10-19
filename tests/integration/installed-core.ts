@@ -85,6 +85,7 @@ await test('copied native classes through installed routes and real hydrated Cor
   if(clazz.uuid.endsWith('wLJV0VJT5I234obT')){assert.equal(res.status,409);continue}
   assert.equal(res.status,200,JSON.stringify(await res.json()));
   const candidate=(await res.json()).candidate;
+  assert.equal('sight' in candidate.generated.actor.prototypeToken,false,'native generation does not enable modern token sight');
   assert.equal(new Set(candidate.generated.actor.items.map((i:any)=>i._id)).size,candidate.generated.actor.items.length);
   nativePlans.push(candidate);
  }

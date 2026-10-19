@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Preserve native token sight defaults during character and companion generation.
 - Yield forms and focus to Core shared content; distinguish unavailable Actors from deletion.
 - Retire editing on native ownership revocation even when the host projection omits `isOwner`.
 

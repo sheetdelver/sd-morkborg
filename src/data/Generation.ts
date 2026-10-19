@@ -130,11 +130,13 @@ export class CharacterGeneration {
         const description = [s.description ?? '', `<p>${traits}</p>`, ...notes.map(line => `<p>${line}</p>`)].join('\n');
         const actor = { name, type: 'character', img: clazz.img, items, flags: {},
             system: { abilities, hp: { value: hp, max: hp }, powerUses: { value: powers, max: powers }, omens: { value: Math.max(0, omens), max: Math.max(0, omens) }, silver, description },
-            prototypeToken: { name, texture: { src: clazz.img }, actorLink: true, disposition: 1, sight: { enabled: true } } };
+            // Native creation owns sight defaults. Its legacy `vision` flag is
+            // not equivalent to enabling modern Foundry token sight.
+            prototypeToken: { name, texture: { src: clazz.img }, actorLink: true, disposition: 1 } };
         for (const companion of companions) {
             companion.name = `${name.split(/\s+/)[0]}'s ${companion.name}`;
             const friendly = companion.type === 'follower';
-            companion.prototypeToken = { actorLink: friendly, disposition: companion.type === 'creature' ? -1 : friendly ? 1 : 0, sight: { enabled: friendly }, ...companion.prototypeToken };
+            companion.prototypeToken = { actorLink: friendly, disposition: companion.type === 'creature' ? -1 : friendly ? 1 : 0, ...companion.prototypeToken };
         }
         return { actor, companions, classUuid, className: clazz.name, traits, notes,
             provenance: { nativeRevision: native.revision, dependencies: Object.fromEntries(this.content.dependencies) } };

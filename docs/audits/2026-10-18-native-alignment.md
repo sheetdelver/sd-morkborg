@@ -6,11 +6,14 @@
 
 ## Conclusion and evidence boundary
 
-Current qualification and cleanup are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
+Qualification and cleanup for checkpoint `006019b` are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
 Module corrections are implemented and executed on native6.0.1/Foundry14.367 with
 released Core0.19.3, including production loading. MB-N09 remains qualified for the
 user-pinned Pale/Owl identities; this audit is not archived. Earlier ledgers describe
 their historical checkpoints and do not supersede the final dispositions below.
+The later [Brevel token-default correction](evidence/2026-10-19-brevel-generation.md)
+has source/installed regression evidence; fresh native creation of that amended
+payload has not been rerun.
 
 The audited baseline built against Core 0.19.3 but had substantive native parity
 defects. Current implementation dispositions and executed qualifications are recorded
@@ -617,7 +620,7 @@ is inferred. Before and after evidence are identified separately in that ledger.
 | MB-C03 | Mounted refetch and late picker/action/generation/status retirement on keys-empty/access/reconnect; no replay; actual Chrome and Core context cases | Corrected; actual mounted revoke/restore, held late200 retirement and production reconnect qualified (MB-A08/09) |
 | MB-C04 | Core >=0.19.3, module API1.5/UI3.2 justified, coherent v0.19.3 workflow pins, explicit CI module typing | Corrected and executed against released Core; no version/release bump |
 
-**Identity disposition:** user requested historical verification for the Forlorn Owl
+**Identity disposition:** user requested historical verification for Forlorn Philosopher's Hegelian Owl
 reference. All 24 local tags 3.0.0–6.0.1 were copied/read where possible; the 21
 readable snapshots contain the same stale reference and two Pale feat identities.
 Three tagged DB snapshots are unreadable and were not repaired. The
@@ -719,3 +722,20 @@ setting IDs/values/absence and pack configuration are restored. Legitimate nativ
 Setting audit metadata remains. All owned services stopped, sessions logged out,
 native users0; Core/native trees clean. Pale/Owl canonical identities remain pinned,
 other runtime pairs unqualified, audit active. No Core blocker is established.
+
+### MB-N09 follow-up: operator-generated Pale One
+
+The [Brevel comparison](evidence/2026-10-19-brevel-generation.md) records the
+operator's Foundry14.367/native6.0.1 export separately from module execution. Its
+resources match the native generator formulas. Pale One is present and native
+generation succeeds; the module's conflict concerns duplicate Intuitive Power
+source IDs, which the export's new embedded ID/null provenance cannot disambiguate.
+The existing Forlorn Philosopher class likewise remains present; its unavailable
+branch references Hegelian Owl, not a class named "Forlorn Owl".
+
+The export also reveals forced token sight in the module's generation payload.
+Removed inferred sight defaults while preserving explicit companion token source.
+Meaningful source and actual released-Core installed-route regressions fail before
+and pass after. MB-N09 remains qualified: previous native acceptance applies to its
+recorded package; fresh native creation of the amended payload has not been rerun.
+Pinned source identities remain open, and the audit is not closed or archived.

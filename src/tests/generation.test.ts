@@ -61,13 +61,23 @@ const req = (body: any) => ({ json: async () => body, runtime, getAccessContext:
 const generated = await new CharacterGeneration(new NativeContent(runtime)).generate([classUuid]);
 assert.equal(generated.className, 'Renamed class', 'metadata, not name branches');
 assert.equal(generated.actor.system.hp.max, 9); assert.equal(generated.actor.system.powerUses.max, 7);
+// Independent native evidence: the operator's generated Brevel export on
+// Foundry 14.367 / Mork Borg 6.0.1 has sight.enabled=false. MBActor.create's
+// legacy `vision` default is not a modern `sight.enabled` instruction.
+assert.equal('sight' in generated.actor.prototypeToken, false, 'let native creation supply token sight defaults');
 assert.equal(generated.companions.length, 1); assert.equal(generated.companions[0].name, "Generated's Donkey");
+assert.equal('sight' in generated.companions[0].prototypeToken, false, 'do not invent companion sight defaults');
 assert.equal(generated.actor.items.filter(i => i.name === 'Repeated').length, 3, 'legitimate repeated templates survive');
 assert.equal(new Set(generated.actor.items.map(i => i._id)).size, generated.actor.items.length);
 assert.ok(generated.actor.items.filter(i => i.name === 'Repeated').every(i => i.effects[0].name === 'preserved'));
 assert.match(generated.actor.system.description, /Trait.*Trait.*Body.*Habit/i);
 assert.deepEqual([...docs], before, 'source templates preserved');
 assert.ok(formulas.includes('1d6') && formulas.includes('1d2'));
+const companion = docs.get('Actor.companion');
+companion.prototypeToken = { sight: { enabled: true, range: 30 }, rotation: 15 };
+const withExplicitSight = await new CharacterGeneration(new NativeContent(runtime)).generate([classUuid]);
+assert.deepEqual(withExplicitSight.companions[0].prototypeToken, { actorLink: false, disposition: 0, sight: { enabled: true, range: 30 }, rotation: 15 }, 'preserve explicit companion token source');
+delete companion.prototypeToken;
 await assert.rejects(() => new CharacterGeneration(new NativeContent(runtime)).generate([]), /Choose/);
 policy = { [classUuid]: false };
 assert.deepEqual(await new CharacterGeneration(new NativeContent(runtime)).catalog(), []);

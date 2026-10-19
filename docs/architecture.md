@@ -188,7 +188,10 @@ formula overrides and scroll rules, retains full Item effects/flags and every
 companion Actor, and builds traits/notes into the created description. New owned
 Items receive fresh IDs; template UUID provenance is retained. Source templates
 remain unchanged. Creation drops collection metadata/old ownership and gives the
-caller private OWNER access, with native token defaults represented explicitly.
+caller private OWNER access. Generation supplies native actor-link/disposition
+defaults without translating the native legacy `vision` field into modern token sight. Absent sight is left to
+native creation; explicit companion token data is preserved. The operator's
+Foundry14.367/native6.0.1 Brevel export independently exposes this distinction.
 
 ### Generation review and recovery
 
