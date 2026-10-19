@@ -39,6 +39,7 @@ function createArmorTierDiv(item: any, onUpdate: (path: string, value: any) => v
 
                     return (
                         <button
+                            disabled={tierVal > Number(item.system?.tier?.max)}
                             key={tierVal}
                             onClick={() => onUpdate(`items.${item._id || item.id}.system.tier.value`, tierVal)}
                             className={`w-10 h-10 flex items-center justify-center font-morkborg text-lg font-bold rounded-lg transition-all duration-200 border-2 ${isSelected
@@ -92,6 +93,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                 </div>
             </div>
 
+            <button className="bg-pink-600 text-black p-3 font-bold" onClick={() => onRoll('defend', '')}>Defend</button>
             {/* Weapons */}
             <div>
                 <h3 className="font-morkborg text-3xl mb-4 border-b-4 border-pink-500 text-pink-500 inline-block pr-6 transform -rotate-1">Weapons</h3>
@@ -108,7 +110,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                                         {w.name}
                                     </button>
                                     <div className="text-xs sm:text-sm text-slate-400 font-mono tracking-tighter whitespace-normal break-words">
-                                        Damage: {w.damageDie || '1d4'} | Fumble: {w.fumbleOn} | Critical: {w.critOn}
+                                        Damage: {w.damageDie || 'Unavailable'} | Fumble: {w.fumbleOn} | Critical: {w.critOn}
                                     </div>
                                 </div>
                             </div>
@@ -118,6 +120,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                             >
                                 Attack
                             </button>
+                            <button onClick={() => onRoll('damage', w._id || w.id)} className="text-pink-400 p-2">Roll damage</button>
                         </div>
                     ))}
                     {!actor.items.weapons.filter((w: any) => w.equipped || w.system?.equipped).length && (

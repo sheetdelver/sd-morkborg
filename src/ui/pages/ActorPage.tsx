@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
+import { actorActionFingerprint } from '../../logic/rules';
 import { processHtmlContent } from '@sheet-delver/sdk';
 import { useSDK, useSDKComponents, useActorSheet } from '@sheet-delver/sdk/react';
 import MorkBorgSheet from '../MorkBorgSheet';
@@ -27,6 +28,8 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
         if (!actor) return;
         const rollMode = (typeof window !== 'undefined' && window.localStorage.getItem('sheetdelver_roll_mode')) || 'publicroll';
         const rollOptions = {
+            expectedSource: actorActionFingerprint(actor),
+            contextRevision: actor.derived?.worldContextRevision,
             ...options,
             rollMode: (options as any).rollMode || rollMode,
             speaker: (options as any).speaker || { actor: actor.id, alias: actor.name },
@@ -74,17 +77,24 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
         itemRequest({ method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(itemData) },
             itemData?.name ? `Updated ${itemData.name}` : 'Item updated'), [itemRequest]);
 
-    const onDeleteItem = useCallback(async (itemId: string) => {
+    const inventoryAction = useCallback(async (command: Record<string, unknown>) => {
         if (!actor) return;
         try {
-            const res = await fetchWithAuth(`/api/actors/${actor.id}/items?itemId=${itemId}`, { method: 'DELETE' });
-            const data = await res.json();
-            if (data.success) { refresh(); addNotification('Item Deleted', 'success'); }
-            else addNotification('Failed to delete item: ' + (data.error ?? 'Unknown error'), 'error');
-        } catch (e: any) {
-            addNotification('Error: ' + e.message, 'error');
-        }
-    }, [actor, fetchWithAuth, addNotification, refresh]);
+            const response = await fetchWithAuth(`/api/modules/morkborg/actors/${actor.id}/inventory`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...command, expectedSource: actorActionFingerprint(actor), contextRevision: actor.derived?.worldContextRevision }),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error ?? 'Inventory action failed');
+            refresh();
+        } catch (e: any) { refresh(); addNotification(e.message, 'error'); }
+    }, [actor, fetchWithAuth, refresh, addNotification]);
+    const onDeleteItem = (itemId: string) => inventoryAction({ op: 'delete', itemId });
+    const updateNative = (path: string, value: any) => {
+        const match = path.match(/^items\.([^.]+)\.system\.(equipped|carried|tier\.value)$/);
+        if (match) return inventoryAction({ op: match[2] === 'equipped' ? 'equip' : match[2] === 'carried' ? 'carry' : 'tier', itemId: match[1], value });
+        return update(path, value);
+    };
 
     if (loading && !actor) return <LoadingModal message="Loading..." />;
 
@@ -121,7 +131,8 @@ export default function MorkBorgActorPage({ actorId }: MorkBorgActorPageProps) {
                 <MorkBorgSheet
                     actor={actor}
                     onRoll={moduleRoll}
-                    onUpdate={update}
+                    onUpdate={updateNative}
+                    onInventoryAction={inventoryAction}
                     onDeleteItem={onDeleteItem}
                     onCreateItem={onCreateItem}
                     onUpdateItem={onUpdateItem}

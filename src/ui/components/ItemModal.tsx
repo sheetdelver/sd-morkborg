@@ -15,7 +15,7 @@ interface ItemModalProps {
     actor: any;
 }
 
-export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModalProps) {
+export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: ItemModalProps) {
     const { resolveImageUrl } = useSDK();
     const { RichTextEditor } = useSDKComponents();
     const [activeTab, setActiveTab] = useState<'description' | 'details'>('description');
@@ -132,6 +132,12 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item }: ItemModal
                                 className="w-5 h-5 accent-yellow-500"
                             />
                         </div>
+                        {system.usesAmmo && <label className="block text-yellow-500">Ammunition
+                            <select aria-label="Ammunition" value={system.ammoId ?? ''} onChange={e => handleChange('system.ammoId', e.target.value)} className="bg-neutral-800 text-white w-full">
+                                <option value="">None selected</option>
+                                {(actor.items?.ammo ?? []).map((ammo: any) => <option key={ammo.id} value={ammo.id}>{ammo.name}</option>)}
+                            </select>
+                        </label>}
                         <div className="flex items-center justify-between border-b border-yellow-500/30 pb-1">
                             <span className="text-yellow-500">Damage Die:</span>
                             <input

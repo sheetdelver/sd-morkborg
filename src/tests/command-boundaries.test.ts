@@ -6,6 +6,7 @@ const params = { params: Promise.resolve({ systemId: 'morkborg', route: ['actors
 let effects = 0;
 const actor = nativeActor();
 const runtime = {
+    world: { snapshot: () => ({ identity: { contextRevision: 1 }, settings: Object.fromEntries(['trackCarryingCapacity', 'trackAmmo', 'hitAutomation'].map(k => [`morkborg.${k}`, { status: 'world', value: true }])) }), assertRevision() {} },
     documents: { async get(_type: string, _id: string, opts: any) { assert.equal(opts.minOwnership, 'owner'); return actor; } },
     compendium: { async findAll() { throw new Error('unrelated pack dependency'); } },
     rolls: { async roll(formula: string) { effects++; return { total: 14, formula,

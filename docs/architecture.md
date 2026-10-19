@@ -121,3 +121,28 @@ speaker attribution to the selected actor before dice or chat. Ordinary ability
 and initiative rolls no longer load unrelated generation packs. Empty generation
 catalogs return not-ready; an explicitly empty class selection is invalid.
 These source/offline boundaries still require installed caller/native acceptance.
+
+### Shared action and inventory execution
+
+`logic/rules.ts` plans formulas, native DR contributions and availability for both
+sheets and server. Request execution re-reads OWNER authority, actor/item source
+and world revision before effects; stale inputs require refresh. Native source
+and prepared projections remain separate. Native attack/defense total quirks are
+corrected to the published natural-die/whole-damage rules recorded in ADR-0001.
+Single-die manual input preserves modifiers; composite/multiple-die manual entry
+is explicitly unavailable. The HUD retains its independent final-total input.
+
+Inventory equip/move/tier/delete operations validate canonical IDs and membership
+then await prerequisite updates. A failure stops later steps; no atomic transaction
+or automatic rollback is claimed. Partial completion requires inspection before
+retry. Armor/shield exclusivity and maximum-tier sheet controls are enforced.
+Ammo uses the selected owned ammo ID and world rule; depleted ammo deletion cleans
+container references first. Ordinary item edits remain public platform CRUD.
+
+Short rest never resets powers; long-rest starvation and infection both apply
+without clamping negative HP. Qualifying fed long rest restores powers and zero
+Omens using the owned class die. Advancement handles equality and preserves current
+HP. Casting uses Presence and remaining uses, with no invented equipment denial or
+automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
+Daily powers, roll Omens and actual Omen spending are distinct controls.
+Table/feat/generation services and installed/browser/native acceptance remain open.

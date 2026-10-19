@@ -20,9 +20,8 @@ See the [releases](https://github.com/sheetdelver/sd-morkborg/releases),
 
 Native data/behavior corrections and current qualification limits are tracked in
 [ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md) and the
-[active audit](docs/audits/2026-10-18-native-alignment.md). This is a proposed
-remediation plan; discovery has not changed the released feature behavior or
-compatibility requirements.
+[active audit](docs/audits/2026-10-18-native-alignment.md). Remediation is in progress on a module branch. The audit records which checks
+have passed and which installed/native acceptance remains outstanding.
 
 ## Third-party license
 

@@ -382,7 +382,7 @@ currently advertised functionality.
 | G0 | In progress | Documentation baseline `7429db2`; maintained native regressions: 20 of 21 fail before changes (see audit). Additional table/generation/UI cases pending. |
 | G1 | In progress | Typed errors/OWNER preflight/command validation and minimal dependencies pass offline; installed caller and comprehensive payload acceptance pending. |
 | G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
-| G3 | Open | Inventory/action parity pending |
+| G3 | In progress | Resource matrix, shared plans/manual combat and sequenced inventory pass offline; SDK table-dependent cases and installed/native races pending. |
 | G4 | Open | Draw/feat consolidation pending |
 | G5 | Open | Generation completeness pending |
 | G6 | Open | Mounted UI/accessible presentation pending |
@@ -430,3 +430,14 @@ linked from [official content](https://morkborg.com/content/).
 No persistent migration is selected: deterministic read normalization preserves
 legacy handedness and there is no provided world inventory establishing a needed
 persisted repair. Do not infer that no affected worlds exist.
+
+Native action/inventory checkpoint (after `540d3bc`): all **21/21** original
+regressions now pass. Added action-parity, manual-damage and inventory-actions
+suites pass; existing preparation/presentation/visibility suites and command
+boundaries pass. The same manual input on `540d3bc` produces `4` damage formula
+vs required `(4+1) * 2`; corrected execution passes with natural 20 and Strength -3.
+Explicit module/UI/hook typing and isolated Core check/package pass. Archive
+SHA-256 `b3c0925fe46f0cc12d6dd4bd3c42224dc1dac8cf14fae252d4bdab17ef76b85e`.
+Resource writes and preflight are verified with offline effect traces, not native
+operator acceptance. Table service integration, full feat identity and generation
+remain G4/G5 work. Source/context checks are optimistic preflight, not atomic CAS.

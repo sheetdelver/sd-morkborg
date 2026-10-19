@@ -13,6 +13,7 @@
 import type { ModuleServerRequest, ModuleServerParams, ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { json, error } from '@sheet-delver/sdk/server';
 import { isSdkError, SdkError } from '@sheet-delver/sdk';
+import { actorEffects } from './actorEffects';
 import { MorkBorgAdapter } from './MorkBorgAdapter';
 import { getRollData } from '../logic/rules';
 import { createMorkBorgData } from '../data/DataManager';
@@ -38,34 +39,6 @@ function validateBody(body: any) {
     return options;
 }
 
-/**
- * Drives the (preserved) mechanics engine over `req.runtime`. The engine calls
- * `roll` / `updateActor` / `createActorItem` / `sendMessage` / `useItem` — this shim maps
- * each onto the runtime (document store / rolls / chat) so the engine body is unchanged.
- * These are document-store operations now; the old Foundry-socket vocabulary is gone.
- */
-function engineClient(runtime: ModuleRequestRuntime) {
-    return {
-        roll: (formula: string, label?: string, opts?: Record<string, unknown>) => runtime.rolls.roll(formula, label, opts),
-        // Patch an actor's document via the document store (was a Foundry socket dispatch).
-        updateActor: (actorId: string, updates: Record<string, unknown>) => {
-            const patch = { ...updates };
-            delete patch._id;
-            return runtime.documents.patch('Actor', actorId, patch);
-        },
-        createActorItem: (actorId: string, item: Record<string, unknown>) =>
-            runtime.documents.items.create({ type: 'Actor', id: actorId }, item),
-        // The engine calls sendMessage both as (data, options) and (data, undefined, options);
-        // accept either and forward rollMode/speaker so chat visibility (public/gm/blind/self)
-        // is honored.
-        sendMessage: (data: Record<string, unknown>, arg2?: any, arg3?: any) => {
-            const opts = (arg3 && typeof arg3 === 'object') ? arg3 : (arg2 && typeof arg2 === 'object' ? arg2 : {});
-            return runtime.chat.send(data, { rollMode: opts.rollMode, speaker: opts.speaker });
-        },
-        useItem: (actorId: string, itemId: string) => runtime.chat.useItem(actorId, itemId),
-    };
-}
-
 async function routeParts(params: ModuleServerParams['params']): Promise<string[]> {
     const { route } = await params;
     return route;
@@ -80,6 +53,7 @@ function sequenceResponse(result: unknown) {
 
 export const apiRoutes = {
     'actors/[id]/roll': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
         try {
             const actorId = (await routeParts(params))[1];
             const body = await req.json<any>();
@@ -91,14 +65,34 @@ export const apiRoutes = {
             if (options.speaker?.actor && options.speaker.actor !== actorId) return error('validation', 'Speaker must be the selected Actor');
             options.speaker = { actor: actorId, alias: actor.name };
 
-            const rollData = getRollData(actor, type, key, options ?? {});
+            effects = actorEffects(req.runtime, actor, options.expectedSource, options.contextRevision);
+            const prepared = adapter.prepareActorData(actor as any, { worldEpoch: 0, sourceRevision: 0, systemId: 'morkborg', world: req.runtime.world?.snapshot() });
+            const rollData = getRollData(prepared, type, key, options ?? {});
             if (!rollData) return error('validation', `Unknown roll: ${type}/${key}`);
 
-            const needsContent = ['broken', 'getBetter', 'decoctions', 'power'].includes(rollData.type);
+            const needsContent = ['broken', 'getBetter', 'decoctions', 'power', 'feat-macro'].includes(rollData.type);
             const data = needsContent ? await createMorkBorgData(req.runtime.compendium) : undefined;
-            const result = await adapter.performAutomatedSequence(engineClient(req.runtime), actor, rollData, options ?? {}, data!);
+            const result = await adapter.performAutomatedSequence(effects, prepared, rollData, options ?? {}, data!);
             return sequenceResponse(result);
         } catch (e) {
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
+            return routeError(e);
+        }
+    },
+
+    'actors/[id]/inventory': async (req: ModuleServerRequest, { params }: ModuleServerParams) => {
+        let effects: ReturnType<typeof actorEffects> | undefined;
+        try {
+            const actorId = (await routeParts(params))[1];
+            const body = await req.json<any>();
+            const actor = await req.runtime.documents.get('Actor', actorId, { minOwnership: 'owner' });
+            if (!actor) return error('not_found', 'Actor not found');
+            if (actor.type !== 'character') return error('validation', 'Inventory actions are unsupported for this Actor type');
+            if (typeof body?.expectedSource !== 'string') return error('validation', 'Refresh the inventory before editing');
+            effects = actorEffects(req.runtime, actor, body.expectedSource, body.contextRevision);
+            return json({ success: true, ...await effects.inventory(body) });
+        } catch (e) {
+            try { effects?.failure(e); } catch (failure) { return routeError(failure); }
             return routeError(e);
         }
     },

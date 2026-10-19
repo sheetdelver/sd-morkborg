@@ -12,11 +12,12 @@ interface EquipmentTabProps {
     onRoll: (type: MorkBorgRollType, key: string, options?: MorkBorgRollOptions) => void;
     onUpdate: (path: string, value: any) => void;
     onDeleteItem: (itemId: string) => void;
+    onInventoryAction?: (command: Record<string, unknown>) => Promise<void>;
     onUpdateItem?: (itemData: any) => void;
     onCreateItem?: (itemData: any) => void;
 }
 
-export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, onCreateItem }: EquipmentTabProps) {
+export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, onCreateItem, onInventoryAction }: EquipmentTabProps) {
     const [itemModalConfig, setItemModalConfig] = useState<{ isOpen: boolean; item: any }>({
         isOpen: false,
         item: null
@@ -114,30 +115,13 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
 
     const handleDrop = (e: React.DragEvent, targetContainerId: string | null) => {
         e.preventDefault();
+        e.stopPropagation();
         e.currentTarget.classList.remove('bg-pink-900/40', 'outline', 'outline-2', 'outline-pink-500');
 
         const draggedItemId = e.dataTransfer.getData('text/plain');
         if (!draggedItemId || draggedItemId === targetContainerId) return;
 
-        // 1. Find where the item currently lives and remove it
-        for (const c of containers) {
-            const itemsArray = c.system?.items || [];
-            if (itemsArray.includes(draggedItemId)) {
-                onUpdate(`items.${c._id || c.id}.system.items`, itemsArray.filter((id: string) => id !== draggedItemId));
-            }
-        }
-
-        // 2. If dropping into a new container, add it
-        if (targetContainerId) {
-            const targetContainer = containers.find(c => (c._id || c.id) === targetContainerId);
-            if (targetContainer) {
-                // Prevent infinite nesting by not allowing containers inside containers for now, or just allow it if sys allows
-                const currentItems = targetContainer.system?.items || [];
-                if (!currentItems.includes(draggedItemId)) {
-                    onUpdate(`items.${targetContainerId}.system.items`, [...currentItems, draggedItemId]);
-                }
-            }
-        }
+        void onInventoryAction?.({ op: 'move', itemId: draggedItemId, targetId: targetContainerId });
     };
 
     const renderItemRow = (item: any, isNested: boolean = false, index: number) => {

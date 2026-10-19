@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Share action plans and preserve raw manual dice, native DR, ammo identity and armor limits.
+- Correct rest, advancement, casting and resource controls; remove extra HP/inventory grants.
+- Sequence inventory writes and reject stale source/context before side effects.
+
 - Prepare native carrying/container/equipment fields once; preserve source data and stack identities.
 - Remove unsafe inventory consolidation; use native handedness values and proven world-rule declarations.
 

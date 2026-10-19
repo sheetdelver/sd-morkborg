@@ -1,7 +1,7 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; discovery complete for the inspected baseline, remediation not implemented.  
+**Status:** Active; remediation in progress. Execution qualifications are recorded below.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 
 ## Conclusion and evidence boundary
@@ -491,3 +491,22 @@ requires scope but gives no omitted-scope default. Registered native scope remai
 a disposable-runtime check; do not declare it world-scoped by assumption.
 Handedness read normalization needs no persisted mutation; actual affected worlds
 are unknown. No migration catalog or historical recovery guess introduced.
+
+### Native actions and inventory checkpoint
+
+MB-N03/04/05/06/07 and inventory part of MB-N02: all 21 original regressions
+pass. New native/RAW action tests cover negative-modifier natural critical,
+modified-total fumble, whole composite damage, manual bounds, unavailable multi-die
+manual, ranged/encumbrance and armor max-vs-current DR; no-automation rolls once
+and offers a separate damage action. The standalone manual-damage case fails on
+`540d3bc` (`4` vs `(4+1) * 2`) and passes unchanged after correction.
+`inventory-actions.test.ts` proves same-name data preservation, exclusivity, tier
+limits, nested-container rejection, source conflicts and no delete after a failed
+container prerequisite. Native resource effect scope is corrected; table content
+selection still awaits G4. Macro dispatch is explicit rather than fallback d20.
+
+All maintained suites and explicit module typing pass. Isolated released-Core
+check/package passes: SHA-256
+`b3c0925fe46f0cc12d6dd4bd3c42224dc1dac8cf14fae252d4bdab17ef76b85e`.
+No installed/native role, concurrent-write, resource-hook or browser acceptance
+is credited from these in-memory traces. G3/finding dispositions stay qualified.

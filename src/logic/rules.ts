@@ -1,229 +1,103 @@
 import { SdkError } from '@sheet-delver/sdk';
 import { prepareInventory, normalizeNativeItem } from './inventory';
+import type { MorkBorgRollType, MorkBorgRollOptions, MorkBorgRollData } from './types';
 
-/**
- * MorkBorg pure logic rules. 
- * These functions are environment-agnostic and safe for use in both UI and Server segments.
- */
-
-/**
- * Calculate the total item slots used by an actor's inventory
- */
-export function calculateSlotsUsed(items: any[]): number {
-    return prepareInventory(items).slotsUsed;
-}
-
-/**
- * Calculate the maximum item slots available to an actor
- */
-export function calculateMaxSlots(actor: any): number {
-    const strength = Number(actor.system?.abilities?.strength?.value || 0);
-    return 8 + strength;
-}
-
-
-/**
- * Get the standardized initiative formula for an actor
- */
-export function getInitiativeFormula(actor: any): string {
-    const agiVal = actor.system?.abilities?.agility?.value ?? 0;
-    let modifierString = '';
-    if (agiVal > 0) {
-        modifierString = `+${agiVal}`;
-    } else if (agiVal < 0) {
-        modifierString = `${agiVal}`;
-    }
-    return `1d6${modifierString}`;
-}
-
-/**
- * Normalize item data for UI display
- */
-export function normalizeItem(item: any): any {
-    return normalizeNativeItem(item);
-}
-
-/**
- * Categorize items by type for display
- */
+export const calculateSlotsUsed = (items: any[]) => prepareInventory(items).slotsUsed;
+export const calculateMaxSlots = (actor: any) => abilityValue(actor, 'strength') + 8;
+export const normalizeItem = normalizeNativeItem;
 export function categorizeItems(actor: any): any {
-    const items = prepareInventory(actor.items || []).items;
-    return {
-        weapons: items.filter((i: any) => i.type === 'weapon'),
-        shields: items.filter((i: any) => i.type === 'shield'),
-        ammo: items.filter((i: any) => i.type === 'ammo'),
-        classes: items.filter((i: any) => i.type === 'class'),
-        armor: items.filter((i: any) => i.type === 'armor'),
-        equipment: items.filter((i: any) => ['misc', 'container'].includes(i.type)),
-        scrolls: items.filter((i: any) => i.type === 'scroll'),
-        feats: items.filter((i: any) => i.type === 'feat'),
-        uncategorized: items.filter((i: any) => !['class', 'weapon', 'armor', 'shield', 'misc', 'container', 'scroll', 'tablet', 'ammo', 'feat'].includes(i.type))
-    };
+    const items = prepareInventory(actor.items ?? []).items;
+    const group = (...types: string[]) => items.filter(i => types.includes(i.type));
+    return { weapons: group('weapon'), armor: group('armor'), shields: group('shield'),
+        ammo: group('ammo'), equipment: group('misc', 'container'), scrolls: group('scroll'),
+        feats: group('feat'), classes: group('class'), uncategorized: items.filter(i => !['weapon', 'armor', 'shield', 'ammo', 'misc', 'container', 'scroll', 'feat', 'class'].includes(i.type)) };
 }
-
-import { 
-    MorkBorgRollType, 
-    MorkBorgRollOptions, 
-    MorkBorgRollData 
-} from './types';
-
-/**
- * Resolve roll data or pre-evaluated card content from actor state
- */
+export function abilityValue(actor: any, key: string): number {
+    const n = actor.system?.abilities?.[key]?.value;
+    if (typeof n !== 'number' || !Number.isFinite(n)) throw new SdkError('not_ready', `Ability ${key} is unavailable`);
+    return n;
+}
+export const signed = (value: number) => value >= 0 ? `+${value}` : String(value);
+export const getInitiativeFormula = (actor: any) => `1d6${signed(abilityValue(actor, 'agility'))}`;
+export function resolveFormula(formula: unknown, actor: any, item?: any): string {
+    if (typeof formula !== 'string' || !formula.trim() || formula.length > 2000) throw new SdkError('not_ready', 'Required formula is unavailable');
+    return formula.replace(/@([\w.]+)/g, (_, variable: string) => {
+        const path = variable.replace(/^system\./, '').split('.');
+        let value: any = actor.system;
+        if (item && path.length === 1 && Object.hasOwn(item.system ?? {}, path[0])) value = item.system;
+        for (const part of path) value = value?.[part];
+        if (typeof value !== 'number' || !Number.isFinite(value)) throw new SdkError('not_ready', `Formula variable @${variable} is unavailable`);
+        return `(${value})`;
+    });
+}
+export function manualDieSpec(formula: string): { faces: number; token: string } | null {
+    const dice = [...formula.matchAll(/\b(\d*)d(\d+)\b/gi)];
+    if (dice.length !== 1 || Number(dice[0][1] || 1) !== 1 || !/^[\d\sd+*/().\-]+$/i.test(formula)) return null;
+    return { faces: Number(dice[0][2]), token: dice[0][0] };
+}
+export function withManualDie(formula: string, raw: unknown): string {
+    if (raw === undefined) return formula;
+    const spec = manualDieSpec(formula);
+    if (!spec) throw new SdkError('validation', 'Manual entry requires a single unmodified die term; use Auto for this formula');
+    if (!Number.isInteger(raw) || Number(raw) < 1 || Number(raw) > spec.faces) throw new SdkError('validation', `Raw die must be 1–${spec.faces}`);
+    return formula.replace(spec.token, String(raw));
+}
+export function actorActionFingerprint(actor: any): string {
+    return JSON.stringify([actor._id ?? actor.id, actor.type, actor.system, (actor.items ?? []).map((i: any) => [i._id ?? i.id, i.type, i.system])]);
+}
+function carryingPenalty(actor: any): number {
+    if (typeof actor.derived?.encumbered !== 'boolean') throw new SdkError('not_ready', 'Carrying rules are unavailable');
+    return actor.derived.encumbered ? 2 : 0;
+}
+function booleanRule(actor: any, key: string): boolean {
+    const r = actor.derived?.rules?.[`morkborg.${key}`];
+    if (!r || r.status === 'unavailable' || typeof r.value !== 'boolean') throw new SdkError('not_ready', `Native ${key} setting is unavailable`);
+    return r.value;
+}
 export function getRollData(actor: any, type: MorkBorgRollType, key: string, options: MorkBorgRollOptions = {}): MorkBorgRollData | null {
-    if (!actor || actor.type && actor.type !== 'character') throw new SdkError('validation', 'Unsupported Actor type');
-    if (!['dice', 'ability', 'item', 'feat', 'initiative', 'rest', 'broken', 'spendOmen', 'getBetter'].includes(type)) throw new SdkError('validation', 'Unsupported action');
-    const system = actor.system || {};
-    const abilities = system.abilities || {};
-
-    if (type === 'dice') {
-        return {
-            formula: key,
-            type: 'dice',
-            label: options.flavor || 'Roll'
-        };
-    }
-
+    if (actor.type && actor.type !== 'character') throw new SdkError('validation', 'Unsupported Actor type');
+    const common = { options, isAutomated: true };
+    const simple = (kind: string, formula: string, label: string, extra: any = {}): any => ({ ...common, type: kind, formula, resolvedFormula: formula, humanFormula: formula, label, rollLabel: label, ...extra });
+    if (type === 'dice') return simple('dice', resolveFormula(key, actor), options.flavor ?? 'Roll');
     if (type === 'ability') {
-        const statLabel = key.charAt(0).toUpperCase() + key.slice(1);
-        if (!Number.isFinite(abilities[key]?.value)) throw new SdkError('validation', 'Unknown or unavailable ability');
-        const value = abilities[key].value;
-        const sign = value >= 0 ? '+' : '-';
-        return {
-            type: 'ability',
-            statKey: key,
-            isAutomated: true,
-            options: options,
-            label: `Test ${statLabel}`,
-            rawFormula: `1d20@abilities.${key}.value`,
-            resolvedFormula: `1d20${sign}${Math.abs(value)}`,
-            humanFormula: `1d20 ${sign} ${Math.abs(value)} (${statLabel})`,
-            rollLabel: `${statLabel} Test`,
-        };
+        if (!['strength', 'agility', 'presence', 'toughness'].includes(key)) throw new SdkError('validation', 'Unknown ability');
+        const inventory = actor.derived?.inventory ?? prepareInventory(actor.items ?? []);
+        const drModifier = ['strength', 'agility'].includes(key) ? carryingPenalty(actor) + (key === 'agility' ? inventory.agilityModifier : 0) : 0;
+        return simple('ability', `1d20${signed(abilityValue(actor, key))}`, `Test ${key}`, { statKey: key, drModifier });
     }
-
-    if (type === 'item') {
-        let item;
-        if (Array.isArray(actor.items)) {
-            item = actor.items.find((i: any) => i.uuid === key || i._id === key || i.id === key);
-        } else if (actor.items && typeof actor.items === 'object') {
-            item = Object.values(actor.items)
-                .flat()
-                .find((i: any) => (i as any).uuid === key || (i as any)._id === key || (i as any).id === key);
-        }
-
-        if (!item) throw new SdkError('not_found', 'Owned Item not found');
-        const itemData = normalizeItem(item);
-
-        if (options.rollType === 'attack' || options.rollType === 'defend') {
-            const isRanged = itemData.type === 'weapon' && itemData.weaponType === 'ranged';
-            const attackStat = isRanged ? 'presence' : 'strength';
-            const attackLabel = isRanged ? 'Presence' : 'Strength';
-            const abilityVal = actor.system?.abilities?.[attackStat]?.value ?? 0;
-            const sign = abilityVal >= 0 ? '+' : '-';
-            const absMod = Math.abs(abilityVal);
-            const agiVal = actor.system?.abilities?.agility?.value ?? 0;
-            const agiSign = agiVal >= 0 ? '+' : '-';
-            // Note: encumbered state detection should be pre-computed in derived data for purity
-            const encumbered = actor.derived?.encumbered || false;
-
-            if (options.rollType === 'attack') {
-                if (itemData.type !== 'weapon') throw new SdkError('validation', 'Attack requires a weapon');
-                if (!itemData.damageDie.trim()) throw new SdkError('not_ready', 'Weapon damage formula is unavailable');
-                return {
-                    type: 'attack',
-                    itemId: itemData.id,
-                    isAutomated: true,
-                    options,
-                    label: `Attack: ${itemData.name}`,
-                    rollLabel: `Attack — ${itemData.name}`,
-                    resolvedFormula: `1d20${sign}${absMod}`,
-                    humanFormula: `1d20 ${sign} ${absMod} (${attackLabel})`,
-                    damageDie: itemData.damageDie,
-                    encumbered,
-                    dr: 12,
-                };
-            } else {
-                return {
-                    type: 'defend',
-                    itemId: itemData.id,
-                    isAutomated: true,
-                    options,
-                    label: `Defense: ${itemData.name}`,
-                    rollLabel: `Defend — ${itemData.name}`,
-                    resolvedFormula: `1d20${agiSign}${Math.abs(agiVal)}`,
-                    humanFormula: `1d20 ${agiSign} ${Math.abs(agiVal)} (Agility)`,
-                    encumbered,
-                    dr: 12,
-                };
-            }
-        }
-
-        if (itemData.type === 'feat') {
-            if (!itemData.rollLabel) return null;
-            const abilities = actor.system?.abilities || {};
-            const rawFeatFormula = itemData.rollFormula || '';
-            const resolvedFeatFormula = rawFeatFormula.replace(/@abilities\.(\w+)\.value/g, (_: string, s: string) => String(abilities[s]?.value ?? 0));
-            const humanFeatFormula = rawFeatFormula.replace(/([+-]?)@abilities\.(\w+)\.value/g, (_: string, op: string, s: string) => {
-                const v = abilities[s]?.value ?? 0; const lbl = s.charAt(0).toUpperCase() + s.slice(1);
-                const eff = op === '-' ? -v : v; return ` ${eff >= 0 ? '+' : '-'} ${Math.abs(eff)} (${lbl})`;
-            });
-            return {
-                type: 'feat-roll',
-                itemId: itemData.id,
-                itemName: itemData.name,
-                isAutomated: false,
-                label: itemData.rollLabel || itemData.name,
-                rollLabel: itemData.rollLabel,
-                rawFormula: itemData.rollFormula,
-                resolvedFormula: resolvedFeatFormula || itemData.rollFormula,
-                humanFormula: humanFeatFormula || itemData.rollFormula,
-                formula: itemData.rollFormula,
-            };
-        }
-
-        if (itemData.type === 'scroll') {
-            const scrollFormula = itemData.rollFormula || '1d20';
-            return {
-                type: 'power',
-                itemId: itemData.id,
-                isAutomated: true,
-                label: `Power: ${itemData.name}`,
-                rollLabel: `Wield — ${itemData.name}`,
-                resolvedFormula: scrollFormula,
-                humanFormula: scrollFormula,
-                dr: itemData.system?.castingThreshold || undefined,
-            };
-        }
-    }
-
     if (type === 'initiative') {
-        const agiVal = actor.system?.abilities?.agility?.value ?? 0;
-        const sign = agiVal >= 0 ? '+' : '-';
-        return {
-            type: 'initiative',
-            subType: key,
-            isAutomated: true,
-            options,
-            label: key === 'party' ? 'Party Initiative' : 'Initiative',
-            rollLabel: key === 'party' ? 'Party Initiative' : 'Initiative',
-            resolvedFormula: `1d6${sign}${Math.abs(agiVal)}`,
-            humanFormula: `1d6 ${sign} ${Math.abs(agiVal)} (Agility)`,
-        };
+        if (!['individual', 'party'].includes(key)) throw new SdkError('validation', 'Unknown initiative mode');
+        return simple('initiative', key === 'party' ? '1d6' : getInitiativeFormula(actor), key === 'party' ? 'Party order roll' : 'Initiative', { subType: key });
     }
-
-    // Simplistic fallbacks
-    if (type === 'rest') return { type: 'rest', isAutomated: true, label: 'Rest' };
-    if (type === 'broken') return { type: 'broken', isAutomated: true, label: 'Broken' };
-    if (type === 'spendOmen') return { type: 'spendOmen', isAutomated: true, label: 'Spend Omen' };
-    if (type === 'getBetter') return { type: 'getBetter', isAutomated: true, label: 'Get Better' };
-
-    // The "Brew Decoctions" special action (Occult Herbmaster) is dispatched as a feat by
-    // name; it maps to the engine's automated decoctions sequence, which draws from the
-    // compendium decoctions table and creates the resulting items on the actor.
-    if (type === 'feat' && key === 'Create Decoctions') {
-        return { type: 'decoctions', isAutomated: true, label: 'Brew Decoctions' };
+    if (['rest', 'broken', 'getBetter', 'spendOmen', 'rollOmens', 'rollPowers'].includes(type)) return { ...common, type, label: type } as any;
+    if (type === 'defend' || (type === 'item' && options.rollType === 'defend')) {
+        const inv = actor.derived?.inventory ?? prepareInventory(actor.items ?? []);
+        if (key && type === 'item' && !inv.items.some((i: any) => i.id === key && ['armor', 'shield'].includes(i.type))) throw new SdkError('not_found', 'Owned defensive Item not found');
+        return simple('defend', `1d20${signed(abilityValue(actor, 'agility'))}`, 'Defend', { itemId: key, dr: 12,
+            drModifier: carryingPenalty(actor) + inv.defenseModifier, reduction: inv.reduction, automation: booleanRule(actor, 'hitAutomation') });
     }
-
-    throw new SdkError('validation', 'Unsupported action or Item capability');
+    if (!['item', 'feat', 'damage'].includes(type)) throw new SdkError('validation', 'Unsupported action');
+    const item = (actor.items ?? []).find((i: any) => [i._id, i.id, i.uuid].includes(key));
+    if (!item) throw new SdkError('not_found', 'Owned Item not found');
+    const id = item._id ?? item.id;
+    if (item.type === 'weapon' && (options.rollType === 'attack' || type === 'damage')) {
+        if (!item.system?.damageDie?.trim()) throw new SdkError('not_ready', 'Weapon damage formula is unavailable');
+        const damageDie = resolveFormula(item.system.damageDie, actor, item);
+        if (type === 'damage') return simple('dice', damageDie, `Damage: ${item.name}`, { itemId: id });
+        if (!['melee', 'ranged'].includes(item.system.weaponType)) throw new SdkError('not_ready', 'Weapon type is unavailable');
+        const ranged = item.system.weaponType === 'ranged';
+        return simple('attack', `1d20${signed(abilityValue(actor, ranged ? 'presence' : 'strength'))}`, `Attack: ${item.name}`, {
+            itemId: id, damageDie, dr: 12, drModifier: ranged ? 0 : carryingPenalty(actor), encumbered: !ranged && actor.derived.encumbered,
+            automation: booleanRule(actor, 'hitAutomation'), trackAmmo: booleanRule(actor, 'trackAmmo'),
+        });
+    }
+    if (item.type === 'scroll') return simple('power', `1d20${signed(abilityValue(actor, 'presence'))}`, `Wield: ${item.name}`, { itemId: id, dr: 12 });
+    if (item.type === 'feat') {
+        if (!item.system?.rollLabel) return null;
+        // Native precedence is macro before formula; adapters are reviewed server capabilities.
+        if (item.system.rollMacro) return { ...common, type: 'feat-macro', itemId: id, label: item.system.rollLabel, macro: item.system.rollMacro } as any;
+        if (!item.system.rollFormula) throw new SdkError('not_ready', 'Feat has no executable formula or reviewed macro');
+        return simple('feat-roll', resolveFormula(item.system.rollFormula, actor), item.system.rollLabel, { itemId: id, itemName: item.name });
+    }
+    throw new SdkError('validation', 'Unsupported Item capability');
 }
