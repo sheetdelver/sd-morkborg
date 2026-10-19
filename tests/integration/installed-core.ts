@@ -44,6 +44,15 @@ await test('unverified native patch remains unavailable before effects',async()=
 });
 await test('real OWNER/GM vs OBSERVER/hidden Store boundaries before dice/chat',async()=>{for(const id of ['owner','gm','observer','hidden']){effects.length=0;const response=await call(runtime(id));assert.equal(response.status,['owner','gm'].includes(id)?200:404);assert.equal(effects.length,['owner','gm'].includes(id)?2:0)}});
 await test('public, GM, blind, self visibility through actual Core chat runtime',async()=>{for(const mode of ['publicroll','gmroll','blindroll','selfroll']){effects.length=0;assert.equal((await call(runtime(),{rollMode:mode})).status,200);const m=effects.find(x=>x.message).message;assert.equal(m.author,'owner');if(mode==='selfroll')assert.deepEqual(m.whisper,['owner']);if(mode==='blindroll'){assert.equal(m.blind,true);assert.deepEqual(m.whisper,['gm'])}if(mode==='gmroll')assert.deepEqual(m.whisper,['gm','owner'])}});
+await test('MB-R05 compiled actual cards preserve four ability identities, modifiers, visibility and zero writes',async()=>{
+ for(const key of ['strength','agility','presence','toughness'])for(const mode of ['publicroll','gmroll','blindroll','selfroll']){
+  effects.length=0;const before=JSON.stringify(actorStore.get('a1'));
+  const res=await server.apiRoutes['actors/[id]/roll']({runtime:runtime(),json:async()=>({type:'ability',key,options:{rollMode:mode}})},params);assert.equal(res.status,200);
+  const message=effects.find(e=>e.message).message;assert.ok(message.content.includes('Test '+key[0].toUpperCase()+key.slice(1)));assert.equal(effects.filter(e=>e.roll)[0].roll,'1d20+2');assert.equal(effects.filter(e=>e.action).length,0);assert.equal(JSON.stringify(actorStore.get('a1')),before);
+  assert.equal(message.content.includes('DR +2'),['strength','agility'].includes(key));
+  if(mode==='selfroll')assert.deepEqual(message.whisper,['owner']);if(mode==='blindroll'){assert.equal(message.blind,true);assert.deepEqual(message.whisper,['gm'])}if(mode==='gmroll')assert.deepEqual(message.whisper,['gm','owner']);
+ }
+});
 await test('actual pack permission change, valid empty and restore',async()=>{let rt=runtime();let res=await server.apiRoutes.items({runtime:rt,url:'http://fixture/items?types=misc'});assert.equal(res.status,200);assert.equal((await res.json()).items[0].uuid,'Compendium.morkborg.mork-borg-items.Item.i1');await settingStore.seed(async()=>[{_id:'access',key:'core.compendiumConfiguration',value:JSON.stringify({[pack]:{ownership:{PLAYER:'NONE'}}})}] as any);assert.equal(world.refresh().dependenciesChanged,true);res=await server.apiRoutes.items({runtime:runtime(),url:'http://fixture/items?types=misc'});assert.equal(res.status,403);await settingStore.seed(async()=>[]);world.refresh();await compendiumStore.setPackRows('morkborg',pack,[]);res=await server.apiRoutes.items({runtime:runtime(),url:'http://fixture/items?types=misc'});assert.equal(res.status,200);assert.deepEqual((await res.json()).items,[])});
 await test('world false setting refresh and stale client action zero effects',async()=>{const revision=world.snapshot().identity.contextRevision;await settingStore.seed(async()=>[{_id:'carrying',key:'morkborg.trackCarryingCapacity',value:'false'}] as any);assert.equal(world.refresh().affectsPreparation,true);assert.equal(adapter!.prepareActorData(actor as any,{world:world.snapshot()} as any).derived.encumbered,false);effects.length=0;assert.equal((await call(runtime(),{contextRevision:revision})).status,409);assert.equal(effects.length,0)});
 await test('owner revoke during native roll prevents chat',async()=>{effects.length=0;beforeRoll=async()=>{await actorStore.seed(async()=>[{...actor,ownership:{default:0,owner:2}}])};const response=await call(runtime());assert.equal(response.status,404);assert.equal(effects.filter(e=>e.message).length,0);beforeRoll=undefined;await actorStore.seed(async()=>[actor])});
@@ -134,6 +143,21 @@ await test('copied native classes through installed routes and real hydrated Cor
 });
 
 
+await test('MB-R04 native passive, formula, reviewed macro precedence and unsupported macro via compiled routes',async()=>{
+ const previousDice=evaluateDice;const original=structuredClone(actor);const passive=nativeItems.find(i=>i._id==='BtoSeh36zY8IqOQJ');const formula=nativeItems.find(i=>i._id==='fuFjGnyyrGg0RRbb');const brew=nativeItems.find(i=>i._id==='SeZNKnkTTZ3oi4ln');assert.ok(passive&&formula&&brew);
+ const roots=JSON.parse(fs.readFileSync(process.env.MB_NATIVE_FIXTURES+'/native-pack-rows.json','utf8'));const otherMacro=roots.macros.find((r:any)=>r.key.startsWith('!macros!')&&r.data._id!=='l6vx8Dy5iSzh7OEh').data;
+ const items=[passive,formula,{...brew,system:{...brew.system,rollFormula:'@missing'}},{...brew,_id:'unsupported',system:{...brew.system,rollFormula:'1d4',rollMacro:`Compendium.morkborg.mork-borg-macros.Macro.${otherMacro._id}`}}];
+ await actorStore.seed(async()=>[{...original,items:structuredClone(items)}]);evaluateDice=true;
+ try{
+  for(const [key,status] of [[passive._id,400],[formula._id,200],[brew._id,200],['unsupported',400]] as const){
+   effects.length=0;const before=JSON.stringify(actorStore.get('a1'));const res=await server.apiRoutes['actors/[id]/roll']({runtime:runtime(),json:async()=>({type:'feat',key})},params);const body=await res.json();assert.equal(res.status,status,JSON.stringify(body));
+   assert.equal(effects.filter(e=>e.action).length,0,'native instructions do not grant HP, inventory or automatic passive effects');assert.equal(JSON.stringify(actorStore.get('a1')),before);
+   if(key===brew._id){assert.ok(effects.some(e=>e.message?.content.includes('Allocate them manually')));assert.equal(effects.filter(e=>e.roll==='1d4').length,1)}
+   if(key==='unsupported'){assert.match(body.error,/unsupported remotely/);assert.equal(effects.length,0)}
+   if(key===passive._id)assert.equal(effects.length,0);
+  }
+ }finally{evaluateDice=previousDice;await actorStore.seed(async()=>[original])}
+});
 await test('reviewed Forlorn row resolves the exact complete native Owl without source writes',async()=>{
  forlornTotal=2;effects.length=0;
  const response=await server.apiRoutes['generate-character']({runtime:runtime(),getAccessContext:()=>({userId:'owner'}),json:async()=>({classUuids:['Compendium.morkborg.mork-borg-items.Item.L9Vwzbx5o0OMdJm0']})});

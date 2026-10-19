@@ -9,8 +9,9 @@ The active [native alignment audit](audits/2026-10-18-native-alignment.md) and
 [ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
 remediation plan. The earlier Core 0.19.3 compatibility review passed build checks,
 but does not establish native parity. Selected-pair native acceptance and the
-later independent review are recorded separately. Current corrective work is
-MB-R01–05 in the [independent review](audits/evidence/2026-10-19-independent-review.md).
+later independent review are recorded separately. The [independent review](audits/evidence/2026-10-19-independent-review.md)
+identified MB-R01–05; their [correction evidence](audits/evidence/2026-10-19-review-corrections.md)
+records isolated verification while G9 independent closeout remains pending.
 
 ## Current implementation and known boundaries
 
@@ -46,14 +47,22 @@ descriptions use SDK sanitization and URL handling. Scoped catalogs retire stale
 responses on lifecycle/access changes. Prior native/browser evidence is retained;
 independent review identified remaining module UI/card gaps before closeout.
 
-The inventory service supports shield equip and ammunition, but the current
-sheet omits the shield toggle and ammo picker type. Violence details still hold
-an opened Item snapshot, unlike Equipment/Special which resolve the latest owned
-ID. Passive feats correctly perform no automatic action but incorrectly display
-an enabled Use button. Ability plans use `statKey`, while chat expects `subType`,
-losing the ability name. These are MB-R01–05 implementation defects, not intended
-contract limitations. Reuse the existing projection, capability and inventory
-services when correcting them; no Core or migration extension is required.
+Equipment exposes shields through the canonical owned-ID equip handler, and ammo
+through the existing browse/custom Item picker. Violence details keep only an owned
+ID, resolve the current visible equipped Item on every render, and retire missing
+or out-of-scope selections. Actor/authority changes retire that tab's modal scope.
+Equipment/Special retain their current-Item details/edit behavior and all forms
+reuse shared focus cleanup.
+
+Special asks the shared action planner using the native Actor Item array; it does
+not re-project the categorized UI model. Passive feats keep accessible details
+without an executable no-op button. Missing executable data displays its reason;
+formula and macro actions use the plan label. Macro-before-formula precedence and
+server-reviewed macro authorization remain authoritative. Unsupported macros
+return explicit typed errors without falling back to formulas or invented effects.
+Ability execution carries the shared plan's validated `statKey` and display label;
+chat uses that label without interpreting dice formulas. No Core extension,
+additional cache, migration or resource mutation is introduced.
 
 ## Native authority and settings
 
@@ -175,7 +184,8 @@ HP. Casting uses Presence and remaining uses, with no invented equipment denial 
 automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
 Daily powers, roll Omens and actual Omen spending are distinct controls.
 Exact table/feat/generation services are described below. Recorded native acceptance
-is scoped to its artifacts; MB-R01–05 require corrective verification before closeout.
+is scoped to its artifacts; MB-R01–05 now have isolated corrective verification; fresh native reruns and
+independent G9 closeout remain pending.
 
 ### Exact table and reviewed feat services
 

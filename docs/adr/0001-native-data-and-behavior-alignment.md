@@ -725,3 +725,29 @@ suites and explicit source/UI/hook typing pass. Details and artifact identities
 are in the [correction evidence](../audits/evidence/2026-10-19-review-corrections.md).
 MB-R03/04/05 and independent closeout review remain open. No new native execution
 is claimed; earlier native receipts retain their original archive identities.
+
+
+### G9 correction checkpoint 2 — current details, capabilities and cards
+
+Inventory checkpoint `33d3291` corrected MB-R01/02. MB-R03/04/05 now resolve
+Violence details from current scoped owned IDs, ask the shared planner before
+rendering feat actions, and retain validated ability identity/label through
+execution into the actual chat renderer. No native resource rules, reviewed
+Pale/Owl policy, SDK contract, compatibility field or release version changed.
+
+The [final correction evidence](../audits/evidence/2026-10-19-review-corrections.md)
+records independent failing-before expectations and the exact final archive
+SHA256 `fe891efa674ced7e12ed1dcaf293c5fed6c1c0849d5010167d18f50e6c90a338`.
+All 19 module suites, explicit source/UI/hook typing, module validation, isolated
+packaging, 20 installed cases on each declared identity, 26 existing plus10 new
+compiled-browser cases and26 release-helper tests pass. Browser execution includes
+actual pointer/keyboard, current source updates, mobile lifecycle/focus, Observer
+controls and the existing mounted/reconnect/stale-response/overlay cases. Installed
+execution includes caller-scoped services, exact native ammo, macro review and
+actual rendered chat cards/visibility, preserving source and generation recovery.
+
+MB-R01–05 are corrected with isolated execution evidence. **G9 and ADR closeout
+remain open pending independent review.** Fresh native reruns of corrected paths
+remain pending current scoped authority; earlier native receipts retain their
+original artifact identities and do not qualify this final archive. Core and the
+reference remained read-only; no task-owned service is retained.

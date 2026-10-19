@@ -77,7 +77,7 @@ export function getRollData(actor: any, type: MorkBorgRollType, key: string, opt
         if (!['strength', 'agility', 'presence', 'toughness'].includes(key)) throw new SdkError('validation', 'Unknown ability');
         const inventory = actor.derived?.inventory ?? prepareInventory(actor.items ?? []);
         const drModifier = ['strength', 'agility'].includes(key) ? carryingPenalty(actor) + (key === 'agility' ? inventory.agilityModifier : 0) : 0;
-        return simple('ability', `1d20${signed(abilityValue(actor, key))}`, `Test ${key}`, { statKey: key, drModifier });
+        return simple('ability', `1d20${signed(abilityValue(actor, key))}`, `Test ${key.charAt(0).toUpperCase() + key.slice(1)}`, { statKey: key, drModifier });
     }
     if (type === 'initiative') {
         if (!['individual', 'party'].includes(key)) throw new SdkError('validation', 'Unknown initiative mode');

@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Restore shield equipment controls and ammunition browse/custom creation.
+- Refresh and retire Violence details by owned identity; keep passive feat details without a no-op Use action.
+- Preserve ability names through shared plans into chat cards.
 
 - Randomize the reviewed Pale One starting feat sources; resolve the approved Hegelian Owl companion reference.
 - Preserve native token sight defaults during character and companion generation.

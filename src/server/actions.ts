@@ -3,7 +3,7 @@ import { abilityValue, resolveFormula, signed, withManualDie, combatDR } from '.
 
 // Pure plans are shared with the UI; only this request-bound executor performs effects.
 export async function executeAction(client: any, actor: any, plan: any, options: any, data: any, card: (actor: any, results: any) => string) {
-    const results: any = { type: plan.type, subType: plan.subType, item: actor.items?.find((i: any) => (i._id ?? i.id) === plan.itemId), rolls: [], outcomes: [], options: { ...options } };
+    const results: any = { type: plan.type, subType: plan.subType, statKey: plan.statKey, label: plan.label, item: actor.items?.find((i: any) => (i._id ?? i.id) === plan.itemId), rolls: [], outcomes: [], options: { ...options } };
     const recorded: string[] = [];
     const id = actor._id ?? actor.id;
     const speaker = { actor: id, alias: actor.name };

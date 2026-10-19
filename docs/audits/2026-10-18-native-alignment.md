@@ -1,16 +1,25 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; MB-R01/02 corrected in isolation; MB-R03–05 open. Prior native qualification retained.
+**Status:** Active; MB-R01–05 corrected with isolated execution; independent closeout and fresh native reruns pending. Prior native qualification retained.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 
 ## Review correction progress
 
-MB-R01/02 pass maintained compiled-browser and installed Core0.19.3 cases:
-shield cycle/exclusivity/reduction and Observer denial, ammo browse/custom types,
-exact native template provenance, owned selection/depletion/replenishment and
-denied/empty catalogs. See [correction evidence](evidence/2026-10-19-review-corrections.md).
-Fresh native acceptance of these paths and G9 independent review remain pending.
+MB-R01–05 pass maintained compiled-browser and installed Core0.19.3 cases.
+
+| Finding | Current disposition | Executed evidence |
+| --- | --- | --- |
+| MB-R01 | Corrected, fresh native rerun pending | Shield cycle, exclusivity, reduction, source preservation and Observer denial in rendered controls and compiled inventory route. |
+| MB-R02 | Corrected, fresh native rerun pending | Ammo browse/custom types, exact native source provenance, owned selection/depletion/replenishment, one representation, denied/empty catalog. |
+| MB-R03 | Corrected, fresh native rerun pending | Open Violence description/damage refresh; deletion, unequip, Actor and authority retirement at mobile width, keyboard/focus cleanup; Equipment/Special refresh control. |
+| MB-R04 | Corrected, fresh native rerun pending | Passive details without executable Use; shared formula plan, reviewed macro before invalid formula, unsupported native macro explicit error, zero invented writes. |
+| MB-R05 | Corrected, fresh native rerun pending | Actual renderer and compiled cards name all four abilities with equal formulas, preserved modifiers, four visibility modes and no writes. |
+
+The [correction evidence](evidence/2026-10-19-review-corrections.md) distinguishes
+failing-before receipts from final-archive execution. Earlier native acceptance
+retains its original artifacts; the corrections do not close G9 without
+independent review. No new native authorization or execution is inferred.
 
 ## Conclusion and evidence boundary
 
@@ -18,7 +27,8 @@ The [October 19 independent review](evidence/2026-10-19-independent-review.md)
 at `f48332e` reran all maintained source, installed and browser checks successfully,
 then reproduced five residual gaps: shield equip controls, ammunition addition,
 stale Violence details, passive-feat no-op actions and unnamed ability chat cards.
-These module corrections hold G9/closeout; no new Core dependency was established.
+These findings required module corrections before closeout; the executed
+corrections above still await independent G9 review. No new Core dependency was established.
 The new findings qualify the earlier broad “Corrected” dispositions below without
 invalidating their executed cases. The review made no native connection or source
 change and does not claim another supported runtime pair.

@@ -271,10 +271,9 @@ export class MorkBorgAdapter extends BaseSystemAdapter {
         }
 
         if (type === 'ability') {
-            const statName = subType?.charAt(0).toUpperCase() + subType?.slice(1) || '';
             const roll = rolls[0];
             return ChatCards.result({
-                cardTitle: `Test ${statName}`,
+                cardTitle: results.label,
                 items: item ? [item] : [],
                 drModifiers: results.drModifiers,
                 rollResults: [{

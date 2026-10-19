@@ -4,6 +4,7 @@ import { Sparkles, FlaskConical, Pencil, Trash2, ShieldPlus, ChevronRight, Info 
 import ItemModal from './components/ItemModal';
 import ItemInfoModal from './components/ItemInfoModal';
 import MorkBorgAddItemModal from './components/MorkBorgAddItemModal';
+import type { MorkBorgRollData } from '../logic/types';
 
 interface SpecialTabProps {
     actor: any;
@@ -11,9 +12,10 @@ interface SpecialTabProps {
     onUpdate: (path: string, value: any) => void;
     onDeleteItem: (itemId: string) => void;
     onCreateItem?: (itemData: any) => void;
+    getFeatPlan: (itemId: string) => MorkBorgRollData | null;
 }
 
-export default function SpecialTab({ actor, onRoll, onUpdate, onDeleteItem, onCreateItem }: SpecialTabProps) {
+export default function SpecialTab({ actor, onRoll, onUpdate, onDeleteItem, onCreateItem, getFeatPlan }: SpecialTabProps) {
     const [itemModalConfig, setItemModalConfig] = useState<{ isOpen: boolean; item: any }>({
         isOpen: false,
         item: null
@@ -44,8 +46,20 @@ export default function SpecialTab({ actor, onRoll, onUpdate, onDeleteItem, onCr
     };
 
     const renderItemRow = (item: any, index: number, buttonLabel: string, actionType: 'feat' | 'item' = 'item') => {
+        let available = true;
+        let unavailable = '';
+        if (actionType === 'feat') {
+            try {
+                const plan = getFeatPlan(item._id || item.id);
+                available = plan !== null;
+                if (plan) buttonLabel = plan.label;
+            } catch (error) {
+                available = false;
+                unavailable = error instanceof Error ? error.message : 'Feat action unavailable';
+            }
+        }
         const handleAction = () => actionType === 'feat'
-            ? onRoll('feat', item.id)
+            ? onRoll('feat', item._id || item.id)
             : onRoll('item', item.uuid || item.id);
 
         return (
@@ -71,12 +85,13 @@ export default function SpecialTab({ actor, onRoll, onUpdate, onDeleteItem, onCr
                 </div>
 
                 <div className="flex items-center gap-2 mt-4 lg:mt-0 lg:ml-auto flex-wrap justify-end">
-                    <button
+                    {available && <button
                         onClick={handleAction}
                         className="px-6 py-2 bg-pink-900 hover:bg-purple-600 text-purple-100 font-morkborg text-lg border border-purple-500/30 transition-all uppercase tracking-widest cursor-pointer"
                     >
                         {buttonLabel}
-                    </button>
+                    </button>}
+                    {unavailable && <span role="status" className="text-purple-300">{unavailable}</span>}
 
                     <button
                         onClick={() => openItemModal(item)}

@@ -398,8 +398,8 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                             {activeTab === 'background' && <BackgroundTab actor={sheetActor} onUpdate={onUpdate} />}
                             {activeTab === 'equipment' && <EquipmentTab key={`${actor.id}:${isOwner}`} actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem}
                             onInventoryAction={onInventoryAction} onCreateItem={onCreateItem} />}
-                            {activeTab === 'violence' && <ViolenceTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} />}
-                            {activeTab === 'special' && <SpecialTab key={`${actor.id}:${isOwner}`} actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem} onCreateItem={onCreateItem} />}
+                            {activeTab === 'violence' && <ViolenceTab key={`${actor.id}:${isOwner}`} actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} />}
+                            {activeTab === 'special' && <SpecialTab key={`${actor.id}:${isOwner}`} actor={sheetActor} getFeatPlan={id => getRollData(actor, 'feat', id)} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem} onCreateItem={onCreateItem} />}
                         </div>
                     </fieldset></main>
 

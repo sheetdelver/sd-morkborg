@@ -67,3 +67,17 @@ The installed Core harness additionally exercises shields and exact copied-nativ
 ammo through the real request runtime, including permission, source preservation,
 depletion and replenishment. Browser fixtures render the archive UI; their
 in-memory Item callbacks are not a native backend acceptance claim.
+
+Action/lifecycle correction cases use the same runner:
+
+```sh
+node tests/browser/run.mjs --core /path/to/Core --archive /tmp/morkborg-0.8.3.tgz --test-script action-regressions.mjs
+```
+
+The seven cases cover current Violence details and retirement on Item/Actor/
+authority changes, mobile keyboard cleanup, Equipment/Special refresh controls,
+and passive/formula/macro presentation. `ability-cards.test.ts` invokes the real
+executor and chat renderer for all four abilities in all four visibility modes;
+`feat-actions.test.ts` verifies shared capability and macro precedence/denial.
+Installed Core cases additionally verify actual persisted chat content/recipients
+and exact copied-native passive/formula/reviewed/unsupported macro execution.

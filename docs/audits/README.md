@@ -15,9 +15,10 @@ same selected pair. Source policies remain provisional; other runtime pairs rema
 
 The [independent implementation review](evidence/2026-10-19-independent-review.md)
 at `f48332e` retains that evidence and adds **MB-R01–05** as the current corrective
-queue. All maintained checks pass, but fresh installed probes expose missing
-shield/ammo controls, stale Violence details and passive action no-ops; actual
-chat rendering also loses ability names. G9 and release closeout remain open.
+queue. The [focused corrections](evidence/2026-10-19-review-corrections.md) now
+verify shield/ammo controls, current Violence details, passive capabilities and
+named ability chat cards through maintained source/compiled/keyboard cases.
+G9 independent review and fresh native reruns of corrected paths remain open.
 
 ## Predecessor evidence
 
