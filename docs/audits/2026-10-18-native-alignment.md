@@ -1,19 +1,19 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; selected native runtime qualified, pinned identity decisions open.
+**Status:** Active; selected native runtime qualified with reviewed provisional content policies.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 
 ## Conclusion and evidence boundary
 
 Qualification and cleanup for checkpoint `006019b` are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
 Module corrections are implemented and executed on native6.0.1/Foundry14.367 with
-released Core0.19.3, including production loading. MB-N09 remains qualified for the
-user-pinned Pale/Owl identities; this audit is not archived. Earlier ledgers describe
+released Core0.19.3, including production loading. MB-N09's later reviewed content
+policies have their own [follow-up qualification](evidence/2026-10-19-content-decisions.md); this audit is not archived. Earlier ledgers describe
 their historical checkpoints and do not supersede the final dispositions below.
 The later [Brevel token-default correction](evidence/2026-10-19-brevel-generation.md)
-has source/installed regression evidence; fresh native creation of that amended
-payload has not been rerun.
+has source/installed regression evidence and is now exercised by the native
+reviewed-content follow-up. Its previous pending-native statements remain historical.
 
 The audited baseline built against Core 0.19.3 but had substantive native parity
 defects. Current implementation dispositions and executed qualifications are recorded
@@ -610,7 +610,7 @@ is inferred. Before and after evidence are identified separately in that ledger.
 | MB-N06 | Advancement equality/bounds/current HP; removed extra debris inventory; action-parity | Corrected; actual equality/bounds/current HP and independent native trials verified (MB-A04) |
 | MB-N07 | Presence/remaining powers, no invented armor gate or HP write, exact catastrophe root, separate resource actions; native/actions/table tests | Corrected; actual powers/resources/catastrophe and no added HP effects verified (MB-A05) |
 | MB-N08 | Removed private evaluator/name resolution; SDK exact multiple/nested/Actor draws, valid-domain exhaustion, hydrated source identity; table/content suites and actual production generation | Corrected; actual multiple/nested tables and caller-bound concealed dependency verified (MB-A05/06/08) |
-| MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | Qualified: copied-native11 plans/14 companions plus actual complete/partial/create/cancel/custom cases; Pale/stale Forlorn identities remain pinned and unavailable (MB-A06) |
+| MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | Corrected with reviewed content policies: 12 installed native class plans; both actual Pale source choices and complete mapped Owl created/verified/cleaned on selected native pair. Prior complete/partial/create/cancel/custom evidence retained (MB-A06). |
 | MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected; all four native changes and identity/value/absence restoration verified; additionalAbilities client scope retained (MB-A02) |
 | MB-N11 | Native numeric handedness, max-tier controls, missing damage unavailable; Chrome Item edit, source tests | Read normalization selected; original disposable Actor10 Items has no legacy1h/2h; other historical worlds unknown. No repair/catalog; MB-A10 N/A |
 | MB-N12 | Owned feat capability/precedence, reviewed macro UUID+digest; SDK two draws/one dose result, no invented grants | Corrected; actual reviewed two draws/one doses roll, passive capability and no extra grant verified (MB-A05) |
@@ -739,3 +739,27 @@ Meaningful source and actual released-Core installed-route regressions fail befo
 and pass after. MB-N09 remains qualified: previous native acceptance applies to its
 recorded package; fresh native creation of the amended payload has not been rerun.
 Pinned source identities remain open, and the audit is not closed or archived.
+
+### MB-N09 reviewed content decisions — October 19
+
+The user approved temporary random choice between the two exact identical Intuitive
+Power documents, and explicitly approved mapping the broken Forlorn Philosopher
+row to existing Hegelian Owl `HLu7lgwoNPlhfx3W`. This supersedes earlier unavailable
+dispositions, without claiming an upstream canonical identity or modifying native
+compendia. The [decision evidence](evidence/2026-10-19-content-decisions.md) records
+both source regressions failing before and passing after, all12 copied-native class
+plans through the installed package, complete Owl data, chosen source provenance,
+creation without redrawing, and rejection if the unselected feat source changes.
+Generic name ambiguities still fail. Native follow-up is recorded separately from
+the prior qualified matrix, preserving the identity of each tested artifact.
+
+Follow-up executed on production-loaded Core0.19.3 / Foundry14.367 / native6.0.1:
+both Pale sources observed in3 previews, Owl in1, all3 reviewed plans persisted
+with5 total complete Actors. Native character sight remains false; Owl explicit
+sight/range and Claw/Bite `1d4` remain native. Desktop Pale and360px Owl factory
+previews/cancellation verify actual pointer/keyboard/focus behavior; the mobile
+Owl was observed on the fourth real preview, without replacing RNG. All5 fixtures
+are absent; both existing Actor sources,14 full world Setting sources,2 message
+IDs and4 compendium sources are unchanged. Installed files match the tested archive.
+All owned services stopped, native users0. MB-N09 is qualified for these reviewed
+policies; source canonicality remains provisional, with no other-runtime claim.

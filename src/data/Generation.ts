@@ -62,7 +62,7 @@ export class CharacterGeneration {
         const fields = ['startingSilver', 'omenDie', 'startingHitPoints', 'startingStrength', 'startingAgility', 'startingPresence', 'startingToughness'];
         fields.forEach(key => formula(s[key], key));
         for (const key of ['weaponTableDie', 'armorTableDie']) if (typeof s[key] !== 'string') throw new SdkError('not_ready', `Class ${key} is unavailable`);
-        const startingItems = await Promise.all(lines(s.startingItems).map(l => this.content.legacy('Item', l.reference)));
+        const startingItems = await Promise.all(lines(s.startingItems).map(l => this.content.legacy('Item', l.reference, classUuid)));
         const startingRolls = [];
         for (const l of lines(s.startingRolls, true)) {
             const table = await this.content.legacy('RollTable', l.reference);
@@ -139,6 +139,6 @@ export class CharacterGeneration {
             companion.prototypeToken = { actorLink: friendly, disposition: companion.type === 'creature' ? -1 : friendly ? 1 : 0, ...companion.prototypeToken };
         }
         return { actor, companions, classUuid, className: clazz.name, traits, notes,
-            provenance: { nativeRevision: native.revision, dependencies: Object.fromEntries(this.content.dependencies) } };
+            provenance: { nativeRevision: native.revision, dependencies: Object.fromEntries(this.content.dependencies), decisions: structuredClone(this.content.decisions) } };
     }
 }

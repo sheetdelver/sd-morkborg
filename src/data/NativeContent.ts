@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { isDeepStrictEqual } from 'node:util';
 import { SdkError } from '@sheet-delver/sdk';
 import type { ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { native } from './native';
@@ -7,6 +8,11 @@ export interface NativeEntry {
     kind: 'text' | 'Item' | 'Actor'; name: string; description: string;
     uuid?: string; document?: any; tableUuid: string; rowId: string; roll: number;
 }
+interface ContentDecision {
+    policy: 'adr-0001-intuitive-power' | 'adr-0001-forlorn-owl';
+    source: string; target: string; classUuid?: string; tableUuid?: string; rowId?: string;
+}
+const canonicalUuid = (value: string) => value.replace(/\.(Item|Actor|RollTable|Macro)\.([^.]+)$/, '.$2');
 export const contentHash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 export function documentUuid(document: any, type: string): string {
     if (document.uuid) return document.uuid;
@@ -26,6 +32,7 @@ function projectIdentity(source: any, uuid: string) {
 /** Request-local orchestration. The SDK owns dice, pack privacy and exact reads. */
 export class NativeContent {
     readonly dependencies = new Map<string, string>();
+    readonly decisions: ContentDecision[] = [];
     private evaluated: string[] = [];
     private usedRows = new Map<string, Set<string>>();
     constructor(readonly runtime: ModuleRequestRuntime, private guard: () => Promise<void> = async () => {}) {}
@@ -41,12 +48,33 @@ export class NativeContent {
         this.dependencies.set(uuid, hash);
         return projection;
     }
-    async legacy(type: 'Item' | 'RollTable' | 'Macro', reference: string): Promise<any> {
+    private assertReviewedRuntime() {
+        const identity = this.runtime.world?.snapshot().identity;
+        if (identity?.systemId !== 'morkborg' || identity.foundryGeneration !== 14 || !['6.0.0', '6.0.1'].includes(identity.systemVersion)) throw new SdkError('not_ready', 'Native content decision is not verified for this runtime');
+    }
+    async legacy(type: 'Item' | 'RollTable' | 'Macro', reference: string, classUuid?: string): Promise<any> {
         if (/^(Compendium\.|Item\.|RollTable\.|Macro\.)/.test(reference)) return this.document(reference);
         const parts = reference.split(',').map(s => s.trim());
         if (parts.length !== 2 || !parts.every(Boolean)) throw new SdkError('validation', 'A pack-qualified content reference is required');
         const [pack, name] = parts;
         if (this.runtime.access && !this.runtime.access.canReadPack(pack)) throw new SdkError('permission_denied', 'Required pack is not visible');
+        const policy = native.intuitivePower;
+        if (type === 'Item' && classUuid && canonicalUuid(classUuid) === canonicalUuid(policy.classUuid) && parts.join(',') === policy.reference) {
+            this.assertReviewedRuntime();
+            const alternatives = await Promise.all(policy.options.map(uuid => this.document(uuid)));
+            const authored = (document: any) => {
+                const copy = structuredClone(document);
+                for (const key of ['_id', 'id', 'uuid', 'pack', '_stats', 'folder', 'sort', 'ownership']) delete copy[key];
+                return copy;
+            };
+            if (alternatives.some(d => d.type !== 'feat' || d.name !== 'Intuitive Power') || !isDeepStrictEqual(authored(alternatives[0]), authored(alternatives[1]))) throw new SdkError('conflict', 'Reviewed Intuitive Power sources no longer match');
+            // This selector is an explicit module policy, not a native rule die.
+            const choice = await this.total('1d2', 'Intuitive Power source');
+            if (!Number.isInteger(choice) || choice < 1 || choice > alternatives.length) throw new SdkError('not_ready', 'Invalid Intuitive Power source choice');
+            const selected = alternatives[choice - 1];
+            this.decisions.push({ policy: 'adr-0001-intuitive-power', source: policy.reference, target: selected.uuid, classUuid });
+            return selected;
+        }
         const matches = (await this.runtime.compendium.findAll(type, { name })).filter(d => d.pack === pack && d.name === name);
         if (!matches.length) throw new SdkError('not_ready', `Required ${type} is unavailable in ${pack}`);
         if (matches.length !== 1) throw new SdkError('conflict', `Ambiguous ${type} reference in ${pack}`);
@@ -110,7 +138,9 @@ export class NativeContent {
             }
             break;
         }
-        if (uuid === native.brokenForlornOwl.tableUuid && matched.some(row => row._id === native.brokenForlornOwl.rowId && row.documentUuid === native.brokenForlornOwl.documentUuid)) throw new SdkError('not_ready', 'Native Forlorn Philosopher result references a missing Actor identity. Review the table reference before generation; no substitute was selected.');
+        const owlPolicy = native.brokenForlornOwl;
+        const mapsOwl = (row: any) => canonicalUuid(uuid) === canonicalUuid(owlPolicy.tableUuid) && row._id === owlPolicy.rowId && row.documentUuid === owlPolicy.documentUuid;
+        if (matched.some(mapsOwl)) this.assertReviewedRuntime();
         await this.guard();
         const drawn = await this.runtime.tables.draw(uuid, { rollOverride: total });
         await this.guard();
@@ -121,9 +151,14 @@ export class NativeContent {
             const rowId = String(row._id ?? index);
             if (table.replacement === false) used.add(rowId);
             const legacy = row.documentCollection && row.documentId ? `${row.documentCollection.startsWith('Compendium.') || ['Item', 'Actor', 'RollTable', 'Macro'].includes(row.documentCollection) ? '' : 'Compendium.'}${row.documentCollection}.${row.documentId}` : undefined;
-            const ref = row.documentUuid ?? legacy;
+            const sourceRef = row.documentUuid ?? legacy;
+            const ref = mapsOwl(row) ? owlPolicy.targetUuid : sourceRef;
             if (ref) {
                 const doc = await this.document(ref);
+                if (mapsOwl(row)) {
+                    if (doc.type !== 'follower') throw new SdkError('not_ready', 'Reviewed Hegelian Owl Actor is not a follower');
+                    this.decisions.push({ policy: 'adr-0001-forlorn-owl', source: owlPolicy.documentUuid, target: ref, tableUuid: uuid, rowId });
+                }
                 if (Array.isArray(doc.results) && typeof doc.formula === 'string') output.push(...await this.draw(ref, { path: [...path, uuid] }));
                 else {
                     const kind = ['character', 'creature', 'follower', 'container', 'misery-tracker'].includes(doc.type) && (doc.system?.hp || doc.items || ref.includes('.Actor.')) || /^(Actor\.)/.test(ref) || ref.includes('.Actor.') ? 'Actor' : 'Item';

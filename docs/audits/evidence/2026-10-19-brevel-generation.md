@@ -1,5 +1,9 @@
 # Brevel: operator-supplied native generation evidence
 
+Later [reviewed-content acceptance](2026-10-19-content-decisions.md) exercises the
+token correction in actual native creation and records the operator-approved
+Pale/Owl policies. Pending statements below describe checkpoint `20fda1a`.
+
 The operator supplied a generated Actor export, `EgsapFTnEhKsQlcj` (Brevel), in
 this task on October 19, 2026. Its statistics identify Foundry 14.367 and native
 Mörk Borg 6.0.1. This is user-supplied output, not a new module execution or an

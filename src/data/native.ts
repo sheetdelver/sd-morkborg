@@ -3,9 +3,12 @@ const table = (id: string) => `Compendium.morkborg.mork-borg-tables.RollTable.${
 const item = (id: string) => `Compendium.morkborg.mork-borg-items.Item.${id}`;
 export const native = {
     revision: 'd850c094a9452d752307221f42245a73b66bdfbb',
-    // Pinned upstream result has both a nonexistent pack and stale Actor ID.
-    // No name-only substitution to the differently identified Hegelian Owl.
-    brokenForlornOwl: { tableUuid: table('DfILdvixuR0LyIcT'), rowId: 'RaRYtTXoANahK7PP', documentUuid: 'Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf' },
+    // ADR-0001 operator decision: temporary equal choice between these exact
+    // source IDs, only for Pale One's declared starting-item reference.
+    intuitivePower: { classUuid: item('wLJV0VJT5I234obT'), reference: 'morkborg.mork-borg-items,Intuitive Power', options: [item('BtoSeh36zY8IqOQJ'), item('YcKA0JHLezBYt3fz')] },
+    // ADR-0001 operator-approved override for this exact broken upstream row.
+    // This does not repair the source table or introduce name-based Actor lookup.
+    brokenForlornOwl: { tableUuid: table('DfILdvixuR0LyIcT'), rowId: 'RaRYtTXoANahK7PP', documentUuid: 'Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf', targetUuid: 'Compendium.morkborg.mork-borg-actors.Actor.HLu7lgwoNPlhfx3W' },
     classless: item('p693pMIVYXMSRl8S'),
     food: item('4kuVcY67MIDA6Imc'), water: item('Zrs4ubq4fDBNPmnN'),
     names: table('tBHfdSGFvfmrLreR'),

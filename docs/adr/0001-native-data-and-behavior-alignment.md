@@ -1,6 +1,6 @@
 # ADR-0001: Native data, behavior and Core contract alignment
 
-**Status:** In progress — selected native runtime qualified; pinned data decisions open
+**Status:** In progress — selected runtime qualified; provisional content policies recorded
 **Date:** October 18, 2026  
 **Owner:** SheetDelver Mörk Borg module  
 **Evidence:** [Native alignment audit](../audits/2026-10-18-native-alignment.md)
@@ -400,11 +400,11 @@ Native Setting audit timestamps/authorship retain the legitimate test history.
 | G2 | Qualified for selected native pair | `540d3bc`; immutable inventory/rules; actual carrying/ammo/automation/class changes and restoration, client-only additionalAbilities verified. |
 | G3 | Qualified with explicit RAW deviations | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. |
 | G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
-| G5 | Qualified with pinned unavailable branches; token follow-up | `21e7b18`; full selected plans/companions, native creation/cancel/custom catalogs, actual partial recovery/no replay. Pale and stale Forlorn branch remain unavailable. Brevel token-default follow-up has source/installed regressions; amended native creation not rerun. |
+| G5 | Qualified with operator-reviewed content policies | Prior full-plan/recovery qualification at `21e7b18` and `006019b`; `20fda1a` token defaults. Current native execution observes both Pale choices, creates both plus the complete mapped Owl, and verifies source preservation/cleanup. |
 | G6 | Qualified | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
 | G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
 | G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
-| G9 | Review/cleanup recorded; ADR remains open | Findings reconciled below and in audit. Pale/Owl canonical identity decisions remain pinned; no unsupported12-class or other-runtime claim, no audit archive. |
+| G9 | Review/cleanup recorded; ADR remains open | Operator-approved provisional content policies replace the earlier unavailable choices. Follow-up native qualification/cleanup is recorded separately from the previous matrix; no absolute upstream identity or other-runtime claim. Audit remains active. |
 
 ### Implementation baseline (2026-10-18)
 
@@ -624,3 +624,47 @@ the old forced setting and verify its removal. This is a post-qualification chan
 the previous native matrix remains evidence for its recorded artifact. Fresh native
 creation with the amended payload has not been rerun. No world writes or new native
 acceptance are claimed by the operator-export comparison.
+
+### G5 reviewed content decisions — October 19
+
+The operator subsequently authorized random choice between the two identical
+Intuitive Power source documents, pending evidence for an absolute canonical ID,
+and approved mapping the exact broken Forlorn Philosopher row to existing Hegelian
+Owl Actor `HLu7lgwoNPlhfx3W`. These decisions supersede the earlier pinned-unavailable
+dispositions; they do not establish an upstream canonical identity.
+
+Pale One's exact class UUID and legacy starting reference now select only between
+`BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz`. Both caller-visible sources are fetched
+and their authored data compared before SDK `1d2` chooses one. The die is an
+explicit module selector, not a claimed native formula. Both source hashes remain
+creation dependencies, and the chosen UUID is recorded without redrawing on create.
+Other duplicate-name references remain conflicts. If these sources diverge or
+become missing/denied, generation fails instead of silently narrowing the choice.
+
+For table `DfILdvixuR0LyIcT` / row `RaRYtTXoANahK7PP`, only the exact stale
+`Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf` reference maps to
+`Compendium.morkborg.mork-borg-actors.Actor.HLu7lgwoNPlhfx3W`. Public SDK table
+selection is retained; exact target hydration, caller permissions, source/context
+checks and complete companion validation apply. Candidates record the original
+reference, resolved UUID and dependencies. Source documents are never repaired or
+mutated. Both policies are bounded to native6.0.0/6.0.1 on Foundry14.
+
+The [decision evidence](../audits/evidence/2026-10-19-content-decisions.md) separates
+meaningful failing-before regressions, passing-after isolated execution and actual
+native acceptance. The provisional policies remain recorded without asserting an
+absolute upstream canonical identity.
+
+Follow-up native acceptance is now recorded for archive
+`9927b43a3e882dcac3bd3379d1d5ab4802e1c68ff290dd2ed5920208b00f631f` on the same
+Foundry14.367/native6.0.1 pair with isolated production Core0.19.3. Both actual
+source choices were observed in3 Pale previews and persisted in separate characters;
+the actual Owl outcome was observed in1 Forlorn preview and created with complete
+native HP/Claw-Bite/token data. New character sight defaults false, closing the
+`20fda1a` token acceptance gap. Actual desktop Pale and360px Owl factory interactions
+verify previews, Tab containment, Escape and trigger return, with no create requests
+from canceled confirmations. All5 fixtures were deleted; both pre-existing Actors
+(including Brevel),14 full Setting sources,2 message IDs and4 checked compendium
+sources compare unchanged. Services stopped and native users0. The
+[metadata receipt](../audits/evidence/2026-10-19-content-decisions.json) records
+before/after, package identity and cleanup; the accepted source policies remain
+provisional rather than claiming an absolute canonical upstream identity.

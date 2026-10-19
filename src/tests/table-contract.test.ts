@@ -65,9 +65,3 @@ source = { ...source, formula: '1d2', replacement: true, results: [
 const diceBeforeExhaustion = formulas.length;
 await assert.rejects(() => new NativeContent(runtime).draw(uuid, { uniqueTotals: new Set([1, 2]) }), /exhausted/);
 assert.equal(formulas.length, diceBeforeExhaustion, 'attainable domain exhausted before any retry');
-const brokenUuid = 'Compendium.morkborg.mork-borg-tables.RollTable.DfILdvixuR0LyIcT';
-const brokenSource = { _id: 'DfILdvixuR0LyIcT', name: 'Forlorn Philosopher Items', formula: '1d6', replacement: true,
-    results: [{ _id: 'RaRYtTXoANahK7PP', type: 'document', range: [2, 2], documentUuid: 'Compendium.morkborg.morkborg-actors.6QMkD6jeNJ5ovUmf' }] };
-const broken = new NativeContent({ ...runtime, documents: { async fetchByUuid() { return brokenSource; } },
-    tables: { async draw() { throw new Error('Known broken identity must be rejected before SDK traversal'); } } });
-await assert.rejects(() => broken.draw(brokenUuid, { override: 2 }), (e: any) => e.code === 'not_ready' && /missing Actor identity/.test(e.message));

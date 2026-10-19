@@ -172,7 +172,7 @@ formula and SDK tables select with a numeric override. Required formula absence,
 uncovered totals and missing/denied documents fail explicitly. Every matched row
 is retained, including text, nested tables and Actor results. Canonical references
 win over names; legacy CSV resolution requires exactly one match in its declared
-pack. Cycles and exhausted result sets are errors. Non-replacement selection is
+pack except the exact reviewed Pale One policy below. Cycles and exhausted result sets are errors. Non-replacement selection is
 request-local only; no native document depletion is promised. Class unique-total
 policy supports proven single-die table formulas; unsupported uniqueness domains
 fail rather than inventing a distribution or returning incomplete success.
@@ -207,13 +207,23 @@ acknowledgement/persistence gap. Recovery requires inspection of the actual worl
 The factory retires catalog/previews/pending responses on public context, access,
 connection and world signals, including ownership-only notifications. Errors have
 retry, and creation uses the server candidate ID rather than client Actor data.
-Native lookup ambiguity remains explicit: Pale One's Intuitive Power legacy CSV
-matches two IDs in the same pack; no identity was chosen by name.
-Forlorn Philosopher's selected Owl row references a missing pack/Actor identity.
-Readable historical tags retain the defect; the same-name existing Owl does not
-justify replacement. This branch is unavailable until canonical source evidence
-or an explicit reviewed data decision resolves it. Companion templates must have
-fully hydrated embedded Items; ID-only payloads cannot become successful plans.
+ADR-0001 records two operator-approved content exceptions for native6.0.0/6.0.1
+on Foundry14. Pale One's exact class/starting CSV reference selects between
+`BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz` with SDK `1d2`. This is a provisional
+module selector, not a native rule die or generic same-name fallback. Both exact
+sources must be readable and have identical authored data (excluding document
+identity, audit metadata, folder/sort and ownership). Both are creation dependencies;
+the selected UUID is retained in the candidate and owned Item provenance, without
+rerolling at creation. Diverged, missing or denied alternatives fail explicitly.
+
+Forlorn Philosopher table `DfILdvixuR0LyIcT`, row `RaRYtTXoANahK7PP`, maps only
+its exact stale reference to Actor `HLu7lgwoNPlhfx3W` in `morkborg.mork-borg-actors`.
+SDK table selection and caller-bound target reads still apply. The original table
+and Actor templates remain unchanged; the candidate records the reviewed mapping,
+original table dependency and exact target dependency. This is an explicit module
+override, not an upstream canonical-identity claim or persisted migration.
+Other ambiguous/missing references retain their existing errors. Companion templates
+must have fully hydrated embedded Items; ID-only payloads cannot become successful plans.
 
 ### Presentation and mounted catalogs
 
