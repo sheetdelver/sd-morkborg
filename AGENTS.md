@@ -42,6 +42,16 @@ second world cache/lifecycle or treat module-prepared data as native browser dat
 - Follow this module's CI/release workflows and the host's documented packaging
   contract. Release publication is a separate authorized operation.
 
+## Standalone release tooling
+
+Use the module-local `npm run release:tag -- [version] --dry-run` and
+`npm run test:release`; see [release instructions](docs/RELEASING.md).
+`info.json` remains the only version authority. The npm manifest has no version
+or dependencies. Tag pushes validate; a separately confirmed workflow dispatch
+publishes only after exact-tag validation. Keep the helper, tests and workflow
+changes together. Do not run a real release or push merely to verify tooling;
+use temporary Git fixtures. No Core checkout is needed to run the helper.
+
 ## Data and verification discipline
 
 - Native source fields, prepared results and caller-visible projections are

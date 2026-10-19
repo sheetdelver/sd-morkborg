@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "release:tag": "node scripts/release.mjs",
+    "test:release": "node --test scripts/release.test.mjs"
+  }
+}

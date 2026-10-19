@@ -26,3 +26,9 @@ have passed and which installed/native acceptance remains outstanding.
 ## Third-party license
 
 Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This product is an independent production by SheetDelver and is not affiliated with Ockult Örtmästare Games or Stockholm Kartell. It is published under the [MÖRK BORG THIRD PARTY LICENSE](https://morkborg.com/license/).
+
+## Release tooling
+
+Use this repository’s independent `npm run release:tag` command. It prepares the
+numbered changelog release, pushes its tag for validation, and asks separately
+before publication. See [module release instructions](docs/RELEASING.md).

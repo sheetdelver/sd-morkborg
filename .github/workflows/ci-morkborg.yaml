@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
     paths:
       - 'src/**'
       - 'module/**'
@@ -13,6 +15,7 @@ on:
       - '.github/workflows/**'
       - 'info.json'
       - 'package.json'
+      - 'CHANGELOG.md'
   pull_request:
     branches:
       - main
@@ -25,6 +28,7 @@ on:
       - '.github/workflows/**'
       - 'info.json'
       - 'package.json'
+      - 'CHANGELOG.md'
   workflow_dispatch:
 
 permissions:
@@ -59,6 +63,9 @@ jobs:
           node-version: '22.x'
           cache: npm
           cache-dependency-path: sheet-delver-core/package-lock.json
+
+      - name: Test standalone release helper
+        run: node --test ".module-ci-data/local/modules/morkborg/scripts/release.test.mjs"
 
       - name: Install reviewed Sheet Delver toolchain
         run: npm ci

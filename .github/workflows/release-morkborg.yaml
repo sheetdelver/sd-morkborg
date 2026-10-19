@@ -1,15 +1,37 @@
 name: Release Module
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: module-release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Check out the requested tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22.x'
+
+      - name: Require passing validation for this exact tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/release.mjs --verify-tag-ci
+
   release:
+    needs: verify
     permissions:
       contents: write
     uses: sheetdelver/sheetdelver/.github/workflows/module-release.yml@v0.19.3
