@@ -3,7 +3,7 @@ import { useSDK, useSDKComponents } from '@sheet-delver/sdk/react';
 import { morkborgTheme } from '../themes/morkborg';
 
 import { buildModuleAssetUrl } from '@sheet-delver/sdk';
-import { randomRotation } from './utils';
+import MorkBorgRollFrame from './MorkBorgRollFrame';
 
 
 
@@ -19,16 +19,6 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
     const { resolveImageUrl } = useSDK();
     const { RichTextEditor } = useSDKComponents();
     const [activeTab, setActiveTab] = useState<'description' | 'details'>('description');
-
-    React.useEffect(() => {
-        const onKey = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onClose();
-        };
-        window.addEventListener('keydown', onKey);
-        return () => window.removeEventListener('keydown', onKey);
-    }, [onClose]);
-
-    const memoizedRotation = React.useMemo(() => randomRotation(), []);
 
     if (!isOpen || !item) return null;
 
@@ -283,95 +273,11 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
         );
     };
 
-    return (
-        <div
-            className="fixed inset-0 z-[100] overflow-y-auto animate-in fade-in duration-300"
-            onClick={onClose}
-        >
-            <div className="flex min-h-full items-center justify-center p-4">
-                <div
-                    className="fixed inset-0 bg-black/90 backdrop-blur-sm"
-                    aria-hidden="true"
-                />
-                <div
-                    className={`relative w-full max-w-2xl bg-black border-[4px] border-black shadow-[15px_15px_0_0_rgba(255,20,147,0.2)] overflow-hidden transform ${memoizedRotation} flex flex-col max-h-[90vh] my-8`}
-                    onClick={e => e.stopPropagation()}
-                >
-                    {/* Grunge Texture Overlay */}
-                    <div
-                        className="absolute inset-0 opacity-40 pointer-events-none mix-blend-overlay"
-                        style={{ backgroundImage: `url(${buildModuleAssetUrl('morkborg', 'grunge.png')})`, backgroundSize: 'cover' }}
-                    />
-
-                    <button
-                        onClick={onClose}
-                        className="absolute top-2 right-4 text-3xl text-neutral-500 hover:text-white transition-colors z-20 font-bold"
-                    >
-                        ×
-                    </button>
-
-                    {/* Header */}
-                    <div className="p-4 sm:p-6 flex flex-col sm:flex-row gap-4 sm:gap-6 items-center border-b-2 border-pink-500/50 bg-neutral-900 relative z-10">
-                        <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0">
-                            <img src={resolveImageUrl(item.img || 'icons/svg/item-bag.svg')} alt={item.name} className="w-full h-full object-contain" />
-                        </div>
-                        <div className="flex-1 w-full text-center sm:text-left">
-                            <input
-                                type="text"
-                                value={item.name}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                className={`bg-transparent $"font-imfell" uppercase text-3xl sm:text-4xl text-white tracking-widest leading-none mb-1 w-full outline-none border-none focus:ring-0 text-center sm:text-left`}
-                            />
-                            <div className="h-0.5 bg-gradient-to-r from-transparent via-pink-500/50 to-transparent sm:from-pink-500/50 sm:to-transparent w-full mb-2 shadow-[0_0_10px_rgba(236,72,153,0.5)]"></div>
-                            <div className="font-morkborg text-xl sm:text-2xl text-pink-500 tracking-tighter uppercase opacity-90">
-                                {item.type}
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Tabs */}
-                    <div className="flex font-morkborg text-xl sm:text-2xl px-4 sm:px-6 relative z-10 bg-black/40 border-b border-pink-500/20 overflow-x-auto scrollbar-hide">
-                        <button
-                            onClick={() => setActiveTab('description')}
-                            className={`flex-1 sm:flex-none px-4 sm:px-8 py-2 relative transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'description' ? 'text-pink-400 bg-black/60 shadow-[inset_0_-2px_0_0_#f472b6]' : 'text-neutral-500 hover:text-white'}`}
-                        >
-                            Description
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('details')}
-                            className={`flex-1 sm:flex-none px-4 sm:px-8 py-2 relative transition-all whitespace-nowrap uppercase tracking-widest ${activeTab === 'details' ? 'text-pink-400 bg-black/60 shadow-[inset_0_-2px_0_0_#f472b6]' : 'text-neutral-500 hover:text-white'}`}
-                        >
-                            Details
-                        </button>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-black/60 relative z-10 scrollbar-thin scrollbar-thumb-pink-900 scrollbar-track-transparent">
-                        {activeTab === 'description' ? (
-                            <div className="font-serif text-base sm:text-lg leading-relaxed text-neutral-300">
-                                <RichTextEditor
-                                    content={item.system?.description || ''}
-                                    onSave={(html: string) => handleChange('system.description', html)}
-                                    editButtonText="Edit Item Description"
-                                    theme={morkborgTheme.richText}
-                                />
-                            </div>
-                        ) : (
-                            renderDetails()
-                        )}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="p-4 bg-white relative z-10 w-full">
-                        <button
-                            onClick={onClose}
-                            className="w-full bg-white hover:bg-neutral-100 text-black py-4 border-2 border-black flex items-center justify-center gap-3 shadow-[6px_6px_0_0_rgba(0,0,0,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all group"
-                        >
-                            <span className={`$"font-imfell" text-4xl font-bold tracking-tighter uppercase`}>Confirm</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    return <MorkBorgRollFrame title={`Edit ${item.name}`} subtitle={item.type} onClose={onClose} wide>
+        <label className="block text-pink-400">Item name<input aria-label="Item name" value={item.name} onChange={e => handleChange('name', e.target.value)} className="block bg-black border border-pink-700 p-2 w-full my-2 text-white" /></label>
+        <div className="flex gap-3 my-4"><button onClick={() => setActiveTab('description')}>Description</button><button onClick={() => setActiveTab('details')}>Details</button></div>
+        {activeTab === 'description' ? <RichTextEditor content={item.system?.description ?? ''} onSave={(html: string) => handleChange('system.description', html)} editButtonText="Edit Item Description" theme={morkborgTheme.richText} /> : renderDetails()}
+        <p className="text-neutral-400 text-sm my-4">Edits save when changed.</p>
+        <button onClick={onClose} className="bg-pink-700 p-3 text-white w-full mt-4">Done</button>
+    </MorkBorgRollFrame>;
 }

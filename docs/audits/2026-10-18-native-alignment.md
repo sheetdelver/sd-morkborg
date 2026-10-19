@@ -546,7 +546,31 @@ helper was real. Installed/native permissions and lifecycle execution still pend
 
 **New native ambiguity:** Pale One's pack/name Intuitive Power reference matches
 `BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz`. Both descriptions match; identities differ.
-Generation stops with conflict, never selects by name/order. User identity choice
-pending. This is an upstream data ambiguity, not a Core blocker or a completed
+Generation stops with conflict, never selects by name/order. The user directed that this identity question remain pinned in ADR-0001
+for later review. Native first-name-match lookup supplies no canonical choice;
+the two copied root records differ only by `_id`. Retain unavailable behavior. This is an upstream data ambiguity, not a Core blocker or a completed
 12-class acceptance claim. MB-N09/G5 stays open until the selected disposition and
 required installed/native verification are recorded.
+
+### Packaged presentation and mounted-consumer checkpoint
+
+MB-N13/C03: SDK-safe Item/class descriptions, shared form composition and public
+confirmation shell replace competing presentation paths. Removed unreachable
+alternate roll/resolver files. Picker current-state/retry/search behavior is
+verified with actual Chrome pointer/keyboard input against the installed archive.
+The G5 Item description executes `onerror` once; identical G6 input executes none.
+New maintained content-safety regression passes. Predecessor Escape already worked
+and is not counted as a new correction.
+
+15 browser cases pass, including 8 width/appearance combinations, raw manual input
+and visibility, select/Tab/Escape/focus return, observer controls, denied/empty
+retry, ownership-only refresh, late response rejection and reconnect. HP 1234/5678
+fits at 360/768/1280/1920, module colors retained; mobile More keyboard handling
+and public footer registration verified. Actual SDK and Core confirmation/editor
+are used; requests/documents are in-memory. Full host tool clearance, nesting and
+native reference/permissions/lifecycle matrix remain open. MB-N13/C03 are corrected
+offline with qualified browser evidence, not resolved native acceptance.
+
+G6 package SHA-256 `545b074d924b1222e9139426fe2f361265911c1e41de4d27b61363bc6fd1c2bd`.
+Driver/results `/tmp/morkborg-adr0001-browser/`; all maintained suites, explicit
+module typing and isolated released-Core check/package pass.

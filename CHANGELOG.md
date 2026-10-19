@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Refresh mounted catalogs safely; share accessible forms and SDK confirmations/rich content.
+
 - Generate from caller-visible native class metadata, exact starting content and full companion plans.
 - Review server-held candidates and report confirmed partial creation without replaying writes.
 

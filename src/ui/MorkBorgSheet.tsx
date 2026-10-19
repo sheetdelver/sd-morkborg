@@ -2,7 +2,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 
-import { buildModuleAssetUrl, logger } from '@sheet-delver/sdk';
+import { useSDK } from '@sheet-delver/sdk/react';
+import { buildModuleAssetUrl, logger, processHtmlContent } from '@sheet-delver/sdk';
 import BackgroundTab from './BackgroundTab';
 import EquipmentTab from './EquipmentTab';
 import ViolenceTab from './ViolenceTab';
@@ -94,6 +95,7 @@ const AbilityBlock = ({ label, value, onRoll }: { label: string, value: number, 
 );
 
 export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, onCreateItem, onInventoryAction, isOwner = true }: MorkBorgSheetProps) {
+    const { foundryUrl } = useSDK();
     const [activeTab, setActiveTab] = useState('violence');
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isRestModalOpen, setIsRestModalOpen] = useState(false);
@@ -305,9 +307,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                     {/* Description/Bio with restored tilt */}
                                     <div className="font-mono text-sm bg-black text-white p-4 transform rotate-1 font-bold shadow-lg border-l-4 border-pink-500 md:max-w-2xl">
                                         <div className="mb-1 text-pink-500 uppercase text-[10px] tracking-widest">{sheetActor.derived?.class?.name || 'SCUM'}</div>
-                                        <div className="leading-tight">
-                                            {sheetActor.derived?.class?.description || (sheetActor.system?.biography ? 'A lowly wretch surviving in a dying world.' : 'Unknown wretch.')}
-                                        </div>
+                                        <div className="leading-tight" dangerouslySetInnerHTML={{ __html: processHtmlContent(sheetActor.derived?.class?.description ?? '', foundryUrl) }} />
                                         <div className="mt-2 text-pink-500 uppercase text-[10px] tracking-widest">Class Notes</div>
                                         <div className="leading-tight">
                                             {sheetActor.system?.notes}
@@ -380,7 +380,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                     </fieldset>
                     {!isOwner && <p className="bg-black text-yellow-400 p-3" role="status">Read-only Actor. Character actions require ownership.</p>}
                     {/* CONTENT AREA - Revert to Yellow */}
-                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-44 sm:pb-24 text-black">
+                    <main className="bg-[#ffe900] p-4 md:p-8 border-2 border-black shadow-[10px_10px_0_0_#111] min-h-[600px] relative pb-44 sm:pb-24 text-black"><fieldset disabled={!isOwner} className="contents">
                         {/* Inner texture/noise for paper feel */}
                         <div className="absolute inset-0 bg-neutral-900/5 pointer-events-none mix-blend-multiply"></div>
 
@@ -391,7 +391,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                             {activeTab === 'violence' && <ViolenceTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} />}
                             {activeTab === 'special' && <SpecialTab actor={sheetActor} onRoll={handleAbilityRoll} onUpdate={onUpdate} onDeleteItem={onDeleteItem} onCreateItem={onCreateItem} />}
                         </div>
-                    </main>
+                    </fieldset></main>
 
                     {/* Footer Fluff */}
                     <div className="mt-8 text-center opacity-30 invert pointer-events-none select-none">

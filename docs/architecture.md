@@ -188,3 +188,18 @@ connection and world signals, including ownership-only notifications. Errors hav
 retry, and creation uses the server candidate ID rather than client Actor data.
 Native lookup ambiguity remains explicit: Pale One's Intuitive Power legacy CSV
 matches two IDs in the same pack; no identity was chosen by name.
+
+### Presentation and mounted catalogs
+
+System forms share `MorkBorgRollFrame` for labels, focus/Tab/Escape, inert background
+and trigger restoration. Public Core `ConfirmationModal` supplies confirmations;
+the wrapper adds only keyboard/focus semantics absent from the released shell.
+Item/class descriptions pass through SDK rich-content sanitization and URL handling.
+Item/edit forms use the public rich-text editor. Removed alternate roll/resolver
+implementations are not supported entry points. Observer sheets disable writes.
+
+`useScopedCatalog` owns only consumer requests, never a second world cache. It
+retires response generations and refetches on public context/access, connection,
+world and invalidation signals, including changes with no setting keys. Failed,
+empty and loading states differ; retry preserves harmless search/tab state. Browse
+selection sends canonical source UUID for server revalidation.

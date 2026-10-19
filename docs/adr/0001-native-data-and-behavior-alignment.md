@@ -384,8 +384,8 @@ currently advertised functionality.
 | G2 | In progress | Canonical native inventory/settings projection passes offline; action/dialog consumption and native settings acceptance pending. |
 | G3 | In progress | Resource matrix, shared plans/manual combat and sequenced inventory pass offline; SDK table-dependent cases and installed/native races pending. |
 | G4 | In progress | SDK exact table traversal and reviewed macro adapter pass offline; installed service/privacy/native acceptance pending. |
-| G5 | In progress | Shared native generation/creation recovery tests pass; copied native 11 classes complete, Pale One ambiguous identity awaits decision; installed/native acceptance pending. |
-| G6 | Open | Mounted UI/accessible presentation pending |
+| G5 | In progress | Shared native generation/creation recovery tests pass; copied native 11 classes complete, Pale One identity explicitly held unresolved; installed/native acceptance pending. |
+| G6 | In progress | Packaged Chrome pointer/keyboard, picker retirement, safe content and eight width/theme cases pass; full host/native lifecycle and nesting acceptance pending. |
 | G7 | Open | Repair decision and installed-host qualification pending |
 | G8 | Open | Native matrix pending; no native connection in this audit |
 | G9 | Open | Review and closeout pending |
@@ -465,7 +465,11 @@ and actual SDK table helper were used; this is not installed/native acceptance.
 Pale One (`wLJV0VJT5I234obT`) is truthfully unavailable because its legacy starting
 reference `morkborg.mork-borg-items,Intuitive Power` matches distinct IDs
 `BtoSeh36zY8IqOQJ` and `YcKA0JHLezBYt3fz` in the same native pack. The user was asked
-which canonical identity to select or whether to retain unavailable behavior.
+which canonical identity to select or whether to retain unavailable behavior. The user
+subsequently directed that this issue stay pinned in the ADR for later review.
+Native `documentFromPack` chooses the first name match; the two copied root records
+differ only by `_id`, and no other copied reference selects either ID. Therefore
+retain explicit unavailable behavior; neither identity is pinned without evidence.
 No name-only tie break was introduced. Local evidence: module ignored
 `temp/adr0001/native-generation.ts`, `/tmp/morkborg-adr0001-native-generation.json`.
 
@@ -474,3 +478,32 @@ Error. Module guards compare the public snapshot and translate revision retireme
 to typed conflict/not-ready, preserving unexpected-error sanitization. No Core
 change or external blocker is inferred. Native permission for Actor creation is
 enforced on create; public zero-op commit preflights bound subject/store only.
+
+### Packaged presentation checkpoint
+
+After `21e7b18`, form dialogs share one composition, using SDK confirmation and
+rich-content/URL services. Removed unused alternate roll/formula paths. Item
+pickers consume scoped loading/ready/failed catalogs, retire on access/context/
+connection signals and expose retry. Observer controls are read-only.
+
+Actual Chrome CDP pointer and keyboard input against the G5 archive reproduces
+unsafe Item `onerror` execution (count 1); the same description on the G6 archive
+executes none. Maintained `content-safety.test.ts` also checks retained safe prose,
+missing-die truthfulness and source preservation. Escape worked in the predecessor
+Item dialog too: it is retained behavior, not a failing-before claim.
+
+Fifteen browser cases pass: safe content; Rest select/Tab wrap/Escape/focus return;
+actual Core confirmation shell; picker loading, ownership-only context refresh,
+stale response rejection, denial, retry, valid empty, disconnect/reconnect and
+search preservation; custom select; raw manual 20 with Strength -3 and GM visibility;
+observer controls; HP 1234/5678 at 360/768/1280/1920 in both host appearances.
+Module yellow/black/pink remains intact. Mobile More/Escape works and the public
+footer element registers. This harness uses actual packaged UI/public SDK/Core
+confirmation/editor with in-memory requests: full host tool clearance, nesting,
+native authority, cross-session recovery and native inline-reference acceptance
+remain pending. No screenshot-only acceptance is credited.
+
+G6 archive SHA-256 `545b074d924b1222e9139426fe2f361265911c1e41de4d27b61363bc6fd1c2bd`;
+local driver/results `/tmp/morkborg-adr0001-browser/{browser-tests.mjs,browser-results.json}`.
+All maintained suites, explicit source/UI/hook typing and isolated package/check
+pass. G6 remains qualified until required installed/native acceptance.
