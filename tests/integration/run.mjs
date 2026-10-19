@@ -30,7 +30,7 @@ const data = path.join(output, 'data'), installed = path.join(data, 'modules/mor
 fs.mkdirSync(installed, { recursive: true });
 run('tar', ['-xzf', path.resolve(archive), '-C', installed]);
 const env = { ...process.env, SHEET_DELVER_DATA: data, NODE_ENV: 'production',
-    MB_NATIVE_FIXTURES: path.resolve(fixtures), MB_INSTALLED_RESULTS: path.join(output, 'installed-results.json'),
+    MB_SYSTEM_VERSION: option('--system-version') ?? '6.0.0', MB_NATIVE_FIXTURES: path.resolve(fixtures), MB_INSTALLED_RESULTS: path.join(output, 'installed-results.json'),
     MB_ARCHIVE_HASH: createHash('sha256').update(fs.readFileSync(archive)).digest('hex') };
 // Generated files and registry state exist only in this fresh /tmp checkout.
 run('npm', ['run', 'managed:generate'], { cwd: output, env });

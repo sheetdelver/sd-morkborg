@@ -602,7 +602,7 @@ is inferred. Before and after evidence are identified separately in that ledger.
 | MB-N07 | Presence/remaining powers, no invented armor gate or HP write, exact catastrophe root, separate resource actions; native/actions/table tests | Corrected offline; MB-A05 native execution pending |
 | MB-N08 | Removed private evaluator/name resolution; SDK exact multiple/nested/Actor draws, valid-domain exhaustion, hydrated source identity; table/content suites and actual production generation | Corrected offline; MB-A05/06 references/permissions pending |
 | MB-N09 | Metadata classes/overrides/full traits/embedded companions, source preservation, server-held candidate/recovery; generation suite, copied-native and real Core production routes | 11 selected plans/14 complete companions proven; Pale One and broken Forlorn branch explicitly unavailable; MB-A06 pending |
-| MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected for declared settings; additionalAbilities registered scope and MB-A02 pending |
+| MB-N10 | Four versioned native world settings, immutable context/default distinctions; real Core settings/access refresh and Chrome stale retirement | Corrected for declared settings; additionalAbilities client scope verified on14.367; MB-A02 changes/restore pending |
 | MB-N11 | Native numeric handedness, max-tier controls, missing damage unavailable; Chrome Item edit, source tests | Read normalization selected; no persisted repair/catalog. Affected-world inventory unknown; MB-A10 N/A for this slice |
 | MB-N12 | Owned feat capability/precedence, reviewed macro UUID+digest; SDK two draws/one dose result, no invented grants | Corrected offline; native macro presentation MB-A05 pending |
 | MB-N13 | SDK safe rich content/confirmation/editor, one bounded form, labels/focus/keyboard, buffered edits, real footer/HUD clearance; 24 Chrome cases | Executed isolated UI correction; native/full-host nesting/inline reference MB-A09 pending |
@@ -626,7 +626,7 @@ and equipment bounds; Forlorn total 2 and Pale One are explicitly unavailable.
 The native record defects remain pinned; do not close MB-N09 from selected successes.
 
 No demonstrated Core blocker or selected persistent migration exists. G8 awaits
-one bundled disposable Foundry14 environment/account + fixture/settings/access
+one bundled disposable Foundry 14 environment/account + fixture/settings/access
 write/cleanup authorization request; no production/native contact has occurred.
 MB-A01–09 remain pending, MB-A10 N/A for this implementation. The active audit is
 not resolved or archived. Full NPC sheets, Misery, encounter ordering, arbitrary
@@ -637,3 +637,26 @@ Operator update after isolated qualification: the user supplied `localhost:30000
 Foundry 14, passwordless GM, in response to the bundled disposable-world request.
 Verify the active world, exact build/native identity and available roles before
 fixtures; native results have not yet been credited at this checkpoint.
+
+### Native runtime checkpoint
+
+G7 implementation was committed at `007aca9`. Actual endpoint/world
+localhost:30000/morkborg is Foundry 14.367/native 6.0.1; its43 served rules/schema
+files match the pinned tag (whose checkout manifest says6.0.0). MB-N10's native
+unsupported-version503 was reproduced, then corrected with verified exact6.0.1
+setting/default provenance; class catalog now 200/12. All 13 source suites, explicit
+module typing, package/check and14 production integration cases pass.
+
+[Native runtime evidence](evidence/2026-10-18-native-runtime-checkpoint.md) records
+archive identity and exact cleanup for five persisted inventory cases (N01/02/03),
+four unsupported Actor types (N04/F01),12 generation previews/11 successes/6 complete
+selected companions (N09/C02), and live exact native identities (N08/09). Native
+additionalAbilities scope is client on the served14.367 implementation (N10/F06);
+it is not adopted as a world rule. Existing Actor/embedded source fields are unchanged,
+all five created Actor fixtures are absent404, and no chat/settings/permission
+artifacts were introduced. Pale/Owl ambiguities remain pinned.
+
+These are partial native dispositions, not resolved findings. Full native UI,
+settings/resource/action, non-GM permissions and recovery cases remain open.
+Computer Use has no available browser; browser/CDP authorization and non-GM
+account access requests remain pending. No external Core blocker is established.

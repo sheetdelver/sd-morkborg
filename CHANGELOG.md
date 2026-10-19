@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Recognize verified native 6.0.1 world-rule defaults alongside the checkout’s 6.0.0 manifest.
+
 - Require released Core 0.19.3; align contract/workflow pins and explicitly type-check module code in CI.
 - Preserve request-retirement errors and reject invalid manual/formula inputs before effects.
 - Retain field drafts, retire stale action/status feedback and clear mobile tools above expanded navigation.

@@ -59,14 +59,17 @@ strings also occur). Class-owned Items supply starting formulas/rolls and the Om
 die. Scrolls are Item type `scroll`; tablets use `system.scrollType`, not a separate
 native Item type. Preserve canonical UUIDs when resolving class/table documents.
 
-Four proven native world settings are declared for manifest version 6.0.0 only:
+Four proven native world settings are declared for exact versions 6.0.0 and 6.0.1:
 carrying, ammo, hit automation and allowed class policy. Core provides registered
 default provenance and immutable snapshots; unavailable carrying rules yield an
-unknown encumbrance state, never an invented false/default. Other manifest versions
-remain unavailable until verified. Client preferences are not service-account rules.
-`additionalAbilities` has no explicit native scope; the public v14 type documentation
-does not specify an omitted-scope default. Its actual registered scope must still
-be checked in disposable native acceptance before adoption as a world rule.
+unknown encumbrance state, never an invented false/default. Runtime 6.0.1 on Foundry 14.367 serves the same 43 rule/schema files as the pinned
+checkout (whose manifest says6.0.0); that comparison establishes the additional
+exact default provenance. Other manifest versions remain unavailable until verified. Client preferences are not service-account rules.
+`additionalAbilities` has no explicit native scope. Served Foundry 14.367
+`ClientSettings.register` defaults omitted scope to client, as recorded in the
+native runtime evidence. It is not adopted as a world rule or read from the service
+account. Browser-only additional-ability configuration remains outside the supported
+world configuration; the standard four abilities remain the supported controls.
 
 Handedness is normalized for reads (native numeric/string 1/2 and the module's
 legacy 1h/2h shapes) without changing source. The editor now writes numeric 1/2

@@ -46,14 +46,14 @@
         {
             "key": "morkborg.trackCarryingCapacity",
             "scope": "world",
-            "systemVersion": "=6.0.0",
+            "systemVersion": ">=6.0.0 <=6.0.1",
             "schema": {
                 "type": "boolean"
             },
             "default": {
                 "value": true,
-                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
-                "systemVersion": "=6.0.0"
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (checkout manifest 6.0.0); identical served source verified on runtime 6.0.1 / Foundry 14.367",
+                "systemVersion": ">=6.0.0 <=6.0.1"
             },
             "affectsPreparation": true,
             "exposure": "authenticated"
@@ -61,14 +61,14 @@
         {
             "key": "morkborg.trackAmmo",
             "scope": "world",
-            "systemVersion": "=6.0.0",
+            "systemVersion": ">=6.0.0 <=6.0.1",
             "schema": {
                 "type": "boolean"
             },
             "default": {
                 "value": true,
-                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
-                "systemVersion": "=6.0.0"
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (checkout manifest 6.0.0); identical served source verified on runtime 6.0.1 / Foundry 14.367",
+                "systemVersion": ">=6.0.0 <=6.0.1"
             },
             "affectsPreparation": true,
             "exposure": "authenticated"
@@ -76,14 +76,14 @@
         {
             "key": "morkborg.hitAutomation",
             "scope": "world",
-            "systemVersion": "=6.0.0",
+            "systemVersion": ">=6.0.0 <=6.0.1",
             "schema": {
                 "type": "boolean"
             },
             "default": {
                 "value": true,
-                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
-                "systemVersion": "=6.0.0"
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (checkout manifest 6.0.0); identical served source verified on runtime 6.0.1 / Foundry 14.367",
+                "systemVersion": ">=6.0.0 <=6.0.1"
             },
             "affectsPreparation": true,
             "exposure": "authenticated"
@@ -91,14 +91,14 @@
         {
             "key": "morkborg.allowedScvmClasses",
             "scope": "world",
-            "systemVersion": "=6.0.0",
+            "systemVersion": ">=6.0.0 <=6.0.1",
             "schema": {
                 "type": "object"
             },
             "default": {
                 "value": {},
-                "source": "Native tag 6.0.1 d850c094 module/settings.js (manifest 6.0.0)",
-                "systemVersion": "=6.0.0"
+                "source": "Native tag 6.0.1 d850c094 module/settings.js (checkout manifest 6.0.0); identical served source verified on runtime 6.0.1 / Foundry 14.367",
+                "systemVersion": ">=6.0.0 <=6.0.1"
             },
             "affectsPreparation": true,
             "exposure": "server"

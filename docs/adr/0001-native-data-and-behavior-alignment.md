@@ -381,13 +381,13 @@ currently advertised functionality.
 | Discovery | Complete for pinned source/data baseline | Active audit; historical descriptions retain the original defects. |
 | G0 | Complete offline baseline | `7429db2` documentation; `7a794ea` meaningful 20 fail / 1 pass; later same-input table, identity and browser regressions. Native/RAW decisions and unsupported choices recorded. |
 | G1 | Implemented, isolated acceptance passed | `ccaf20f`; typed errors, OWNER preflight, command/dependency validation; actual production Core boundary cases. Native roles remain G8. |
-| G2 | Implemented, native qualification pending | `540d3bc`; immutable shared inventory/world rules. Four settings verified in isolated Core; additionalAbilities registration scope remains G8. |
+| G2 | Implemented, native qualification pending | `540d3bc`; immutable shared inventory/world rules. Four settings verified in isolated Core/live version gate; additionalAbilities client scope verified on14.367, native setting changes remain G8. |
 | G3 | Implemented, native qualification pending | `b3ee21a`; 21/21 baseline, resource matrix/manual combat/sequenced writes; real Core raw combat execution. Native hooks/races remain G8. |
 | G4 | Implemented, native qualification pending | `aadbc9d`; SDK exact tables/reviewed feats; raw hydrated Core identity and attainable exhaustion corrections verified. |
 | G5 | Implemented with explicit unavailable branches | `21e7b18`; complete selected plans and recovery; Pale One and Forlorn broken result remain unavailable. See identity evidence and G8. |
 | G6 | Implemented, isolated browser qualification passed | `18bc9ce` plus installed follow-up; 24 packaged pointer/keyboard cases, real HUD clearance, editor lifecycle and request retirement. Native/full-host acceptance remains G8. |
 | G7 | Isolated qualification complete | No persisted repair selected; Core/API minima and workflow pins justified. Actual development and production registry/13 integration cases pass; checksummed archive below. |
-| G8 | Pending operator environment and authorization | MB-A01–09 not executed natively; MB-A10 N/A for selected read-only normalization. Bundled disposable-world request pending. |
+| G8 | Partial native execution | Runtime14.367/native 6.0.1 verified; five inventory/four unsupported-type cases and twelve previews executed/cleaned. Full native UI, settings/resources and non-GM matrix pending; see native checkpoint. |
 | G9 | Reconciled to current evidence, closeout open | Per-finding dispositions updated; do not close ADR/archive audit until required native acceptance. |
 
 ### Implementation baseline (2026-10-18)
@@ -563,3 +563,29 @@ Operator update after isolated qualification: the user supplied `localhost:30000
 Foundry 14, passwordless GM, in response to the bundled disposable-world request.
 Verify the active world, exact build/native identity and available roles before
 fixtures; native results have not yet been credited at this checkpoint.
+
+### Native runtime version and first acceptance slice
+
+Prior installed checkpoint commit: `007aca9` (G7). The operator supplied world
+`morkborg` at localhost:30000, Foundry 14.367, native 6.0.1. All 43 served rule/schema
+files match the pinned tag, whose checkout manifest still says6.0.0. Preserve both
+identities. The actual native 503 unsupported-version class-catalog failure justified
+extending world setting/default provenance through exact patch 6.0.1, without
+claiming other versions. Same endpoint now200/12 classes; future 6.0.2 remains503
+before effects in maintained actual-Core integration (14 passing cases).
+
+Archive `fc7dc6d7e41d30cefad0797ca96be3401705e584ee5279c379a62db8e0d97b7b`,
+module 0.8.3 unchanged, installed in a fresh Core 0.19.3 API with separate data.
+The [native runtime checkpoint](../audits/evidence/2026-10-18-native-runtime-checkpoint.md)
+records exact fixture cleanup, previous-world source preservation and qualifications:
+five native persisted inventory cases, four unsupported-type cases,12 class
+previews (11 success/6 selected companions; Pale 409), and live exact identity reads.
+No settings/permission/chat artifacts were introduced by these probes.
+
+Served Foundry registration code confirms additionalAbilities defaults to client
+scope on14.367; it is not a world setting/service-account rule. Live pack reads
+retain both Pale IDs and the stale Owl reference. No canonical replacement is
+selected. G8 is partial: native UI/settings/actions/resources/full role and recovery
+acceptance remains pending. Computer Use has no available browser; connected
+browser or explicit isolated CDP authorization and non-GM account access have been
+requested. No Core limitation is inferred from that tooling/access gap.

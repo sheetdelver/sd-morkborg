@@ -11,7 +11,7 @@ acceptance**. ADR-0001 and the active audit remain open.
 - Native tag **6.0.1**, `d850c094a9452d752307221f42245a73b66bdfbb`;
   manifest **6.0.0 / Foundry 14**. Original checkout stayed clean/read-only.
   No v13 compatibility claim.
-- Installed archive `/tmp/morkborg-adr0001-host/data/dist/modules/morkborg-0.8.3.tgz`,
+- G7 installed archive (retained as `/tmp/morkborg-native-setting-before.tgz`),
   SHA-256 **c5676bc0d2c9144c3cf6b4f3bf0854cd799395b1eea6081003408021ee3481c4**.
   Only this archive was installed in the final production integration run.
 - Core >=0.19.3, module-api >=1.5.0 <2, UI >=3.2.0 <4, roll >=1.0.0 <2.

@@ -26,6 +26,8 @@ transport boundary. The fixture directory must contain `native-documents.json`
 and `native-pack-rows.json` decoded from **copies** of the pinned native databases
 (root records plus embedded rows). Native pack prose is not committed here.
 Companion Items are reconstructed from embedded rows before validation.
+`--system-version 6.0.1` also qualifies that explicitly verified native version
+(the isolated default run uses checkout manifest 6.0.0).
 
 Both runners retain their output directory and report the archive SHA-256 and
 qualifications in JSON. They establish neither full Core HTTP/session acceptance
