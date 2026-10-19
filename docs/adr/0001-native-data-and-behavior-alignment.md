@@ -378,7 +378,8 @@ currently advertised functionality.
 
 Selected native qualification is recorded in the [final matrix and cleanup review](../audits/evidence/2026-10-19-native-acceptance.md)
 and its [portable metadata ledger](../audits/evidence/2026-10-19-native-acceptance.json).
-Prior full-host fixes were committed at `aadde52` and `1b38ff4`. The final slice
+Prior full-host fixes were committed at `aadde52` and `1b38ff4`. Final implementation
+checkpoint: `006019b563b7edf1946da240290a7c057d021d6a`. The final slice
 also yields module forms to Core shared presentation with correct focus return,
 and labels hidden/unavailable Actors truthfully. Actual native execution exposed
 these defects; meaningful old-archive failures remain separate from final passes.
@@ -400,7 +401,7 @@ Native Setting audit timestamps/authorship retain the legitimate test history.
 | G3 | Qualified with explicit RAW deviations | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. |
 | G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
 | G5 | Qualified with pinned unavailable branches | `21e7b18`; full selected plans/companions, native creation/cancel/custom catalogs, actual partial recovery/no replay. Pale and stale Forlorn branch remain unavailable. |
-| G6 | Qualified | `18bc9ce`, `1b38ff4` and final presentation slice; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
+| G6 | Qualified | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
 | G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
 | G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
 | G9 | Review/cleanup recorded; ADR remains open | Findings reconciled below and in audit. Pale/Owl canonical identity decisions remain pinned; no unsupported12-class or other-runtime claim, no audit archive. |

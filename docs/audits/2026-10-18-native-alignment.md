@@ -697,6 +697,8 @@ account access requests remain pending. No external Core blocker is established.
 
 ### Final selected native qualification and review — October19
 
+Implementation checkpoint: `006019b563b7edf1946da240290a7c057d021d6a`.
+
 The [final matrix](evidence/2026-10-19-native-acceptance.md) and
 [metadata ledger](evidence/2026-10-19-native-acceptance.json) supersede the remaining
 pending-native statements in historical checkpoints.16 source suites, explicit

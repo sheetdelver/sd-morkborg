@@ -5,6 +5,7 @@ on released **Core0.19.3 /90c13e5**. The reference remains tag6.0.1 /`d850c094`,
 whose checkout manifest reports **6.0.0 /Foundry14**. All43 served rule/schema files
 match that reference. This does not establish another runtime6.0.0 or v13 pairing.
 
+Verified implementation checkpoint: `006019b563b7edf1946da240290a7c057d021d6a`.
 The final module remains **0.8.3**, archive SHA-256
 **1b7e1d48ab878fbaa080f5642d94f9d8b934136cde775410d8bc77967070822b**.
 [Portable execution metadata](2026-10-19-native-acceptance.json) records identities,

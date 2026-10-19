@@ -1,5 +1,5 @@
 {
-  "recordedUtc": "2026-10-19T04:09:12.371304+00:00",
+  "recordedUtc": "2026-10-19T04:39:38.133993+00:00",
   "scope": "Module ADR-0001; same disposable native world/version; no other runtime version acceptance inferred",
   "identity": {
     "moduleVersion": "0.8.3",
@@ -640,5 +640,6 @@
     "Copied source/native default provenance does not establish a separate runtime6.0.0 or Foundry13 acceptance",
     "Selected random plans/trials do not exhaust every possible class outcome",
     "Full NPC sheets, Misery, party encounter ordering, arbitrary macros and browser-only add-on execution remain deferred"
-  ]
+  ],
+  "implementationCommit": "006019b563b7edf1946da240290a7c057d021d6a"
 }
