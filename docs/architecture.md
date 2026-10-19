@@ -292,3 +292,12 @@ through guarded dotted-field writes, preserving unrelated flags and applying no
 HP/armor changes. Automation-off forms hide unused damage formula inputs.
 Daily resource resets update only native value/max fields, preserving min and
 other source attributes under Foundry's object merge behavior.
+
+
+The October 19 MB-R01/02 correction exposes shields through Equipment's existing
+owned-ID equip handler and includes ammo in the caller-scoped browse/custom
+picker. Browse submits only the selected exact source UUID; custom ammo submits
+an empty native system shape for schema defaults and requires configuration.
+The existing server inventory planner enforces shield exclusivity and the attack
+executor consumes the selected owned ammunition stack. No name consolidation or
+additional inventory projection is introduced.

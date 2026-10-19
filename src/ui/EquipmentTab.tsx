@@ -202,7 +202,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
                     )}
 
                     {/* Equip/Carry Toggle - Clear White/Yellow SVG icons */}
-                    {(item.type === 'weapon' || item.type === 'armor') && (
+                    {(item.type === 'weapon' || item.type === 'armor' || item.type === 'shield') && (
                         <button
                             onClick={(e) => { e.stopPropagation(); handleToggleEquipped(item); }}
                             className={`w-12 h-12 flex items-center justify-center transition-all bg-transparent border-none outline-none ${isEquipped ? 'text-yellow-500 drop-shadow-[0_0_8px_#ea7108]' : 'text-white'}`}
@@ -354,7 +354,7 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
             )}
             {addModal && (
                 <MorkBorgAddItemModal
-                    allowedTypes={['armor', 'container', 'misc', 'scroll', 'shield', 'weapon']}
+                    allowedTypes={['ammo', 'armor', 'container', 'misc', 'scroll', 'shield', 'weapon']}
                     onConfirm={(item) => {
                         onCreateItem?.(item);
                         setAddModal(false);

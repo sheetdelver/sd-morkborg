@@ -55,3 +55,15 @@ details, passive capability presentation and actual ability chat rendering. Incl
 the existing passing Special editor refresh as a control and retain the public
 Core overlay/permission cases. Do not present new archive checks as fresh native
 execution of that archive.
+
+
+Review correction controls (compiled archive, isolated Core/Chrome, no Foundry):
+
+```sh
+node tests/browser/run.mjs --core /path/to/Core --archive /tmp/morkborg-0.8.3.tgz --test-script inventory-regressions.mjs
+```
+
+The installed Core harness additionally exercises shields and exact copied-native
+ammo through the real request runtime, including permission, source preservation,
+depletion and replenishment. Browser fixtures render the archive UI; their
+in-memory Item callbacks are not a native backend acceptance claim.

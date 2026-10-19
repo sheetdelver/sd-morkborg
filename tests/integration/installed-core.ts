@@ -24,7 +24,7 @@ await settingStore.seed(async()=>[]);worldStateStore.seed({release:{generation:1
 const pack='morkborg.mork-borg-items';compendiumStore.setPackMetadata(pack,{id:pack,type:'Item',packageType:'system',ownership:{PLAYER:'OBSERVER'}} as any);await compendiumStore.setPackRows('morkborg',pack,[{_id:'i1',name:'Visible template',type:'misc',system:{}}]);
 world.configure('http://127.0.0.1:1',{worldId:'fixture',systemId:'morkborg',systemVersion:process.env.MB_SYSTEM_VERSION??'6.0.0',foundryGeneration:14,foundryBuild:'fixture',runtimeEpoch:1},info.worldSettings);
 const base=await createModuleRuntime('morkborg');const effects:any[]=[];let connected=true;let evaluateDice=false;let forlornTotal=6;let creationCount=0;let allocatedIds=0;let denySecond=false;let beforeRoll:undefined|(()=>Promise<void>);const resolver=new DocumentResolver({allowLiveCompendiumUuidFallback:false});
-function runtime(userId='owner'){return createModuleRequestRuntime(base,{userId,fetchByUuid:async(uuid:string)=>resolver.fetchByUuid(uuid),roll:async(formula:string,label:string)=>{effects.push({roll:formula});await beforeRoll?.();if(evaluateDice){if(label==='Forlorn Philosopher Items')return {formula,total:forlornTotal};return (await new Roll(formula).evaluate()).toJSON();}return {formula,total:14,terms:[{class:'Die',faces:20,results:[{result:12,active:true}]}]};},createChatMessage:async(message:any)=>{effects.push({message});return {_id:'chat',...message}},dispatchDocument:async(type:string,action:string,operation:any)=>{effects.push({type,action,operation});if(type==='Actor'&&action==='update'){
+function runtime(userId='owner'){return createModuleRequestRuntime(base,{userId,fetchByUuid:async(uuid:string)=>resolver.fetchByUuid(uuid),roll:async(formula:string,label:string)=>{effects.push({roll:formula});await beforeRoll?.();if(evaluateDice){if(label==='Forlorn Philosopher Items')return {formula,total:forlornTotal};return (await new Roll(formula).evaluate()).toJSON();}return {formula,total:14,terms:[{class:'Die',faces:20,results:[{result:12,active:true}]}]};},createChatMessage:async(message:any)=>{effects.push({message});return {_id:'chat',...message}},dispatchDocument:async(type:string,action:string,operation:any,parent?:{type:string,id:string})=>{effects.push({type,action,operation,parent});if(type==='Item'){assert.equal(parent?.type,'Actor');const current:any=structuredClone(actorStore.get(parent!.id));assert.ok(current);let result:any[]=[];if(action==='create'){const created={...operation.data[0],_id:operation.data[0]._id??(++allocatedIds).toString(16).padStart(16,'0')};current.items.push(created);result=[created]}else if(action==='delete')current.items=current.items.filter((i:any)=>!operation.ids.includes(i._id));else if(action==='update'){const update=operation.updates[0],item=current.items.find((i:any)=>i._id===update._id);assert.ok(item);for(const[path,value]of Object.entries(update)){if(path==='_id')continue;const parts=path.split('.');let node=item;for(const key of parts.slice(0,-1))node=node[key]??={};node[parts.at(-1)!]=value}result=[item]}await actorStore.seed(async()=>actorStore.list().map(a=>a._id===current._id?current:a));return {result}}if(type==='Actor'&&action==='update'){
  const update=operation.updates[0],current=structuredClone(actorStore.get(update._id));assert.ok(current);
  const merge=(target:any,patch:any)=>{for(const[path,value]of Object.entries(patch)){if(path==='_id')continue;const parts=path.split('.');let node=target;for(const key of parts.slice(0,-1))node=node[key]??={};const key=parts.at(-1)!;if(value&&typeof value==='object'&&!Array.isArray(value))merge(node[key]??={},value);else node[key]=value}};
  merge(current,update);await actorStore.seed(async()=>actorStore.list().map(a=>a._id===current._id?current:a));return {result:[current]}
@@ -62,6 +62,42 @@ await test('sheet raw attack and defense fields execute through real Core dice',
   for(const e of effects.filter(e=>e.action==='update'))assert.ok(Object.keys(e.operation.updates[0]).every(k=>k==='_id'||k.startsWith('flags.morkborg.')),'damage remains instructional; native preferences may persist');
  }
  evaluateDice=false;
+});
+// Request guards are supplied from current authoritative source, never a prepared projection.
+const fingerprint=(a:any)=>JSON.stringify([a._id,a.type,a.system,a.flags?.morkborg,a.items.map((i:any)=>[i._id,i.type,i.system])]);
+const itemRequest=(body:any,user='owner')=>({runtime:runtime(user),json:async()=>({...body,expectedSource:fingerprint(actorStore.get('a1'))})});
+await test('MB-R01 compiled inventory route shields cycle, replacement, reduction and Observer denial',async()=>{
+ const original=structuredClone(actor);const shields=['s1','s2'].map((id,n)=>({_id:id,type:'shield',name:'Shield '+n,flags:{custom:{keep:id}},system:{quantity:1,carryWeight:1,containerSpace:1,carried:true,equipped:n===1,description:'Preserved'}}));
+ await actorStore.seed(async()=>[{...original,items:[...original.items,...shields]}]);
+ try{
+  for(const value of [true,false,true]){
+   const res=await server.apiRoutes['actors/[id]/inventory'](itemRequest({op:'equip',itemId:'s1',value}),params);assert.equal(res.status,200,JSON.stringify(await res.json()));
+   const source:any=actorStore.get('a1');assert.equal(source.items.find((i:any)=>i._id==='s1').system.equipped,value);assert.equal(source.items.find((i:any)=>i._id==='s2').system.equipped,false);
+   assert.equal(adapter!.prepareActorData(source,{world:world.snapshot()} as any).derived.inventory.reduction,value?'0+1':'0');
+   for(const shield of shields){const actual=source.items.find((i:any)=>i._id===shield._id);assert.deepEqual({...actual,system:{...actual.system,equipped:shield.system.equipped}},shield)}
+  }
+  effects.length=0;assert.equal((await server.apiRoutes['actors/[id]/inventory'](itemRequest({op:'equip',itemId:'s1',value:false},'observer'),params)).status,404);assert.equal(effects.length,0);
+ }finally{await actorStore.seed(async()=>[original])}
+});
+await test('MB-R02 exact native ammo browse/add, selection, depletion, replenishment and denied/empty catalogs',async()=>{
+ const original=structuredClone(actor);const native=JSON.parse(fs.readFileSync(process.env.MB_NATIVE_FIXTURES+'/native-documents.json','utf8'));
+ const ammo=native.items.find((i:any)=>i._id==='4wvSoapM7f0FczOH');assert.ok(ammo);
+ // Selection is an owned Item id, independent of template names or pack order.
+ const weapon=native.items.find((i:any)=>i.type==='weapon'&&i.system.usesAmmo);assert.ok(weapon);
+ await actorStore.seed(async()=>[{...original,items:[{...structuredClone(weapon),_id:'w1',system:{...weapon.system,ammoId:null}}]}]);
+ await compendiumStore.setPackRows('morkborg',pack,[ammo]);await compendiumStore.setManifest({systemId:'morkborg',packs:{[pack]:{id:pack,hash:'fixture',lastUpdated:1,rowCount:1,hydrate:true}},_instanceId:'fixture'});world.refresh();
+ const add=async()=>{const res=await server.apiRoutes['actors/[id]/add-item'](itemRequest({sourceUuid:`Compendium.${pack}.Item.${ammo._id}`}),params);assert.equal(res.status,200,JSON.stringify(await res.json()));return (await res.json()).item};
+ try{
+  const catalog=await server.apiRoutes.items({runtime:runtime(),url:'http://fixture/items?types=ammo'});assert.equal(catalog.status,200);assert.equal((await catalog.json()).items[0].uuid,`Compendium.${pack}.Item.${ammo._id}`);
+  const first=await add();assert.notEqual(first._id,ammo._id);assert.equal(first.flags.morkborg.sourceUuid,`Compendium.${pack}.Item.${ammo._id}`);assert.deepEqual(first.system,ammo.system);
+  effects.length=0;assert.equal((await server.apiRoutes['actors/[id]/add-item'](itemRequest({sourceUuid:`Compendium.${pack}.Item.${ammo._id}`},'observer'),params)).status,404);assert.equal(effects.length,0);
+  await runtime().documents.items.update({type:'Actor',id:'a1'},'w1',{'system.ammoId':first._id});
+  evaluateDice=true;effects.length=0;const response=await server.apiRoutes['actors/[id]/roll']({runtime:runtime(),json:async()=>({type:'item',key:'w1',options:{rollType:'attack',manualHitDie:2,baseDR:12,targetArmor:'0'}})},params);assert.equal(response.status,200,JSON.stringify(await response.json()));
+  assert.equal((actorStore.get('a1') as any).items.some((i:any)=>i._id===first._id),false,'one native sling stone is depleted, not merged by name');
+  const second=await add();assert.notEqual(second._id,first._id);const prepared=adapter!.prepareActorData(actorStore.get('a1') as any,{world:world.snapshot()} as any);assert.equal(prepared.categorizedItems.ammo.length,1);assert.equal(prepared.categorizedItems.equipment.some((i:any)=>i.id===second._id),false);
+  await settingStore.seed(async()=>[{_id:'access',key:'core.compendiumConfiguration',value:JSON.stringify({[pack]:{ownership:{PLAYER:'NONE'}}})}] as any);world.refresh();effects.length=0;assert.equal((await server.apiRoutes.items({runtime:runtime(),url:'http://fixture/items?types=ammo'})).status,403);assert.equal(effects.length,0);
+  await settingStore.seed(async()=>[]);world.refresh();await compendiumStore.setPackRows('morkborg',pack,[]);assert.deepEqual((await(await server.apiRoutes.items({runtime:runtime(),url:'http://fixture/items?types=ammo'})).json()).items,[]);
+ }finally{evaluateDice=false;await settingStore.seed(async()=>[]);world.refresh();await actorStore.seed(async()=>[original])}
 });
 let nativePlans:any[]=[], nativeItems:any[]=[], owlPlan:any;
 await test('copied native classes through installed routes and real hydrated Core packs',async()=>{

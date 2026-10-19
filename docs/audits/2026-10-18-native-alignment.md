@@ -1,8 +1,16 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; independent review corrections MB-R01–05 open. Prior native qualification retained.
+**Status:** Active; MB-R01/02 corrected in isolation; MB-R03–05 open. Prior native qualification retained.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
+
+## Review correction progress
+
+MB-R01/02 pass maintained compiled-browser and installed Core0.19.3 cases:
+shield cycle/exclusivity/reduction and Observer denial, ammo browse/custom types,
+exact native template provenance, owned selection/depletion/replenishment and
+denied/empty catalogs. See [correction evidence](evidence/2026-10-19-review-corrections.md).
+Fresh native acceptance of these paths and G9 independent review remain pending.
 
 ## Conclusion and evidence boundary
 

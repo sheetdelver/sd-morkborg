@@ -711,3 +711,17 @@ Implementation checkpoints:
 No live Foundry connection or source change occurred in this review. The ADR was
 saved before amendment in the module's ignored review evidence. All owned test
 services stopped; the operator's port30000 process was untouched.
+
+
+### G9 correction checkpoint 1 — inventory controls
+
+The independent-review documentation is preserved in `49ceea6`. Before amendment,
+the current ADR was saved locally with SHA256
+`115a11619174f6f147bca69d281a8891b89ed3e142fdb525fae67679f77f47c6`.
+MB-R01/02 now expose shield equipment and ammo browse/custom controls through
+existing services. Three maintained rendered-control cases fail on the reviewed
+archive and pass on the inventory archive; 18 installed Core cases, inventory
+suites and explicit source/UI/hook typing pass. Details and artifact identities
+are in the [correction evidence](../audits/evidence/2026-10-19-review-corrections.md).
+MB-R03/04/05 and independent closeout review remain open. No new native execution
+is claimed; earlier native receipts retain their original archive identities.

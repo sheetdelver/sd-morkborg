@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Restore shield equipment controls and ammunition browse/custom creation.
+
 - Randomize the reviewed Pale One starting feat sources; resolve the approved Hegelian Owl companion reference.
 - Preserve native token sight defaults during character and companion generation.
 - Yield forms and focus to Core shared content; distinguish unavailable Actors from deletion.
