@@ -1,10 +1,19 @@
 # Mörk Borg native data and behavior alignment audit
 
 **Date:** October 18, 2026  
-**Status:** Active; selected native runtime qualified with reviewed provisional content policies.
+**Status:** Active; independent review corrections MB-R01–05 open. Prior native qualification retained.
 **Implementation plan:** [Module ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 
 ## Conclusion and evidence boundary
+
+The [October 19 independent review](evidence/2026-10-19-independent-review.md)
+at `f48332e` reran all maintained source, installed and browser checks successfully,
+then reproduced five residual gaps: shield equip controls, ammunition addition,
+stale Violence details, passive-feat no-op actions and unnamed ability chat cards.
+These module corrections hold G9/closeout; no new Core dependency was established.
+The new findings qualify the earlier broad “Corrected” dispositions below without
+invalidating their executed cases. The review made no native connection or source
+change and does not claim another supported runtime pair.
 
 Qualification and cleanup for checkpoint `006019b` are in the [final native matrix](evidence/2026-10-19-native-acceptance.md).
 Module corrections are implemented and executed on native6.0.1/Foundry14.367 with

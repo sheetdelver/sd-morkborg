@@ -13,6 +13,12 @@ implement the approved Pale source choice and Hegelian Owl row mapping; their na
 follow-up verifies both choices, complete creation, actual UI and cleanup on the
 same selected pair. Source policies remain provisional; other runtime pairs remain unqualified.
 
+The [independent implementation review](evidence/2026-10-19-independent-review.md)
+at `f48332e` retains that evidence and adds **MB-R01–05** as the current corrective
+queue. All maintained checks pass, but fresh installed probes expose missing
+shield/ammo controls, stale Violence details and passive action no-ops; actual
+chat rendering also loses ability names. G9 and release closeout remain open.
+
 ## Predecessor evidence
 
 [Core 0.19.3 compatibility review](2026-10-18-core-0193-compatibility.md) records

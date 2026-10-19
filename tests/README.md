@@ -44,3 +44,14 @@ Both runners retain their output directory and report the archive SHA-256 and
 qualifications in JSON. They establish neither full Core HTTP/session acceptance
 nor native document-hook, cross-session or disposable-world permission acceptance.
 ADR-0001 G8 remains the separate operator matrix.
+
+The [selected native matrix](../docs/audits/evidence/2026-10-19-native-acceptance.md)
+and [content-policy follow-up](../docs/audits/evidence/2026-10-19-content-decisions.md)
+record the already-executed pair; these isolated runners do not replace it.
+The [independent review](../docs/audits/evidence/2026-10-19-independent-review.md)
+identifies missing regression coverage MB-R01–05 despite the current suites passing.
+Remediation must exercise rendered shield/ammo controls, refreshed open Violence
+details, passive capability presentation and actual ability chat rendering. Include
+the existing passing Special editor refresh as a control and retain the public
+Core overlay/permission cases. Do not present new archive checks as fresh native
+execution of that archive.

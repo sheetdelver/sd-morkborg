@@ -1,6 +1,6 @@
 # ADR-0001: Native data, behavior and Core contract alignment
 
-**Status:** In progress — selected runtime qualified; provisional content policies recorded
+**Status:** In progress — selected native evidence retained; independent review corrections MB-R01–05 open
 **Date:** October 18, 2026  
 **Owner:** SheetDelver Mörk Borg module  
 **Evidence:** [Native alignment audit](../audits/2026-10-18-native-alignment.md)
@@ -398,13 +398,13 @@ Native Setting audit timestamps/authorship retain the legitimate test history.
 | G0 | Complete | `7429db2` existing docs; `7a794ea` meaningful20 fail/1 pass; subsequent same-input regressions and explicit RAW/native decisions. |
 | G1 | Qualified on released Core and native callers | `ccaf20f`; typed errors/OWNER preflight; production and real owner/observer/hidden execution. |
 | G2 | Qualified for selected native pair | `540d3bc`; immutable inventory/rules; actual carrying/ammo/automation/class changes and restoration, client-only additionalAbilities verified. |
-| G3 | Qualified with explicit RAW deviations | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. |
+| G3 | Native paths qualified; residual UI/card gaps open | `b3ee21a`, `aadde52`; native inventory/rest/advancement/power/combat/resources, merge-safe fields and remembered preferences. MB-R01/02/05 require correction at the consumer/card boundary. |
 | G4 | Qualified | `aadbc9d`; SDK exact tables, multiple/nested results, canonical feats; actual native Broken/Catastrophes/macro and concealed dependency cases. |
 | G5 | Qualified with operator-reviewed content policies | Prior full-plan/recovery qualification at `21e7b18` and `006019b`; `20fda1a` token defaults. Current native execution observes both Pale choices, creates both plus the complete mapped Owl, and verifies source preservation/cleanup. |
-| G6 | Qualified | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. |
+| G6 | Executed cases retained; residual controls/lifecycle gaps open | `18bc9ce`, `1b38ff4`, `006019b`; native permissions, production UI, actual shared-image nesting/focus, mobile clearance and reconnect. Independent probes expose MB-R01–05. |
 | G7 | Released-host qualification complete; repair N/A | `007aca9`; coherent Core/API/workflow pins, explicit typing,14 production integrations; no deterministic persisted repair selected. |
 | G8 | Selected pair executed and qualified | Native6.0.1/Foundry14.367 MB-A01–09 matrix and cleanup recorded; MB-A10 N/A. Other runtime pairs unqualified. |
-| G9 | Review/cleanup recorded; ADR remains open | Operator-approved provisional content policies replace the earlier unavailable choices. Follow-up native qualification/cleanup is recorded separately from the previous matrix; no absolute upstream identity or other-runtime claim. Audit remains active. |
+| G9 | Independent review requires corrections | MB-R01–05 remain open after review at `f48332e`; see the final addendum. Prior native qualification and approved content policies remain attributed to their tested artifacts. Audit remains active. |
 
 ### Implementation baseline (2026-10-18)
 
@@ -668,3 +668,46 @@ sources compare unchanged. Services stopped and native users0. The
 [metadata receipt](../audits/evidence/2026-10-19-content-decisions.json) records
 before/after, package identity and cleanup; the accepted source policies remain
 provisional rather than claiming an absolute canonical upstream identity.
+
+### G9 independent review addendum — October 19
+
+Review at `f48332e` preserves the executed native matrix and approved content
+policies. No runtime source changed after `d28727d`; the intervening release-helper
+commit is present. The [independent review record](../audits/evidence/2026-10-19-independent-review.md)
+documents fresh source/typing/package checks, 16 installed Core cases for each
+declared native identity, 26 browser cases and 26 release-helper cases, all passing.
+Separate probes reproduce five remaining module defects. G9 stays open until
+these are corrected; the accepted Pale/Owl decisions are not the cause of this hold.
+
+| Finding | Required correction | Same-input completion evidence |
+| --- | --- | --- |
+| MB-R01 | Restore shield Equip/Unequip through the existing canonical inventory handler. | Equip an unequipped shield, unequip/re-equip, verify exclusivity/reduction and Observer denial. |
+| MB-R02 | Include ammo in the existing browse/custom Item picker. | Actual rendered types and request include ammo; select an exact source, bind it to a weapon, deplete/replenish, retain one inventory identity and catalog privacy. |
+| MB-R03 | Resolve Violence details by current owned Item identity, retiring missing/out-of-scope selection. | An already-open modal follows source description/damage changes and retires on deletion/scope change with correct focus cleanup. |
+| MB-R04 | Remove the enabled no-op Use action for passive feats; expose truthful capabilities and details. | Passive feat performs no invented action; formula/reviewed macro work, unsupported macro explains its state. |
+| MB-R05 | Preserve validated ability identity through executor and chat rendering. | Actual cards name Strength, Agility, Presence and Toughness, retaining correct formulas/visibility and no extra writes. |
+
+Implementation checkpoints:
+
+1. Preserve the review documents and reproduce the recorded failures before fixes.
+   Do not replace them with assertions that merely inspect source text. Use the
+   compiled package for the affected controls and the actual renderer for cards.
+2. Correct MB-R01/02 together at the inventory UI boundary, with maintained
+   pointer/keyboard and command tests. Keep native Items, source UUIDs and the
+   existing inventory service authoritative. Record this completed checkpoint.
+3. Correct MB-R03/04/05 using shared projections/capabilities/action metadata.
+   Preserve the passing Special editor refresh control and Core overlay/focus
+   behavior. Record the corresponding regression and documentation checkpoint.
+4. Run all module suites, explicit typing, module check, isolated packaging and
+   affected installed/browser cases. Use the final archive, identify its checksum,
+   and distinguish fresh execution from the retained native receipts. Where
+   native testing is authorized, exercise the corrected shield/ammo/detail/feat/
+   chat paths on the selected Foundry14/native6.0.1 pair. No v13 claim is implied.
+5. Reconcile MB-R01–05, update this ledger/audit/architecture/handoff, then perform
+   G9 closeout review. Commits and releases still require current scoped authority;
+   this review performed neither. No compatibility/version bump, Core change or
+   migration catalog is needed for these corrections.
+
+No live Foundry connection or source change occurred in this review. The ADR was
+saved before amendment in the module's ignored review evidence. All owned test
+services stopped; the operator's port30000 process was untouched.

@@ -8,8 +8,9 @@ catalog is used, so module API 1.6 is not required merely because Core offers it
 The active [native alignment audit](audits/2026-10-18-native-alignment.md) and
 [ADR-0001](adr/0001-native-data-and-behavior-alignment.md) record the current
 remediation plan. The earlier Core 0.19.3 compatibility review passed build checks,
-but does not establish native parity. Implementation evidence and outstanding
-installed/native acceptance are recorded separately in the ADR and active audit.
+but does not establish native parity. Selected-pair native acceptance and the
+later independent review are recorded separately. Current corrective work is
+MB-R01–05 in the [independent review](audits/evidence/2026-10-19-independent-review.md).
 
 ## Current implementation and known boundaries
 
@@ -42,7 +43,17 @@ so Core controls remain accessible above it.
 System info/edit/rest/roll forms share a bounded composition for raw dice and
 native fields. Confirmations and rich-text editing use public SDK components;
 descriptions use SDK sanitization and URL handling. Scoped catalogs retire stale
-responses on lifecycle/access changes. Full native/browser acceptance stays open.
+responses on lifecycle/access changes. Prior native/browser evidence is retained;
+independent review identified remaining module UI/card gaps before closeout.
+
+The inventory service supports shield equip and ammunition, but the current
+sheet omits the shield toggle and ammo picker type. Violence details still hold
+an opened Item snapshot, unlike Equipment/Special which resolve the latest owned
+ID. Passive feats correctly perform no automatic action but incorrectly display
+an enabled Use button. Ability plans use `statKey`, while chat expects `subType`,
+losing the ability name. These are MB-R01–05 implementation defects, not intended
+contract limitations. Reuse the existing projection, capability and inventory
+services when correcting them; no Core or migration extension is required.
 
 ## Native authority and settings
 
@@ -163,7 +174,8 @@ Omens using the owned class die. Advancement handles equality and preserves curr
 HP. Casting uses Presence and remaining uses, with no invented equipment denial or
 automatic failure HP write. Damage/armor/catastrophe instructions remain manual.
 Daily powers, roll Omens and actual Omen spending are distinct controls.
-Exact table/feat/generation services are described below. Native acceptance remains open.
+Exact table/feat/generation services are described below. Recorded native acceptance
+is scoped to its artifacts; MB-R01–05 require corrective verification before closeout.
 
 ### Exact table and reviewed feat services
 
