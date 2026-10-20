@@ -11,6 +11,13 @@ import * as sdkExports from '@sheet-delver/sdk';
 import * as sdkReactExports from '@sheet-delver/sdk/react';
 window.__SD={React,ReactJSX,sdk:sdkExports,sdkReact:sdkReactExports};
 const manifest=(await import('fixture-module')).default;
+// Mirror the public registry's declared stylesheet loading, in addition to the
+// compiled utilities linked by run.mjs. Test the module's actual appearance.
+for(const file of [manifest.stylesheet].flat().filter(Boolean)){
+ const link=document.createElement('link');link.rel='stylesheet';
+ link.href='/api/modules/morkborg/assets/'+file.replace(/^\/?assets\//,'');
+ document.head.append(link);
+}
 import {Adapter} from 'fixture-logic';
 import {planInventoryOperation} from 'fixture-inventory';
 const Sheet=(await manifest.sheet()).default;
@@ -28,14 +35,14 @@ sdk.fetchWithAuth=async(path,opts)=>{
  if(window.__mode==='delay')return new Promise(resolve=>window.__pending.push(resolve));
  if(window.__mode==='denied')return new Response(JSON.stringify({error:'Fixture access denied'}),{status:403});
  if(path.includes('/items?'))return new Response(JSON.stringify({items:window.__mode==='empty'?[]:window.__reviewTemplates?window.__reviewTemplates.filter(i=>new URL(path,location.origin).searchParams.get('types').split(',').includes(i.type)):[{uuid:'Compendium.fixture.items.Item.i1',name:window.__catalog,type:'weapon',img:'data:,'}]}));
- if(path.includes('/classes'))return new Response(JSON.stringify({classes:[{uuid:'Compendium.fixture.items.Item.class',name:'Fixture Class',img:'data:,',description:'<p>Fixture class</p>'}]}));
+ if(path.includes('/classes'))return new Response(JSON.stringify({classes:window.__factoryClasses??[{uuid:'Compendium.fixture.items.Item.class',name:'Fixture Class',img:'data:,',description:'<p>Fixture class</p>'}]}));
  if(path.endsWith('/generate-character')){if(window.__generationMode==='delay')return new Promise(resolve=>window.__pendingGeneration.push(resolve));return new Response(JSON.stringify(window.__candidate()));}
  if(path.endsWith('/create-character'))return new Response(JSON.stringify({error:'Fixture partial creation; inspect before recovery',outcome:{status:'needs-review',confirmedWriteCount:1}}),{status:403});
  if(path.endsWith('/creation-status')){if(window.__statusMode==='delay')return new Promise(resolve=>window.__pendingStatus.push(resolve));return new Response(JSON.stringify({outcome:{status:'needs-review',created:[{id:'created1',name:'CURRENT_VISIBLE_ACTOR',type:'character'}]}}));}
  return new Response(JSON.stringify({}));
 };
 window.__events=sdk.events;
-window.__candidate=()=>({candidate:{id:`00000000-0000-4000-8000-${String(++window.__nextCandidate).padStart(12,'0')}`,generated:{actor:{name:'Generated Fixture',system:{abilities:{strength:{value:1}},hp:{max:6},omens:{max:2},powerUses:{max:3},silver:10,description:'<p>Complete preview</p>'},items:[{_id:'generated1',name:'Generated Item',system:{quantity:1}}]},className:'Fixture Class',companions:[{name:'Generated Donkey',type:'container'}]}}});
+window.__candidate=()=>({candidate:{id:`00000000-0000-4000-8000-${String(++window.__nextCandidate).padStart(12,'0')}`,generated:{actor:{name:'Generated Fixture',system:{abilities:{strength:{value:1},agility:{value:-1},presence:{value:2},toughness:{value:0}},hp:{max:6},omens:{max:2},powerUses:{max:3},silver:10,description:'<p>Complete preview</p>'},items:[{_id:'generated1',name:'Generated Item',system:{quantity:1,description:'<p>Reviewed native Item instructions</p>'}}]},className:'Fixture Class',companions:[{name:'Generated Donkey',type:'container'}]}}});
 function App(){
  const ui=useUI();const register=useCallback(el=>{window.__footer=el;const dispose=ui.registerBottomNavigation(el);return()=>{window.__footer=null;dispose()}},[ui.registerBottomNavigation]);
  const context={...sdk,registerBottomNavigation:register};const [scene,setScene]=useState('sheet'),[owner,setOwner]=useState(true),[projection,setProjection]=useState(actor);

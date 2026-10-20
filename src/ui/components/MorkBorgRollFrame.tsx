@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect, useLayoutEffect, useId, useRef, type ReactNode } from 'react';
-import { Dices, Pencil } from 'lucide-react';
+import { Dices, Pencil, Skull } from 'lucide-react';
 import { useSDK } from '@sheet-delver/sdk/react';
 
 export function RollEntryMode({ manual, onChange, canAuto = true, canManual = true, manualLabel = 'Manual' }: {
@@ -95,9 +95,9 @@ export default function MorkBorgRollFrame({ title, subtitle = '', onClose, child
         onCancel={event => { event.preventDefault(); onClose(); }}>
         <style>{`.sdk-module--morkborg.mb-form-dialog::backdrop { background: rgba(0,0,0,.8); backdrop-filter: blur(4px); }`}</style>
         <div className="flex min-h-full items-center justify-center p-4" onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
-            <div className={`bg-neutral-950 text-white border-2 border-pink-900 shadow-[8px_8px_0_0_#831843] ${wide ? 'max-w-2xl' : 'max-w-sm'} w-full p-5 sm:p-6 my-6 relative text-left`}>
-                <button type="button" onClick={onClose} aria-label={`Close ${title}`} className="absolute top-2 right-3 text-xl text-pink-400">×</button>
-                <h2 id={titleId} className="font-imfell text-2xl text-yellow-400 uppercase pr-8 mb-2">{title}</h2>
+            <div className={`mb-form-panel bg-neutral-950 text-white border-2 border-pink-900 shadow-[8px_8px_0_0_#831843] ${wide ? 'mb-form-panel--wide max-w-2xl' : 'max-w-sm'} w-full p-5 sm:p-6 my-6 relative text-left`}>
+                <button type="button" onClick={onClose} aria-label={`Close ${title}`} className="mb-form-close absolute top-2 right-2"><Skull aria-hidden="true" size={24} /></button>
+                <h2 id={titleId} className="mb-form-heading font-imfell text-yellow-400 uppercase pr-10">{title}</h2>
                 {subtitle && <p className="text-pink-400 text-xs font-mono mb-4">{subtitle}</p>}
                 {children}
             </div>

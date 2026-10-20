@@ -1,0 +1,178 @@
+/* Module-owned presentation. Loaded for local and managed surfaces alike.
+ * The palette, cut-paper panels and texture restore the pre-0.9.0 design. */
+.sdk-module--morkborg .font-morkborg {
+    font-family: var(--font-imfell, Georgia), Georgia, serif;
+}
+.sdk-module--morkborg .mb-factory {
+    /* SCVMBIRTHER's seven palettes: black, white, #ffe82c and #f142af. */
+    --mb-paper: #fff; --mb-ink: #000; --mb-accent: #ffe82c;
+    --mb-accent-ink: #000; --mb-shadow: var(--mb-ink);
+    --mb-button: #000; --mb-button-ink: #fff; --mb-dice-invert: 1;
+    --mb-equipment-description: var(--mb-ink);
+    min-height: 100dvh; color: var(--mb-ink); background: var(--mb-paper);
+    padding-bottom: calc(5rem + env(safe-area-inset-bottom));
+    font-family: var(--font-inter, Arial), Arial, sans-serif;
+}
+.sdk-module--morkborg .mb-factory[data-palette="doom"] {
+    --mb-paper: #000; --mb-ink: #fff; --mb-accent: #ffe82c;
+    --mb-button: #fff; --mb-button-ink: #000; --mb-dice-invert: 0;
+    --mb-equipment-description: #ffe82c;
+}
+.sdk-module--morkborg .mb-factory[data-palette="flesh"] {
+    --mb-paper: #000; --mb-ink: #fff; --mb-accent: #f142af;
+    --mb-button: #fff; --mb-button-ink: #000; --mb-dice-invert: 0;
+    --mb-equipment-description: #f142af;
+}
+.sdk-module--morkborg .mb-factory[data-palette="pig"] {
+    --mb-paper: #f142af; --mb-ink: #fff; --mb-accent: #fff;
+    --mb-equipment-description: #000;
+}
+.sdk-module--morkborg .mb-factory[data-palette="gold"] {
+    --mb-paper: #ffe82c; --mb-accent: #fff;
+    --mb-button: #fff; --mb-button-ink: #000; --mb-dice-invert: 0;
+}
+.sdk-module--morkborg .mb-factory[data-palette="ink"] {
+    --mb-accent: #000; --mb-accent-ink: #fff;
+}
+.sdk-module--morkborg .mb-factory[data-palette="sarkash"] {
+    --mb-paper: #000; --mb-ink: #fff; --mb-accent: #fff;
+    --mb-button: #fff; --mb-button-ink: #000; --mb-dice-invert: 0;
+}
+.sdk-module--morkborg .mb-factory-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--mb-paper); color: var(--mb-ink); padding: .75rem 1rem;
+    border-bottom: 1px solid var(--mb-ink); font-size: .875rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .025em;
+}
+.sdk-module--morkborg .mb-factory-bar button:hover { text-decoration: underline; }
+.sdk-module--morkborg .mb-factory-bar span { font: .75rem monospace; text-transform: none; }
+.sdk-module--morkborg .mb-factory-header {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    padding: 1rem 1.5rem; min-height: 6rem; border-bottom: 4px solid var(--mb-ink);
+}
+.sdk-module--morkborg .mb-factory-heading { display: flex; align-items: center; gap: 1.5rem; min-width: 0; }
+.sdk-module--morkborg .mb-factory-avatar { width: 4rem; height: 4rem; flex: 0 0 auto; border: 2px solid var(--mb-ink); border-radius: .25rem; display: grid; place-items: center; }
+.sdk-module--morkborg .mb-factory-avatar svg { width: 2rem; height: 2rem; }
+.sdk-module--morkborg .mb-factory-header h1 { font: bold 1.875rem/1.1 Georgia, serif; letter-spacing: -.025em; }
+.sdk-module--morkborg .mb-factory-header p { margin-top: .25rem; font-size: .75rem; letter-spacing: .1em; }
+.sdk-module--morkborg .mb-factory-roll {
+    width: 3.5rem; height: 3.5rem; flex: 0 0 auto; display: grid; place-items: center;
+    border: 2px solid var(--mb-ink); border-radius: 50%; background: var(--mb-button); cursor: pointer;
+}
+.sdk-module--morkborg .mb-factory-roll img { width: 3rem; height: 3rem; filter: brightness(0) invert(var(--mb-dice-invert)); }
+.sdk-module--morkborg .mb-factory-roll:hover:not(:disabled) { transform: scale(1.1); }
+.sdk-module--morkborg .mb-factory-content { max-width: 80rem; margin: 0 auto; padding: .5rem 1.5rem 1.5rem; }
+.sdk-module--morkborg .mb-factory-classes {
+    padding: .5rem; border: 4px solid var(--mb-ink); box-shadow: 15px 15px 0 var(--mb-shadow);
+}
+.sdk-module--morkborg .mb-factory-classes h2,
+.sdk-module--morkborg .mb-factory-panel h2 { background: var(--mb-accent); color: var(--mb-accent-ink); font-size: 1.5rem; font-weight: 700; padding: .5rem; }
+.sdk-module--morkborg .mb-factory-classes h2 { text-align: center; padding: 0 .5rem; }
+.sdk-module--morkborg .mb-factory-class-options { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 0 1rem; padding: .75rem .5rem; }
+.sdk-module--morkborg .mb-factory-class-options label { display: flex; align-items: center; gap: .5rem; min-height: 2.75rem; font-size: .875rem; cursor: pointer; }
+.sdk-module--morkborg .mb-factory-class-options input { width: 1rem; height: 1rem; flex-shrink: 0; accent-color: var(--mb-button); }
+.sdk-module--morkborg .mb-factory-class-options span { overflow-wrap: anywhere; }
+.sdk-module--morkborg .mb-factory-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin: 1rem 0 .5rem; }
+.sdk-module--morkborg .mb-factory-classes .mb-factory-actions { padding-top: 1rem; border-top: 1px solid var(--mb-ink); }
+.sdk-module--morkborg .mb-factory-button { min-height: 44px; padding: .5rem 1rem; border: 2px solid var(--mb-ink); background: var(--mb-button); color: var(--mb-button-ink); text-transform: uppercase; letter-spacing: .1em; font-family: var(--font-imfell, Georgia), Georgia, serif; cursor: pointer; }
+.sdk-module--morkborg .mb-factory-button:hover:not(:disabled) { background: var(--mb-button-ink); color: var(--mb-button); }
+.sdk-module--morkborg .mb-factory button:disabled { opacity: .5; cursor: not-allowed; }
+.sdk-module--morkborg .mb-factory :is(button,input,summary):focus-visible { outline: 3px solid var(--mb-ink); outline-offset: 4px; }
+.sdk-module--morkborg .mb-factory-preview { margin-top: 2.5rem; }
+.sdk-module--morkborg .mb-factory-stats { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 1.25rem; padding: .5rem; margin-bottom: 2rem; }
+.sdk-module--morkborg .mb-factory-stat { background: var(--mb-accent); color: var(--mb-accent-ink); border: 4px solid var(--mb-ink); padding: .5rem; text-align: center; font-size: 1.5rem; font-weight: bold; box-shadow: 15px 15px 0 var(--mb-shadow); overflow-wrap: anywhere; }
+.sdk-module--morkborg :is(.mb-factory-stat,.mb-factory-panel,.mb-factory-save) { transform: rotate(var(--mb-tilt, 0deg)); }
+.sdk-module--morkborg .mb-factory-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2rem; }
+.sdk-module--morkborg .mb-factory-panel { min-width: 0; border: 4px solid var(--mb-ink); background: var(--mb-paper); padding: .5rem; box-shadow: 15px 15px 0 var(--mb-shadow); overflow-wrap: anywhere; }
+.sdk-module--morkborg .mb-factory-description { padding: .5rem; font-size: .95rem; line-height: 1.6; }
+.sdk-module--morkborg .mb-factory-description p { margin: .5rem 0; }
+.sdk-module--morkborg .mb-factory-description :is(ul,ol) { padding-left: 1.5rem; list-style: revert; }
+.sdk-module--morkborg .mb-factory-class-name { padding: .5rem; margin-top: .5rem; font-size: .875rem; text-transform: uppercase; font-weight: bold; letter-spacing: .1em; }
+.sdk-module--morkborg .mb-factory-feature { padding: .5rem; }
+.sdk-module--morkborg .mb-factory-feature h3 { font-weight: bold; border-bottom: 1px solid var(--mb-ink); padding-bottom: .25rem; }
+.sdk-module--morkborg .mb-factory-feature .mb-factory-description { padding: .5rem 0; }
+.sdk-module--morkborg .mb-factory-abilities { padding: .75rem .5rem; font-size: .875rem; font-weight: bold; text-transform: uppercase; letter-spacing: .1em; }
+.sdk-module--morkborg .mb-factory-abilities div { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .5rem; }
+.sdk-module--morkborg .mb-factory-powers { padding: .5rem; border-top: 1px solid var(--mb-ink); }
+.sdk-module--morkborg .mb-factory-silver { text-align: right; font-size: .875rem; text-transform: uppercase; font-weight: bold; padding: 1rem .5rem; border-bottom: 1px solid var(--mb-ink); }
+.sdk-module--morkborg .mb-factory-list { list-style: none; padding: .5rem; }
+.sdk-module--morkborg .mb-factory-list li { padding: .25rem 0; }
+.sdk-module--morkborg .mb-factory-list summary { cursor: pointer; min-height: 44px; display: list-item; align-content: center; font-weight: bold; }
+.sdk-module--morkborg .mb-factory-list .mb-factory-description { color: var(--mb-equipment-description); }
+.sdk-module--morkborg .mb-factory-companions { margin: .5rem; padding-top: .5rem; border-top: 1px solid var(--mb-ink); }
+.sdk-module--morkborg .mb-factory-companions h3 { font-weight: bold; }
+.sdk-module--morkborg .mb-factory-save { display: block; width: 100%; min-height: 44px; margin-top: 2.5rem; padding: 1rem; font-size: 2.25rem; background: var(--mb-button); color: var(--mb-button-ink); border: 4px solid var(--mb-ink); box-shadow: 15px 15px 0 var(--mb-shadow); cursor: pointer; }
+.sdk-module--morkborg .mb-factory-notice { border: 2px solid var(--mb-ink); padding: 1rem; margin: 1rem 0; }
+.sdk-module--morkborg .mb-sheet-navigation { grid-template-columns: repeat(4,minmax(0,1fr)); gap: clamp(.5rem,1.5vw,1rem); }
+.sdk-module--morkborg .mb-sheet-navigation button { min-width: 0; padding: .75rem clamp(.25rem,1vw,1rem); }
+.sdk-module--morkborg .mb-sheet-navigation button > div:first-child { font-size: clamp(.75rem,1.65vw,1.25rem); letter-spacing: .08em; }
+@media (max-width: 1023px) {
+    .sdk-module--morkborg .mb-factory-class-options { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .sdk-module--morkborg .mb-factory-stats { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .sdk-module--morkborg .mb-factory-grid { grid-template-columns: minmax(0,1fr); }
+}
+.sdk-module--morkborg .mb-form-panel {
+    transform: rotate(-1deg); border-width: 4px; isolation: isolate;
+    font-family: var(--font-imfell, Georgia), Georgia, serif;
+}
+.sdk-module--morkborg .mb-form-panel::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: url("./grunge.png") center / cover; opacity: .05;
+}
+.sdk-module--morkborg .mb-form-panel--wide {
+    max-height: calc(100dvh - 5rem); overflow-y: auto;
+}
+.sdk-module--morkborg .mb-catalog-results {
+    height: min(24rem, 40dvh); overflow-y: auto; overscroll-behavior: contain;
+    scrollbar-gutter: stable; padding-right: .25rem;
+}
+.sdk-module--morkborg .mb-form-heading {
+    border-bottom: 3px solid #be185d; padding-bottom: .75rem; margin-bottom: 1rem;
+    font-size: 1.8rem; font-weight: 900; letter-spacing: .06em;
+}
+.sdk-module--morkborg .mb-form-close { color: #f472b6; padding: .5rem; min-width: 44px; min-height: 44px; }
+.sdk-module--morkborg .mb-form-close:hover { color: #ffe900; transform: rotate(12deg); }
+.sdk-module--morkborg .mb-form-panel button:not(.mb-form-close) { min-height: 44px; }
+.sdk-module--morkborg .mb-form-tabs { display: flex; flex-wrap: wrap; gap: .5rem; border-bottom: 3px solid #be185d; padding-bottom: .5rem; }
+.sdk-module--morkborg .mb-form-tabs button {
+    padding: .5rem 1rem; border: 2px solid #831843;
+    text-transform: uppercase; font-weight: bold; letter-spacing: .06em;
+}
+.sdk-module--morkborg .mb-form-tabs button[aria-pressed="true"] { background: #ffe900; color: #111; border-color: #ffe900; }
+.sdk-module--morkborg.mb-confirm-dialog { transform: rotate(-1deg); }
+.sdk-module--morkborg .mb-form-panel button:focus-visible,
+.sdk-module--morkborg .mb-form-panel input:focus-visible,
+.sdk-module--morkborg .mb-form-panel select:focus-visible { outline: 2px solid #ffe900; outline-offset: 3px; }
+.sdk-module--morkborg .mb-form-panel input:not([type="checkbox"]):not([type="radio"]),
+.sdk-module--morkborg .mb-form-panel select { min-height: 44px; }
+.sdk-module--morkborg .mb-form-panel input[type="checkbox"],
+.sdk-module--morkborg .mb-form-panel input[type="radio"] { accent-color: #ec4899; }
+.sdk-module--morkborg .mb-rest-section { border-bottom: 1px solid #555; padding: 1rem 0; }
+.sdk-module--morkborg .mb-rest-section legend { font-size: 1.5rem; color: #fff; }
+.sdk-module--morkborg .mb-rest-choice { display: flex; align-items: flex-start; gap: .75rem; padding: .65rem 0; cursor: pointer; }
+.sdk-module--morkborg .mb-rest-choice input { margin-top: .4rem; width: 1rem; height: 1rem; flex-shrink: 0; }
+.sdk-module--morkborg .mb-rest-choice strong { display: block; text-transform: uppercase; letter-spacing: .05em; }
+.sdk-module--morkborg .mb-rest-choice small { color: #d4d4d4; font-family: var(--font-inter, sans-serif); }
+.sdk-module--morkborg .mb-action-button {
+    min-height: 44px; padding: .6rem 1rem; border: 2px solid #ec4899;
+    background: #831843; color: #fff; font-family: var(--font-imfell, Georgia), Georgia, serif;
+    font-size: 1.15rem; font-weight: bold; text-transform: uppercase; letter-spacing: .06em;
+    box-shadow: 4px 4px 0 #000; cursor: pointer;
+}
+.sdk-module--morkborg .mb-action-button:hover:not(:disabled) { background: #be185d; }
+.sdk-module--morkborg .mb-action-button:disabled { opacity: .5; cursor: not-allowed; }
+.sdk-module--morkborg .mb-action-button:focus-visible { outline: 2px solid #ffe900; outline-offset: 3px; }
+@media (max-width: 639px) {
+    .sdk-module--morkborg .mb-factory-grid { grid-template-columns: minmax(0, 1fr); }
+    .sdk-module--morkborg .mb-factory-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .sdk-module--morkborg .mb-factory-header { padding: 1rem; }
+    .sdk-module--morkborg .mb-factory-heading { gap: .75rem; }
+    .sdk-module--morkborg .mb-factory-avatar { display: none; }
+    .sdk-module--morkborg .mb-factory-header h1 { font-size: 1.65rem; }
+    .sdk-module--morkborg .mb-factory-bar span { display: none; }
+    .sdk-module--morkborg .mb-factory-class-options { grid-template-columns: minmax(0,1fr); }
+    .sdk-module--morkborg .mb-factory-stat { font-size: 1.125rem; }
+    .sdk-module--morkborg .mb-factory-save { font-size: 1.5rem; }
+    .sdk-module--morkborg .mb-form-panel,
+    .sdk-module--morkborg.mb-confirm-dialog { transform: none; }
+}

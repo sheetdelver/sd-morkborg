@@ -6,7 +6,9 @@ Do not adopt Shadowdark's audit or the Core handoff as this module's work queue.
 
 [Module ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md) is closed
 for its agreed scope; the [audit index](docs/audits/README.md) links completed
-evidence and separately scoped follow-ups. There is no active remediation queue.
+evidence and separately scoped follow-ups. The current presentation repair is
+[ADR-0002](docs/adr/0002-preserve-module-presentation.md), with the
+[whole-UI audit](docs/audits/2026-10-20-presentation-regressions.md).
 Do not reopen historical checklists by inference. Release publication still needs
 its own authority. For new work, follow the current task and record verified
 progress/checkpoints in its owning plan. Core findings MB-C01–04 were resolved
@@ -102,6 +104,15 @@ use temporary Git fixtures. No Core checkout is needed to run the helper.
 Preserve Mörk Borg resource shapes, roll visibility and its yellow/black/pink
 presentation. Sheet Auto/Manual raw-die inputs and the HUD's final manual total
 have different semantics; do not merge them by convenience.
+Behavior refactoring does not authorize redesign. Compare all affected surfaces
+with their prior design, including Factory palettes, tilted/textured forms,
+typography and navigation. Preserve working accessibility and shared overlays.
+Verify declared module CSS in an isolated packaged browser, not only development
+utilities. Keep cosmetic state separate from generation and persistence.
+Factory entry automatically generates once after the allowed class catalog
+arrives. Do not replace this with a separate Preview step. A repeated healthy
+connection status is not an invalidation; verify both catalogs and in-flight
+action feedback across the host's actual heartbeat semantics.
 
 Use native `carryWeight`/`containerSpace`/`carried` and canonical owned Item IDs.
 Never consolidate destructive inventory operations by name, count overlapping

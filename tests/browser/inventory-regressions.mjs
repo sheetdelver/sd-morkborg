@@ -19,7 +19,7 @@ await check('inventory','R01 shield equip/unequip/re-equip, replacement, source 
 await check('inventory','R02 browse ammo exact selection and single inventory representation',async()=>{
  await setup();await click(button('Add'));await wait(q('[aria-label="Search Items"]'));
  const request=await evaluate('window.__calls.find(c=>c.path?.includes("/items?")).path');assert.ok(new URL(request,'http://fixture').searchParams.get('types').split(',').includes('ammo'),'catalog must request ammo');
- await click(button('Template Arrows ammo'));await wait('!document.querySelector("[role=dialog]")');assert.deepEqual(await evaluate('window.__calls.find(c=>c.create).create'),{sourceUuid:'Compendium.fixture.items.Item.ammo'});
+ await click(q('[aria-label="Toggle ammo Items"]'));await click(button('Template Arrows ammo'));await wait('!document.querySelector("[role=dialog]")');assert.deepEqual(await evaluate('window.__calls.find(c=>c.create).create'),{sourceUuid:'Compendium.fixture.items.Item.ammo'});
  assert.equal(await evaluate(`[...document.querySelectorAll('[draggable=true]')].filter(e=>e.querySelector('button')?.textContent.trim().startsWith('Template Arrows')).length`),1);
  await click(q('[aria-label="Edit Fixture Sword"]'));await click(button('Details'));await click(q('[aria-label="Uses Ammo"]'));assert.ok(await evaluate(`[...document.querySelectorAll('select option')].some(o=>o.textContent.includes('Template Arrows'))`));await click(q('[aria-label="Ammunition"]'));await key('ArrowDown');await key('ArrowDown');await key('Enter');assert.equal(await evaluate('window.__raw().items.find(i=>i._id==="w1").system.ammoId'),'added1');await key('Escape');
 });

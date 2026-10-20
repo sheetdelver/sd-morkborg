@@ -1,6 +1,28 @@
 # Isolated acceptance tooling
 
-These development tools require the configured released Core 0.19.3 dependencies.
+`--test-script factory-corrections.mjs` checks automatic generation, unchanged
+healthy heartbeats, real reconnect/context retirement, all four desktop tabs
+on one row, delayed catalog geometry and an open editor retaining unsaved input.
+It initially failed both heartbeat cases before `useScopedCatalog` was corrected.
+It also compares all seven Factory palettes against colors transcribed from
+SCVMBIRTHER and checks that every new result changes all nine tilts without
+movement during class selection, healthy heartbeats or confirmation.
+
+The module runner disables HTTP caching and supplies fixture requests. It does
+not verify the host's asset cache or cold-session startup. Those are separately
+exercised with ordinary browser caching, real Socket.IO and actual player
+providers/asset routes by Core's `player-startup-assets.mjs` (Core ADR-0065).
+Module layout results do not establish operator acceptance.
+
+Presentation repair uses the same runner with `--test-script
+presentation-regressions.mjs`: all sheet tabs, dialogs and Factory at
+360/768/1280/1920 in both appearances, declared stylesheet loading, visible
+mobile controls, palette states, no page overflow and screenshots.
+The manifest stylesheet and compiled utilities are loaded together, matching
+the host contract. See the [current review](../docs/audits/2026-10-20-presentation-regressions.md).
+
+These development tools require a configured supported Core toolchain (0.19.3
+minimum; this presentation pass uses 0.19.5).
 They do not start the Core application, use its `.env`, or contact a native world.
 Runtime module code never imports these fixtures or host internals.
 
@@ -43,14 +65,15 @@ Companion Items are reconstructed from embedded rows before validation.
 Both runners retain their output directory and report the archive SHA-256 and
 qualifications in JSON. They establish neither full Core HTTP/session acceptance
 nor native document-hook, cross-session or disposable-world permission acceptance.
-ADR-0001 G8 remains the separate operator matrix.
+The completed ADR-0001 native matrix remains separate historical acceptance.
+These tools do not reopen its closed gates.
 
 The [selected native matrix](../docs/audits/evidence/2026-10-19-native-acceptance.md)
 and [content-policy follow-up](../docs/audits/evidence/2026-10-19-content-decisions.md)
 record the already-executed pair; these isolated runners do not replace it.
 The [independent review](../docs/audits/evidence/2026-10-19-independent-review.md)
-identifies missing regression coverage MB-R01–05 despite the current suites passing.
-Remediation must exercise rendered shield/ammo controls, refreshed open Violence
+identified missing regression coverage MB-R01–05 at its recorded revision.
+The completed corrections exercise rendered shield/ammo controls, refreshed open Violence
 details, passive capability presentation and actual ability chat rendering. Include
 the existing passing Special editor refresh as a control and retain the public
 Core overlay/permission cases. Do not present new archive checks as fresh native

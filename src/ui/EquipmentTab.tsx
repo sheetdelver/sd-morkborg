@@ -147,17 +147,17 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
                 onDrop={isContainer ? (e) => handleDrop(e, item._id || item.id) : undefined}
                 className={`flex flex-col lg:flex-row lg:items-center justify-between bg-black border-b border-white/20 group hover:bg-neutral-900 transition-colors my-2 py-4 cursor-grab active:cursor-grabbing ${index % 2 === 0 ? 'rotate-1' : '-rotate-1'} ${isNested ? 'ml-8 lg:ml-12 bg-neutral-900/40 border-l-4 border-l-pink-900/50 pl-4' : 'p-3'}`}
             >
-                <div className="flex items-center gap-4 flex-1">
+                <div className="flex min-w-0 items-center gap-4 flex-1">
                     <img
                         src={item.img}
                         alt={item.name}
-                        className="w-10 h-10 object-contain"
+                        className="w-10 h-10 shrink-0 object-contain"
                     />
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-2">
                             <button
                                 onClick={(e) => { e.stopPropagation(); openInfoModal(item); }}
-                                className="font-morkborg text-xl tracking-tight text-neutral-200 uppercase text-left hover:text-pink-500 transition-colors focus:outline-none"
+                                className="font-morkborg min-w-0 break-words text-xl tracking-tight text-neutral-200 uppercase text-left hover:text-pink-500 transition-colors focus:outline-none"
                             >
                                 {item.name}
                                 {quantity > 1 && <span className="text-white ml-2 opacity-100">({quantity})</span>}
@@ -260,8 +260,8 @@ export default function EquipmentTab({ actor, onRoll, onUpdate, onDeleteItem, on
             </div>
 
             {/* Equipment Header */}
-            <div className="flex items-center justify-between mb-4 pb-2 rotate-1">
-                <h3 className="font-morkborg text-4xl uppercase text-black border-b-4 border-pink-500 tracking-widest transform rotate-1">
+            <div className="flex flex-wrap gap-3 items-center justify-between mb-4 pb-2 rotate-1">
+                <h3 className="font-morkborg text-3xl sm:text-4xl uppercase text-black border-b-4 border-pink-500 tracking-widest transform rotate-1">
                     Equipment
                 </h3>
                 <button

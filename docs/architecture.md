@@ -1,5 +1,24 @@
 # Mörk Borg module architecture
 
+Presentation is owned by the module's `assets/presentation.css`, declared through
+`module/ui.tsx` alongside compiled utilities. It restores Factory palettes and
+cut-paper panels and themes the existing native-dialog frame. Scope remains
+`.sdk-module--morkborg`; Core owns shared overlays and footer clearance.
+See [ADR-0002](adr/0002-preserve-module-presentation.md) and the
+[complete UI review](audits/2026-10-20-presentation-regressions.md).
+
+Factory entry automatically generates one reviewed candidate after the authorized
+class catalog arrives. Stable healthy connection heartbeats do not refetch that
+catalog or replace the candidate. Actual context/access changes retire stale
+intent and require an explicit reroll. `useScopedCatalog` retains request
+retirement and reconnect refresh while distinguishing repeated link health from
+a changed connection. Add Item groups its results inside a bounded scrolling
+area; loading does not stretch and recenter the entire dialog.
+Factory presentation uses SCVMBIRTHER's seven black/white/yellow/pink color
+combinations. Each accepted generation changes the palette and reverses all nine
+card/panel/save tilts (a random 1–2 degrees on the opposite side). Cosmetic state is independent of
+candidate data and stays stable through selection, confirmation and recovery.
+
 `info.json` is the compatibility authority. The module requires Core 0.19.3,
 module API 1.5 and UI API 3.2; roll API remains 1.0. World snapshots/settings and
 context lifecycle signals justify the newer API floors; no relation/migration
