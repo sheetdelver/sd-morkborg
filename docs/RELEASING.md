@@ -35,17 +35,40 @@ numbered release. The helper:
    at that commit without rewriting files or creating another commit. It never
    changes compatibility, SDK/API ranges, dependencies or workflow pins.
 3. Asks before pushing `main` and that one tag atomically. The tag push runs
-   `ci-<moduleId>.yaml`, which validates and packages the exact tagged commit.
+   `ci-<moduleId>.yaml`, which validates the exact tagged commit or verifies reuse of successful main CI at that same commit.
 4. Waits for that tag's successful push validation, then asks separately before
    dispatching `release-<moduleId>.yaml` at the tag. Declining retains the validated
    tag without starting publication.
 5. Waits for the release workflow and confirms the GitHub Release exists. The
-   pinned reusable build publishes the archive, checksum, manifest and history;
-   its existing GitHub-generated release notes policy remains unchanged.
+   module-owned publisher uses the validated archive, checksum and manifest;
+   release history is generated from the existing Core tool bundled by CI.
+   GitHub-generated release notes remain unchanged.
 
 Both prompts default to No. The release workflow also checks exact tag validation
 when started manually through GitHub; dispatching it at a branch fails. Neither
 tag creation nor tag push publishes a release by itself under these wrappers.
+
+## Validate once, publish those files
+
+Main and tag pushes at one commit share a concurrency group. The first runs
+validation and packaging; the second verifies the retained files and skips the
+repeated installation/tests/package. PRs run fully. Reuse requires the exact
+repository, source commit, successful workflow attempt and resolved Core toolchain
+commit. Any changed commit requires validation; no source-file equivalence is
+assumed. A manual validation run deliberately performs the complete suite.
+
+CI retains a publication bundle for 30 days. Its GitHub archive digest and all
+file hashes are checked before use. Publication runs no npm installation, tests
+or package rebuild. The existing history generator is bundled from CI's pinned
+Core checkout, then executed against current release manifests at publication.
+That preserves the history contract without copying its rules into this module.
+Runtime Core/SDK minima and the tested CI Core pin are unaffected.
+
+If retained files expired or were deleted, run `ci-<moduleId>.yaml` manually at
+the unchanged release tag, wait for success, then resume publication. If the tag
+push validation itself failed, review and rerun that failed validation first.
+Do not move tags to repair missing artifacts. API failures and corrupt or
+mismatched files stop publication. A failed run cannot authorize a release.
 
 ## Local preparation and recovery
 
@@ -78,12 +101,12 @@ overwritten.
 
 ## First adoption and maintenance
 
-Commit and push the helper, npm commands and **both** workflow changes together
+Commit and push all release scripts, npm commands and **both** workflow changes together
 before releasing. The manual release workflow must exist on GitHub's default
 branch. Old wrappers publish immediately on a tag push and are rejected by the
 helper. Existing release tags are immutable and keep their original workflows.
 
-The helper and tests are identical across the three maintained modules and the
+The standalone release/publication helpers and tests are identical across the three maintained modules and the
 `module:init` scaffold. Workflow filenames use the module ID; tested Core refs
 remain module-specific. Run the dependency-free release-tool regressions with:
 

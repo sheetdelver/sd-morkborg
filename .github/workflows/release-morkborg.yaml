@@ -11,14 +11,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  verify:
+  release:
+    name: Publish validated package
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     permissions:
-      contents: read
+      contents: write
       actions: read
+    env:
+      CI_CORE_REF: 'v0.19.3'
     steps:
       - name: Check out the requested tag
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Use Node.js 22
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -30,11 +36,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: node scripts/release.mjs --verify-tag-ci
 
-  release:
-    needs: verify
-    permissions:
-      contents: write
-    uses: sheetdelver/sheetdelver/.github/workflows/module-release.yml@v0.19.3
-    with:
-      module_id: 'morkborg'
-      core_ref: 'v0.19.3'
+      - name: Publish the validated archive without rebuilding
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/publish-release.mjs

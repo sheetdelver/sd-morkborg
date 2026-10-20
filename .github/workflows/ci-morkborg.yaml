@@ -33,11 +33,18 @@ on:
 
 permissions:
   contents: read
+  actions: read
+
+# Main and tag pushes at the same commit take turns; the second reuses the first.
+concurrency:
+  group: validation-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: false
 
 jobs:
   validate:
     runs-on: ubuntu-latest
     env:
+      CI_CORE_REF: 'v0.19.3'
       SHEET_DELVER_DATA: ${{ github.workspace }}/sheet-delver-core/.module-ci-data
     defaults:
       run:
@@ -64,26 +71,76 @@ jobs:
           cache: npm
           cache-dependency-path: sheet-delver-core/package-lock.json
 
+      - name: Record the selected toolchain commit
+        run: echo "CI_TOOLCHAIN_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Reuse successful validation for this commit
+        id: reuse
+        if: github.event_name == 'push'
+        working-directory: sheet-delver-core/.module-ci-data/local/modules/morkborg
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/ci-artifacts.mjs restore "$RUNNER_TEMP/reused-validation"
+
       - name: Test standalone release helper
-        run: node --test ".module-ci-data/local/modules/morkborg/scripts/release.test.mjs"
+        if: steps.reuse.outputs.reused != 'true'
+        run: node --test .module-ci-data/local/modules/morkborg/scripts/*.test.mjs
 
       - name: Install reviewed Sheet Delver toolchain
+        if: steps.reuse.outputs.reused != 'true'
         run: npm ci
 
       - name: Generate managed configuration
+        if: steps.reuse.outputs.reused != 'true'
         run: npm run managed:generate
 
       - name: Validate module contract
+        if: steps.reuse.outputs.reused != 'true'
         run: npm run module:check -- 'morkborg'
 
       - name: Type-check module source, UI and hooks
+        if: steps.reuse.outputs.reused != 'true'
         run: node .module-ci-data/local/modules/morkborg/scripts/typecheck.mjs
 
       - name: Run module regression tests
+        if: steps.reuse.outputs.reused != 'true'
         run: |
           for test in .module-ci-data/local/modules/morkborg/src/tests/*.test.ts; do
             npx tsx "$test" || exit 1
           done
 
       - name: Verify distributable package
-        run: npm run module:package -- 'morkborg'
+        if: steps.reuse.outputs.reused != 'true'
+        env:
+          REPOSITORY_URL: https://github.com/${{ github.repository }}
+        run: |
+          VERSION=$(node -p "require('./.module-ci-data/local/modules/morkborg/info.json').version")
+          npm run module:package -- 'morkborg' --release-tag "v$VERSION" \
+            --repository "$REPOSITORY_URL" --changelog "$REPOSITORY_URL/releases/tag/v$VERSION"
+
+      - name: Prepare validated publication files
+        if: steps.reuse.outputs.reused != 'true' && github.event_name != 'pull_request'
+        run: |
+          VERSION=$(node -p "require('./.module-ci-data/local/modules/morkborg/info.json').version")
+          OUT="$SHEET_DELVER_DATA/dist/modules"
+          BUNDLE="$RUNNER_TEMP/validated-release"
+          mkdir -p "$BUNDLE"
+          cp "$OUT/morkborg-$VERSION.tgz" "$OUT/morkborg-$VERSION.sha256" "$BUNDLE/"
+          cp "$OUT/morkborg-$VERSION.manifest.json" "$BUNDLE/sheet-delver-manifest.json"
+          npx esbuild src/scripts/tools/modules/generate-release-history.ts --bundle --platform=node --format=esm \
+            --outfile="$BUNDLE/generate-release-history.mjs"
+
+      - name: Bind files to this validation attempt
+        id: bundle
+        if: steps.reuse.outputs.reused != 'true' && github.event_name != 'pull_request'
+        working-directory: sheet-delver-core/.module-ci-data/local/modules/morkborg
+        run: node scripts/ci-artifacts.mjs record "$RUNNER_TEMP/validated-release"
+
+      - name: Retain validated publication files
+        if: steps.reuse.outputs.reused != 'true' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ${{ steps.bundle.outputs.artifact_name }}
+          path: ${{ runner.temp }}/validated-release/*
+          if-no-files-found: error
+          retention-days: 30
