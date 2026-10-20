@@ -1,4 +1,5 @@
 name: Release Module
+run-name: Release ${{ github.ref_name }}
 
 on:
   workflow_dispatch:

@@ -47,6 +47,8 @@ numbered release. The helper:
 Both prompts default to No. The release workflow also checks exact tag validation
 when started manually through GitHub; dispatching it at a branch fails. Neither
 tag creation nor tag push publishes a release by itself under these wrappers.
+The publication run is titled `Release <tag>` in Actions, independently of the
+`chore(release): prepare <tag>` commit message shown by validation.
 
 ## Validate once, publish those files
 
