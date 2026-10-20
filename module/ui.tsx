@@ -6,6 +6,7 @@ const info = infoJson as ModuleInfo;
 
 const uiManifest: UIModuleManifest = {
     info,
+    stylesheet: 'assets/presentation.css',
     componentStyles: morkborgTheme,
     sheet: () => import('../src/ui/MorkBorgSheet'),
     actorPage: () => import('../src/ui/pages/ActorPage'),

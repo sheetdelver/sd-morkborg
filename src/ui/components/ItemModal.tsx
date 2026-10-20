@@ -289,9 +289,9 @@ export default function ItemModal({ isOpen, onClose, onUpdate, item, actor }: It
 
     return <MorkBorgRollFrame title={`Edit ${item.name}`} subtitle={item.type} onClose={onClose} wide>
         <label className="block text-pink-400">Item name<BufferedInput aria-label="Item name" value={item.name} onCommit={e => handleChange('name', e.target.value)} className="block bg-black border border-pink-700 p-2 w-full my-2 text-white" /></label>
-        <div className="flex gap-3 my-4"><button onClick={() => setActiveTab('description')}>Description</button><button onClick={() => setActiveTab('details')}>Details</button></div>
+        <div className="mb-form-tabs my-4"><button aria-pressed={activeTab === 'description'} onClick={() => setActiveTab('description')}>Description</button><button aria-pressed={activeTab === 'details'} onClick={() => setActiveTab('details')}>Details</button></div>
         {activeTab === 'description' ? <RichTextEditor content={item.system?.description ?? ''} onSave={(html: string) => handleChange('system.description', html)} editButtonText="Edit Item Description" theme={morkborgTheme.richText} /> : renderDetails()}
         <p className="text-neutral-400 text-sm my-4">Fields save when focus leaves them. Descriptions use Save.</p>
-        <button onClick={onClose} className="bg-pink-700 p-3 text-white w-full mt-4">Done</button>
+        <button onClick={onClose} className="mb-action-button w-full mt-4">Done</button>
     </MorkBorgRollFrame>;
 }

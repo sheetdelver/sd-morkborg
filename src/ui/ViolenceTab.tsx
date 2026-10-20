@@ -86,7 +86,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                 </div>
             </div>
 
-            <button className="bg-pink-600 text-black p-3 font-bold" onClick={() => onRoll('defend', '')}>Defend</button>
+            <button className="mb-action-button" onClick={() => onRoll('defend', '')}>Defend</button>
             {/* Weapons */}
             <div>
                 <h3 className="font-morkborg text-3xl mb-4 border-b-4 border-pink-500 text-pink-500 inline-block pr-6 transform -rotate-1">Weapons</h3>
@@ -113,7 +113,7 @@ export default function ViolenceTab({ actor, onRoll, onUpdate }: ViolenceTabProp
                             >
                                 Attack
                             </button>
-                            <button onClick={() => onRoll('damage', w._id || w.id)} className="text-pink-400 p-2">Roll damage</button>
+                            <button onClick={() => onRoll('damage', w._id || w.id)} className="mb-action-button">Roll damage</button>
                         </div>
                     ))}
                     {!actor.items.weapons.filter((w: any) => w.equipped || w.system?.equipped).length && (

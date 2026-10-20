@@ -31,19 +31,19 @@ await check('late Actor action feedback is retired on ownership-only context cha
  await evaluate('window.__events.emit("world:contextChanged",{keys:[],revision:9});window.__pendingActions.shift()(new Response(JSON.stringify({error:"PRIVATE_OLD_NOTICE"}),{status:403}))');await pause(150);assert.equal(await evaluate('window.__notices.some(n=>n[0].includes("PRIVATE_OLD_NOTICE"))'),false);
 });
 await check('factory reviews full preview, disables replay, reports count and retires late status',async()=>{
- await go();await evaluate('window.__scene("factory")');await wait('document.body.innerText.includes("SCVM Factory")');await wait(`![...document.querySelectorAll('button')].find(b=>b.textContent==='Generate new preview')?.disabled`);
- await click(button('Generate new preview'));await wait('document.body.innerText.includes("Starting Items (1)")');assert.ok(await evaluate('document.body.innerText.includes("Generated Donkey")'));
- await click(button('Create reviewed character and companions'));await wait('document.querySelector(".mb-confirm-dialog")');await key('Escape');assert.equal(await evaluate('window.__calls.filter(c=>c.path?.endsWith("/create-character")).length'),0);
- await click(button('Create reviewed character and companions'));await wait('document.querySelector(".mb-confirm-dialog")');await click(button('Create'));await wait('document.body.innerText.includes("Creation: needs-review")');
- assert.equal(await evaluate(`[...document.querySelectorAll('button')].find(b=>b.textContent==='Create reviewed character and companions').disabled`),true);assert.ok(await evaluate('document.body.innerText.includes("1 document write(s) confirmed")'));
+ await go();await evaluate('window.__scene("factory")');await wait(`document.querySelector('[aria-label="SCVM Factory"]')`);await wait('document.body.textContent.includes("Generated Item")');
+ assert.ok(await evaluate('document.body.textContent.includes("Generated Donkey")'));
+ await click(button('💀 SAVE THIS ONE 💀'));await wait('document.querySelector(".mb-confirm-dialog")');await key('Escape');assert.equal(await evaluate('window.__calls.filter(c=>c.path?.endsWith("/create-character")).length'),0);
+ await click(button('💀 SAVE THIS ONE 💀'));await wait('document.querySelector(".mb-confirm-dialog")');await click(button('Create'));await wait('document.body.innerText.includes("Creation: needs-review")');
+ assert.equal(await evaluate(`[...document.querySelectorAll('button')].find(b=>b.textContent==='💀 SAVE THIS ONE 💀').disabled`),true);assert.ok(await evaluate('document.body.innerText.includes("1 document write(s) confirmed")'));
  await evaluate('window.__statusMode="delay"');await click(button('Inspect creation status'));await wait('window.__pendingStatus.length===1');await evaluate('window.__events.emit("world:contextChanged",{keys:[],revision:9})');await pause(100);
  await evaluate('window.__pendingStatus.shift()(new Response(JSON.stringify({outcome:{status:"complete",created:[{id:"old",name:"PRIVATE_OLD_ACTOR"}]}})))');await pause(100);assert.equal(await evaluate('document.body.innerText.includes("PRIVATE_OLD_ACTOR")'),false);
 });
 await check('factory drops late generation and preserves class selection after refresh',async()=>{
- await go();await evaluate('window.__scene("factory")');await wait('document.body.innerText.includes("SCVM Factory")');await wait(`![...document.querySelectorAll('button')].find(b=>b.textContent==='Generate new preview')?.disabled`);
- await click(`document.querySelector('article input[type=checkbox]')`);assert.equal(await evaluate(`[...document.querySelectorAll('button')].find(b=>b.textContent==='Generate new preview').disabled`),true);await click(`document.querySelector('article input[type=checkbox]')`);
- await evaluate('window.__generationMode="delay"');await click(button('Generate new preview'));await wait('window.__pendingGeneration.length===1');await evaluate('window.__events.emit("world:contextChanged",{keys:[],revision:9})');await pause(100);
- await evaluate('const response=window.__candidate();response.candidate.generated.actor.name="STALE_PLAN";window.__pendingGeneration.shift()(new Response(JSON.stringify(response)))');await pause(150);assert.equal(await evaluate('document.body.innerText.includes("STALE_PLAN")'),false);assert.equal(await evaluate('document.querySelector("article input").checked'),true);
+ await go();await evaluate('window.__scene("factory")');await wait(`document.querySelector('[aria-label="SCVM Factory"]')`);await wait('document.body.textContent.includes("Generated Item")');
+ await click(`document.querySelector('.mb-factory-class-options input[type=checkbox]')`);assert.equal(await evaluate(`document.querySelector('[aria-label="Randomize All"]').disabled`),true);await click(`document.querySelector('.mb-factory-class-options input[type=checkbox]')`);
+ await evaluate('window.__generationMode="delay"');await click(`document.querySelector('[aria-label="Randomize All"]')`);await wait('window.__pendingGeneration.length===1');await evaluate('window.__generationMode="ready";window.__events.emit("world:contextChanged",{keys:[],revision:9})');await pause(100);
+ await evaluate('const response=window.__candidate();response.candidate.generated.actor.name="STALE_PLAN";window.__pendingGeneration.shift()(new Response(JSON.stringify(response)))');await pause(150);assert.equal(await evaluate('document.body.innerText.includes("STALE_PLAN")'),false);assert.equal(await evaluate('document.querySelector(".mb-factory-class-options input").checked'),true);
 });
 
 await check('buffered resource and SCVM text input survive delayed source refresh',async()=>{

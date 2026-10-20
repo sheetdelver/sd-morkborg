@@ -10,6 +10,6 @@ export default function ItemInfoModal({ isOpen, onClose, item }: { isOpen: boole
         <div className="text-neutral-200 leading-relaxed break-words" dangerouslySetInnerHTML={{ __html: processHtmlContent(item.system?.description ?? item.description ?? '', foundryUrl) }} />
         {item.type === 'weapon' && <p className="text-pink-400 mt-4">Damage: {item.damageDie || 'Unavailable'}; handed: {item.handed ?? 'Unavailable'}</p>}
         {item.totalCarryWeight !== undefined && <p className="text-neutral-300 mt-3">Carry weight: {item.totalCarryWeight}; container space used: {item.totalContainerSpace ?? 'Unavailable'}</p>}
-        <button onClick={onClose} className="bg-pink-700 text-white p-3 mt-6 w-full">Close</button>
+        <button onClick={onClose} className="mb-action-button mt-6 w-full">Close</button>
     </MorkBorgRollFrame>;
 }

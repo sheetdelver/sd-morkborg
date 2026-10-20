@@ -2,10 +2,16 @@
 
 ## Current status
 
-**No active remediation audit.** [ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
+**Active:** [whole-UI presentation review](2026-10-20-presentation-regressions.md),
+under [ADR-0002](../adr/0002-preserve-module-presentation.md).
+The user accepted the presentation checkpoint on October 20. External Core dice
+sequencing remains recorded as MB-UI13; it is not implemented by this module
+checkpoint. Publication remains separate.
+
+[ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
 is closed for the agreed native-alignment/Core-contract scope as of October 19,
 2026. Release preparation/publication remains separate and requires its own
-Git/release authorization. Module version remains 0.8.3, Core floor 0.19.3.
+Git/release authorization. Published module version is 0.9.0, Core floor 0.19.3.
 
 ## Completed evidence
 

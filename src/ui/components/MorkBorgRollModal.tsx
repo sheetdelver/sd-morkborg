@@ -61,7 +61,7 @@ export default function MorkBorgRollModal({ config, rollMode, onRollModeChange, 
             </select>
         </label>
         <div className="flex gap-3 mt-6">
-            <button disabled={manual && !validManual || !Number.isInteger(baseDR)} onClick={submit} className="flex-1 bg-pink-600 text-black font-bold p-3 disabled:opacity-40">{manual ? 'Use raw dice' : 'Roll'}</button>
+            <button disabled={manual && !validManual || !Number.isInteger(baseDR)} onClick={submit} className="mb-action-button flex-1">{manual ? 'Use raw dice' : 'Roll'}</button>
             <button onClick={onClose} className="border border-neutral-600 text-white p-3">Cancel</button>
         </div>
     </MorkBorgRollFrame>;

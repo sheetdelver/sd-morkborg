@@ -34,7 +34,7 @@ const server=http.createServer((req,res)=>{
  const requested=url.pathname.replace(/^\/api\/modules\/morkborg\/assets\//,'/installed/assets/');
  const target=path.resolve(output,'.'+requested);
  if(!target.startsWith(output+path.sep)||!fs.existsSync(target)||!fs.statSync(target).isFile()){res.statusCode=404;res.end();return}
- res.setHeader('Content-Type',target.endsWith('.js')?'text/javascript':target.endsWith('.css')?'text/css':target.endsWith('.png')?'image/png':'application/octet-stream');fs.createReadStream(target).pipe(res);
+ res.setHeader('Content-Type',target.endsWith('.js')?'text/javascript':target.endsWith('.css')?'text/css':target.endsWith('.png')?'image/png':target.endsWith('.svg')?'image/svg+xml':'application/octet-stream');fs.createReadStream(target).pipe(res);
 });
 await new Promise(resolve=>server.listen(httpPort,'127.0.0.1',resolve));
 const chromeLog=fs.openSync(path.join(output,'chrome.log'),'w');

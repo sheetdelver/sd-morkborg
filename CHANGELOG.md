@@ -2,6 +2,14 @@
 
 Historical entries are reconstructed from [published releases](https://github.com/sheetdelver/sd-morkborg/releases), their tags, and merged changes. Version numbers follow the published tags; unreleased branch work is excluded.
 
+## Unreleased
+
+- Restore SCVM Factory presentation
+- Restore textured module dialogs
+- Repair typography and tablet navigation
+- Stop heartbeat regeneration loops
+- Stabilize Item catalog layout
+
 ## 0.9.0
 
 - Align native inventory preparation

@@ -1,0 +1,461 @@
+{
+  "date": "2026-10-20",
+  "module": "morkborg",
+  "versionUnchanged": "0.9.0",
+  "branch": "fix/restore-module-presentation",
+  "core": {
+    "version": "0.19.5",
+    "commit": "f195246a"
+  },
+  "archiveSha256": "0aacc7f2ef550b55eab73a68d7985ddc83819a0394e28b6160e1e1604d7181c7",
+  "nativeAcceptance": false,
+  "compiledRuntimeUnchanged": {
+    "dist/logic.js": true,
+    "dist/server.js": true
+  },
+  "sourceChecks": [
+    {
+      "name": "morkborg-typecheck.mjs",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-ability-cards.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-action-parity.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-authority.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-combat-memory.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-command-boundaries.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-content-decisions.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-content-identity.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-content-safety.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-feat-actions.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-generation.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-inventory-actions.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-manual-damage.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-native-alignment.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-native-inventory.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-prepared-actor.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-presentation.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-resource-shapes.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-roll-visibility.test.ts",
+      "exit": 0
+    },
+    {
+      "name": "morkborg-table-contract.test.ts",
+      "exit": 0
+    }
+  ],
+  "browserSuites": [
+    {
+      "name": "inventory",
+      "passed": 3,
+      "cases": [
+        {
+          "name": "R01 shield equip/unequip/re-equip, replacement, source preservation and Observer control",
+          "status": "passed"
+        },
+        {
+          "name": "R02 browse ammo exact selection and single inventory representation",
+          "status": "passed"
+        },
+        {
+          "name": "R02 custom ammo, keyboard submission, denial and valid-empty catalog",
+          "status": "passed"
+        }
+      ],
+      "uncaughtErrors": [],
+      "qualification": "Retained earlier run; current delta changes Factory palettes and per-generation tilt only."
+    },
+    {
+      "name": "actions",
+      "passed": 7,
+      "cases": [
+        {
+          "name": "R03 open Violence details follows current owned description and damage",
+          "status": "passed"
+        },
+        {
+          "name": "R03 Violence deletion retires modal and frees keyboard/focus",
+          "status": "passed"
+        },
+        {
+          "name": "R03 Violence unequip retires modal and frees keyboard/focus",
+          "status": "passed"
+        },
+        {
+          "name": "R03 Violence Actor replacement retires modal and frees keyboard/focus",
+          "status": "passed"
+        },
+        {
+          "name": "R03 Violence ownership loss retires modal and frees keyboard/focus",
+          "status": "passed"
+        },
+        {
+          "name": "R03 Equipment details and Special editor still refresh current Item",
+          "status": "passed"
+        },
+        {
+          "name": "R04 passive details accessible without executable no-op; formula and macro retain shared capability",
+          "status": "passed"
+        }
+      ],
+      "uncaughtErrors": [],
+      "qualification": "Retained earlier run; current delta changes Factory palettes and per-generation tilt only."
+    },
+    {
+      "name": "presentation",
+      "passed": 17,
+      "cases": [
+        {
+          "name": "factory 360/light: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 360/light: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 360/dark: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 360/dark: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 768/light: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 768/light: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 768/dark: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 768/dark: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 1280/light: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 1280/light: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 1280/dark: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 1280/dark: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 1920/light: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 1920/light: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "factory 1920/dark: paper, controls, review and recovery",
+          "status": "passed"
+        },
+        {
+          "name": "sheet/rest 1920/dark: texture, frame and keyboard",
+          "status": "passed"
+        },
+        {
+          "name": "all sheet tabs and editor surfaces retain presentation",
+          "status": "passed"
+        }
+      ],
+      "archiveSha256": "0aacc7f2ef550b55eab73a68d7985ddc83819a0394e28b6160e1e1604d7181c7",
+      "uncaughtErrors": []
+    },
+    {
+      "name": "factory-corrections",
+      "passed": 14,
+      "cases": [
+        {
+          "name": "Factory automatically generates once and keeps the original single-page review",
+          "status": "passed"
+        },
+        {
+          "name": "Factory uses all seven SCVMBIRTHER color combinations",
+          "status": "passed"
+        },
+        {
+          "name": "every new SCVM reverses all nine tilts; selection, heartbeat and confirmation stay still",
+          "status": "passed"
+        },
+        {
+          "name": "healthy Core heartbeats do not refetch classes or regenerate; actual invalidation requires reroll",
+          "status": "passed"
+        },
+        {
+          "name": "healthy Core heartbeats preserve an open Item catalog without refetch or loading flicker",
+          "status": "passed"
+        },
+        {
+          "name": "pending action feedback survives healthy status only (true)",
+          "status": "passed"
+        },
+        {
+          "name": "pending action feedback survives healthy status only (false)",
+          "status": "passed"
+        },
+        {
+          "name": "desktop tabs stay in one row at 640",
+          "status": "passed"
+        },
+        {
+          "name": "desktop tabs stay in one row at 768",
+          "status": "passed"
+        },
+        {
+          "name": "desktop tabs stay in one row at 1024",
+          "status": "passed"
+        },
+        {
+          "name": "desktop tabs stay in one row at 1280",
+          "status": "passed"
+        },
+        {
+          "name": "desktop tabs stay in one row at 1920",
+          "status": "passed"
+        },
+        {
+          "name": "delayed Item catalog keeps its frame in place and scrolls the results",
+          "status": "passed"
+        },
+        {
+          "name": "item editor opens without late vertical jump; refresh preserves dialog and draft",
+          "status": "passed"
+        }
+      ],
+      "archiveSha256": "0aacc7f2ef550b55eab73a68d7985ddc83819a0394e28b6160e1e1604d7181c7",
+      "uncaughtErrors": []
+    },
+    {
+      "name": "maintained",
+      "passed": 26,
+      "cases": [
+        {
+          "name": "safe rich Item content, Escape and trigger focus",
+          "status": "passed"
+        },
+        {
+          "name": "Rest select keyboard operation, Tab wrapping and focus restore",
+          "status": "passed"
+        },
+        {
+          "name": "public Core confirmation shell focus and Escape",
+          "status": "passed"
+        },
+        {
+          "name": "mounted Item catalog lifecycle, stale response retirement, denial, retry, empty and search preservation",
+          "status": "passed"
+        },
+        {
+          "name": "custom Item type select and name keyboard input",
+          "status": "passed"
+        },
+        {
+          "name": "sheet manual raw die semantics and visibility retained",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 360 light: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 360 dark: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 768 light: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 768 dark: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 1280 light: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 1280 dark: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 1920 light: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "viewport 1920 dark: HP fits and module colors remain",
+          "status": "passed"
+        },
+        {
+          "name": "observer controls disabled through actual DOM fieldsets",
+          "status": "passed"
+        },
+        {
+          "name": "real Core HUD clears expanded mobile navigation and remains operable",
+          "status": "passed"
+        },
+        {
+          "name": "late Actor action feedback is retired on ownership-only context change",
+          "status": "passed"
+        },
+        {
+          "name": "factory reviews full preview, disables replay, reports count and retires late status",
+          "status": "passed"
+        },
+        {
+          "name": "factory drops late generation and preserves class selection after refresh",
+          "status": "passed"
+        },
+        {
+          "name": "buffered resource and SCVM text input survive delayed source refresh",
+          "status": "passed"
+        },
+        {
+          "name": "native Item controls, shared rich editor and editor permission retirement",
+          "status": "passed"
+        },
+        {
+          "name": "SCVM editor closes when write authority is revoked",
+          "status": "passed"
+        },
+        {
+          "name": "native observer ownership retires editor despite host owner fallback",
+          "status": "passed"
+        },
+        {
+          "name": "real Core shared image replaces module form and restores trigger focus",
+          "status": "passed"
+        },
+        {
+          "name": "sheet manual attack uses the discriminated server input contract",
+          "status": "passed"
+        },
+        {
+          "name": "sheet manual defend uses the discriminated server input contract",
+          "status": "passed"
+        }
+      ],
+      "archiveSha256": "e97db37f9d670f529f150f21fbcc89b1ba26474967f872270b63f1d8b1776b38",
+      "uncaughtErrors": [],
+      "qualification": "Retained earlier run; current delta changes Factory palettes and per-generation tilt only."
+    }
+  ],
+  "supersededIterations": [
+    {
+      "archiveSha256": "439ca8c8f4042c80f5160c3e396f9699a56ede590f91bcfee07da64c45f93447",
+      "disposition": "User rejected the tabbed/manual-preview Factory. Fixture checks omitted healthy heartbeat cadence and browser HTTP caching."
+    }
+  ],
+  "operatorAcceptance": true,
+  "operatorAcceptanceScope": "Current presentation accepted for a local checkpoint on October 20; no new native acceptance or release approval. External Core dice sequencing remains pending.",
+  "externalCoreCorrection": "Core ADR-0065, separately authorized; not part of this archive",
+  "operatorFeedback": {
+    "restoredLayout": "User says the original layout is looking good.",
+    "coreStartup": "User confirms the separate Core fixes corrected loading problems.",
+    "paletteTiltRefinement": "User accepted the current Mörk Borg presentation and authorized a local checkpoint."
+  },
+  "paletteReference": {
+    "url": "https://scvmbirther.makedatanotlore.dev/",
+    "script": "static/js/main.23471cfb.js",
+    "inspected": "2026-10-20",
+    "paletteIds": [
+      "classic",
+      "doom",
+      "flesh",
+      "pig",
+      "gold",
+      "ink",
+      "sarkash"
+    ],
+    "colors": [
+      "#000000",
+      "#ffffff",
+      "#ffe82c",
+      "#f142af"
+    ]
+  },
+  "paletteTiltRegression": {
+    "beforeArchiveSha256": "e97db37f9d670f529f150f21fbcc89b1ba26474967f872270b63f1d8b1776b38",
+    "beforePassed": 12,
+    "beforeFailed": [
+      "unsupported palette selected",
+      "nine tilts unchanged after reroll"
+    ],
+    "afterPassed": 14
+  },
+  "tiltDirectionRegression": {
+    "beforeArchiveSha256": "6539cd0be54356bf47416195aba8ecd51a90e6b5adc8e2f76d496cfc77e54fa4",
+    "beforePassed": 13,
+    "beforeFailed": [
+      "save/card angles could remain on the same side"
+    ],
+    "afterPassed": 14,
+    "policy": "Every generation reverses each of the nine elements; magnitude is 1 or 2 degrees."
+  }
+}

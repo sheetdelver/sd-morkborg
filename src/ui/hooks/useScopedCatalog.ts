@@ -10,6 +10,8 @@ export function useScopedCatalog<T>(url: string) {
     const [state, setState] = useState<{ scope: string; generation: number; status: 'loading' | 'ready' | 'failed'; data?: T; error?: string }>({ scope, generation: 0, status: 'loading' });
     useEffect(() => {
         let retired = false;
+        let connected = sdk.isConnected;
+        let connectedWorld = sdk.worldId;
         const refresh = async (connected = sdk.isConnected) => {
             const generation = ++sequence.current;
             setState({ scope, generation, status: 'loading' });
@@ -29,8 +31,15 @@ export function useScopedCatalog<T>(url: string) {
         const disposers = [
             sdk.events.on('world:contextChanged', () => { void refresh(); }),
             sdk.events.on('world:ready', () => { void refresh(); }),
-            sdk.events.on('world:teardown', () => { void refresh(false); }),
-            sdk.events.on('connection:changed', event => { void refresh(event.connected); }),
+            sdk.events.on('world:teardown', () => { connected = false; void refresh(false); }),
+            sdk.events.on('connection:changed', event => {
+                // Core reports link health on every status heartbeat. A repeated
+                // healthy status does not invalidate content or the user's work.
+                const nextWorld = event.worldId ?? connectedWorld;
+                if (event.connected === connected && nextWorld === connectedWorld) return;
+                connected = event.connected; connectedWorld = nextWorld;
+                void refresh(event.connected);
+            }),
             sdk.events.on('document:listInvalidated', () => { void refresh(); }),
         ];
         return () => { retired = true; sequence.current++; disposers.forEach(dispose => dispose()); };

@@ -12,6 +12,6 @@ export default function MorkBorgEditScvmModal({ isOpen, onClose, onUpdate, actor
             {['hp', 'omens', 'powerUses'].flatMap(key => ['value', 'max'].map(field => numberField(`${key} ${field}`, `system.${key}.${field}`, actor.system[key]?.[field])))}
             {numberField('Silver', 'system.silver', actor.system.silver)}
         </div>
-        <button onClick={onClose} className="w-full bg-pink-700 text-white p-3 mt-5">Done</button>
+        <button onClick={onClose} className="mb-action-button w-full mt-5">Done</button>
     </MorkBorgRollFrame>;
 }
