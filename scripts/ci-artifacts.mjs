@@ -46,7 +46,19 @@ export function trustedRun(run, id) {
         && run.path?.split('@')[0] === `.github/workflows/${id.workflow}`;
 }
 
+function validateBasis(basis, id) {
+    if (basis === undefined) return;
+    const allowed = id.product === 'core' ? ['CHANGELOG.md', 'package.json', 'package-lock.json'] : ['CHANGELOG.md', 'info.json'];
+    if (!basis || !shaPattern.test(basis.commit ?? '') || basis.commit === id.commit
+        || !Number.isSafeInteger(basis.runId) || basis.runId < 1
+        || !Number.isSafeInteger(basis.runAttempt) || basis.runAttempt < 1
+        || !Array.isArray(basis.changed) || basis.changed.some(file => !allowed.includes(file))) {
+        throw new Error('Invalid metadata-only validation basis.');
+    }
+}
+
 export function validateBundle(bundle, id, run, read) {
+    validateBasis(bundle.validationBasis, id);
     for (const key of ['schema', 'product', 'version', 'commit', 'repository', 'workflow', 'nodeMajor']) {
         if (bundle[key] !== id[key]) throw new Error(`Validated artifact ${key} differs from requested release.`);
     }
@@ -77,7 +89,9 @@ export function recordBundle(id, directory, env = process.env) {
         const bytes = fs.readFileSync(file);
         return [name, { size: bytes.length, sha256: digest(bytes) }];
     }));
-    const bundle = { ...id, runId: run.id, runAttempt: run.run_attempt, files };
+    const validationBasis = env.CI_VALIDATION_BASIS ? JSON.parse(fs.readFileSync(env.CI_VALIDATION_BASIS, 'utf8')) : undefined;
+    validateBasis(validationBasis, id);
+    const bundle = { ...id, runId: run.id, runAttempt: run.run_attempt, validationBasis, files };
     fs.writeFileSync(path.join(directory, 'validation.json'), `${JSON.stringify(bundle, null, 2)}\n`);
     return artifactName(id, run);
 }

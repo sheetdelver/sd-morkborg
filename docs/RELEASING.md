@@ -52,12 +52,29 @@ The publication run is titled `Release <tag>` in Actions, independently of the
 
 ## Validate once, publish those files
 
-Main and tag pushes at one commit share a concurrency group. The first runs
-validation and packaging; the second verifies the retained files and skips the
-repeated installation/tests/package. PRs run fully. Reuse requires the exact
-repository, source commit, successful workflow attempt and resolved Core toolchain
-commit. Any changed commit requires validation; no source-file equivalence is
-assumed. A manual validation run deliberately performs the complete suite.
+Main and tag pushes at one commit share a concurrency group. Exact-commit reuse
+skips installation, tests and packaging. A new release-preparation commit can
+reuse a successful main ancestor when the complete Git tree differs only in
+`CHANGELOG.md` or `info.json.version`. Every other manifest field, dependency,
+configuration, workflow, source/asset or unknown file is significant and runs the
+full checks. File additions/deletions and mode changes are significant too.
+Module CI has no path filter that silently excludes new inputs.
+
+The small selection job verifies the successful same-repository run, attempt,
+artifact hashes, Node major and resolved Core toolchain. It examines up to 100
+recent main runs; unavailable history/artifacts, an in-progress baseline or a
+changed toolchain falls back to full validation. API failures/corruption stop the
+run. The Actions summary reports the selected path and baseline. Same-repository
+metadata-only PRs can reuse main checks but publish no artifacts; fork PRs and
+manual validation run fully.
+
+`info.json` is compiled into module JavaScript. Version changes skip the repeated
+helper/type/rules suites but still run the existing pinned packaging process,
+including its built-in contract check, to produce the correct embedded version.
+Changelog-only changes retain the original compiled package unless it includes
+`CHANGELOG.md`. Final files are bound to the current commit and successful run,
+with the baseline commit/run recorded. Publication never rebuilds them.
+No compiled version is changed by search-and-replace or just renaming an archive.
 
 CI retains a publication bundle for 30 days. Its GitHub archive digest and all
 file hashes are checked before use. Publication runs no npm installation, tests
@@ -104,7 +121,8 @@ overwritten.
 ## First adoption and maintenance
 
 Commit and push all release scripts, npm commands and **both** workflow changes together
-before releasing. The manual release workflow must exist on GitHub's default
+before releasing. This tooling change itself runs full CI; later metadata-only
+commits can reuse it. The manual release workflow must exist on GitHub's default
 branch. Old wrappers publish immediately on a tag push and are rejected by the
 helper. Existing release tags are immutable and keep their original workflows.
 
