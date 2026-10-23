@@ -44,6 +44,12 @@ second world cache/lifecycle or treat module-prepared data as native browser dat
   compatibility minima or CI toolchain pins as incidental housekeeping.
 - Follow this module's CI/release workflows and the host's documented packaging
   contract. Release publication is a separate authorized operation.
+- Record any Core/SDK/API requirement changes with explicit old → new versions
+  in CHANGELOG.md and the current handoff, alongside manifest/toolchain updates.
+  Keep this guidance current when a new required floor is adopted. Use the previous
+  release baseline, not intermediate branch bumps; identify the supporting Core
+  publication and whether it must precede the module release. Optional adoption
+  must name its introduction versions without implying an increased minimum.
 
 ## Standalone release tooling
 
