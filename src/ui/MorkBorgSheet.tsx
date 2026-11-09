@@ -289,10 +289,10 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                         </div>
 
                         <div className="flex flex-col gap-6">
-                            <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
+                            <div className="flex flex-col lg:flex-row gap-8 items-start justify-between">
                                 {/* Profile & Name Section */}
                                 <div className="flex flex-col gap-6 flex-1 min-w-0 w-full order-first">
-                                    <div className="flex gap-4 sm:gap-6 items-center">
+                                    <div className="flex gap-4 sm:gap-6 items-center max-[379px]:flex-col max-[379px]:items-start">
                                         <div className="relative flex-shrink-0">
                                             <img
                                                 src={encodeURI(sheetActor.img)}
@@ -307,8 +307,8 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                                 {sheetActor.derived?.class?.name}
                                             </div>
                                         </div>
-                                        <div className="flex-1 min-w-0 overflow-hidden">
-                                            <h1 className={`font-imfell text-3xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] sm:leading-none mb-1 drop-shadow-md break-words`}>
+                                        <div className="flex-1 min-w-0 overflow-hidden max-[379px]:w-full">
+                                            <h1 className={`font-imfell text-3xl sm:text-6xl lg:text-7xl font-bold uppercase tracking-tighter leading-[0.85] sm:leading-none mb-1 drop-shadow-md break-words`}>
                                                 {sheetActor.name}
                                             </h1>
                                         </div>
@@ -326,8 +326,8 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                 </div>
 
                                 {/* Abilities - Now below name and description on mobile */}
-                                <div className="w-full md:w-auto">
-                                    <div className="grid grid-cols-2 md:flex md:flex-col gap-x-4 gap-y-2 border-t-4 md:border-t-0 md:border-l-4 border-black pt-6 md:pt-0 md:pl-6 py-2">
+                                <div className="w-full lg:w-auto">
+                                    <div className="grid grid-cols-2 lg:flex lg:flex-col gap-x-4 gap-y-2 border-t-4 lg:border-t-0 lg:border-l-4 border-black pt-6 lg:pt-0 lg:pl-6 py-2">
                                         <AbilityBlock label="Strength" value={sheetActor.derived.abilities?.strength?.value ?? 0} onRoll={handleAbilityRoll} />
                                         <AbilityBlock label="Agility" value={sheetActor.derived.abilities?.agility?.value ?? 0} onRoll={handleAbilityRoll} />
                                         <AbilityBlock label="Presence" value={sheetActor.derived.abilities?.presence?.value ?? 0} onRoll={handleAbilityRoll} />

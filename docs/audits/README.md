@@ -61,3 +61,8 @@ before implementation; do not reopen the completed ADR by inference.
 No demonstrated external Core blocker, selected persistent migration or new SDK
 minimum remains for this release scope. Absence of a migration catalog is the
 recorded N/A decision, not a claim that every historical world is repaired.
+
+## November8 follow-up
+
+Current selected follow-up: [Phone and tablet names](2026-11-08-narrow-phone-and-artwork-review.md).
+Automated checks and user verification accepted; patch release 1.0.3.

@@ -104,3 +104,11 @@ executor and chat renderer for all four abilities in all four visibility modes;
 `feat-actions.test.ts` verifies shared capability and macro precedence/denial.
 Installed Core cases additionally verify actual persisted chat content/recipients
 and exact copied-native passive/formula/reviewed/unsupported macro execution.
+
+### Phone/tablet name regression
+
+`name-regressions.mjs` renders the installed ActorPage (including its real
+max-width/padding), not the standalone Sheet. Run with `MB_TEST_FONT` pointing
+to the host's local IM Fell Double Pica woff2; it rejects fallback-font evidence.
+It checks 19 widths at DPR2, including iPad portrait and breakpoint edges, and
+records actual name-box dimensions. No live Core/Foundry connection is required.
