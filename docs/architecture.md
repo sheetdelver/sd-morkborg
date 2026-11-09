@@ -341,3 +341,8 @@ an empty native system shape for schema defaults and requires configuration.
 The existing server inventory planner enforces shield exclusivity and the attack
 executor consumes the selected owned ammunition stack. No name consolidation or
 additional inventory projection is introduced.
+
+Phone character headings use text-3xl with shrinkable profile/name flex children;
+larger breakpoint sizes and long-name wrapping remain unchanged. Installed
+responsive coverage is in `tests/browser/name-regressions.mjs`; see
+[ADR-0003](adr/0003-mobile-character-name.md).

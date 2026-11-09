@@ -50,7 +50,7 @@ function App(){
  const patch=(object,path,value)=>{const keys=path.split('.');for(const key of keys.slice(0,-1))object=object[key]??={};object[keys.at(-1)]=value};
  const inventory=command=>{window.__calls.push({inventory:command});for(const step of planInventoryOperation(source,command)){if(step.kind==='delete')source.items=source.items.filter(i=>i._id!==step.itemId);else for(const [key,value]of Object.entries(step.patch))patch(source.items.find(i=>i._id===step.itemId),key,value)}refresh()};
  const update=(path,value)=>{window.__calls.push({path,value});if(!window.__review)return;const item=path.match(/^items\.([^.]+)\.(.*)$/);if(item){if(item[2]==='system.equipped')return inventory({op:'equip',itemId:item[1],value});patch(source.items.find(i=>i._id===item[1]),item[2],value)}else patch(source,path,value);refresh()};
- window.__raw=()=>structuredClone(source);window.__projection=projection;
+ window.__setName=(name,img)=>{source.name=name;if(img)source.img=img;refresh()};window.__raw=()=>structuredClone(source);window.__projection=projection;
  window.__patchItem=(id,fields)=>{Object.assign(source.items.find(i=>i._id===id).system,fields);refresh()};
  window.__removeItem=id=>{source.items=source.items.filter(i=>i._id!==id);refresh()};
  window.__actorId=id=>{source._id=id;refresh()};

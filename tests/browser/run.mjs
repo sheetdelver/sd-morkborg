@@ -25,6 +25,8 @@ for(const [flavor,file] of [['installed',archive],['baseline',before??archive]])
 }
 const styles=await postcss([tailwind({base:core})]).process(`@import "tailwindcss" source(none);\n@source "${core}/src";`,{from:path.join(core,'src/app/browser-fixture.css')});
 fs.writeFileSync(path.join(output,'host.css'),styles.css+fs.readFileSync(path.join(core,'src/app/globals.css'),'utf8').replace('@import "tailwindcss";',''));
+if(process.env.MB_TEST_FONT){fs.copyFileSync(process.env.MB_TEST_FONT,path.join(output,'name-font.woff2'));fs.appendFileSync(path.join(output,'host.css'),`@font-face{font-family:ObservedIMFell;src:url('/name-font.woff2') format('woff2');font-weight:400;}body{--font-imfell:ObservedIMFell;}.font-imfell{font-family:ObservedIMFell,serif;}`);}
+fs.writeFileSync(path.join(output,'portrait.svg'),'<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96"><rect width="96" height="96" fill="black"/></svg>');
 fs.copyFileSync(path.join(here,'cdp.mjs'),path.join(output,'cdp.mjs'));
 const testScript=option('--test-script')??'browser-tests.mjs';if(path.basename(testScript)!==testScript)throw Error('Test script must be in tests/browser');
 fs.copyFileSync(path.join(here,testScript),path.join(output,'browser-tests.mjs'));

@@ -291,7 +291,7 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                         <div className="flex flex-col gap-6">
                             <div className="flex flex-col md:flex-row gap-8 items-start justify-between">
                                 {/* Profile & Name Section */}
-                                <div className="flex flex-col gap-6 flex-1 w-full order-first">
+                                <div className="flex flex-col gap-6 flex-1 min-w-0 w-full order-first">
                                     <div className="flex gap-4 sm:gap-6 items-center">
                                         <div className="relative flex-shrink-0">
                                             <img
@@ -307,8 +307,8 @@ export default function MorkBorgSheet({ actor, onUpdate, onRoll, onDeleteItem, o
                                                 {sheetActor.derived?.class?.name}
                                             </div>
                                         </div>
-                                        <div className="flex-1 overflow-hidden">
-                                            <h1 className={`font-imfell text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] sm:leading-none mb-1 drop-shadow-md break-words`}>
+                                        <div className="flex-1 min-w-0 overflow-hidden">
+                                            <h1 className={`font-imfell text-3xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tighter leading-[0.85] sm:leading-none mb-1 drop-shadow-md break-words`}>
                                                 {sheetActor.name}
                                             </h1>
                                         </div>
