@@ -1,7 +1,15 @@
 # ADR-0002: Preserve Mörk Borg presentation through behavior changes
 
-Status: Open — presentation checkpoint accepted; external dice follow-up recorded
+Status: Open — module presentation accepted and released; external MB-UI13 disposition unresolved
 Date: 2026-10-20
+
+## Status reconciliation — November 8, 2026
+
+The accepted module presentation repairs have shipped. Only the external Core
+attack/defense dice-timing observation MB-UI13 remains recorded without closure
+evidence; this documentation pass does not implement or verify that host change.
+The module's current release is 1.0.3. Earlier checkpoint/publication-pending
+statements below describe their dated state, not a new module release gate.
 
 ## Context
 

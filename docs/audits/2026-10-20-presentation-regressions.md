@@ -1,6 +1,14 @@
 # Mörk Borg presentation regression review
 
-Date: 2026-10-20. Active scope: [ADR-0002](../adr/0002-preserve-module-presentation.md).
+Date: 2026-10-20. Decision: [ADR-0002](../adr/0002-preserve-module-presentation.md).
+
+## Current disposition — reconciled November 8
+
+The user accepted the module presentation repairs October20; they have shipped.
+The separate external Core timing observation MB-UI13 below remains unverified
+by this documentation review. New phone/tablet corrections and release evidence
+are in the [current audit index](README.md). Historical pending publication and
+review statements below do not reopen accepted module work.
 
 ## Provenance and scope
 

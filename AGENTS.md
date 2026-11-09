@@ -6,7 +6,8 @@ Do not adopt Shadowdark's audit or the Core handoff as this module's work queue.
 
 [Module ADR-0001](docs/adr/0001-native-data-and-behavior-alignment.md) is closed
 for its agreed scope; the [audit index](docs/audits/README.md) links completed
-evidence and separately scoped follow-ups. The current presentation repair is
+evidence and separately scoped follow-ups. Accepted presentation repairs and
+the unresolved external dice-timing follow-up are recorded in
 [ADR-0002](docs/adr/0002-preserve-module-presentation.md), with the
 [whole-UI audit](docs/audits/2026-10-20-presentation-regressions.md).
 Do not reopen historical checklists by inference. Release publication still needs

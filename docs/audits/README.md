@@ -1,17 +1,17 @@
 # Mörk Borg audit index
 
-## Current status
+## Current status — November 8, 2026
 
-**Active:** [whole-UI presentation review](2026-10-20-presentation-regressions.md),
-under [ADR-0002](../adr/0002-preserve-module-presentation.md).
-The user accepted the presentation checkpoint on October 20. External Core dice
-sequencing remains recorded as MB-UI13; it is not implemented by this module
-checkpoint. Publication remains separate.
+[Mörk Borg 1.0.3](https://github.com/sheetdelver/sd-morkborg/releases/tag/v1.0.3)
+is published; Core minimum remains 0.19.3. Native alignment under
+[ADR-0001](../adr/0001-native-data-and-behavior-alignment.md) and the selected
+phone/tablet corrections under ADR-0003/0004 are complete and user accepted.
 
-[ADR-0001](../adr/0001-native-data-and-behavior-alignment.md)
-is closed for the agreed native-alignment/Core-contract scope as of October 19,
-2026. Release preparation/publication remains separate and requires its own
-Git/release authorization. Published module version is 0.9.0, Core floor 0.19.3.
+The [presentation repairs](2026-10-20-presentation-regressions.md) were accepted
+October20. [ADR-0002](../adr/0002-preserve-module-presentation.md) retains only
+the external Core dice-sequencing follow-up MB-UI13; this review has no evidence
+to close that follow-up. It is not an unshipped module presentation repair.
+Future Git/release operations require separate authorization.
 
 ## Completed evidence
 
@@ -62,7 +62,14 @@ No demonstrated external Core blocker, selected persistent migration or new SDK
 minimum remains for this release scope. Absence of a migration catalog is the
 recorded N/A decision, not a claim that every historical world is repaired.
 
-## November8 follow-up
+## Completed November8 corrections
 
-Current selected follow-up: [Phone and tablet names](2026-11-08-narrow-phone-and-artwork-review.md).
-Automated checks and user verification accepted; patch release 1.0.3.
+[Phone and tablet names](2026-11-08-narrow-phone-and-artwork-review.md) supersedes
+the initial [mobile-name review](2026-11-08-mobile-character-name.md) where noted.
+The installed ActorPage checks and user verification passed; released in 1.0.3.
+The artwork investigation selected no runtime change.
+
+Release commit `fce9bd581f3b690f8ad2180419dfcb721616ab76` followed PR14.
+PR validation `42561196410`, main validation `42561445748` and tag
+validation `42561580682` passed. Publication run `42561784890` succeeded; downloaded
+archive checksum and packaged/manifest versions were verified.

@@ -342,14 +342,11 @@ The existing server inventory planner enforces shield exclusivity and the attack
 executor consumes the selected owned ammunition stack. No name consolidation or
 additional inventory projection is introduced.
 
-Phone character headings use text-3xl with shrinkable profile/name flex children;
-larger breakpoint sizes and long-name wrapping remain unchanged. Installed
-responsive coverage is in `tests/browser/name-regressions.mjs`; see
-[ADR-0003](adr/0003-mobile-character-name.md).
-
-Below379px, the profile stacks its name below the portrait to preserve readable
-font sizing. Narrow-width/DPR2 follow-up: [ADR-0004](adr/0004-narrow-phone-header.md).
-
-The large heading and side-by-side stats begin at 1024px together. Tablet
-headers keep stats below the profile. Name regressions render installed
-ActorPage, including its max-width/padding, rather than Sheet alone.
+Phone character headings use text-3xl with shrinkable profile/name flex children.
+Below 379px, the profile stacks its name below the portrait. Tablet headings use
+60px text with stats below the profile; the 72px heading and side-by-side stats
+begin together at 1024px. Installed responsive coverage in
+`tests/browser/name-regressions.mjs` renders ActorPage with its actual width and
+padding. [ADR-0004](adr/0004-narrow-phone-header.md) records the accepted phone and
+tablet correction, superseding the narrower [ADR-0003](adr/0003-mobile-character-name.md)
+coverage.
