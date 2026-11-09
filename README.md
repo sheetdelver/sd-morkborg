@@ -1,5 +1,7 @@
 # SheetDelver — Mörk Borg
 
+[![CI](https://github.com/sheetdelver/sd-morkborg/actions/workflows/ci-morkborg.yaml/badge.svg?branch=main)](https://github.com/sheetdelver/sd-morkborg/actions/workflows/ci-morkborg.yaml?query=branch%3Amain)
+
 Character sheets and tools for playing Mörk Borg with SheetDelver.
 
 ## Features
@@ -9,8 +11,6 @@ Character sheets and tools for playing Mörk Borg with SheetDelver.
 - Inventory management, rest, Omens and Get Better.
 - SCVM Factory character generation.
 - Mobile-friendly navigation and Combat HUD initiative rolling.
-
-<img src="https://github.com/sheetdelver/sheetdelver/blob/main/images/sheets/morkborg/mb-character-sheet.png" alt="Mörk Borg character sheet" width="25%">
 
 Requires **SheetDelver Core 0.19.3 or later**. The current module targets native
 **Mörk Borg 6.0.x on Foundry v14**, following upstream system support. Foundry v13 /
