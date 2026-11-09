@@ -30,3 +30,9 @@ The user confirmed verification on 2026-11-08 and authorized patch release
 1.0.2. This operator acceptance does not imply an agent-run live Foundry probe
 or redefine the existing presentation design.
 See [the audit](../audits/2026-11-08-mobile-character-name.md).
+
+## Post-release qualification
+
+Observation29 is partially resolved: the user confirmed390px and wider, then
+reported remaining320/360px splits. [ADR-0004](0004-narrow-phone-header.md)
+tracks that narrower follow-up without replacing the original evidence.

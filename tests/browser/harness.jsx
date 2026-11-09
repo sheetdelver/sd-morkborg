@@ -1,6 +1,6 @@
 import React,{useState,useCallback} from 'react';
 import {createRoot} from 'react-dom/client';
-import {createMockSdkContext,createMockSdkComponents,MockSDKProvider} from '@sheet-delver/sdk/testing';
+import {createMockSdkContext,createMockSdkComponents,createMockDocumentSource,MockSDKProvider} from '@sheet-delver/sdk/testing';
 import {ConfirmationModal} from 'host-confirm';
 import RichTextEditor from 'host-editor';
 import {UIProvider,useUI} from 'host-ui';
@@ -45,7 +45,9 @@ window.__events=sdk.events;
 window.__candidate=()=>({candidate:{id:`00000000-0000-4000-8000-${String(++window.__nextCandidate).padStart(12,'0')}`,generated:{actor:{name:'Generated Fixture',system:{abilities:{strength:{value:1},agility:{value:-1},presence:{value:2},toughness:{value:0}},hp:{max:6},omens:{max:2},powerUses:{max:3},silver:10,description:'<p>Complete preview</p>'},items:[{_id:'generated1',name:'Generated Item',system:{quantity:1,description:'<p>Reviewed native Item instructions</p>'}}]},className:'Fixture Class',companions:[{name:'Generated Donkey',type:'container'}]}}});
 function App(){
  const ui=useUI();const register=useCallback(el=>{window.__footer=el;const dispose=ui.registerBottomNavigation(el);return()=>{window.__footer=null;dispose()}},[ui.registerBottomNavigation]);
- const context={...sdk,registerBottomNavigation:register};const [scene,setScene]=useState('sheet'),[owner,setOwner]=useState(true),[projection,setProjection]=useState(actor);
+ const [scene,setScene]=useState('sheet'),[owner,setOwner]=useState(true),[projection,setProjection]=useState(actor);
+ const pageDocuments=React.useMemo(()=>createMockDocumentSource({Actor:{a1:projection}}),[projection]);
+ const context={...sdk,documents:scene==='page'?pageDocuments:sdk.documents,registerBottomNavigation:register};
  const refresh=()=>setProjection(adapter.prepareActorData(source,{world:worlds}));
  const patch=(object,path,value)=>{const keys=path.split('.');for(const key of keys.slice(0,-1))object=object[key]??={};object[keys.at(-1)]=value};
  const inventory=command=>{window.__calls.push({inventory:command});for(const step of planInventoryOperation(source,command)){if(step.kind==='delete')source.items=source.items.filter(i=>i._id!==step.itemId);else for(const [key,value]of Object.entries(step.patch))patch(source.items.find(i=>i._id===step.itemId),key,value)}refresh()};
@@ -67,6 +69,6 @@ function App(){
  };
  const create=item=>{window.__calls.push({create:item});if(!window.__review)return;const template=item.sourceUuid?window.__reviewTemplates.find(t=>t.uuid===item.sourceUuid):item;const copy=structuredClone(template);delete copy.uuid;copy._id='added'+(window.__createdCount=(window.__createdCount??0)+1);if(item.sourceUuid)copy.flags={...copy.flags,morkborg:{sourceUuid:item.sourceUuid}};source.items.push(copy);refresh()};
  window.__nativeOwner=value=>setProjection(previous=>({...previous,ownership:{...previous.ownership,u1:value}}));window.__scene=setScene;window.__owner=setOwner;
- return <MockSDKProvider context={context} components={{...createMockSdkComponents(),ConfirmationModal,RichTextEditor}}><div className="sdk-module--morkborg" id="module-root">{scene==='page'?<ActorPage actorId="a1"/>:scene==='sheet'?<Sheet actor={projection} isOwner={owner} onRoll={(type,key,options)=>window.__calls.push({type,key,options})} onUpdate={update} onDeleteItem={id=>window.__calls.push({delete:id})} onInventoryAction={async command=>inventory(command)} onCreateItem={create}/>:<Factory/>}</div></MockSDKProvider>
+ return <MockSDKProvider context={context} components={{...createMockSdkComponents(),ConfirmationModal,RichTextEditor}}><div className="sd-surface-root sdk-module--morkborg sd-ui-page" data-sd-surface="actorPage" id="module-root">{scene==='page'?<ActorPage actorId="a1"/>:scene==='sheet'?<Sheet actor={projection} isOwner={owner} onRoll={(type,key,options)=>window.__calls.push({type,key,options})} onUpdate={update} onDeleteItem={id=>window.__calls.push({delete:id})} onInventoryAction={async command=>inventory(command)} onCreateItem={create}/>:<Factory/>}</div></MockSDKProvider>
 }
 createRoot(document.getElementById('root')).render(<UIProvider><App/><FloatingHUD/><SharedContentHost/></UIProvider>);window.__ready=true;

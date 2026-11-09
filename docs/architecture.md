@@ -346,3 +346,10 @@ Phone character headings use text-3xl with shrinkable profile/name flex children
 larger breakpoint sizes and long-name wrapping remain unchanged. Installed
 responsive coverage is in `tests/browser/name-regressions.mjs`; see
 [ADR-0003](adr/0003-mobile-character-name.md).
+
+Below379px, the profile stacks its name below the portrait to preserve readable
+font sizing. Narrow-width/DPR2 follow-up: [ADR-0004](adr/0004-narrow-phone-header.md).
+
+The large heading and side-by-side stats begin at 1024px together. Tablet
+headers keep stats below the profile. Name regressions render installed
+ActorPage, including its max-width/padding, rather than Sheet alone.

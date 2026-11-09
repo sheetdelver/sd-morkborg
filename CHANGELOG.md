@@ -4,6 +4,10 @@ Historical entries are reconstructed from [published releases](https://github.co
 
 ## Unreleased
 
+## 1.0.3
+
+- Fix phone and tablet names.
+
 ## 1.0.2
 - Improve mobile name wrapping
 - Reuse merge validation checks
