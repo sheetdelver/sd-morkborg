@@ -73,3 +73,5 @@ Release commit `fce9bd581f3b690f8ad2180419dfcb721616ab76` followed PR14.
 PR validation `42561196410`, main validation `42561445748` and tag
 validation `42561580682` passed. Publication run `42561784890` succeeded; downloaded
 archive checksum and packaged/manifest versions were verified.
+
+Current compatibility correction: [ADR-0005](../adr/0005-native-version-compatibility.md). Offline checks and operator acceptance remain distinct.

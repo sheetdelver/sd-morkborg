@@ -350,3 +350,9 @@ begin together at 1024px. Installed responsive coverage in
 padding. [ADR-0004](adr/0004-narrow-phone-header.md) records the accepted phone and
 tablet correction, superseding the narrower [ADR-0003](adr/0003-mobile-character-name.md)
 coverage.
+
+## Native version admission
+
+Current native minimum: **6.0.0**, with no upper admission bound. See
+[ADR-0005](adr/0005-native-version-compatibility.md). Settings/defaults and the two reviewed content decisions admit native versions >=6.0.0. Foundry 14, exact content identities, source equivalence, permissions and request retirement remain required.
+Dated native verification does not claim parity with every future release.

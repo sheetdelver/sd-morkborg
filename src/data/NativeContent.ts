@@ -3,6 +3,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { SdkError } from '@sheet-delver/sdk';
 import type { ModuleRequestRuntime } from '@sheet-delver/sdk/server';
 import { native } from './native';
+import { supportsNativeVersion } from '../logic/native-version';
 
 export interface NativeEntry {
     kind: 'text' | 'Item' | 'Actor'; name: string; description: string;
@@ -50,7 +51,7 @@ export class NativeContent {
     }
     private assertReviewedRuntime() {
         const identity = this.runtime.world?.snapshot().identity;
-        if (identity?.systemId !== 'morkborg' || identity.foundryGeneration !== 14 || !['6.0.0', '6.0.1'].includes(identity.systemVersion)) throw new SdkError('not_ready', 'Native content decision is not verified for this runtime');
+        if (identity?.systemId !== 'morkborg' || identity.foundryGeneration !== 14 || !supportsNativeVersion(identity.systemVersion)) throw new SdkError('not_ready', 'Native content requires Mörk Borg 6.0.0 or newer on Foundry 14');
     }
     async legacy(type: 'Item' | 'RollTable' | 'Macro', reference: string, classUuid?: string): Promise<any> {
         if (/^(Compendium\.|Item\.|RollTable\.|Macro\.)/.test(reference)) return this.document(reference);

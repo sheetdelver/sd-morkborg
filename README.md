@@ -22,3 +22,6 @@ See the [releases](https://github.com/sheetdelver/sd-morkborg/releases) and
 ## Third-party license
 
 Mörk Borg is copyright Ockult Örtmästare Games and Stockholm Kartell. This product is an independent production by SheetDelver and is not affiliated with Ockult Örtmästare Games or Stockholm Kartell. It is published under the [MÖRK BORG THIRD PARTY LICENSE](https://morkborg.com/license/).
+
+Native system minimum: **6.0.0**. Newer versions are admitted subject to data
+validation; tested baselines are recorded in the module documentation.
