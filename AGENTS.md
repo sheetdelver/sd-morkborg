@@ -169,3 +169,11 @@ checking types. Use isolated package output when validating distribution.
 The current workflow is `.github/workflows/ci-morkborg.yaml`; inspect its pinned
 host version before running compatibility checks. Tools may run from Core,
 but module work does not authorize changing Core files or generated settings.
+
+## Native admission policy (November 26, 2026)
+
+[ADR-0005](docs/adr/0005-native-version-compatibility.md) supersedes prior exact/upper native-version
+admission instructions. Use native >=6.0.0; record tested versions separately.
+Preserve schema, source, authorization and Foundry-generation checks. Core/SDK
+contract ranges and release versions are unchanged. Do not claim future-version
+parity merely because a version passes admission.
